@@ -273,6 +273,78 @@ public :
     vector<float>   *mutrkKink;
     vector<float>   *muBestTrkPtError;
     vector<float>   *muBestTrkPt;
+    Int_t           nTau;
+    vector<bool>    *taupfTausDiscriminationByDecayModeFinding;
+    vector<bool>    *taupfTausDiscriminationByDecayModeFindingNewDMs;
+    vector<bool>    *tauByMVA6VLooseElectronRejection;
+    vector<bool>    *tauByMVA6LooseElectronRejection;
+    vector<bool>    *tauByMVA6MediumElectronRejection;
+    vector<bool>    *tauByMVA6TightElectronRejection;
+    vector<bool>    *tauByMVA6VTightElectronRejection;
+    vector<bool>    *tauByLooseMuonRejection3;
+    vector<bool>    *tauByTightMuonRejection3;
+    vector<bool>    *tauByLooseCombinedIsolationDeltaBetaCorr3Hits;
+    vector<bool>    *tauByMediumCombinedIsolationDeltaBetaCorr3Hits;
+    vector<bool>    *tauByTightCombinedIsolationDeltaBetaCorr3Hits;
+    vector<float>   *tauCombinedIsolationDeltaBetaCorrRaw3Hits;
+    vector<float>   *tauByIsolationMVArun2v1DBnewDMwLTraw;
+    vector<float>   *tauByIsolationMVArun2v1DBoldDMwLTraw;
+    vector<float>   *tauByIsolationMVArun2v1PWnewDMwLTraw;
+    vector<float>   *tauByIsolationMVArun2v1PWoldDMwLTraw;
+    vector<bool>    *tauByVTightIsolationMVArun2v1DBnewDMwLT;
+    vector<bool>    *tauByVTightIsolationMVArun2v1DBoldDMwLT;
+    vector<bool>    *tauByVTightIsolationMVArun2v1PWnewDMwLT;
+    vector<bool>    *tauByVTightIsolationMVArun2v1PWoldDMwLT;
+    vector<bool>    *tauByTightIsolationMVArun2v1DBnewDMwLT;
+    vector<bool>    *tauByTightIsolationMVArun2v1DBoldDMwLT;
+    vector<bool>    *tauByTightIsolationMVArun2v1PWnewDMwLT;
+    vector<bool>    *tauByTightIsolationMVArun2v1PWoldDMwLT;
+    vector<bool>    *tauByMediumIsolationMVArun2v1DBnewDMwLT;
+    vector<bool>    *tauByMediumIsolationMVArun2v1DBoldDMwLT;
+    vector<bool>    *tauByMediumIsolationMVArun2v1PWnewDMwLT;
+    vector<bool>    *tauByMediumIsolationMVArun2v1PWoldDMwLT;
+    vector<bool>    *tauByLooseIsolationMVArun2v1DBnewDMwLT;
+    vector<bool>    *tauByLooseIsolationMVArun2v1DBoldDMwLT;
+    vector<bool>    *tauByLooseIsolationMVArun2v1PWnewDMwLT;
+    vector<bool>    *tauByLooseIsolationMVArun2v1PWoldDMwLT;
+    vector<bool>    *tauByVLooseIsolationMVArun2v1DBnewDMwLT;
+    vector<bool>    *tauByVLooseIsolationMVArun2v1DBoldDMwLT;
+    vector<bool>    *tauByVLooseIsolationMVArun2v1PWnewDMwLT;
+    vector<bool>    *tauByVLooseIsolationMVArun2v1PWoldDMwLT;
+    vector<float>   *tauEta;
+    vector<float>   *tauPhi;
+    vector<float>   *tauPt;
+    vector<float>   *tauEt;
+    vector<float>   *tauCharge;
+    vector<float>   *tauP;
+    vector<float>   *tauPx;
+    vector<float>   *tauPy;
+    vector<float>   *tauPz;
+    vector<float>   *tauVz;
+    vector<float>   *tauEnergy;
+    vector<float>   *tauMass;
+    vector<float>   *tauDxy;
+    vector<float>   *tauZImpact;
+    vector<int>     *tauDecayMode;
+    vector<bool>    *tauLeadChargedHadronExists;
+    vector<float>   *tauLeadChargedHadronEta;
+    vector<float>   *tauLeadChargedHadronPhi;
+    vector<float>   *tauLeadChargedHadronPt;
+    vector<float>   *tauChargedIsoPtSum;
+    vector<float>   *tauNeutralIsoPtSum;
+    vector<float>   *tauPuCorrPtSum;
+    vector<int>     *tauNumSignalPFChargedHadrCands;
+    vector<int>     *tauNumSignalPFNeutrHadrCands;
+    vector<int>     *tauNumSignalPFGammaCands;
+    vector<int>     *tauNumSignalPFCands;
+    vector<int>     *tauNumIsolationPFChargedHadrCands;
+    vector<int>     *tauNumIsolationPFNeutrHadrCands;
+    vector<int>     *tauNumIsolationPFGammaCands;
+    vector<int>     *tauNumIsolationPFCands;
+    vector<float>   *taufootprintCorrection;
+    vector<float>   *tauphotonPtSumOutsideSignalCone;
+    vector<float>   *taudz;
+    vector<float>   *taudxy;
     Int_t           nJet;
     vector<float>   *jetPt;
     vector<float>   *jetEn;
@@ -569,6 +641,78 @@ public :
     TBranch        *b_mutrkKink;   //!
     TBranch        *b_muBestTrkPtError;   //!
     TBranch        *b_muBestTrkPt;   //!
+    TBranch        *b_nTau;   //!
+    TBranch        *b_taupfTausDiscriminationByDecayModeFinding;   //!
+    TBranch        *b_taupfTausDiscriminationByDecayModeFindingNewDMs;   //!
+    TBranch        *b_tauByMVA6VLooseElectronRejection;   //!
+    TBranch        *b_tauByMVA6LooseElectronRejection;   //!
+    TBranch        *b_tauByMVA6MediumElectronRejection;   //!
+    TBranch        *b_tauByMVA6TightElectronRejection;   //!
+    TBranch        *b_tauByMVA6VTightElectronRejection;   //!
+    TBranch        *b_tauByLooseMuonRejection3;   //!
+    TBranch        *b_tauByTightMuonRejection3;   //!
+    TBranch        *b_tauByLooseCombinedIsolationDeltaBetaCorr3Hits;   //!
+    TBranch        *b_tauByMediumCombinedIsolationDeltaBetaCorr3Hits;   //!
+    TBranch        *b_tauByTightCombinedIsolationDeltaBetaCorr3Hits;   //!
+    TBranch        *b_tauCombinedIsolationDeltaBetaCorrRaw3Hits;   //!
+    TBranch        *b_tauByIsolationMVArun2v1DBnewDMwLTraw;   //!
+    TBranch        *b_tauByIsolationMVArun2v1DBoldDMwLTraw;   //!
+    TBranch        *b_tauByIsolationMVArun2v1PWnewDMwLTraw;   //!
+    TBranch        *b_tauByIsolationMVArun2v1PWoldDMwLTraw;   //!
+    TBranch        *b_tauByVTightIsolationMVArun2v1DBnewDMwLT;   //!
+    TBranch        *b_tauByVTightIsolationMVArun2v1DBoldDMwLT;   //!
+    TBranch        *b_tauByVTightIsolationMVArun2v1PWnewDMwLT;   //!
+    TBranch        *b_tauByVTightIsolationMVArun2v1PWoldDMwLT;   //!
+    TBranch        *b_tauByTightIsolationMVArun2v1DBnewDMwLT;   //!
+    TBranch        *b_tauByTightIsolationMVArun2v1DBoldDMwLT;   //!
+    TBranch        *b_tauByTightIsolationMVArun2v1PWnewDMwLT;   //!
+    TBranch        *b_tauByTightIsolationMVArun2v1PWoldDMwLT;   //!
+    TBranch        *b_tauByMediumIsolationMVArun2v1DBnewDMwLT;   //!
+    TBranch        *b_tauByMediumIsolationMVArun2v1DBoldDMwLT;   //!
+    TBranch        *b_tauByMediumIsolationMVArun2v1PWnewDMwLT;   //!
+    TBranch        *b_tauByMediumIsolationMVArun2v1PWoldDMwLT;   //!
+    TBranch        *b_tauByLooseIsolationMVArun2v1DBnewDMwLT;   //!
+    TBranch        *b_tauByLooseIsolationMVArun2v1DBoldDMwLT;   //!
+    TBranch        *b_tauByLooseIsolationMVArun2v1PWnewDMwLT;   //!
+    TBranch        *b_tauByLooseIsolationMVArun2v1PWoldDMwLT;   //!
+    TBranch        *b_tauByVLooseIsolationMVArun2v1DBnewDMwLT;   //!
+    TBranch        *b_tauByVLooseIsolationMVArun2v1DBoldDMwLT;   //!
+    TBranch        *b_tauByVLooseIsolationMVArun2v1PWnewDMwLT;   //!
+    TBranch        *b_tauByVLooseIsolationMVArun2v1PWoldDMwLT;   //!
+    TBranch        *b_tauEta;   //!
+    TBranch        *b_tauPhi;   //!
+    TBranch        *b_tauPt;   //!
+    TBranch        *b_tauEt;   //!
+    TBranch        *b_tauCharge;   //!
+    TBranch        *b_tauP;   //!
+    TBranch        *b_tauPx;   //!
+    TBranch        *b_tauPy;   //!
+    TBranch        *b_tauPz;   //!
+    TBranch        *b_tauVz;   //!
+    TBranch        *b_tauEnergy;   //!
+    TBranch        *b_tauMass;   //!
+    TBranch        *b_tauDxy;   //!
+    TBranch        *b_tauZImpact;   //!
+    TBranch        *b_tauDecayMode;   //!
+    TBranch        *b_tauLeadChargedHadronExists;   //!
+    TBranch        *b_tauLeadChargedHadronEta;   //!
+    TBranch        *b_tauLeadChargedHadronPhi;   //!
+    TBranch        *b_tauLeadChargedHadronPt;   //!
+    TBranch        *b_tauChargedIsoPtSum;   //!
+    TBranch        *b_tauNeutralIsoPtSum;   //!
+    TBranch        *b_tauPuCorrPtSum;   //!
+    TBranch        *b_tauNumSignalPFChargedHadrCands;   //!
+    TBranch        *b_tauNumSignalPFNeutrHadrCands;   //!
+    TBranch        *b_tauNumSignalPFGammaCands;   //!
+    TBranch        *b_tauNumSignalPFCands;   //!
+    TBranch        *b_tauNumIsolationPFChargedHadrCands;   //!
+    TBranch        *b_tauNumIsolationPFNeutrHadrCands;   //!
+    TBranch        *b_tauNumIsolationPFGammaCands;   //!
+    TBranch        *b_tauNumIsolationPFCands;   //!
+    TBranch        *b_taufootprintCorrection;   //!
+    TBranch        *b_tauphotonPtSumOutsideSignalCone;   //!
+    TBranch        *b_taudz;   //!
+    TBranch        *b_taudxy;   //!
     TBranch        *b_nJet;   //!
     TBranch        *b_jetPt;   //!
     TBranch        *b_jetEn;   //!
@@ -881,6 +1025,77 @@ void Skimmer::Init(TTree *tree)
     mutrkKink = 0;
     muBestTrkPtError = 0;
     muBestTrkPt = 0;
+    taupfTausDiscriminationByDecayModeFinding = 0;
+    taupfTausDiscriminationByDecayModeFindingNewDMs = 0;
+    tauByMVA6VLooseElectronRejection = 0;
+    tauByMVA6LooseElectronRejection = 0;
+    tauByMVA6MediumElectronRejection = 0;
+    tauByMVA6TightElectronRejection = 0;
+    tauByMVA6VTightElectronRejection = 0;
+    tauByLooseMuonRejection3 = 0;
+    tauByTightMuonRejection3 = 0;
+    tauByLooseCombinedIsolationDeltaBetaCorr3Hits = 0;
+    tauByMediumCombinedIsolationDeltaBetaCorr3Hits = 0;
+    tauByTightCombinedIsolationDeltaBetaCorr3Hits = 0;
+    tauCombinedIsolationDeltaBetaCorrRaw3Hits = 0;
+    tauByIsolationMVArun2v1DBnewDMwLTraw = 0;
+    tauByIsolationMVArun2v1DBoldDMwLTraw = 0;
+    tauByIsolationMVArun2v1PWnewDMwLTraw = 0;
+    tauByIsolationMVArun2v1PWoldDMwLTraw = 0;
+    tauByVTightIsolationMVArun2v1DBnewDMwLT = 0;
+    tauByVTightIsolationMVArun2v1DBoldDMwLT = 0;
+    tauByVTightIsolationMVArun2v1PWnewDMwLT = 0;
+    tauByVTightIsolationMVArun2v1PWoldDMwLT = 0;
+    tauByTightIsolationMVArun2v1DBnewDMwLT = 0;
+    tauByTightIsolationMVArun2v1DBoldDMwLT = 0;
+    tauByTightIsolationMVArun2v1PWnewDMwLT = 0;
+    tauByTightIsolationMVArun2v1PWoldDMwLT = 0;
+    tauByMediumIsolationMVArun2v1DBnewDMwLT = 0;
+    tauByMediumIsolationMVArun2v1DBoldDMwLT = 0;
+    tauByMediumIsolationMVArun2v1PWnewDMwLT = 0;
+    tauByMediumIsolationMVArun2v1PWoldDMwLT = 0;
+    tauByLooseIsolationMVArun2v1DBnewDMwLT = 0;
+    tauByLooseIsolationMVArun2v1DBoldDMwLT = 0;
+    tauByLooseIsolationMVArun2v1PWnewDMwLT = 0;
+    tauByLooseIsolationMVArun2v1PWoldDMwLT = 0;
+    tauByVLooseIsolationMVArun2v1DBnewDMwLT = 0;
+    tauByVLooseIsolationMVArun2v1DBoldDMwLT = 0;
+    tauByVLooseIsolationMVArun2v1PWnewDMwLT = 0;
+    tauByVLooseIsolationMVArun2v1PWoldDMwLT = 0;
+    tauEta = 0;
+    tauPhi = 0;
+    tauPt = 0;
+    tauEt = 0;
+    tauCharge = 0;
+    tauP = 0;
+    tauPx = 0;
+    tauPy = 0;
+    tauPz = 0;
+    tauVz = 0;
+    tauEnergy = 0;
+    tauMass = 0;
+    tauDxy = 0;
+    tauZImpact = 0;
+    tauDecayMode = 0;
+    tauLeadChargedHadronExists = 0;
+    tauLeadChargedHadronEta = 0;
+    tauLeadChargedHadronPhi = 0;
+    tauLeadChargedHadronPt = 0;
+    tauChargedIsoPtSum = 0;
+    tauNeutralIsoPtSum = 0;
+    tauPuCorrPtSum = 0;
+    tauNumSignalPFChargedHadrCands = 0;
+    tauNumSignalPFNeutrHadrCands = 0;
+    tauNumSignalPFGammaCands = 0;
+    tauNumSignalPFCands = 0;
+    tauNumIsolationPFChargedHadrCands = 0;
+    tauNumIsolationPFNeutrHadrCands = 0;
+    tauNumIsolationPFGammaCands = 0;
+    tauNumIsolationPFCands = 0;
+    taufootprintCorrection = 0;
+    tauphotonPtSumOutsideSignalCone = 0;
+    taudz = 0;
+    taudxy = 0;
     jetPt = 0;
     jetEn = 0;
     jetEta = 0;
@@ -1180,6 +1395,78 @@ void Skimmer::Init(TTree *tree)
     fChain->SetBranchAddress("mutrkKink", &mutrkKink, &b_mutrkKink);
     fChain->SetBranchAddress("muBestTrkPtError", &muBestTrkPtError, &b_muBestTrkPtError);
     fChain->SetBranchAddress("muBestTrkPt", &muBestTrkPt, &b_muBestTrkPt);
+    fChain->SetBranchAddress("nTau", &nTau, &b_nTau);
+    fChain->SetBranchAddress("taupfTausDiscriminationByDecayModeFinding", &taupfTausDiscriminationByDecayModeFinding, &b_taupfTausDiscriminationByDecayModeFinding);
+    fChain->SetBranchAddress("taupfTausDiscriminationByDecayModeFindingNewDMs", &taupfTausDiscriminationByDecayModeFindingNewDMs, &b_taupfTausDiscriminationByDecayModeFindingNewDMs);
+    fChain->SetBranchAddress("tauByMVA6VLooseElectronRejection", &tauByMVA6VLooseElectronRejection, &b_tauByMVA6VLooseElectronRejection);
+    fChain->SetBranchAddress("tauByMVA6LooseElectronRejection", &tauByMVA6LooseElectronRejection, &b_tauByMVA6LooseElectronRejection);
+    fChain->SetBranchAddress("tauByMVA6MediumElectronRejection", &tauByMVA6MediumElectronRejection, &b_tauByMVA6MediumElectronRejection);
+    fChain->SetBranchAddress("tauByMVA6TightElectronRejection", &tauByMVA6TightElectronRejection, &b_tauByMVA6TightElectronRejection);
+    fChain->SetBranchAddress("tauByMVA6VTightElectronRejection", &tauByMVA6VTightElectronRejection, &b_tauByMVA6VTightElectronRejection);
+    fChain->SetBranchAddress("tauByLooseMuonRejection3", &tauByLooseMuonRejection3, &b_tauByLooseMuonRejection3);
+    fChain->SetBranchAddress("tauByTightMuonRejection3", &tauByTightMuonRejection3, &b_tauByTightMuonRejection3);
+    fChain->SetBranchAddress("tauByLooseCombinedIsolationDeltaBetaCorr3Hits", &tauByLooseCombinedIsolationDeltaBetaCorr3Hits, &b_tauByLooseCombinedIsolationDeltaBetaCorr3Hits);
+    fChain->SetBranchAddress("tauByMediumCombinedIsolationDeltaBetaCorr3Hits", &tauByMediumCombinedIsolationDeltaBetaCorr3Hits, &b_tauByMediumCombinedIsolationDeltaBetaCorr3Hits);
+    fChain->SetBranchAddress("tauByTightCombinedIsolationDeltaBetaCorr3Hits", &tauByTightCombinedIsolationDeltaBetaCorr3Hits, &b_tauByTightCombinedIsolationDeltaBetaCorr3Hits);
+    fChain->SetBranchAddress("tauCombinedIsolationDeltaBetaCorrRaw3Hits", &tauCombinedIsolationDeltaBetaCorrRaw3Hits, &b_tauCombinedIsolationDeltaBetaCorrRaw3Hits);
+    fChain->SetBranchAddress("tauByIsolationMVArun2v1DBnewDMwLTraw", &tauByIsolationMVArun2v1DBnewDMwLTraw, &b_tauByIsolationMVArun2v1DBnewDMwLTraw);
+    fChain->SetBranchAddress("tauByIsolationMVArun2v1DBoldDMwLTraw", &tauByIsolationMVArun2v1DBoldDMwLTraw, &b_tauByIsolationMVArun2v1DBoldDMwLTraw);
+    fChain->SetBranchAddress("tauByIsolationMVArun2v1PWnewDMwLTraw", &tauByIsolationMVArun2v1PWnewDMwLTraw, &b_tauByIsolationMVArun2v1PWnewDMwLTraw);
+    fChain->SetBranchAddress("tauByIsolationMVArun2v1PWoldDMwLTraw", &tauByIsolationMVArun2v1PWoldDMwLTraw, &b_tauByIsolationMVArun2v1PWoldDMwLTraw);
+    fChain->SetBranchAddress("tauByVTightIsolationMVArun2v1DBnewDMwLT", &tauByVTightIsolationMVArun2v1DBnewDMwLT, &b_tauByVTightIsolationMVArun2v1DBnewDMwLT);
+    fChain->SetBranchAddress("tauByVTightIsolationMVArun2v1DBoldDMwLT", &tauByVTightIsolationMVArun2v1DBoldDMwLT, &b_tauByVTightIsolationMVArun2v1DBoldDMwLT);
+    fChain->SetBranchAddress("tauByVTightIsolationMVArun2v1PWnewDMwLT", &tauByVTightIsolationMVArun2v1PWnewDMwLT, &b_tauByVTightIsolationMVArun2v1PWnewDMwLT);
+    fChain->SetBranchAddress("tauByVTightIsolationMVArun2v1PWoldDMwLT", &tauByVTightIsolationMVArun2v1PWoldDMwLT, &b_tauByVTightIsolationMVArun2v1PWoldDMwLT);
+    fChain->SetBranchAddress("tauByTightIsolationMVArun2v1DBnewDMwLT", &tauByTightIsolationMVArun2v1DBnewDMwLT, &b_tauByTightIsolationMVArun2v1DBnewDMwLT);
+    fChain->SetBranchAddress("tauByTightIsolationMVArun2v1DBoldDMwLT", &tauByTightIsolationMVArun2v1DBoldDMwLT, &b_tauByTightIsolationMVArun2v1DBoldDMwLT);
+    fChain->SetBranchAddress("tauByTightIsolationMVArun2v1PWnewDMwLT", &tauByTightIsolationMVArun2v1PWnewDMwLT, &b_tauByTightIsolationMVArun2v1PWnewDMwLT);
+    fChain->SetBranchAddress("tauByTightIsolationMVArun2v1PWoldDMwLT", &tauByTightIsolationMVArun2v1PWoldDMwLT, &b_tauByTightIsolationMVArun2v1PWoldDMwLT);
+    fChain->SetBranchAddress("tauByMediumIsolationMVArun2v1DBnewDMwLT", &tauByMediumIsolationMVArun2v1DBnewDMwLT, &b_tauByMediumIsolationMVArun2v1DBnewDMwLT);
+    fChain->SetBranchAddress("tauByMediumIsolationMVArun2v1DBoldDMwLT", &tauByMediumIsolationMVArun2v1DBoldDMwLT, &b_tauByMediumIsolationMVArun2v1DBoldDMwLT);
+    fChain->SetBranchAddress("tauByMediumIsolationMVArun2v1PWnewDMwLT", &tauByMediumIsolationMVArun2v1PWnewDMwLT, &b_tauByMediumIsolationMVArun2v1PWnewDMwLT);
+    fChain->SetBranchAddress("tauByMediumIsolationMVArun2v1PWoldDMwLT", &tauByMediumIsolationMVArun2v1PWoldDMwLT, &b_tauByMediumIsolationMVArun2v1PWoldDMwLT);
+    fChain->SetBranchAddress("tauByLooseIsolationMVArun2v1DBnewDMwLT", &tauByLooseIsolationMVArun2v1DBnewDMwLT, &b_tauByLooseIsolationMVArun2v1DBnewDMwLT);
+    fChain->SetBranchAddress("tauByLooseIsolationMVArun2v1DBoldDMwLT", &tauByLooseIsolationMVArun2v1DBoldDMwLT, &b_tauByLooseIsolationMVArun2v1DBoldDMwLT);
+    fChain->SetBranchAddress("tauByLooseIsolationMVArun2v1PWnewDMwLT", &tauByLooseIsolationMVArun2v1PWnewDMwLT, &b_tauByLooseIsolationMVArun2v1PWnewDMwLT);
+    fChain->SetBranchAddress("tauByLooseIsolationMVArun2v1PWoldDMwLT", &tauByLooseIsolationMVArun2v1PWoldDMwLT, &b_tauByLooseIsolationMVArun2v1PWoldDMwLT);
+    fChain->SetBranchAddress("tauByVLooseIsolationMVArun2v1DBnewDMwLT", &tauByVLooseIsolationMVArun2v1DBnewDMwLT, &b_tauByVLooseIsolationMVArun2v1DBnewDMwLT);
+    fChain->SetBranchAddress("tauByVLooseIsolationMVArun2v1DBoldDMwLT", &tauByVLooseIsolationMVArun2v1DBoldDMwLT, &b_tauByVLooseIsolationMVArun2v1DBoldDMwLT);
+    fChain->SetBranchAddress("tauByVLooseIsolationMVArun2v1PWnewDMwLT", &tauByVLooseIsolationMVArun2v1PWnewDMwLT, &b_tauByVLooseIsolationMVArun2v1PWnewDMwLT);
+    fChain->SetBranchAddress("tauByVLooseIsolationMVArun2v1PWoldDMwLT", &tauByVLooseIsolationMVArun2v1PWoldDMwLT, &b_tauByVLooseIsolationMVArun2v1PWoldDMwLT);
+    fChain->SetBranchAddress("tauEta", &tauEta, &b_tauEta);
+    fChain->SetBranchAddress("tauPhi", &tauPhi, &b_tauPhi);
+    fChain->SetBranchAddress("tauPt", &tauPt, &b_tauPt);
+    fChain->SetBranchAddress("tauEt", &tauEt, &b_tauEt);
+    fChain->SetBranchAddress("tauCharge", &tauCharge, &b_tauCharge);
+    fChain->SetBranchAddress("tauP", &tauP, &b_tauP);
+    fChain->SetBranchAddress("tauPx", &tauPx, &b_tauPx);
+    fChain->SetBranchAddress("tauPy", &tauPy, &b_tauPy);
+    fChain->SetBranchAddress("tauPz", &tauPz, &b_tauPz);
+    fChain->SetBranchAddress("tauVz", &tauVz, &b_tauVz);
+    fChain->SetBranchAddress("tauEnergy", &tauEnergy, &b_tauEnergy);
+    fChain->SetBranchAddress("tauMass", &tauMass, &b_tauMass);
+    fChain->SetBranchAddress("tauDxy", &tauDxy, &b_tauDxy);
+    fChain->SetBranchAddress("tauZImpact", &tauZImpact, &b_tauZImpact);
+    fChain->SetBranchAddress("tauDecayMode", &tauDecayMode, &b_tauDecayMode);
+    fChain->SetBranchAddress("tauLeadChargedHadronExists", &tauLeadChargedHadronExists, &b_tauLeadChargedHadronExists);
+    fChain->SetBranchAddress("tauLeadChargedHadronEta", &tauLeadChargedHadronEta, &b_tauLeadChargedHadronEta);
+    fChain->SetBranchAddress("tauLeadChargedHadronPhi", &tauLeadChargedHadronPhi, &b_tauLeadChargedHadronPhi);
+    fChain->SetBranchAddress("tauLeadChargedHadronPt", &tauLeadChargedHadronPt, &b_tauLeadChargedHadronPt);
+    fChain->SetBranchAddress("tauChargedIsoPtSum", &tauChargedIsoPtSum, &b_tauChargedIsoPtSum);
+    fChain->SetBranchAddress("tauNeutralIsoPtSum", &tauNeutralIsoPtSum, &b_tauNeutralIsoPtSum);
+    fChain->SetBranchAddress("tauPuCorrPtSum", &tauPuCorrPtSum, &b_tauPuCorrPtSum);
+    fChain->SetBranchAddress("tauNumSignalPFChargedHadrCands", &tauNumSignalPFChargedHadrCands, &b_tauNumSignalPFChargedHadrCands);
+    fChain->SetBranchAddress("tauNumSignalPFNeutrHadrCands", &tauNumSignalPFNeutrHadrCands, &b_tauNumSignalPFNeutrHadrCands);
+    fChain->SetBranchAddress("tauNumSignalPFGammaCands", &tauNumSignalPFGammaCands, &b_tauNumSignalPFGammaCands);
+    fChain->SetBranchAddress("tauNumSignalPFCands", &tauNumSignalPFCands, &b_tauNumSignalPFCands);
+    fChain->SetBranchAddress("tauNumIsolationPFChargedHadrCands", &tauNumIsolationPFChargedHadrCands, &b_tauNumIsolationPFChargedHadrCands);
+    fChain->SetBranchAddress("tauNumIsolationPFNeutrHadrCands", &tauNumIsolationPFNeutrHadrCands, &b_tauNumIsolationPFNeutrHadrCands);
+    fChain->SetBranchAddress("tauNumIsolationPFGammaCands", &tauNumIsolationPFGammaCands, &b_tauNumIsolationPFGammaCands);
+    fChain->SetBranchAddress("tauNumIsolationPFCands", &tauNumIsolationPFCands, &b_tauNumIsolationPFCands);
+    fChain->SetBranchAddress("taufootprintCorrection", &taufootprintCorrection, &b_taufootprintCorrection);
+    fChain->SetBranchAddress("tauphotonPtSumOutsideSignalCone", &tauphotonPtSumOutsideSignalCone, &b_tauphotonPtSumOutsideSignalCone);
+    fChain->SetBranchAddress("taudz", &taudz, &b_taudz);
+    fChain->SetBranchAddress("taudxy", &taudxy, &b_taudxy);
     fChain->SetBranchAddress("nJet", &nJet, &b_nJet);
     fChain->SetBranchAddress("jetPt", &jetPt, &b_jetPt);
     fChain->SetBranchAddress("jetEn", &jetEn, &b_jetEn);

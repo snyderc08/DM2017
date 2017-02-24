@@ -1,6 +1,7 @@
-#include "../interface/LQ3Analyzer.h"
+#include "../interface/CodexAnalyzer.h"
 #include "../interface/WeightCalculator.h"
 #include "../interface/Corrector.h"
+#include "../interface/Functions.h"
 #include <string>
 #include <ostream>
 

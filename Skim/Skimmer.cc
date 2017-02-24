@@ -51,7 +51,7 @@ void Skimmer::Loop(TString outputName, int skm)
     fChain->SetBranchStatus("ele*",1);
     fChain->SetBranchStatus("mu*",1);
     fChain->SetBranchStatus("pho",0);
-    fChain->SetBranchStatus("tau*",0);
+    fChain->SetBranchStatus("tau*",1);
    fChain->SetBranchStatus("m*",1); 
     
     TH1F* hcount = new TH1F("hcount", "", 10, 1, 10);
@@ -82,7 +82,8 @@ void Skimmer::Loop(TString outputName, int skm)
         TLorentzVector Mu4Momentum, Jet4Momentum;
         
   
-
+        if(pfMET < 100) continue;
+        hcount->Fill(3);
 
         //MuJet
         for (int imu = 0; imu < nMu; ++imu){
@@ -94,7 +95,7 @@ void Skimmer::Loop(TString outputName, int skm)
                 
                 for (int ijet = 0; ijet < nJet; ++ijet){
 Jet4Momentum.SetPtEtaPhiM(jetPt->at(ijet),jetEta->at(ijet),jetPhi->at(ijet),jetEn->at(ijet));
-	if (jetPt->at(ijet) > 60 &&  fabs(jetEta->at(ijet)) < 3.0   && Jet4Momentum.DeltaR(Mu4Momentum) > 0.5 ){
+	if (jetPt->at(ijet) > 100 &&  fabs(jetEta->at(ijet)) < 3.0   && Jet4Momentum.DeltaR(Mu4Momentum) > 0.5 ){
                             isMuJet=1;
                             break;
                             
@@ -109,9 +110,8 @@ Jet4Momentum.SetPtEtaPhiM(jetPt->at(ijet),jetEta->at(ijet),jetPhi->at(ijet),jetE
 
         
         if(!(isMuJet)) continue;
-        hcount->Fill(3);
-        if(pfMET < 50) continue;
         hcount->Fill(4);
+
         
         
         MyNewTree->Fill();
