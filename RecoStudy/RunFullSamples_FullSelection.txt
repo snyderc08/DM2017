@@ -1,0 +1,23 @@
+./Make.sh CodexAnalyzer_FinalSelection.cc
+
+
+
+./CodexAnalyzer_FinalSelection.exe  OutFiles_FullSelection/DYJetsToLL.root ../ROOT80X/DYJetsToLL_M-50*.root
+./CodexAnalyzer_FinalSelection.exe  OutFiles_FullSelection/TTJets.root ../ROOT80X/Inclusive_TTJets.root
+./CodexAnalyzer_FinalSelection.exe  OutFiles_FullSelection/WJetsToLNu.root ../ROOT80X/WJetsToLNu*.root
+./CodexAnalyzer_FinalSelection.exe  OutFiles_FullSelection/VV.root ../ROOT80X/ZZ.root  ../ROOT80X/WW.root  ../ROOT80X/WZ.root
+./CodexAnalyzer_FinalSelection.exe  OutFiles_FullSelection/SingleTop.root ../ROOT80X/ST_*.root
+
+./CodexAnalyzer_FinalSelection.exe  OutFiles_FullSelection/Data.root ../ROOT80X/SingleMu.root
+
+
+
+
+./CodexAnalyzer_FinalSelection.exe   OutFiles_FullSelection/DM_Codex_1000.root  ../ROOT80X/DM_Codex_1000.root
+./CodexAnalyzer_FinalSelection.exe   OutFiles_FullSelection/DM_Codex_1200.root  ../ROOT80X/DM_Codex_1200.root
+./CodexAnalyzer_FinalSelection.exe   OutFiles_FullSelection/DM_Codex_1400.root  ../ROOT80X/DM_Codex_1400.root
+./CodexAnalyzer_FinalSelection.exe   OutFiles_FullSelection/DM_Codex_1600.root  ../ROOT80X/DM_Codex_1600.root
+./CodexAnalyzer_FinalSelection.exe   OutFiles_FullSelection/DM_Codex_1800.root  ../ROOT80X/DM_Codex_1800.root
+./CodexAnalyzer_FinalSelection.exe   OutFiles_FullSelection/DM_Codex_2000.root  ../ROOT80X/DM_Codex_2000.root
+
+
