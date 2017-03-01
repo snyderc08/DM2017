@@ -894,9 +894,20 @@ float compTopPtWeight(float top1Pt, float top2Pt) {
 
 int ptBIN=0;
 int etaBIN=0;
+int etaPOINT=-1;
 
+//Lumi in fb-1 taken from  CMS AN-16-362
+float LumiB=5.93; 
+float LumiC=2.65;
+float LumiD=4.35;
+float LumiE=4.12;
+float LumiF=3.19;
+float LumiG=7.72;
+float LumiHv2=8.64;
+float LumiHv3=0.22;
 
-
+float LumiBCDEF=LumiB+LumiC+LumiD+LumiE+LumiF;
+float LumiGH=LumiG+LumiHv2+LumiHv3;
 
 
 //x min    x avg    x max     ratio    -err / +err
@@ -914,6 +925,35 @@ int etaBIN=0;
 /////////////////////////////////////////////////////
 //  Muon TRK Correction 80X
 ////////////////////////////////////////////////////////////
+
+float Cor80X_TRK_Mu_Full2016(float eta, TGraphAsymmErrors * graph ) {
+// take the ratio_eff_eta3_dr030e030_corr histogram (as function of eta).
+    double * ipoint=NULL;
+    double x_point,y_sf;
+    ipoint=graph->GetX(); 
+    if (eta >=(ipoint[0]-graph->GetErrorXlow(0))  && eta < (ipoint[0]+graph->GetErrorXhigh(0)) )  etaPOINT=0 ;
+    else if (eta >= (ipoint[1]-graph->GetErrorXlow(1))  && eta < (ipoint[1]+graph->GetErrorXhigh(1)) ) etaPOINT=1;
+    else if (eta >= (ipoint[2]-graph->GetErrorXlow(2)) && eta < (ipoint[2]+graph->GetErrorXhigh(2)) ) etaPOINT=2;
+    else if (eta >= (ipoint[3]-graph->GetErrorXlow(3)) && eta < (ipoint[3]+graph->GetErrorXhigh(3)) ) etaPOINT=3;
+    else if (eta >= (ipoint[4]-graph->GetErrorXlow(4)) && eta < (ipoint[4]+graph->GetErrorXhigh(4)) ) etaPOINT=4;
+    else if (eta >= (ipoint[5]-graph->GetErrorXlow(5)) && eta < (ipoint[5]+graph->GetErrorXhigh(5)) ) etaPOINT=5;
+    else if (eta >= (ipoint[6]-graph->GetErrorXlow(6)) && eta < (ipoint[6]+graph->GetErrorXhigh(6)) ) etaPOINT=6;
+    else if (eta >= (ipoint[7]-graph->GetErrorXlow(7)) && eta < (ipoint[7]+graph->GetErrorXhigh(7)) ) etaPOINT=7;
+    else if (eta >= (ipoint[8]-graph->GetErrorXlow(8)) && eta < (ipoint[8]+graph->GetErrorXhigh(8)) ) etaPOINT=8;
+    else if (eta >= (ipoint[9]-graph->GetErrorXlow(9)) && eta < (ipoint[9]+graph->GetErrorXhigh(9)) ) etaPOINT=9;
+    else if (eta >= (ipoint[10]-graph->GetErrorXlow(10)) && eta < (ipoint[10]+graph->GetErrorXhigh(10)) ) etaPOINT=10;
+    else if (eta >= (ipoint[11]-graph->GetErrorXlow(11)) && eta < (ipoint[11]+graph->GetErrorXhigh(11)) ) etaPOINT=11;
+    else if (eta >= (ipoint[12]-graph->GetErrorXlow(12)) && eta < (ipoint[12]+graph->GetErrorXhigh(12)) ) etaPOINT=12;
+    else if (eta >= (ipoint[13]-graph->GetErrorXlow(13)) && eta < (ipoint[13]+graph->GetErrorXhigh(13)) ) etaPOINT=13;
+    else if (eta >= (ipoint[14]-graph->GetErrorXlow(14)) && eta < (ipoint[14]+graph->GetErrorXhigh(14)) ) etaPOINT=14;
+    else return 1;
+
+    graph->GetPoint(etaPOINT,x_point,y_sf);
+    return y_sf;
+
+}
+
+
 float Cor80X_TRK_Mu(float eta ) {
     
     if (eta >= -2.4 && eta < -2.1 ) return 0.9879;
@@ -935,6 +975,52 @@ float Cor80X_TRK_Mu(float eta ) {
 /////////////////////////////////////////////////////
 //  Muon Id Correction 74X
 ////////////////////////////////////////////////////////////
+
+
+
+float Cor80X_ID_Mu_BCDEF(float pt, float eta , TH2F * HistoId) {
+    
+    if (pt >= 20 && pt < 25 ) ptBIN=1;
+    if (pt >= 25 && pt < 30 ) ptBIN=2;
+    if (pt >= 30 && pt < 40 ) ptBIN=3;
+    if (pt >= 40 && pt < 50 ) ptBIN=4;
+    if (pt >= 50 && pt < 60 ) ptBIN=5;
+    if (pt >= 60  ) ptBIN=6;
+    
+
+    if (fabs(eta) <= 0.9) etaBIN=1;
+    if (0.9 <= fabs(eta) && fabs(eta) < 1.2) etaBIN=2;
+    if (1.2 <= fabs(eta) && fabs(eta) < 2.1) etaBIN=3;
+    if (2.1 <= fabs(eta) && fabs(eta) < 2.4) etaBIN=4;
+
+
+ //       cout<< "--->Muon Id    pt= "<<pt<<  "   eta" <<eta<< "  SF="<<HistoId->GetBinContent(ptBIN,etaBIN)<<"\n";
+    return HistoId->GetBinContent(ptBIN,etaBIN);
+}
+    
+
+float Cor80X_ID_Mu_GH(float pt, float eta , TH2F * HistoId) {
+
+    if (pt >= 20 && pt < 25 ) ptBIN=1;
+    if (pt >= 25 && pt < 30 ) ptBIN=2;
+    if (pt >= 30 && pt < 40 ) ptBIN=3;
+    if (pt >= 40 && pt < 50 ) ptBIN=4;
+    if (pt >= 50 && pt < 60 ) ptBIN=5;
+    if (pt >= 60  ) ptBIN=6;
+    
+
+    if (fabs(eta) <= 0.9) etaBIN=1;
+    if (0.9 <= fabs(eta) && fabs(eta) < 1.2) etaBIN=2;
+    if (1.2 <= fabs(eta) && fabs(eta) < 2.1) etaBIN=3;
+    if (2.1 <= fabs(eta) && fabs(eta) < 2.4) etaBIN=4;
+
+
+    //    cout<< "--->Muon Id    pt= "<<pt<<  "   eta" <<eta<< "  SF="<<HistoId->GetBinContent(ptBIN,etaBIN)<<"\n";
+    return HistoId->GetBinContent(ptBIN,etaBIN);
+}
+
+
+
 float Cor80X_ID_Mu(float pt, float eta , TH2F * HistoId) {
     
     if (pt >= 20 && pt < 25 ) ptBIN=1;
@@ -991,6 +1077,46 @@ float Cor80X_ID_Mu(float pt, float eta , TH2F * HistoId) {
 //    return HistoIso->GetBinContent(ptBIN,etaBIN);;
 //}
 
+
+float Cor80X_Iso_Mu_BCDEF(float pt,float eta, TH2F* HistoIso){
+
+    if (pt >= 20 && pt < 25 ) ptBIN=1;
+    if (pt >= 25 && pt < 30 ) ptBIN=2;
+    if (pt >= 30 && pt < 40 ) ptBIN=3;
+    if (pt >= 40 && pt < 50 ) ptBIN=4;
+    if (pt >= 50 && pt < 60 ) ptBIN=5;
+    if (pt >= 60  ) ptBIN=6;
+    
+
+    if (fabs(eta) <= 0.9) etaBIN=1;
+    if (0.9 <= fabs(eta) && fabs(eta) < 1.2) etaBIN=2;
+    if (1.2 <= fabs(eta) && fabs(eta) < 2.1) etaBIN=3;
+    if (2.1 <= fabs(eta) && fabs(eta) < 2.4) etaBIN=4;
+
+    //    cout<< "--->Muon Iso    pt= "<<pt<<  "   eta" <<eta<< "  SF="<<HistoIso->GetBinContent(ptBIN,etaBIN)<<"\n";
+    return HistoIso->GetBinContent(ptBIN,etaBIN);
+}
+
+
+float Cor80X_Iso_Mu_GH(float pt,float eta, TH2F* HistoIso){
+
+    if (pt >= 20 && pt < 25 ) ptBIN=1;
+    if (pt >= 25 && pt < 30 ) ptBIN=2;
+    if (pt >= 30 && pt < 40 ) ptBIN=3;
+    if (pt >= 40 && pt < 50 ) ptBIN=4;
+    if (pt >= 50 && pt < 60 ) ptBIN=5;
+    if (pt >= 60 ) ptBIN=6;
+
+    if (fabs(eta) <= 0.9) etaBIN=1;
+    if (0.9 <= fabs(eta) && fabs(eta) < 1.2) etaBIN=2;
+    if (1.2 <= fabs(eta) && fabs(eta) < 2.1) etaBIN=3;
+    if (2.1 <= fabs(eta) && fabs(eta) < 2.4) etaBIN=4;
+
+    //    cout<< "--->Muon Iso    pt= "<<pt<<  "   eta" <<eta<< "  SF="<<HistoIso->GetBinContent(ptBIN,etaBIN)<<"\n";
+    return HistoIso->GetBinContent(ptBIN,etaBIN);
+}
+
+
 float Cor80X_Iso_Mu(float pt,float eta, TH2F* HistoIso){
     
     if (pt >= 20 && pt < 25 ) ptBIN=1;
@@ -998,8 +1124,8 @@ float Cor80X_Iso_Mu(float pt,float eta, TH2F* HistoIso){
     if (pt >= 30 && pt < 40 ) ptBIN=3;
     if (pt >= 40 && pt < 50 ) ptBIN=4;
     if (pt >= 50 && pt < 60 ) ptBIN=5;
-    if (pt >= 60 && pt < 100) ptBIN=6;
-    if (pt >= 100 ) ptBIN=7;
+    if (pt >= 60  ) ptBIN=6;
+    
     
     if (fabs(eta) <= 0.9) etaBIN=1;
     if (0.9 <= fabs(eta) && fabs(eta) < 1.2) etaBIN=2;
@@ -1013,6 +1139,54 @@ float Cor80X_Iso_Mu(float pt,float eta, TH2F* HistoIso){
 ///////////////////////////////////////////////
 //  Muon Trigger Correction 74X
 ////////////////////////////////////////////////////////////
+
+float Cor80X_Trigger_Mu_BCDEF(float pt,float eta, TH2F* HistoTrg ){
+
+    if (pt >=52 && pt < 55 ) ptBIN=1;
+    if (pt >= 55 && pt < 60 ) ptBIN=2;
+    if (pt >= 60 && pt < 80) ptBIN=3;
+    if (pt >= 80 && pt < 120) ptBIN=4;
+    if (pt >= 120 && pt < 200) ptBIN=5;
+    if (pt >= 200 && pt < 300) ptBIN=6;
+    if (pt >= 300 && pt < 400) ptBIN=7;
+    if (pt >= 400) ptBIN=8;
+    
+
+    if (fabs(eta) <= 0.9) etaBIN=1;
+    if (0.9 <= fabs(eta) && fabs(eta) < 1.2) etaBIN=2;
+    if (1.2 <= fabs(eta) && fabs(eta) < 2.1) etaBIN=3;
+    if (2.1 <= fabs(eta) && fabs(eta) < 2.4) etaBIN=4;
+
+    //    cout<< "--->Trigger    pt= "<<pt<<  "   eta" <<eta<< "  SF="<<HistoTrg->GetBinContent(ptBIN,etaBIN)<<"\n";
+    return HistoTrg->GetBinContent(ptBIN,etaBIN);
+
+}
+
+
+float Cor80X_Trigger_Mu_GH(float pt,float eta, TH2F* HistoTrg ){
+
+    if (pt >=52 && pt < 55 ) ptBIN=1;
+    if (pt >= 55 && pt < 60 ) ptBIN=2;
+    if (pt >= 60 && pt < 80) ptBIN=3;
+    if (pt >= 80 && pt < 120) ptBIN=4;
+    if (pt >= 120 && pt < 200) ptBIN=5;
+    if (pt >= 200 && pt < 300) ptBIN=6;
+    if (pt >= 300 && pt < 400) ptBIN=7;
+    if (pt >= 400) ptBIN=8;
+    
+
+    if (fabs(eta) <= 0.9) etaBIN=1;
+    if (0.9 <= fabs(eta) && fabs(eta) < 1.2) etaBIN=2;
+    if (1.2 <= fabs(eta) && fabs(eta) < 2.1) etaBIN=3;
+    if (2.1 <= fabs(eta) && fabs(eta) < 2.4) etaBIN=4;
+
+    //    cout<< "--->Trigger    pt= "<<pt<<  "   eta" <<eta<< "  SF="<<HistoTrg->GetBinContent(ptBIN,etaBIN)<<"\n";
+    return HistoTrg->GetBinContent(ptBIN,etaBIN);
+
+}
+
+
+
 float Cor80X_Trigger_Mu(float pt,float eta, TH2F* HistoTrg ){
     
     if (pt >= 45 && pt < 50 ) ptBIN=1;
@@ -1295,6 +1469,32 @@ float Cor80X_Trigger_Mu_FIT(float pt,float eta, TH2F* HistoTrg ){
     }
     //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
     
+   // This function is called to calculate the weighted ID, Iso and Trigger SF's from the individual ones for run BCDEF and GH.
+   float CalcWeightedObj(float Obj_period1, float Obj_period2){
+        
+        float weighted_obj= (LumiBCDEF*Obj_period1+LumiGH*Obj_period2)/(LumiBCDEF+LumiGH);     
+        return weighted_obj;
+   }
+
+   float getCorrFactorMuon80X(bool isData, float pt, float eta, TH2F ** HistoId, TH2F ** HistoIso,TH2F ** HistoTrg, TGraphAsymmErrors * graph) {
+
+        if (isData)
+            return 1;
+        else{
+            float Weighted_IDSF=CalcWeightedObj(Cor80X_ID_Mu_BCDEF(pt,eta,HistoId[0]), Cor80X_ID_Mu_GH(pt,eta,HistoId[1]));
+            float Weighted_IsoSF=CalcWeightedObj(Cor80X_Iso_Mu_BCDEF(pt,eta,HistoIso[0]), Cor80X_Iso_Mu_GH(pt,eta,HistoIso[1]));
+            float Weighted_TriggerSF=CalcWeightedObj(Cor80X_Trigger_Mu_BCDEF(pt,eta,HistoTrg[0]), Cor80X_Trigger_Mu_GH(pt,eta,HistoTrg[1]));
+            float Tracking_SF=Cor80X_TRK_Mu_Full2016(eta, graph);
+            return (Weighted_IDSF * Weighted_IsoSF * Tracking_SF * Weighted_TriggerSF);
+        }
+
+    }
+
+
+
+
+
+
     float getCorrFactorMuon74X(bool isData, float pt, float eta, TH2F * HistoId, TH2F * HistoIso,TH2F * HistoTrg) {
         
         if (isData)
