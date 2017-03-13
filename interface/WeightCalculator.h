@@ -39,26 +39,26 @@ float XSection(std::string OutName) {
     
     
     
-    if (OutName.find("WJetsToLNu") != string::npos) return 50690;
-    else if (OutName.find("WJetsToLNu_HT-70To100") != string::npos) return 1345;
-    else if (OutName.find("WJetsToLNu_HT-100To200") != string::npos) return 1345;
-    else if (OutName.find("WJetsToLNu_HT-200To400") != string::npos) return 359.7;
-    else if (OutName.find("WJetsToLNu_HT-400To600") != string::npos) return 48.91;
+//    if (OutName.find("WJetsToLNu") != string::npos) return 50690;   // As we have large cut at Skim, this one is not needed
+    if (OutName.find("WJetsToLNu_HT-70To100") != string::npos) return 0;
+    else if (OutName.find("WJetsToLNu_HT-100To200") != string::npos) return 1343;
+    else if (OutName.find("WJetsToLNu_HT-200To400") != string::npos) return 359.6;
+    else if (OutName.find("WJetsToLNu_HT-400To600") != string::npos) return 48.85;
     else if (OutName.find("WJetsToLNu_HT-600To800") != string::npos) return 12.05;
     else if (OutName.find("WJetsToLNu_HT-800To1200") != string::npos) return 5.501;
     else if (OutName.find("WJetsToLNu_HT-1200To2500") != string::npos) return 1.329;
     else if (OutName.find("WJetsToLNu_HT-2500ToInf") != string::npos) return 0.03216;
     
     
-    else if (OutName.find("DYJetsToLL") != string::npos) return 4895 * 1.012;
-    else if (OutName.find("DYJetsToLNu_HT-70To100") != string::npos) return 0;
-    else if (OutName.find("DYJetsToLNu_HT-100To200") != string::npos) return 147.4;
-    else if (OutName.find("DYJetsToLNu_HT-200To400") != string::npos) return 40.99;
-    else if (OutName.find("DYJetsToLNu_HT-400To600") != string::npos) return 5.678;
-    else if (OutName.find("DYJetsToLNu_HT-600To800") != string::npos) return 0;
-    else if (OutName.find("DYJetsToLNu_HT-800To1200") != string::npos) return 0;
-    else if (OutName.find("DYJetsToLNu_HT-1200To2500") != string::npos) return 0;
-    else if (OutName.find("DYJetsToLNu_HT-2500ToInf") != string::npos) return 0;
+//    else if (OutName.find("DYJetsToLL") != string::npos) return 4895 * 1.012; // As we have large cut at Skim, this one is not needed
+    else if (OutName.find("DYJetsToLL_M-50_HT-70to100") != string::npos) return 0;
+    else if (OutName.find("DYJetsToLL_M-50_HT-100to200") != string::npos) return 148;
+    else if (OutName.find("DYJetsToLL_M-50_HT-200to400") != string::npos) return 40.94;
+    else if (OutName.find("DYJetsToLL_M-50_HT-400to600") != string::npos) return 5.497;
+    else if (OutName.find("DYJetsToLL_M-50_HT-600to800") != string::npos) return 1.354;
+    else if (OutName.find("DYJetsToLL_M-50_HT-800to1200") != string::npos) return 0.625;
+    else if (OutName.find("DYJetsToLL_M-50_HT-1200to2500") != string::npos) return 0.151;
+    else if (OutName.find("DYJetsToLL_M-50_HT-2500toInf") != string::npos) return 0.003647;
 
     
     //Di-boson
@@ -68,10 +68,8 @@ float XSection(std::string OutName) {
     
     
     //SingleTop
-//    else if (OutName.find("ST_t-channel_antitop_4f_leptonDecays") != string::npos) return 80.95 * 0.108*3;
-//    else if (OutName.find("ST_t-channel_top_4f_leptonDecays") != string::npos) return 136.02 * 0.108*3;
-    else if (OutName.find("ST_t-channel_antitop_4f_inclusiveDecays") != string::npos) return 0;
-    else if (OutName.find("ST_t-channel_top_4f_leptonDecaysXXX") != string::npos) return 0;
+    else if (OutName.find("ST_t-channel_antitop_4f_inclusiveDecays") != string::npos) return 26.2;
+    else if (OutName.find("ST_t-channel_top_4f_leptonDecays") != string::npos) return 44.1;
     else if (OutName.find("ST_tW_antitop_5f_inclusiveDecays") != string::npos) return 35.6;
     else if (OutName.find("ST_tW_top_5f_inclusiveDecays") != string::npos) return 35.6;
     
@@ -210,7 +208,8 @@ float XSection(std::string OutName) {
 
 
 
-float weightCalc(TH1F *Histo,std::string outputName , float genHT , float WPt, vector<float> W_events, vector<float> DY_events, vector<float> W_eventsNLO) {
+//float weightCalc(TH1F *Histo,std::string outputName , float genHT , float WPt, vector<float> W_events, vector<float> DY_events, vector<float> W_eventsNLO) {
+    float weightCalc(TH1F *Histo,std::string outputName) {
     
     //    cout<< "outputName is "<<outputName << "  and histoname is " <<Histo->GetName()<<  " Histo->GetBinContent(1)="<<Histo->GetBinContent(1)<< " XSection(wjet)=" <<XSection("WJets")<<"\n";
     
@@ -225,7 +224,7 @@ float weightCalc(TH1F *Histo,std::string outputName , float genHT , float WPt, v
     std::string LastPart = ".root";
     std::string newOut = M.substr(FirstPart.size());
     newOut = newOut.substr(0, newOut.size() - LastPart.size());
-    //    cout<<"--->  Check Name is "<<newOut<<"\n";
+//    cout<<"--->  Check Name is "<<newOut<<"\n";
     
     
     //    float LOtoNLO_DY = 1.230888662;

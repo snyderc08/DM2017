@@ -2,6 +2,7 @@
 #include "../interface/WeightCalculator.h"
 #include "../interface/Corrector.h"
 #include "../interface/Functions.h"
+#include "../interface/makeHisto.h"
 #include <string>
 #include <ostream>
 

@@ -2,6 +2,7 @@
 #include "../interface/WeightCalculator.h"
 #include "../interface/Corrector.h"
 #include "../interface/Functions.h"
+#include "../interface/makeHisto.h"
 #include <string>
 #include <ostream>
 #include <vector>
@@ -25,25 +26,59 @@ int main(int argc, char** argv) {
     }
     
     
-    TFile * PUData= TFile::Open("../interface/pileup-hists/MyDataPileupHistogram2016.root");
+    TFile * PUData= TFile::Open("../interface/pileup-hists/dataMoriondPU.root");
     TH1F * HistoPUData= (TH1F *) PUData->Get("pileup");
     HistoPUData->Scale(1.0/HistoPUData->Integral());
     
-    TFile * PUMC= TFile::Open("../interface/pileup-hists/Sprin16_MC.root");
+    TFile * PUMC= TFile::Open("../interface/pileup-hists/mcMoriondPU.root");
     TH1F * HistoPUMC= (TH1F *) PUMC->Get("pileup");
     HistoPUMC->Scale(1.0/HistoPUMC->Integral());
     
-    TFile * MuCorrId= TFile::Open("../interface/pileup-hists/MuonID_Z_RunBCD_prompt80X_7p65.root");
-    //    TFile * MuCorrId= TFile::Open("../interface/pileup-hists/MuonID_Z_2016runB_2p6fb.root");
-    TH2F * HistoMuId= (TH2F *) MuCorrId->Get("MC_NUM_TightIDandIPCut_DEN_genTracks_PAR_pt_spliteta_bin1/pt_abseta_ratio");
+//    TFile * MuCorrId= TFile::Open("../interface/pileup-hists/MuonID_Z_RunBCD_prompt80X_7p65.root");
+//    //    TFile * MuCorrId= TFile::Open("../interface/pileup-hists/MuonID_Z_2016runB_2p6fb.root");
+//    TH2F * HistoMuId= (TH2F *) MuCorrId->Get("MC_NUM_TightIDandIPCut_DEN_genTracks_PAR_pt_spliteta_bin1/pt_abseta_ratio");
+//    
+//    TFile * MuCorrIso= TFile::Open("../interface/pileup-hists/MuonIso_Z_RunBCD_prompt80X_7p65.root");
+//    //    TFile * MuCorrIso= TFile::Open("../interface/pileup-hists/MuonISO_Z_2016runB_2p6fb.root");
+//    TH2F * HistoMuIso= (TH2F *) MuCorrIso->Get("MC_NUM_TightRelIso_DEN_TightID_PAR_pt_spliteta_bin1/pt_abseta_ratio");
+//    
+//    TFile * MuCorrTrg= TFile::Open("../interface/pileup-hists/SingleMuonTrigger_Z_RunBCD_prompt80X_7p65.root");
+//    //    TFile * MuCorrTrg= TFile::Open("../interface/pileup-hists/SingleMuonTrigger_Z_RunCD_Reco76X_Feb15.root");
+//    TH2F * HistoMuTrg= (TH2F *) MuCorrTrg->Get("Mu45_eta2p1_PtEtaBins_Run274094_to_276097/efficienciesDATA/pt_abseta_DATA");
     
-    TFile * MuCorrIso= TFile::Open("../interface/pileup-hists/MuonIso_Z_RunBCD_prompt80X_7p65.root");
-    //    TFile * MuCorrIso= TFile::Open("../interface/pileup-hists/MuonISO_Z_2016runB_2p6fb.root");
-    TH2F * HistoMuIso= (TH2F *) MuCorrIso->Get("MC_NUM_TightRelIso_DEN_TightID_PAR_pt_spliteta_bin1/pt_abseta_ratio");
     
-    TFile * MuCorrTrg= TFile::Open("../interface/pileup-hists/SingleMuonTrigger_Z_RunBCD_prompt80X_7p65.root");
-    //    TFile * MuCorrTrg= TFile::Open("../interface/pileup-hists/SingleMuonTrigger_Z_RunCD_Reco76X_Feb15.root");
-    TH2F * HistoMuTrg= (TH2F *) MuCorrTrg->Get("Mu45_eta2p1_PtEtaBins_Run274094_to_276097/efficienciesDATA/pt_abseta_DATA");
+    
+std:string Working_Dir= ".";
+    TFile * MuCorrId_BCDEF= TFile::Open((Working_Dir+"/"+"../interface/pileup-hists/ID_EfficienciesAndSF_BCDEF.root").c_str());
+    TH2F * HistoMuId_BCDEF= (TH2F *) MuCorrId_BCDEF->Get("MC_NUM_TightID_DEN_genTracks_PAR_pt_eta/pt_abseta_ratio");
+
+    TFile * MuCorrId_GH= TFile::Open((Working_Dir+"/"+"../interface/pileup-hists/ID_EfficienciesAndSF_GH.root").c_str());
+    TH2F * HistoMuId_GH= (TH2F *) MuCorrId_GH->Get("MC_NUM_TightID_DEN_genTracks_PAR_pt_eta/pt_abseta_ratio");
+
+    TFile * MuCorrIso_BCDEF= TFile::Open((Working_Dir+"/"+"../interface/pileup-hists/Iso_EfficienciesAndSF_BCDEF.root").c_str());
+    TH2F * HistoMuIso_BCDEF= (TH2F *) MuCorrIso_BCDEF->Get("TightISO_TightID_pt_eta/pt_abseta_ratio");
+
+    TFile * MuCorrIso_GH= TFile::Open((Working_Dir+"/"+"../interface/pileup-hists/Iso_EfficienciesAndSF_GH.root").c_str());
+    TH2F * HistoMuIso_GH= (TH2F *) MuCorrIso_GH->Get("TightISO_TightID_pt_eta/pt_abseta_ratio");
+
+
+    TFile * MuCorrTrg_BCDEF= TFile::Open((Working_Dir+"/"+"../interface/pileup-hists/Trigger_EfficienciesAndSF_RunBtoF.root").c_str());
+    TH2F * HistoMuTrg_BCDEF= (TH2F *) MuCorrTrg_BCDEF->Get("Mu50_OR_TkMu50_PtEtaBins/pt_abseta_ratio");
+    
+    
+    TFile * MuCorrTrg_GH= TFile::Open((Working_Dir+"/"+"../interface/pileup-hists/Trigger_EfficienciesAndSF_Period4.root").c_str());
+    TH2F * HistoMuTrg_GH= (TH2F *) MuCorrTrg_GH->Get("Mu50_OR_TkMu50_PtEtaBins/pt_abseta_ratio");
+
+    TFile * MuCorrTrack= TFile::Open((Working_Dir+"/"+"../interface/pileup-hists/Tracking_EfficienciesAndSF_BCDEFGH.root").c_str());
+    TGraphAsymmErrors * HistoMuTrack= (TGraphAsymmErrors *) MuCorrTrack->Get("ratio_eff_eta3_dr030e030_corr");
+
+    TH2F* HistoMuId[2]={HistoMuId_BCDEF, HistoMuId_GH};
+    TH2F* HistoMuIso[2]={HistoMuIso_BCDEF,HistoMuIso_GH};
+    TH2F* HistoMuTrg[2]={HistoMuTrg_BCDEF, HistoMuTrg_GH};
+
+    
+    
+    
     
     
     
@@ -73,10 +108,10 @@ int main(int argc, char** argv) {
         
         
         std::string ROOTLoc= "/Users/abdollah1/GIT_abdollah110/DarkMatter/ROOT80X/";
-        vector<float> DY_Events = DY_HTBin(ROOTLoc);
-        vector<float> W_Events = W_HTBin(ROOTLoc);
+//        vector<float> DY_Events = DY_HTBin(ROOTLoc);
+//        vector<float> W_Events = W_HTBin(ROOTLoc);
         //        vector<float> W_EventsNLO = W_PTBinNLO(ROOTLoc); //This is for the NLO samples (as the stat is too low we do not use them)
-        vector<float> W_EventsNLO = W_HTBin(ROOTLoc);
+//        vector<float> W_EventsNLO = W_HTBin(ROOTLoc);
         
         /////////////////////////   General Info
         Run_Tree->SetBranchAddress("isData", &isData);
@@ -127,9 +162,7 @@ int main(int argc, char** argv) {
         Run_Tree->SetBranchAddress("muPhi"  ,&muPhi);
         Run_Tree->SetBranchAddress("muIsoTrk", &muIsoTrk);
         Run_Tree->SetBranchAddress("muCharge",&muCharge);
-        Run_Tree->SetBranchAddress("muIsTightID",&muIsTightID);
-        Run_Tree->SetBranchAddress("muIsMediumID",&muIsMediumID);
-        Run_Tree->SetBranchAddress("muIsLooseID",&muIsLooseID);
+        Run_Tree->SetBranchAddress("muIDbit",&muIDbit);//NEW
         Run_Tree->SetBranchAddress("muPFChIso", &muPFChIso);
         Run_Tree->SetBranchAddress("muPFPhoIso", &muPFPhoIso);
         Run_Tree->SetBranchAddress("muPFNeuIso", &muPFNeuIso);
@@ -143,7 +176,7 @@ int main(int argc, char** argv) {
         Run_Tree->SetBranchAddress("eleEta"  ,&eleEta);
         Run_Tree->SetBranchAddress("elePhi"  ,&elePhi);
         Run_Tree->SetBranchAddress("elePFChIso", &elePFChIso);
-        Run_Tree->SetBranchAddress("eleIDMVANonTrg", &eleIDMVANonTrg);
+        Run_Tree->SetBranchAddress("eleIDMVA", &eleIDMVA);//NEW
         Run_Tree->SetBranchAddress("eleCharge",&eleCharge);
         Run_Tree->SetBranchAddress("eleSCEta",&eleSCEta);
         Run_Tree->SetBranchAddress("elePFChIso", &elePFChIso);
@@ -162,9 +195,9 @@ int main(int argc, char** argv) {
         Run_Tree->SetBranchAddress("jetEta",&jetEta);
         Run_Tree->SetBranchAddress("jetPhi",&jetPhi);
         Run_Tree->SetBranchAddress("jetEn",&jetEn);
-        Run_Tree->SetBranchAddress("jetpfCombinedInclusiveSecondaryVertexV2BJetTags",&jetpfCombinedInclusiveSecondaryVertexV2BJetTags);
+        Run_Tree->SetBranchAddress("jetCSV2BJetTags",&jetCSV2BJetTags);
         Run_Tree->SetBranchAddress("jetPFLooseId",&jetPFLooseId);
-        Run_Tree->SetBranchAddress("jetPUidFullDiscriminant",&jetPUidFullDiscriminant);
+        Run_Tree->SetBranchAddress("jetPUID",&jetPUID);
         Run_Tree->SetBranchAddress("jetRawPt",&jetRawPt);
         Run_Tree->SetBranchAddress("jetJECUnc",&jetJECUnc);
         Run_Tree->SetBranchAddress("jetRawEn",&jetRawEn);
@@ -236,7 +269,8 @@ int main(int argc, char** argv) {
             
             if (!isData){
                 
-                if (HistoTot) LumiWeight = weightCalc(HistoTot, InputROOT, genHT,WBosonPt, W_Events, DY_Events,W_EventsNLO);
+//                if (HistoTot) LumiWeight = weightCalc(HistoTot, InputROOT, genHT,WBosonPt, W_Events, DY_Events,W_EventsNLO);
+                if (HistoTot) LumiWeight = weightCalc(HistoTot, InputROOT);
                 GetGenWeight=genWeight;
                 
                 int puNUmmc=int(puTrue->at(0)*10);
@@ -245,6 +279,7 @@ int main(int argc, char** argv) {
                 float PUData_=HistoPUData->GetBinContent(puNUmdata+1);
                 PUWeight= PUData_/PUMC_;
             }
+            
             
             float TotalWeight = LumiWeight * GetGenWeight * PUWeight * TopPtReweighting * WBosonKFactor * ZBosonKFactor;
             //###############################################################################################
@@ -270,7 +305,7 @@ int main(int argc, char** argv) {
             //###########       Trigger Requirement ###########################################################
             const int size_trgCat = 1;
             bool PassTrigger=1;
-            if (isData) PassTrigger = (HLTEleMuX >> 26 & 1) == 1; //  else if (name.find("HLT_Mu45_eta2p1_v") != string::npos) bitEleMuX = 26;
+            if (isData) PassTrigger = (HLTEleMuX >> 21 & 1) == 1; //   else if (name.find("HLT_Mu50_v") != string::npos) bitEleMuX = 21;
             
             if (! PassTrigger) continue;
             
@@ -295,9 +330,9 @@ int main(int argc, char** argv) {
                 if ( elePt->at(jele) < 15 || fabs(eleEta->at(jele)) > 2.5) continue;
                 
                 bool eleMVAIdExtra= false;
-                if (fabs (eleSCEta->at(jele)) < 0.8 && eleIDMVANonTrg->at(jele) >  0.913286 ) eleMVAIdExtra= true;
-                else if (fabs (eleSCEta->at(jele)) >  0.8 &&fabs (eleSCEta->at(jele)) <  1.5 && eleIDMVANonTrg->at(jele) >  0.805013 ) eleMVAIdExtra= true;
-                else if ( fabs (eleSCEta->at(jele)) >  1.5 && eleIDMVANonTrg->at(jele) >  0.358969  ) eleMVAIdExtra= true;
+                if (fabs (eleSCEta->at(jele)) < 0.8 && eleIDMVA->at(jele) >  0.913286 ) eleMVAIdExtra= true;
+                else if (fabs (eleSCEta->at(jele)) >  0.8 &&fabs (eleSCEta->at(jele)) <  1.5 && eleIDMVA->at(jele) >  0.805013 ) eleMVAIdExtra= true;
+                else if ( fabs (eleSCEta->at(jele)) >  1.5 && eleIDMVA->at(jele) >  0.358969  ) eleMVAIdExtra= true;
                 else eleMVAIdExtra= false;
                 
                 
@@ -308,7 +343,7 @@ int main(int argc, char** argv) {
             //###########       bJet Veto   ###########################################################
             int numBJet=0;
             for (int ijet= 0 ; ijet < nJet ; ijet++){
-                if (jetPFLooseId->at(ijet) > 0.5 && jetPt->at(ijet) > BJetPtCut && fabs(jetEta->at(ijet)) < 2.4 && jetpfCombinedInclusiveSecondaryVertexV2BJetTags->at(ijet) >  CSVCut )
+                if (jetPFLooseId->at(ijet) > 0.5 && jetPt->at(ijet) > BJetPtCut && fabs(jetEta->at(ijet)) < 2.4 && jetCSV2BJetTags->at(ijet) >  CSVCut )
                     numBJet++;
             }
             
@@ -343,20 +378,24 @@ int main(int argc, char** argv) {
                 if ( (muPFNeuIso->at(imu) + muPFPhoIso->at(imu) - 0.5* muPFPUIso->at(imu) )  > 0.0)
                     IsoMu= ( muPFChIso->at(imu)/muPt->at(imu) + muPFNeuIso->at(imu) + muPFPhoIso->at(imu) - 0.5* muPFPUIso->at(imu))/muPt->at(imu);
                 
-                bool MuPtCut = muPt->at(imu) > LeptonPtCut_ && fabs(muEta->at(imu)) < 2.1 ;
-                bool MuIdIso=(muIsTightID->at(imu) > 0  && fabs(muD0->at(imu)) < 0.045 && fabs(muDz->at(imu)) < 0.2);
+                bool MuPtCut = muPt->at(imu) > LeptonPtCut_ && fabs(muEta->at(imu)) < 2.4 ;
+                bool MuIdIso=( (muIDbit->at(imu) >> 2 & 1)  && fabs(muD0->at(imu)) < 0.045 && fabs(muDz->at(imu)) < 0.2); //Tight Muon Id
+                
                 
                 if (! MuPtCut || !MuIdIso ) continue;
                 
                 
-                float LepCor=getCorrFactorMuon74X(isData,  muPt->at(imu), muEta->at(imu) , HistoMuId,HistoMuIso,HistoMuTrg);
+//                float LepCor=getCorrFactorMuon80X(isData,  muPt->at(imu), muEta->at(imu) , HistoMuId,HistoMuIso,HistoMuTrg);
+                float LepCor=getCorrFactorMuon80X(isData,  muPt->at(imu), muEta->at(imu) , HistoMuId,HistoMuIso,HistoMuTrg,HistoMuTrack);
+//                cout <<"  LepCor == "<<LepCor<< "\n";
+        
                 
                 
                 TLorentzVector Mu4Momentum, Tau4Momentum, Jet4Momentum,ExtraMu4Momentum, ExtraEle4Momentum,KJet4Momentum,LQ;
                 Mu4Momentum.SetPtEtaPhiM(muPt->at(imu),muEta->at(imu),muPhi->at(imu),MuMass);
                 
                 
-                //###########      Finding the close jet near mu   ###########################################################
+                //###########      Finding the closest jet near mu   ###########################################################
                 
                 float CLoseJetMuPt=muPt->at(imu);
                 float CLoseJetMuEta=muEta->at(imu);
@@ -508,6 +547,7 @@ int main(int argc, char** argv) {
                                                                 plotFill(CHL+"_LQMass"+FullStringName,LQ.M(),200,0,2000,FullWeight);
                                                                 plotFill(CHL+"_LQEta"+FullStringName,LQ.Eta(),300,-3,3,FullWeight);
                                                                 plotFill(CHL+"_LQPt"+FullStringName,LQ.Pt(),200,0,2000,FullWeight);
+                                                                plotFill(CHL+"_genHT"+FullStringName,genHT,200,0,2000,FullWeight);
                                                                 
                                                                 //                                                            plotFill(CHL+"_MuPtOverJetPt"+FullStringName,muPt->at(imu)/jetPt->at(ijet),1000,0,10,FullWeight);
                                                                 //                                                            plotFill(CHL+"_LQPtOverMET"+FullStringName,LQ.Pt()/pfMET,1000,0,10,FullWeight);
@@ -516,7 +556,7 @@ int main(int argc, char** argv) {
                                                                 plotFill(CHL+"_dPhi_Mu_Met"+FullStringName,deltaPhi(Mu4Momentum.Phi(),pfMETPhi),200,0,4,FullWeight);
                                                                 
                                                                 plotFill(CHL+"_BosonKFactor"+FullStringName,ZBosonKFactor*WBosonKFactor,200,0,2,FullWeight);
-                                                                
+
                                                                 
                                                                 
                                                                 
