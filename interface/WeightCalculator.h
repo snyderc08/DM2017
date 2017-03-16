@@ -40,14 +40,14 @@ float XSection(std::string OutName) {
     
     
 //    if (OutName.find("WJetsToLNu") != string::npos) return 50690;   // As we have large cut at Skim, this one is not needed
-    if (OutName.find("WJetsToLNu_HT-70To100") != string::npos) return 0;
-    else if (OutName.find("WJetsToLNu_HT-100To200") != string::npos) return 1343;
-    else if (OutName.find("WJetsToLNu_HT-200To400") != string::npos) return 359.6;
-    else if (OutName.find("WJetsToLNu_HT-400To600") != string::npos) return 48.85;
-    else if (OutName.find("WJetsToLNu_HT-600To800") != string::npos) return 12.05;
-    else if (OutName.find("WJetsToLNu_HT-800To1200") != string::npos) return 5.501;
-    else if (OutName.find("WJetsToLNu_HT-1200To2500") != string::npos) return 1.329;
-    else if (OutName.find("WJetsToLNu_HT-2500ToInf") != string::npos) return 0.03216;
+    if (OutName.find("WJetsToLNu_HT-70to100") != string::npos) return 0;
+    else if (OutName.find("WJetsToLNu_HT-100to200") != string::npos) return 1343;
+    else if (OutName.find("WJetsToLNu_HT-200to400") != string::npos) return 359.6;
+    else if (OutName.find("WJetsToLNu_HT-400to600") != string::npos) return 48.85;
+    else if (OutName.find("WJetsToLNu_HT-600to800") != string::npos) return 12.05;
+    else if (OutName.find("WJetsToLNu_HT-800to1200") != string::npos) return 5.501;
+    else if (OutName.find("WJetsToLNu_HT-1200to2500") != string::npos) return 1.329;
+    else if (OutName.find("WJetsToLNu_HT-2500toInf") != string::npos) return 0.03216;
     
     
 //    else if (OutName.find("DYJetsToLL") != string::npos) return 4895 * 1.012; // As we have large cut at Skim, this one is not needed
@@ -67,11 +67,25 @@ float XSection(std::string OutName) {
     else if (OutName.find("ZZ") != string::npos) return 16.523;
     
     
+    
+//    /ST_tW_antitop_5f_inclusiveDecays_13TeV-powheg-pythia8_TuneCUETP8M1/RunIISummer16MiniAODv2-PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6_ext1-v1/MINIAODSIM
+//    /ST_tW_top_5f_inclusiveDecays_13TeV-powheg-pythia8_TuneCUETP8M1/RunIISummer16MiniAODv2-PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6_ext1-v1/MINIAODSIM
+//    /ST_t-channel_top_4f_inclusiveDecays_13TeV-powhegV2-madspin-pythia8_TuneCUETP8M1/RunIISummer16MiniAODv2-PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/MINIAODSIM
+//    /ST_t-channel_antitop_4f_inclusiveDecays_13TeV-powhegV2-madspin-pythia8_TuneCUETP8M1/RunIISummer16MiniAODv2-PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/MINIAODSIM
+    
+    
+//    -rw-r--r--  1 abdollah1  228379582 Feb 27 13:15 ../ROOT80X/ST_t-channel_antitop_4f_inclusiveDecays.root
+//    -rw-r--r--  1 abdollah1  450329489 Feb 27 13:15 ../ROOT80X/ST_t-channel_top_4f_inclusiveDecays.root
+//    -rw-r--r--  1 abdollah1  312186239 Feb 27 13:15 ../ROOT80X/ST_tW_antitop_5f.root
+//    -rw-r--r--  1 abdollah1  317698343 Feb 27 13:16 ../ROOT80X/ST_tW_top_5f.root
+//
+//    
+    
     //SingleTop
-    else if (OutName.find("ST_t-channel_antitop_4f_inclusiveDecays") != string::npos) return 26.2;
-    else if (OutName.find("ST_t-channel_top_4f_leptonDecays") != string::npos) return 44.1;
-    else if (OutName.find("ST_tW_antitop_5f_inclusiveDecays") != string::npos) return 35.6;
-    else if (OutName.find("ST_tW_top_5f_inclusiveDecays") != string::npos) return 35.6;
+    else if (OutName.find("ST_t-channel_antitop") != string::npos) return 80.95;
+    else if (OutName.find("ST_t-channel_top") != string::npos) return 136.02;
+    else if (OutName.find("ST_tW_antitop_5f") != string::npos) return 35.6;
+    else if (OutName.find("ST_tW_top_5f") != string::npos) return 35.6;
     
     
     else if (OutName.find("TTJets") != string::npos) return (831.76);

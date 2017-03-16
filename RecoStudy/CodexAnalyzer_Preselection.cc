@@ -107,7 +107,7 @@ std:string Working_Dir= ".";
         cout.precision(6);
         
         
-        std::string ROOTLoc= "/Users/abdollah1/GIT_abdollah110/DarkMatter/ROOT80X/";
+        std::string ROOTLoc= "/Users/abdollah1/GIT_abdollah110/DM2016/ROOT80X/";
 //        vector<float> DY_Events = DY_HTBin(ROOTLoc);
 //        vector<float> W_Events = W_HTBin(ROOTLoc);
         //        vector<float> W_EventsNLO = W_PTBinNLO(ROOTLoc); //This is for the NLO samples (as the stat is too low we do not use them)
@@ -233,7 +233,7 @@ std:string Working_Dir= ".";
             if (i % 10000 == 0) fprintf(stdout, "\r  Processed events: %8d of %8d ", i, nentries_wtn);
             fflush(stdout);
             
-            if (isData && (metFilters!=0)) continue;
+//            if (isData && (metFilters!=0)) continue;  FIXME   filter needs to be checked out
             std::vector<string> HistNamesFilled;
             HistNamesFilled.clear();
             //###############################################################################################
@@ -277,11 +277,17 @@ std:string Working_Dir= ".";
                 int puNUmdata=int(puTrue->at(0)*10);
                 float PUMC_=HistoPUMC->GetBinContent(puNUmmc+1);
                 float PUData_=HistoPUData->GetBinContent(puNUmdata+1);
-                PUWeight= PUData_/PUMC_;
+                if (PUMC_ ==0)
+                    cout<<"PUMC_ is zero!!! & num pileup= "<< puTrue->at(0)<<"\n";
+                else
+                    PUWeight= PUData_/PUMC_;
+                
             }
             
+        
             
             float TotalWeight = LumiWeight * GetGenWeight * PUWeight * TopPtReweighting * WBosonKFactor * ZBosonKFactor;
+//            cout<<"TotalWeight= "<<TotalWeight<<"\n";
             //###############################################################################################
             //  Some Histogram Filling
             //###############################################################################################
@@ -475,10 +481,10 @@ std:string Working_Dir= ".";
                     //###############################################################################################
                     const int size_lqEta = 3;
                     bool centralLQ = (fabs(LQ.Eta()) < 1.5);
-                    bool BarrelLQ = (fabs(LQ.Eta()) >= 1.5 );
+                    bool EndcapLQ = (fabs(LQ.Eta()) >= 1.5 );
                     bool TotLQ = 1;
                     
-                    bool lqEta_category[size_lqEta] = {centralLQ,BarrelLQ,TotLQ};
+                    bool lqEta_category[size_lqEta] = {centralLQ,EndcapLQ,TotLQ};
                     std::string lqEta_Cat[size_lqEta] = {"_Barrel", "_Endcap","_TotEta"};
                     
                     //###############################################################################################

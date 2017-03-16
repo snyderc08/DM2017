@@ -156,7 +156,7 @@ int main(int argc, char* argv[]){
 
 
 
-
+combineTool.py -M Impacts -d cmb/125/workspace.root -m 125 --robustFit 1 --doFits -t -1 --minimizerAlgoForMinos Minuit2,Migrad --rMin 0.5 --rMax 1.5 --expectSignal=1 --parallel 18 --named CMS_scale_t_1prong_13TeV CMS_scale_t_1prong1pizero_13TeV  CMS_scale_t_3prong_13TeV  --X-rtd FITTER_NEW_CROSSING_ALGO --X-rtd FITTER_NEVER_GIVE_UP
 
 
 
