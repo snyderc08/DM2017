@@ -323,8 +323,11 @@ float Get_W_Z_BosonKFactor(float WBosonPt, TH1F* WLO, TH1F* WNLO){
 // AM: recipe for top quark Pt reweighting taken from https://twiki.cern.ch/twiki/bin/viewauth/CMS/TopPtReweighting
 
 float compTopPtWeight(float topPt) {
-    const float a =  0.148 ;
-    const float b =  -0.00129;
+    //Updated values for 13 TeV
+    const float a =  0.0615  ;
+    const float b =  -0.0005 ;
+//    const float a =  0.148 ;
+//    const float b =  -0.00129;
     //    const float a = 0.156;
     //    const float b = -0.00137;
     return TMath::Exp(a + b * topPt);
