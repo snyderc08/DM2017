@@ -34,7 +34,7 @@ import os
 
 ROOT.gROOT.SetBatch(True)
 SubRootDir = 'OutFiles_QCD/'
-#SubRootDir = 'OutFiles_PreSelectionQCD/'
+#SubRootDir = 'OutFiles_QCD_NobJetVeto/'
 #SubRootDir = 'OutFiles_PreSelection/'
 
 
@@ -147,8 +147,8 @@ def MakeTheHistogram(channel,NormQCD,ShapeQCD,Binning,doBinning):
             WSampleQCDShapeHist=WSampleQCDShape.Get("HISTO") ; print  "WSampleQCDShapeHist= ", WSampleQCDShapeHist.Integral()
             DataSampleQCDShapeHist=DataSampleQCDShape.Get("HISTO") ; print  "DataSampleQCDShapeHist= ", DataSampleQCDShapeHist.Integral()
             
-            if (SingleTSampleQCDShapeHist) : DataSampleQCDShapeHist.Add(SingleTSampleQCDShapeHist, -1)
-            if (VVSampleQCDShapeHist): DataSampleQCDShapeHist.Add(VVSampleQCDShapeHist, -1)
+            DataSampleQCDShapeHist.Add(SingleTSampleQCDShapeHist, -1)
+            DataSampleQCDShapeHist.Add(VVSampleQCDShapeHist, -1)
             DataSampleQCDShapeHist.Add(TTSampleQCDShapeHist, -1)
             DataSampleQCDShapeHist.Add(ZTTSampleQCDShapeHist, -1)
             DataSampleQCDShapeHist.Add(WSampleQCDShapeHist, -1)
@@ -161,22 +161,30 @@ def MakeTheHistogram(channel,NormQCD,ShapeQCD,Binning,doBinning):
             WSampleQCDNormHist=WSampleQCDNorm.Get("HISTO")
             DataSampleQCDNormHist=DataSampleQCDNorm.Get("HISTO")
             
-            SingleT_qcd=0;
-            if (SingleTSampleQCDNormHist): SingleT_qcd=SingleTSampleQCDNormHist.Integral()
-            VV_qcd=0;
-            if (VVSampleQCDNormHist): VV_qcd=VVSampleQCDNormHist.Integral()
-            TT_qcd=0;
-            if (TTSampleQCDNormHist): TT_qcd=TTSampleQCDNormHist.Integral()
-            ZTT_qcd=0;
-            if (ZTTSampleQCDNormHist): ZTT_qcd=ZTTSampleQCDNormHist.Integral()
-            W_qcd=0;
-            if (WSampleQCDNormHist): W_qcd=WSampleQCDNormHist.Integral()
+#            SingleT_qcd=0;
+#            if (SingleTSampleQCDNormHist): SingleT_qcd=SingleTSampleQCDNormHist.Integral()
+#            VV_qcd=0;
+#            if (VVSampleQCDNormHist): VV_qcd=VVSampleQCDNormHist.Integral()
+#            TT_qcd=0;
+#            if (TTSampleQCDNormHist): TT_qcd=TTSampleQCDNormHist.Integral()
+#            ZTT_qcd=0;
+#            if (ZTTSampleQCDNormHist): ZTT_qcd=ZTTSampleQCDNormHist.Integral()
+#            W_qcd=0;
+#            if (WSampleQCDNormHist): W_qcd=WSampleQCDNormHist.Integral()
+
+
+
+            SingleT_qcd=SingleTSampleQCDNormHist.Integral()
+            VV_qcd=VVSampleQCDNormHist.Integral()
+            TT_qcd=TTSampleQCDNormHist.Integral()
+            ZTT_qcd=ZTTSampleQCDNormHist.Integral()
+            W_qcd=WSampleQCDNormHist.Integral()
             
             
             
             print "\n ----> Data before subtraction is = ", DataSampleQCDNormHist.Integral()
             QCDEstimation= (DataSampleQCDNormHist.Integral()- (TT_qcd+ZTT_qcd+W_qcd+SingleT_qcd+VV_qcd))
-            print "\n ---->  Data aftre ____ subtraction is = ", QCDEstimation
+            print "\n ---->  Data aftre ____ subtraction is = ", QCDEstimation , "  which should be =", DataSampleQCDShapeHist.Integral()
             
             
             #            NameOut= "QCD"+str(TauScaleOut[tscale])
@@ -236,8 +244,8 @@ def Make_Mu_FakeRate(channelName):
     
     
     
-    HistoFakeNum=ObjectPT+"_LowMT_LowDPhi_Iso"
-    HistoFakeDeNum=ObjectPT+"_LowMT_LowDPhi_Total"
+    HistoFakeNum=ObjectPT+"_LowMT_LowDPhi_TotEta_Iso"
+    HistoFakeDeNum=ObjectPT+"_LowMT_LowDPhi_TotEta_Total"
 
 
 
@@ -248,7 +256,7 @@ def Make_Mu_FakeRate(channelName):
     HistoDeNum=ShapeDeNum.Get("HISTO")
     
     print "\n---------------------------------------------------------------------------\n"
-    print "overal FR = ", HistoNum.Integral()/ HistoDeNum.Integral(), "\n"
+    print "overal FR = ",  HistoNum.Integral(), "/",  HistoDeNum.Integral(), "  =  ", HistoNum.Integral()/ HistoDeNum.Integral(), "\n"
     print "---------------------------------------------------------------------------\n\n"
     HistoNum.Divide(HistoDeNum)
     
@@ -265,7 +273,7 @@ def Make_Mu_FakeRate(channelName):
     else: HistoNum.GetXaxis().SetTitle("Jet p_{T} [GeV]")
     HistoNum.GetYaxis().SetTitle("#mu Fake Rate  (Tight Iso / Loose Iso)")
     HistoNum.GetYaxis().SetTitleOffset(1.3)
-    HistoNum.GetYaxis().SetRangeUser(0.05,2)
+    HistoNum.GetYaxis().SetRangeUser(0.005,2)
     HistoNum.SetStats(0)
     HistoNum.SetMarkerStyle(20)
     

@@ -1,13 +1,13 @@
-./Make.sh CodexAnalyzer_QCDEstim.cc
+./Make.sh CodexAnalyzer_QCDEstim_Data.cc
 
 
 
-./CodexAnalyzer_QCDEstim.exe  OutFiles_QCD/DYJetsToLL.root ../ROOT80X/DYJetsToLL_M-50*.root
-./CodexAnalyzer_QCDEstim.exe  OutFiles_QCD/TTJets.root ../ROOT80X/Inclusive_TTJets.root
-./CodexAnalyzer_QCDEstim.exe  OutFiles_QCD/WJetsToLNu.root ../ROOT80X/WJetsToLNu*.root
-./CodexAnalyzer_QCDEstim.exe  OutFiles_QCD/VV.root ../ROOT80X/ZZ.root  ../ROOT80X/WW.root  ../ROOT80X/WZ.root
-./CodexAnalyzer_QCDEstim.exe  OutFiles_QCD/SingleTop.root ../ROOT80X/ST_*.root
+./CodexAnalyzer_QCDEstim_Data.exe  OutFiles_QCD/DYJetsToLL.root ../ROOT80X/DYJetsToLL*.root
+./CodexAnalyzer_QCDEstim_Data.exe  OutFiles_QCD/TTJets.root ../ROOT80X/TTJets.root
+./CodexAnalyzer_QCDEstim_Data.exe  OutFiles_QCD/WJetsToLNu.root ../ROOT80X/WJetsToLNu*.root
+./CodexAnalyzer_QCDEstim_Data.exe  OutFiles_QCD/VV.root ../ROOT80X/ZZ.root  ../ROOT80X/WW.root  ../ROOT80X/WZ.root
+./CodexAnalyzer_QCDEstim_Data.exe  OutFiles_QCD/SingleTop.root ../ROOT80X/ST_*.root
 
-./CodexAnalyzer_QCDEstim.exe  OutFiles_QCD/Data.root ../ROOT80X/SingleMu.root
+./CodexAnalyzer_QCDEstim_Data.exe  OutFiles_QCD/Data.root ../ROOT80X/SingleMu.root
 
 

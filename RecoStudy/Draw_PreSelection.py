@@ -21,7 +21,7 @@ def add_lumi():
     lumi.SetTextColor(    1 )
     lumi.SetTextSize(0.06)
     lumi.SetTextFont (   42 )
-    lumi.AddText("12.9 fb^{-1} (13 TeV)")
+    lumi.AddText("35.9 fb^{-1} (13 TeV)")
     return lumi
 
 def add_CMS():
@@ -92,7 +92,8 @@ def MakePlot(FileName,categoriy,HistName,Xaxis,Info,RB_,channel,yMin,isLOG):
 
 
     
-    SingleT=file.Get(categoriy).Get("SingleTop")
+#    SingleT=file.Get(categoriy).Get("SingleTop")
+    SingleT=file.Get(categoriy).Get("VV")
     SingleT.Rebin(RB_)
 
     VV=file.Get(categoriy).Get("VV")
@@ -115,13 +116,13 @@ def MakePlot(FileName,categoriy,HistName,Xaxis,Info,RB_,channel,yMin,isLOG):
     Data.GetYaxis().SetTitle("Events")
 
 
-    Signal=file.Get(categoriy).Get("DM_Codex_1400")
-    Signal.Scale(.1)
-    Signal.Rebin(RB_)
-    Signal.SetLineStyle(11)
-    Signal.SetLineWidth(3)
-    Signal.SetLineColor(4)
-    Signal.SetMarkerColor(4)
+#    Signal=file.Get(categoriy).Get("DM_Codex_1400")
+#    Signal.Scale(.1)
+#    Signal.Rebin(RB_)
+#    Signal.SetLineStyle(11)
+#    Signal.SetLineWidth(3)
+#    Signal.SetLineColor(4)
+#    Signal.SetMarkerColor(4)
 
 
     QCD.SetFillColor(ROOT.TColor.GetColor(408, 106, 154))
@@ -211,11 +212,11 @@ def MakePlot(FileName,categoriy,HistName,Xaxis,Info,RB_,channel,yMin,isLOG):
     stack.Draw("histsame")
     errorBand.Draw("e2same")
     Data.Draw("esame")
-    Signal.Draw("histsame")
+#    Signal.Draw("histsame")
 
     legende=make_legend()
     legende.AddEntry(Data,"Observed","elp")
-    legende.AddEntry(Signal,"Codex_1400","l")
+#    legende.AddEntry(Signal,"Codex_1400","l")
     legende.AddEntry(TT,"t#bar{t}+jets","f")
     legende.AddEntry(SingleT,"SingleTop","f")
     legende.AddEntry(DYS,"DY #rightarrowll ","f")
@@ -322,20 +323,20 @@ def MakePlot(FileName,categoriy,HistName,Xaxis,Info,RB_,channel,yMin,isLOG):
 
 
 FileNamesInfo=[
-               ["_tmass_JetMet","M_{T}(jet,MET) (GeV)","",5,1],
-               ["_tmass_LQMet","M_{T}(LQ,MET)  (GeV)","",5,1],
-               ["_LepPt","lepton p_{T} (GeV)","",5,1],
-               ["_LepEta","lepton #eta ","",5,10],
-               ["_JetPt","jet p_{T} (GeV)","",5,1],
-               ["_JetEta","jet #eta ","",5,10],
+#               ["_tmass_JetMet","M_{T}(jet,MET) (GeV)","",5,1],
+#               ["_tmass_LQMet","M_{T}(LQ,MET)  (GeV)","",5,1],
+#               ["_LepPt","lepton p_{T} (GeV)","",5,1],
+#               ["_LepEta","lepton #eta ","",5,10],
+#               ["_JetPt","jet p_{T} (GeV)","",5,1],
+#               ["_JetEta","jet #eta ","",5,10],
 #               ["_nVtx","# of vertex","",1,10],
 #               ["_nVtx_NoPU","# of vertex before PU reweighting","",1,10],
-               ["_MET","MET  (GeV)","",5,1],
-               ["_LQMass","M_{LQ}   (GeV)","",5,1],
-               ["_tmass_MuMet","M_{T}(#mu,MET) (GeV)","",5,1],
-               ["_dPhi_Jet_Met","#Delta#phi (jet,MET)","",5,1],
-               ["_dPhi_Mu_Met","#Delta#phi (#mu,MET)","",5,1],
-#               ["_LQEta","#eta_{LQ}","",10,10],
+#               ["_MET","MET  (GeV)","",5,1],
+#               ["_LQMass","M_{LQ}   (GeV)","",5,1],
+#               ["_tmass_MuMet","M_{T}(#mu,MET) (GeV)","",5,1],
+#               ["_dPhi_Jet_Met","#Delta#phi (jet,MET)","",5,1],
+#               ["_dPhi_Mu_Met","#Delta#phi (#mu,MET)","",5,1],
+               ["_LQEta","#eta_{LQ}","",10,10],
 #               ["_numTau","_numTau","",1],
 #               ["_numElectron","_numElectron","",1],
 #               ["_numBJet","_numBJet","",1],
@@ -354,7 +355,7 @@ FileNamesInfo=[
 
 #    Isolation=["_Iso", "_AntiIso","_Total"]
 Isolation=["_Iso"]
-#    MT=["_NoMT"]
+#MT=["_HighMT"]
 #MT= ["_NoMT","_LowMT","_HighMT"]
 MT= ["_NoMT","_HighMT"]
 #    JPT=["_LowDPhi", "_HighDPhi"];
