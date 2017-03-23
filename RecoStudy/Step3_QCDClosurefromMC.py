@@ -108,14 +108,14 @@ def MakeTheHistogram(channel,NormMC,NormQCD,ShapeQCD):
             value=DataSampleQCDNormHist.GetBinContent(bin)
             if value < 0 : value=0
             FR= _FIT_Jet_Function(bin+1.5,FR_FitMaram)
-            print "Bin, value , FR= ",bin, value , FR
+#            print "Bin, value , FR= ",bin, value , FR
             if FR> 0.9: FR=0.9
             QCDEstimation += value * FR/(1-FR)
 #            QCDEstimation += value * FR
 
         print "\n##########\n QCDEstimation",    QCDEstimation
         NameOut= "QCD"
-        DataSampleQCDShapeHist.Scale(QCDEstimation/DataSampleQCDShapeHist.Integral())  # The shape is from btag-Loose Need get back norm
+        DataSampleQCDShapeHist.Scale(QCDEstimation/DataSampleQCDShapeHist.Integral())
         RebinedHist= DataSampleQCDShapeHist.Rebin(RB_)
         tDirectory.WriteObject(RebinedHist,NameOut)
 
@@ -153,7 +153,7 @@ def MakeTheHistogram(channel,NormMC,NormQCD,ShapeQCD):
 
 if __name__ == "__main__":
 
-    PlotName= ["_tmass_MuMet","_tmass_JetMet","_tmass_LQMet","_LepEta","_LepPt","_LepIso","_JetPt","_JetEta","_MET","_LQMass","_dPhi_Jet_Met","_dPhi_Mu_Met"]
+    PlotName= ["_tmass_MuMet","_tmass_JetMet","_tmass_LQMet","_LepEta","_LepPt","_JetPt","_JetEta","_MET","_LQMass","_dPhi_Jet_Met","_dPhi_Mu_Met"]
     for NormMC in PlotName:
         MakeTheHistogram("MuJet",NormMC+"_HighMT"+"_RelaxDPhi"+"_Iso","_CloseJetLepPt"+"_HighMT"+"_RelaxDPhi"+"_AntiIso",NormMC+"_HighMT"+"_RelaxDPhi"+"_Total")
 

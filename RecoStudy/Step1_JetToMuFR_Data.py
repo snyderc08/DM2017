@@ -52,7 +52,7 @@ def add_lumi():
     lumi.SetTextColor(    1 )
     lumi.SetTextSize(0.03)
     lumi.SetTextFont (   42 )
-    lumi.AddText("12.9 fb^{-1} (13 TeV)")
+    lumi.AddText("35.9 fb^{-1} (13 TeV)")
     return lumi
 
 def add_CMS():
@@ -97,7 +97,7 @@ def _FileReturn(Name, channel,HistoName):
         os.makedirs(SubRootDir)
     myfile = TFile(SubRootDir + Name + '.root')
     Histo =  myfile.Get(channel+HistoName)
-    print "0--------->>>>>>  ",SubRootDir,Name, channel+HistoName
+    if verbos_: print "0--------->>>>>>  ",SubRootDir,Name, channel+HistoName
     if not os.path.exists("Extra"):
         os.makedirs("Extra")
     NewFile=TFile("Extra/HISTO.root","RECREATE")
@@ -140,12 +140,12 @@ def MakeTheHistogram(channel,NormQCD,ShapeQCD,Binning,doBinning):
             
             
             
-            SingleTSampleQCDShapeHist=SingleTSampleQCDShape.Get("HISTO") ; print  "SingleTSampleQCDShapeHist= ", SingleTSampleQCDShapeHist.Integral()
-            VVSampleQCDShapeHist=VVSampleQCDShape.Get("HISTO") ; print  "VVSampleQCDShapeHist= ", VVSampleQCDShapeHist.Integral()
-            TTSampleQCDShapeHist=TTSampleQCDShape.Get("HISTO") ; print  "TTSampleQCDShapeHist= ", TTSampleQCDShapeHist.Integral()
-            ZTTSampleQCDShapeHist=ZTTSampleQCDShape.Get("HISTO") ; print  "ZTTSampleQCDShapeHist= ", ZTTSampleQCDShapeHist.Integral()
-            WSampleQCDShapeHist=WSampleQCDShape.Get("HISTO") ; print  "WSampleQCDShapeHist= ", WSampleQCDShapeHist.Integral()
-            DataSampleQCDShapeHist=DataSampleQCDShape.Get("HISTO") ; print  "DataSampleQCDShapeHist= ", DataSampleQCDShapeHist.Integral()
+            SingleTSampleQCDShapeHist=SingleTSampleQCDShape.Get("HISTO")
+            VVSampleQCDShapeHist=VVSampleQCDShape.Get("HISTO")
+            TTSampleQCDShapeHist=TTSampleQCDShape.Get("HISTO")
+            ZTTSampleQCDShapeHist=ZTTSampleQCDShape.Get("HISTO")
+            WSampleQCDShapeHist=WSampleQCDShape.Get("HISTO")
+            DataSampleQCDShapeHist=DataSampleQCDShape.Get("HISTO")
             
             DataSampleQCDShapeHist.Add(SingleTSampleQCDShapeHist, -1)
             DataSampleQCDShapeHist.Add(VVSampleQCDShapeHist, -1)
@@ -161,18 +161,6 @@ def MakeTheHistogram(channel,NormQCD,ShapeQCD,Binning,doBinning):
             WSampleQCDNormHist=WSampleQCDNorm.Get("HISTO")
             DataSampleQCDNormHist=DataSampleQCDNorm.Get("HISTO")
             
-#            SingleT_qcd=0;
-#            if (SingleTSampleQCDNormHist): SingleT_qcd=SingleTSampleQCDNormHist.Integral()
-#            VV_qcd=0;
-#            if (VVSampleQCDNormHist): VV_qcd=VVSampleQCDNormHist.Integral()
-#            TT_qcd=0;
-#            if (TTSampleQCDNormHist): TT_qcd=TTSampleQCDNormHist.Integral()
-#            ZTT_qcd=0;
-#            if (ZTTSampleQCDNormHist): ZTT_qcd=ZTTSampleQCDNormHist.Integral()
-#            W_qcd=0;
-#            if (WSampleQCDNormHist): W_qcd=WSampleQCDNormHist.Integral()
-
-
 
             SingleT_qcd=SingleTSampleQCDNormHist.Integral()
             VV_qcd=VVSampleQCDNormHist.Integral()
@@ -212,6 +200,7 @@ def _FIT_Jet(x, p):
     Pol0 = p[0]+p[1]*x[0]
     return Land + Pol0
 #    return Land
+
 def _FIT_Jet_Function(x, p):
     Land = p[2] * TMath.Landau(x, p[3], p[4])
     Pol0 = p[0]+p[1]*x
@@ -233,8 +222,8 @@ if FR_vs_LeptonPT:
     BinningFake = array.array("d",[0,20,30,40,50,60,70,80,90,100,120,150,200,300])
 else:
     ObjectPT="_CloseJetLepPt"
-#    BinningFake = array.array("d",[0,50,70,90,110,140,170,200,240,280,320,360,400])
-    BinningFake = array.array("d",[0,50,75,90,110,130,150,200,250,300,400,500])
+    BinningFake = array.array("d",[0,60,80,110,150,200,250,300,400,500,800])
+#    BinningFake = array.array("d",[0,60,80,110,150,200,300,400,500])
 
 #############################################################################################################
 ##   Calculating the Fake Rate ---> "Linear Fit, 2 parameters"
@@ -267,13 +256,13 @@ def Make_Mu_FakeRate(channelName):
     #    HistoNum.GetXaxis().SetRangeUser(0,400)
     canv.SetLogy()
 #    canv.SetGridx()
-    canv.SetGridy()
+#    canv.SetGridy()
     HistoNum.SetTitle("")
     if FR_vs_LeptonPT: HistoNum.GetXaxis().SetTitle("#mu p_{T} [GeV]")
     else: HistoNum.GetXaxis().SetTitle("Jet p_{T} [GeV]")
     HistoNum.GetYaxis().SetTitle("#mu Fake Rate  (Tight Iso / Loose Iso)")
     HistoNum.GetYaxis().SetTitleOffset(1.3)
-    HistoNum.GetYaxis().SetRangeUser(0.005,2)
+    HistoNum.GetYaxis().SetRangeUser(0.011,5)
     HistoNum.SetStats(0)
     HistoNum.SetMarkerStyle(20)
     
@@ -284,7 +273,7 @@ def Make_Mu_FakeRate(channelName):
     # number of parameters in the fit
     if FR_vs_LeptonPT:
         nPar = 3
-        theFit=TF1("theFit", _FIT_Lepton, 80, 500,nPar)
+        theFit=TF1("theFit", _FIT_Lepton, 60, 500,nPar)
         theFit.SetParameter(0, .2)
         theFit.SetParLimits(0, 0.1, 0.4)
         theFit.SetParameter(1, 4)
@@ -292,7 +281,7 @@ def Make_Mu_FakeRate(channelName):
     
     else:
         nPar = 5
-        theFit=TF1("theFit",_FIT_Jet,60,500,nPar)
+        theFit=TF1("theFit",_FIT_Jet,60,400,nPar)
 #        theFit.SetParLimits(0,    0,     0.5);
 ##        theFit.SetParameter(0, 0.03)
 ##        theFit.SetParameter(1, 0)
@@ -303,8 +292,11 @@ def Make_Mu_FakeRate(channelName):
 #        theFit.SetParLimits(0,    0,     0.5);
 #        theFit.SetParameter(0, 0.03)
 #        theFit.SetParameter(1, 0)
-        theFit.SetParameter(2, 0.6)
-#        theFit.SetParameter(3, -0.6)
+#        theFit.SetParameter(2, 0.6)
+        theFit.SetParLimits(1, 0.0001,0.00013)
+        theFit.SetParLimits(2, 0.1,10)
+        theFit.SetParLimits(3, 0,1000)
+        theFit.SetParLimits(4, 19, 20)
 #        theFit.SetParameter(4, 96.6)
 
     
@@ -316,6 +308,15 @@ def Make_Mu_FakeRate(channelName):
     FitParam=theFit.GetParameters()
     theFit.Draw("SAME")
 
+    FitParamTot=FitParam[0],FitParam[1],FitParam[2],FitParam[3],FitParam[4]
+    FR_at_400=_FIT_Jet_Function(400,FitParamTot)
+    
+    L=r.TLine(400, FR_at_400, 800, FR_at_400)
+    L.SetLineWidth(4)
+    L.SetLineColor(3)
+    L.SetLineStyle(2)
+    L.Draw("same")
+    
     legende=make_legend()
     legende.AddEntry(HistoNum,"Jet#rightarrow#mu fake rate","lp")
     legende.AddEntry(theFit,"Fit (Landau+Pol1)","l")
@@ -357,7 +358,6 @@ def Make_Mu_FakeRate(channelName):
 
 if __name__ == "__main__":
     FR_FitMaram=Make_Mu_FakeRate("MuJet")
-#    FR_FitMaram=Make_Tau_FakeRate("EleTau")
 
 
 

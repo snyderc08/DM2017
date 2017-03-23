@@ -60,7 +60,7 @@ def MakePlot(FileName,categoriy,HistName,Xaxis,Info,RB_,channel):
     ROOT.gStyle.SetOptStat(0)
     
     c=ROOT.TCanvas("canvas","",0,0,600,600)
-#    c.cd()
+#    c.SetLogy()
 
     file=ROOT.TFile(FileName,"r")
     
@@ -85,10 +85,10 @@ def MakePlot(FileName,categoriy,HistName,Xaxis,Info,RB_,channel):
     
     
     ######  Add OverFlow Bin
-    QCD.SetBinContent(QCD.GetNbinsX(),QCD.GetBinContent(QCD.GetNbinsX()+1)+QCD.GetBinContent(QCD.GetNbinsX()))
-    
-    Data.SetBinContent(Data.GetNbinsX(),Data.GetBinContent(Data.GetNbinsX()+1)+Data.GetBinContent(Data.GetNbinsX()))
-    
+#    QCD.SetBinContent(QCD.GetNbinsX(),QCD.GetBinContent(QCD.GetNbinsX()+1)+QCD.GetBinContent(QCD.GetNbinsX()))
+
+#    Data.SetBinContent(Data.GetNbinsX(),Data.GetBinContent(Data.GetNbinsX()+1)+Data.GetBinContent(Data.GetNbinsX()))
+
     Data.SetMarkerStyle(24)
     Data.SetMarkerSize(1.5)
     Data.SetMarkerColor(2)
@@ -110,7 +110,7 @@ def MakePlot(FileName,categoriy,HistName,Xaxis,Info,RB_,channel):
     Data.GetYaxis().SetTitle("Events / GeV")
     Data.GetXaxis().SetTitle(Xaxis)
     Data.SetMaximum(Data.GetMaximum()*2.5)
-    Data.SetMinimum(0)
+    Data.SetMinimum(0.1)
     Data.Draw("e")
     QCD.Draw("esame")
 #    stack.Draw("esame")

@@ -56,7 +56,7 @@ def _FileReturn(Name, channel,cat,HistoName):
     if not os.path.exists(SubRootDir):
         os.makedirs(SubRootDir)
     myfile = TFile(SubRootDir + Name + '.root')
-    print "##### --->>>>>>> File name is ", SubRootDir + Name + '.root'  "   and histo is -->  ", channel+HistoName + cat
+    if verbos_: print "##### --->>>>>>> File name is ", SubRootDir + Name + '.root'  "   and histo is -->  ", channel+HistoName + cat
     Histo =  myfile.Get(channel+HistoName + cat)
     if not os.path.exists("Extra"):
         os.makedirs("Extra")
@@ -69,7 +69,7 @@ def _FileReturn(Name, channel,cat,HistoName):
 ####################################################
 ##   Start Making the Datacard Histograms
 ####################################################
-def MakeTheHistogram(channel,NormMC,NormQCD,ShapeQCD):
+def MakeTheHistogram(channel,NormMC,NormQCD,ShapeQCD,NormTTbar):
     
     OutFile = TFile("TotalRootForLimit_PreSelection_"+channel + NormMC+".root" , 'RECREATE') # Name Of the output file
 
@@ -144,14 +144,21 @@ def MakeTheHistogram(channel,NormMC,NormQCD,ShapeQCD):
         Name= "TTJets"
         NameOut= "TT"
 
-        NormFile= _FileReturn(Name, channel,NameCat, NormMC)
+        NormFileShape= _FileReturn(Name, channel,NameCat, NormMC)
+        NormHistoShape=NormFileShape.Get("HISTO")
+        
+        NormFile= _FileReturn(Name, channel,NameCat, NormTTbar)
         NormHisto=NormFile.Get("HISTO")
+        
+        NormTTbar
 
-        if not NormHisto:
+        if not NormHistoShape:
             raise Exception('Not valid %s'%NameOut)
         else:
-            RebinedHist= NormHisto.Rebin(RB_)
-            tDirectory.WriteObject(RebinedHist,NameOut)
+            print '######  TTbar norm with TopPtRW %d without TopPtRW %d and the ratio is %d #####'%(NormHistoShape.Integral(),NormHisto.Integral(),NormHistoShape.Integral()/NormHisto.Integral()*1.0)
+            NormHistoShape.Scale(NormHisto.Integral()*1.0/NormHistoShape.Integral())
+            RebinedHist= NormHistoShape.Rebin(RB_)
+            tDirectory.WriteObject(NormHistoShape,NameOut)
 
 
         ################################################
@@ -238,7 +245,7 @@ def MakeTheHistogram(channel,NormMC,NormQCD,ShapeQCD):
 #        DataSampleQCDShapeHist.Add(ZTTSampleQCDShapeHist, -1)
 #        DataSampleQCDShapeHist.Add(WSampleQCDShapeHist, -1)
         dataAfterSub=DataSampleQCDShapeHist.Integral() #Here we get the data yeild after subtracting other background
-        print "\n##########\n QCD --Shape-- Purity is = ", dataAfterSub/dataBeforeSub, " which is ",  dataAfterSub, "/",dataBeforeSub
+        if verbos_: print "\n##########\n QCD --Shape-- Purity is = ", dataAfterSub/dataBeforeSub, " which is ",  dataAfterSub, "/",dataBeforeSub
 
 
 
@@ -255,7 +262,7 @@ def MakeTheHistogram(channel,NormMC,NormQCD,ShapeQCD):
         DataSampleQCDNormHist.Add(ZTTSampleQCDNormHist, -1)
         DataSampleQCDNormHist.Add(WSampleQCDNormHist, -1)
         dataAfterSub=DataSampleQCDNormHist.Integral() #Here we get the data yeild after subtracting other background
-        print "\n##########\n QCD ++Norm++ Purity is = ", dataAfterSub/dataBeforeSub, " which is ",  dataAfterSub, "/",dataBeforeSub
+        if verbos_: print "\n##########\n QCD ++Norm++ Purity is = ", dataAfterSub/dataBeforeSub, " which is ",  dataAfterSub, "/",dataBeforeSub
         
 
         FR_FitMaram=Make_Mu_FakeRate(channel)
@@ -266,7 +273,7 @@ def MakeTheHistogram(channel,NormMC,NormQCD,ShapeQCD):
             FR= _FIT_Jet_Function(bin+1.5,FR_FitMaram)
             if FR> 0.9: FR=0.9
             QCDEstimation += value * FR/(1-FR)
-        print "\n##########\n QCDEstimation",    QCDEstimation
+        if verbos_: print "\n##########\n QCDEstimation",    QCDEstimation
 
 
         NameOut= "QCD"
@@ -303,7 +310,7 @@ def MakeTheHistogram(channel,NormMC,NormQCD,ShapeQCD):
 
 if __name__ == "__main__":
     
-    PlotName= ["_tmass_MuMet","_tmass_JetMet","_tmass_LQMet","_LepEta","_LepPt","_JetPt","_JetEta","_MET","_LQMass","_dPhi_Jet_Met","_dPhi_Mu_Met","_LQEta","_nVtx","_nVtx_NoPU"]
+    PlotName= ["_tmass_MuMet","_tmass_JetMet","_tmass_LQMet","_LepEta","_LepPt","_JetPt","_JetEta","_MET","_LQMass","_dPhi_Jet_Met","_dPhi_Mu_Jet","_dPhi_Mu_Met","_LQEta","_nVtx","_nVtx_NoPU"]
     
 
 #    Isolation=["_Iso", "_AntiIso","_Total"]
@@ -325,8 +332,10 @@ if __name__ == "__main__":
                         for reg in region:
                         
                             channel='MuJet'
+                            
                             NormMC=Norm+mt+jpt+etalq+reg+iso
                             NormQCD="_CloseJetLepPt"+mt+jpt+etalq+reg+"_AntiIso"
                             ShapeQCD=Norm+mt+jpt+etalq+reg+"_AntiIso"
+                            NormTTbar=Norm+"_NoTopRW"+mt+jpt+etalq+reg+iso
                             
-                            MakeTheHistogram(channel,NormMC,NormQCD,ShapeQCD)
+                            MakeTheHistogram(channel,NormMC,NormQCD,ShapeQCD,NormTTbar)

@@ -87,13 +87,13 @@ def MakePlot(FileName,categoriy,HistName,Xaxis,Info,RB_,channel,yMin,isLOG):
 
     TT=file.Get(categoriy).Get("TT")
     TT.Rebin(RB_)
+
+
+
+
     
-
-
-
-    
-#    SingleT=file.Get(categoriy).Get("SingleTop")
-    SingleT=file.Get(categoriy).Get("VV")
+    SingleT=file.Get(categoriy).Get("SingleTop")
+#    SingleT=file.Get(categoriy).Get("VV")
     SingleT.Rebin(RB_)
 
     VV=file.Get(categoriy).Get("VV")
@@ -115,6 +115,14 @@ def MakePlot(FileName,categoriy,HistName,Xaxis,Info,RB_,channel,yMin,isLOG):
     Data.SetTitle("")
     Data.GetYaxis().SetTitle("Events")
 
+
+    ################################################################################################################
+    #   Here we compute the TT scale factor
+    #   (Data - allBkg)/TT
+    TTScale=(Data.Integral() - SingleT.Integral() - DYS.Integral() - VV.Integral()- W.Integral() - QCD.Integral()) / TT.Integral()
+    print "##########\nTT Scale factor for = ", FileName.replace('TotalRootForLimit_PreSelection_MuJet',''), "  is ---> ", TTScale, "\n##########"
+    ################################################################################################################
+    TT.Scale(0.81)
 
 #    Signal=file.Get(categoriy).Get("DM_Codex_1400")
 #    Signal.Scale(.1)
@@ -165,6 +173,19 @@ def MakePlot(FileName,categoriy,HistName,Xaxis,Info,RB_,channel,yMin,isLOG):
         print "##################################\n", FileName
         for i in range(Data.GetNbinsX()):
             if i > 15 : Data.SetBinContent(i+1,0)
+
+    if FileName.find("MET") > 0 :
+        print "##################################\n", FileName
+        for i in range(Data.GetNbinsX()):
+            if i > 9 : Data.SetBinContent(i+1,0)
+
+    if FileName.find("tmass_MuMet") > 0 :
+        print "##################################\n", FileName
+        for i in range(Data.GetNbinsX()):
+                if i > 9 : Data.SetBinContent(i+1,0)
+
+
+
 
     stack=ROOT.THStack("stack","stack")
     stack.Add(QCD)
@@ -312,63 +333,48 @@ def MakePlot(FileName,categoriy,HistName,Xaxis,Info,RB_,channel,yMin,isLOG):
 
     c.Modified()
     c.SaveAs("_plot"+FileName.replace('TotalRootForLimit_PreSelection_MuJet','').replace('.root','')+str(isLOG)+".pdf")
-    #       c.SaveAs("mvis"+categoriy+".png")
-
-
-#channelDirectory = ["MuTau", "EleTau"]
-#channelDirectory = ["MuTau"]
-#Category = ["_DiJet","_JetBJet"]
-#Category = ["_JetBJet"]
-#Category = [""]
 
 
 FileNamesInfo=[
-#               ["_tmass_JetMet","M_{T}(jet,MET) (GeV)","",5,1],
-#               ["_tmass_LQMet","M_{T}(LQ,MET)  (GeV)","",5,1],
-#               ["_LepPt","lepton p_{T} (GeV)","",5,1],
-#               ["_LepEta","lepton #eta ","",5,10],
-#               ["_JetPt","jet p_{T} (GeV)","",5,1],
-#               ["_JetEta","jet #eta ","",5,10],
-#               ["_nVtx","# of vertex","",1,10],
-#               ["_nVtx_NoPU","# of vertex before PU reweighting","",1,10],
-#               ["_MET","MET  (GeV)","",5,1],
-#               ["_LQMass","M_{LQ}   (GeV)","",5,1],
-#               ["_tmass_MuMet","M_{T}(#mu,MET) (GeV)","",5,1],
-#               ["_dPhi_Jet_Met","#Delta#phi (jet,MET)","",5,1],
-#               ["_dPhi_Mu_Met","#Delta#phi (#mu,MET)","",5,1],
+               ["_tmass_JetMet","M_{T}(jet,MET) (GeV)","",5,1],
+               ["_tmass_LQMet","M_{T}(LQ,MET)  (GeV)","",5,1],
+               ["_LepPt","lepton p_{T} (GeV)","",5,1],
+               ["_LepEta","lepton #eta ","",5,10],
+               ["_JetPt","jet p_{T} (GeV)","",5,1],
+               ["_JetEta","jet #eta ","",5,10],
+               ["_nVtx","# of vertex","",1,10],
+               ["_nVtx_NoPU","# of vertex before PU reweighting","",1,10],
+               ["_MET","MET  (GeV)","",5,1],
+               ["_LQMass","M_{LQ}   (GeV)","",5,1],
+               ["_tmass_MuMet","M_{T}(#mu,MET) (GeV)","",5,1],
+               ["_dPhi_Jet_Met","#Delta#phi (jet,MET)","",5,1],
+               ["_dPhi_Mu_Jet","#Delta#phi (#mu,jet)","",5,1],
+               ["_dPhi_Mu_Met","#Delta#phi (#mu,MET)","",5,1],
+               ["_dPhi_Mu_Jet","#Delta#phi (#mu,jet)","",5,1],
                ["_LQEta","#eta_{LQ}","",10,10],
-#               ["_numTau","_numTau","",1],
-#               ["_numElectron","_numElectron","",1],
-#               ["_numBJet","_numBJet","",1],
-#               ["_numZboson","_numZboson","",1],
-               
+#               ["_LQPt","#p_{T}_{LQ}","",10,10],
                ]
 
 
 
 
-#def MakePlot(FileName,categoriy,HistName,Xaxis,Info,RB_,channel):
-
-#PlotName= ["_tmass_MuMet","_tmass_JetMet","_tmass_LQMet","_LepEta","_LepPt","_JetPt","_JetEta","_MET","_LQMass","_dPhi_Jet_Met","_dPhi_Mu_Met","_nVtx","_nVtx_NoPU"]
-
-#PlotName= ["_tmass_MuMet","_tmass_JetMet","_tmass_LQMet","_LepEta","_LepPt","_LepIso","_JetPt","_JetEta","_MET","_LQMass","_dPhi_Jet_Met","_dPhi_Mu_Met","_nVtx","_nVtx_NoPU"]
 
 #    Isolation=["_Iso", "_AntiIso","_Total"]
 Isolation=["_Iso"]
 #MT=["_HighMT"]
-#MT= ["_NoMT","_LowMT","_HighMT"]
-MT= ["_NoMT","_HighMT"]
+MT= ["_NoMT"]
+#MT= ["_NoMT","_HighMT"]
 #    JPT=["_LowDPhi", "_HighDPhi"];
 JPT=[ "_HighDPhi"]
 lqEta= ["_Barrel", "_Endcap","_TotEta"]
 #    lqEta= ["_TotEta"]
-region= ["", "_ttbarCR","_DYCR"]
-#    region= ["", "_DYCR"]
-#logStat=[0,1]
+region= ["", "_ttbarCR"]
+#region= ["_ttbarCR"]
+
+#logStat=[0]
 logStat=[1]
 
 
-#for NormMC in PlotName:
 for i in range(0,len(FileNamesInfo)):
     
     NormMC=FileNamesInfo[i][0]

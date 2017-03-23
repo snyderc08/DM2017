@@ -26,6 +26,9 @@ int main(int argc, char** argv) {
     }
     
     
+    //########################################
+    // Pileup files
+    //########################################
     TFile * PUData= TFile::Open("../interface/pileup-hists/dataMoriondPU.root");
     TH1F * HistoPUData= (TH1F *) PUData->Get("pileup");
     HistoPUData->Scale(1.0/HistoPUData->Integral());
@@ -34,54 +37,46 @@ int main(int argc, char** argv) {
     TH1F * HistoPUMC= (TH1F *) PUMC->Get("pileup");
     HistoPUMC->Scale(1.0/HistoPUMC->Integral());
     
-//    TFile * MuCorrId= TFile::Open("../interface/pileup-hists/MuonID_Z_RunBCD_prompt80X_7p65.root");
-//    //    TFile * MuCorrId= TFile::Open("../interface/pileup-hists/MuonID_Z_2016runB_2p6fb.root");
-//    TH2F * HistoMuId= (TH2F *) MuCorrId->Get("MC_NUM_TightIDandIPCut_DEN_genTracks_PAR_pt_spliteta_bin1/pt_abseta_ratio");
-//    
-//    TFile * MuCorrIso= TFile::Open("../interface/pileup-hists/MuonIso_Z_RunBCD_prompt80X_7p65.root");
-//    //    TFile * MuCorrIso= TFile::Open("../interface/pileup-hists/MuonISO_Z_2016runB_2p6fb.root");
-//    TH2F * HistoMuIso= (TH2F *) MuCorrIso->Get("MC_NUM_TightRelIso_DEN_TightID_PAR_pt_spliteta_bin1/pt_abseta_ratio");
-//    
-//    TFile * MuCorrTrg= TFile::Open("../interface/pileup-hists/SingleMuonTrigger_Z_RunBCD_prompt80X_7p65.root");
-//    //    TFile * MuCorrTrg= TFile::Open("../interface/pileup-hists/SingleMuonTrigger_Z_RunCD_Reco76X_Feb15.root");
-//    TH2F * HistoMuTrg= (TH2F *) MuCorrTrg->Get("Mu45_eta2p1_PtEtaBins_Run274094_to_276097/efficienciesDATA/pt_abseta_DATA");
     
-    
-    
-std:string Working_Dir= ".";
-    TFile * MuCorrId_BCDEF= TFile::Open((Working_Dir+"/"+"../interface/pileup-hists/ID_EfficienciesAndSF_BCDEF.root").c_str());
+    //########################################
+    // Muon Id, Iso, Trigger and Tracker Eff files
+    //########################################
+    TFile * MuCorrId_BCDEF= TFile::Open(("../interface/pileup-hists/ID_EfficienciesAndSF_BCDEF.root"));
     TH2F * HistoMuId_BCDEF= (TH2F *) MuCorrId_BCDEF->Get("MC_NUM_TightID_DEN_genTracks_PAR_pt_eta/pt_abseta_ratio");
-
-    TFile * MuCorrId_GH= TFile::Open((Working_Dir+"/"+"../interface/pileup-hists/ID_EfficienciesAndSF_GH.root").c_str());
+    
+    TFile * MuCorrId_GH= TFile::Open(("../interface/pileup-hists/ID_EfficienciesAndSF_GH.root"));
     TH2F * HistoMuId_GH= (TH2F *) MuCorrId_GH->Get("MC_NUM_TightID_DEN_genTracks_PAR_pt_eta/pt_abseta_ratio");
-
-    TFile * MuCorrIso_BCDEF= TFile::Open((Working_Dir+"/"+"../interface/pileup-hists/Iso_EfficienciesAndSF_BCDEF.root").c_str());
+    
+    TFile * MuCorrIso_BCDEF= TFile::Open(("../interface/pileup-hists/Iso_EfficienciesAndSF_BCDEF.root"));
     TH2F * HistoMuIso_BCDEF= (TH2F *) MuCorrIso_BCDEF->Get("TightISO_TightID_pt_eta/pt_abseta_ratio");
-
-    TFile * MuCorrIso_GH= TFile::Open((Working_Dir+"/"+"../interface/pileup-hists/Iso_EfficienciesAndSF_GH.root").c_str());
+    
+    TFile * MuCorrIso_GH= TFile::Open(("../interface/pileup-hists/Iso_EfficienciesAndSF_GH.root"));
     TH2F * HistoMuIso_GH= (TH2F *) MuCorrIso_GH->Get("TightISO_TightID_pt_eta/pt_abseta_ratio");
-
-
-    TFile * MuCorrTrg_BCDEF= TFile::Open((Working_Dir+"/"+"../interface/pileup-hists/Trigger_EfficienciesAndSF_RunBtoF.root").c_str());
+    
+    TFile * MuCorrTrg_BCDEF= TFile::Open(("../interface/pileup-hists/Trigger_EfficienciesAndSF_RunBtoF.root"));
     TH2F * HistoMuTrg_BCDEF= (TH2F *) MuCorrTrg_BCDEF->Get("Mu50_OR_TkMu50_PtEtaBins/pt_abseta_ratio");
     
-    
-    TFile * MuCorrTrg_GH= TFile::Open((Working_Dir+"/"+"../interface/pileup-hists/Trigger_EfficienciesAndSF_Period4.root").c_str());
+    TFile * MuCorrTrg_GH= TFile::Open(("../interface/pileup-hists/Trigger_EfficienciesAndSF_Period4.root"));
     TH2F * HistoMuTrg_GH= (TH2F *) MuCorrTrg_GH->Get("Mu50_OR_TkMu50_PtEtaBins/pt_abseta_ratio");
-
-    TFile * MuCorrTrack= TFile::Open((Working_Dir+"/"+"../interface/pileup-hists/Tracking_EfficienciesAndSF_BCDEFGH.root").c_str());
+    
+    TFile * MuCorrTrack= TFile::Open(("../interface/pileup-hists/Tracking_EfficienciesAndSF_BCDEFGH.root"));
     TGraphAsymmErrors * HistoMuTrack= (TGraphAsymmErrors *) MuCorrTrack->Get("ratio_eff_eta3_dr030e030_corr");
-
+    
     TH2F* HistoMuId[2]={HistoMuId_BCDEF, HistoMuId_GH};
     TH2F* HistoMuIso[2]={HistoMuIso_BCDEF,HistoMuIso_GH};
     TH2F* HistoMuTrg[2]={HistoMuTrg_BCDEF, HistoMuTrg_GH};
-
     
     
+    //########################################
+    // Electron MVA IdIso files
+    //########################################
+    TFile * EleCorrMVAIdIso90= TFile::Open(("../interface/pileup-hists/egammaEffi.txt_EGM2D.root"));
+    TH2F * HistoEleMVAIdIso90= (TH2F *) EleCorrMVAIdIso90->Get("EGamma_SF2D");
     
     
-    
-    
+    //########################################
+    // W and DY K-factor files
+    //########################################
     TFile * KFactor= TFile::Open("../interface/pileup-hists/kfactors.root");
     TH1F * WLO= (TH1F *) KFactor->Get("WJets_LO/inv_pt");
     TH1F * WNLO= (TH1F *) KFactor->Get("EWKcorr/W");
@@ -107,13 +102,13 @@ std:string Working_Dir= ".";
         cout.precision(6);
         
         
-        std::string ROOTLoc= "/Users/abdollah1/GIT_abdollah110/DM2016/ROOT80X/";
-//        vector<float> DY_Events = DY_HTBin(ROOTLoc);
-//        vector<float> W_Events = W_HTBin(ROOTLoc);
+        //        std::string ROOTLoc= "/Users/abdollah1/GIT_abdollah110/DM2016/ROOT80X/";
+        //        vector<float> DY_Events = DY_HTBin(ROOTLoc);
+        //        vector<float> W_Events = W_HTBin(ROOTLoc);
         //        vector<float> W_EventsNLO = W_PTBinNLO(ROOTLoc); //This is for the NLO samples (as the stat is too low we do not use them)
-//        vector<float> W_EventsNLO = W_HTBin(ROOTLoc);
+        //        vector<float> W_EventsNLO = W_HTBin(ROOTLoc);
         
-        /////////////////////////   General Info
+        //########################################   General Info
         Run_Tree->SetBranchAddress("isData", &isData);
         Run_Tree->SetBranchAddress("run", &run);
         Run_Tree->SetBranchAddress("lumis", &lumis);
@@ -123,7 +118,7 @@ std:string Working_Dir= ".";
         Run_Tree->SetBranchAddress("puTrue", &puTrue);
         Run_Tree->SetBranchAddress("nVtx",&nVtx);
         
-        /////////////////////////   MC Info
+        //########################################   MC Info
         Run_Tree->SetBranchAddress("nMC", &nMC);
         Run_Tree->SetBranchAddress("mcPID", &mcPID);
         Run_Tree->SetBranchAddress("mcStatus", &mcStatus);
@@ -136,8 +131,7 @@ std:string Working_Dir= ".";
         Run_Tree->SetBranchAddress("mcGMomPID", &mcGMomPID );
         
         
-        
-        /////////////////////////   Tau Info
+        //########################################   Tau Info
         Run_Tree->SetBranchAddress("nTau", &nTau);
         Run_Tree->SetBranchAddress("tauPt"  ,&tauPt);
         Run_Tree->SetBranchAddress("tauEta"  ,&tauEta);
@@ -155,7 +149,8 @@ std:string Working_Dir= ".";
         Run_Tree->SetBranchAddress("tauDecayMode",&tauDecayMode);
         Run_Tree->SetBranchAddress("tauByLooseIsolationMVArun2v1DBoldDMwLT",&tauByLooseIsolationMVArun2v1DBoldDMwLT);
         Run_Tree->SetBranchAddress("tauByVLooseIsolationMVArun2v1DBoldDMwLT",&tauByVLooseIsolationMVArun2v1DBoldDMwLT);
-        /////////////////////////   Mu Info
+        
+        //########################################   Mu Info
         Run_Tree->SetBranchAddress("nMu", &nMu);
         Run_Tree->SetBranchAddress("muPt"  ,&muPt);
         Run_Tree->SetBranchAddress("muEta"  ,&muEta);
@@ -170,7 +165,7 @@ std:string Working_Dir= ".";
         Run_Tree->SetBranchAddress("muD0",&muD0);
         Run_Tree->SetBranchAddress("muDz",&muDz);
         
-        /////////////////////////   Ele Info
+        //########################################   Ele Info
         Run_Tree->SetBranchAddress("nEle", &nEle);
         Run_Tree->SetBranchAddress("elePt"  ,&elePt);
         Run_Tree->SetBranchAddress("eleEta"  ,&eleEta);
@@ -189,7 +184,7 @@ std:string Working_Dir= ".";
         Run_Tree->SetBranchAddress("eleConvVeto", &eleConvVeto);
         Run_Tree->SetBranchAddress("eleSCEta", &eleSCEta );
         
-        /////////////////////////   Jet Info
+        //########################################   Jet Info
         Run_Tree->SetBranchAddress("nJet",&nJet);
         Run_Tree->SetBranchAddress("jetPt",&jetPt);
         Run_Tree->SetBranchAddress("jetEta",&jetEta);
@@ -202,7 +197,8 @@ std:string Working_Dir= ".";
         Run_Tree->SetBranchAddress("jetJECUnc",&jetJECUnc);
         Run_Tree->SetBranchAddress("jetRawEn",&jetRawEn);
         Run_Tree->SetBranchAddress("jetHadFlvr",&jetHadFlvr);
-        /////////////////////////   MET Info
+        
+        //########################################   MET Info
         Run_Tree->SetBranchAddress("pfMET",&pfMET);
         Run_Tree->SetBranchAddress("pfMETPhi",&pfMETPhi);
         Run_Tree->SetBranchAddress("metFilters",&metFilters);
@@ -212,28 +208,29 @@ std:string Working_Dir= ".";
         //###############################################################################################
         //  Weight Calculation
         //###############################################################################################
-        float WSCALEFACTORE=1.00;  //measured July 4th from WEstimaOutPut/_16_80X
+        float WSCALEFACTORE=1.00;
         float WSF_mutau=1.0;
         float WSF_etau=1.0;
         float MuMass= 0.10565837;
         float eleMass= 0.000511;
         float LeptonPtCut_=60;
         float TauPtCut_=20;
-        float JetPtCut=100; // used to be 50
+        float JetPtCut=100;
         float BJetPtCut=20;
         float ElectronPtCut_=15;
-        float CSVCut= 0.935 ;    // loose is 0.460                 //https://twiki.cern.ch/twiki/bin/viewauth/CMS/BtagRecommendation74X
+        float CSVCut= 0.8484 ;    // loose is 0.460                 //https://twiki.cern.ch/twiki/bin/viewauth/CMS/BtagRecommendation74X
         float LeptonIsoCut=0.15;
         
         
         Int_t nentries_wtn = (Int_t) Run_Tree->GetEntries();
         cout<<"nentries_wtn===="<<nentries_wtn<<"\n";
         for (Int_t i = 0; i < nentries_wtn; i++) {
+            //            for (Int_t i = 0; i < 100000; i++) {
             Run_Tree->GetEntry(i);
             if (i % 10000 == 0) fprintf(stdout, "\r  Processed events: %8d of %8d ", i, nentries_wtn);
             fflush(stdout);
             
-//            if (isData && (metFilters!=0)) continue;  FIXME   filter needs to be checked out
+            if (isData && (metFilters!=1536)) continue;
             std::vector<string> HistNamesFilled;
             HistNamesFilled.clear();
             //###############################################################################################
@@ -269,7 +266,7 @@ std:string Working_Dir= ".";
             
             if (!isData){
                 
-//                if (HistoTot) LumiWeight = weightCalc(HistoTot, InputROOT, genHT,WBosonPt, W_Events, DY_Events,W_EventsNLO);
+                //                if (HistoTot) LumiWeight = weightCalc(HistoTot, InputROOT, genHT,WBosonPt, W_Events, DY_Events,W_EventsNLO);
                 if (HistoTot) LumiWeight = weightCalc(HistoTot, InputROOT);
                 GetGenWeight=genWeight;
                 
@@ -284,17 +281,19 @@ std:string Working_Dir= ".";
                 
             }
             
-        
             
-            float TotalWeight = LumiWeight * GetGenWeight * PUWeight * TopPtReweighting * WBosonKFactor * ZBosonKFactor;
-//            cout<<"TotalWeight= "<<TotalWeight<<"\n";
+            
+            float TotalWeight_withTopPtRW = LumiWeight * GetGenWeight * PUWeight * TopPtReweighting * WBosonKFactor * ZBosonKFactor;
+            float TotalWeight_NoTopPtRW = LumiWeight * GetGenWeight * PUWeight * WBosonKFactor * ZBosonKFactor;
+            //            cout<<"TotalWeight= "<<TotalWeight<<"\n";
             //###############################################################################################
             //  Some Histogram Filling
             //###############################################################################################
-            plotFill("WeightLumi",LumiWeight,10000,0,100);
-            plotFill("TopPtReweighting",TopPtReweighting,100,0,10);
-            plotFill("WeightPU",PUWeight,100,0,10);
-            plotFill("WeightTotal",TotalWeight,50,0,5);
+            plotFill("WeightLumi",LumiWeight,1000,0,10);
+            plotFill("TopPtReweighting",TopPtReweighting,100,0,2);
+            plotFill("WeightPU",PUWeight,100,0,5);
+            plotFill("TotalWeight_withTopPtRW",TotalWeight_withTopPtRW,50,0,2);
+            plotFill("TotalWeight_NoTopPtRW",TotalWeight_NoTopPtRW,50,0,2);
             plotFill("nVtx_NoPUCorr",nVtx,60,0,60);
             plotFill("nVtx_PUCorr",nVtx,60,0,60,PUWeight);
             plotFill("WBosonPt",WBosonPt,150,0,1500,PUWeight);
@@ -309,14 +308,8 @@ std:string Working_Dir= ".";
             //  Doing MuTau Analysis
             //###############################################################################################
             //###########       Trigger Requirement ###########################################################
-            const int size_trgCat = 1;
-            bool PassTrigger=1;
-            if (isData) PassTrigger = (HLTEleMuX >> 21 & 1) == 1; //   else if (name.find("HLT_Mu50_v") != string::npos) bitEleMuX = 21;
-            
+            bool PassTrigger = (HLTEleMuX >> 21 & 1) == 1; //   else if (name.find("HLT_Mu50_v") != string::npos) bitEleMuX = 21;
             if (! PassTrigger) continue;
-            
-            
-            
             
             //###########       tau Veto   ###########################################################
             int numTau=0;
@@ -330,21 +323,30 @@ std:string Working_Dir= ".";
                 numTau++;
             }
             //###########       Ele Veto   ###########################################################
+            //            https://twiki.cern.ch/twiki/bin/view/CMS/MultivariateElectronIdentificationRun2#Recommended_MVA_recipes_for_2016
             int numElectron=0;
+            float ElectronCor=1;
+            TLorentzVector Ele4Momentum;
+            Ele4Momentum.SetPtEtaPhiM(0,0,0,0);
             for  (int jele=0 ; jele < nEle; jele++){
                 
                 if ( elePt->at(jele) < 15 || fabs(eleEta->at(jele)) > 2.5) continue;
                 
                 bool eleMVAIdExtra= false;
-                if (fabs (eleSCEta->at(jele)) < 0.8 && eleIDMVA->at(jele) >  0.913286 ) eleMVAIdExtra= true;
-                else if (fabs (eleSCEta->at(jele)) >  0.8 &&fabs (eleSCEta->at(jele)) <  1.5 && eleIDMVA->at(jele) >  0.805013 ) eleMVAIdExtra= true;
-                else if ( fabs (eleSCEta->at(jele)) >  1.5 && eleIDMVA->at(jele) >  0.358969  ) eleMVAIdExtra= true;
+                if (fabs (eleSCEta->at(jele)) <= 0.8 && eleIDMVA->at(jele) >   0.837  ) eleMVAIdExtra= true;
+                else if (fabs (eleSCEta->at(jele)) >  0.8 &&fabs (eleSCEta->at(jele)) <=  1.5 && eleIDMVA->at(jele) >   0.715  ) eleMVAIdExtra= true;
+                else if ( fabs (eleSCEta->at(jele)) >=  1.5 && eleIDMVA->at(jele) >  0.357  ) eleMVAIdExtra= true;
                 else eleMVAIdExtra= false;
                 
                 
                 if (!(eleMVAIdExtra )) continue;
-                numElectron++;
                 
+                ElectronCor=getCorrFactorMVA90WPElectron80X(isData,  elePt->at(jele),eleSCEta->at(jele),    HistoEleMVAIdIso90 );
+                Ele4Momentum.SetPtEtaPhiM(elePt->at(jele),eleEta->at(jele),elePhi->at(jele),eleMass);
+                numElectron++;
+                //                cout << "elePt=  " <<elePt->at(jele)<<"   eleSCeta= " <<eleSCEta->at(jele) <<"  Cor= " << ElectronCor<<"\n";
+                
+                break;
             }
             //###########       bJet Veto   ###########################################################
             int numBJet=0;
@@ -370,7 +372,7 @@ std:string Working_Dir= ".";
                 if ( (muPFNeuIso->at(1) + muPFPhoIso->at(1) - 0.5* muPFPUIso->at(1) )  > 0.0)
                     IsoMu2= ( muPFChIso->at(1)/muPt->at(1) + muPFNeuIso->at(1) + muPFPhoIso->at(1) - 0.5* muPFPUIso->at(1))/muPt->at(1);
                 
-                if ( IsoMu1 < 0.25  && IsoMu2 < 0.25 && Z4Momentum.M() > 80 && Z4Momentum.M()< 100 ) numZboson++;
+                if ( muPt->at(0) > 60 && muPt->at(1) > 15 &&  IsoMu1 < 0.25  && IsoMu2 < 0.25 && Z4Momentum.M() > 80 && Z4Momentum.M()< 100 ) numZboson++;
             }
             
             
@@ -391,13 +393,9 @@ std:string Working_Dir= ".";
                 if (! MuPtCut || !MuIdIso ) continue;
                 
                 
-//                float LepCor=getCorrFactorMuon80X(isData,  muPt->at(imu), muEta->at(imu) , HistoMuId,HistoMuIso,HistoMuTrg);
-                float LepCor=getCorrFactorMuon80X(isData,  muPt->at(imu), muEta->at(imu) , HistoMuId,HistoMuIso,HistoMuTrg,HistoMuTrack);
-//                cout <<"  LepCor == "<<LepCor<< "\n";
-        
+                float MuonCor=getCorrFactorMuon80X(isData,  muPt->at(imu), muEta->at(imu) , HistoMuId,HistoMuIso,HistoMuTrg,HistoMuTrack);
                 
-                
-                TLorentzVector Mu4Momentum, Tau4Momentum, Jet4Momentum,ExtraMu4Momentum, ExtraEle4Momentum,KJet4Momentum,LQ;
+                TLorentzVector Mu4Momentum, Jet4Momentum,KJet4Momentum,LQ4Momentum;
                 Mu4Momentum.SetPtEtaPhiM(muPt->at(imu),muEta->at(imu),muPhi->at(imu),MuMass);
                 
                 
@@ -435,11 +433,11 @@ std:string Working_Dir= ".";
                     bool goodJet = (jetPFLooseId->at(ijet) > 0.5 && jetPt->at(ijet) > JetPtCut && fabs(jetEta->at(ijet)) < 2.4 && Jet4Momentum.DeltaR(Mu4Momentum) > 0.5);
                     if (! goodJet) continue;
                     
-                    LQ=Jet4Momentum + Mu4Momentum;
+                    LQ4Momentum=Jet4Momentum + Mu4Momentum;
                     
+                    bool isThisJetElectron= Jet4Momentum.DeltaR(Ele4Momentum) < 0.5;
                     //###############################################################################################
                     //  Isolation Categorization
-                    //###############################################################################################
                     //###############################################################################################
                     bool LepPassIsolation= IsoMu < LeptonIsoCut;
                     
@@ -464,7 +462,7 @@ std:string Working_Dir= ".";
                     std::string MT_Cat[size_mTCat] = {"_NoMT", "_LowMT","_HighMT"};
                     
                     float tmass_JetMet= TMass_F(jetPt->at(ijet), jetPt->at(ijet)*cos(jetPhi->at(ijet)),jetPt->at(ijet)*sin(jetPhi->at(ijet)) , pfMET, pfMETPhi);
-                    float tmass_LQMet= TMass_F(LQ.Pt(), LQ.Px(),LQ.Py(), pfMET, pfMETPhi);
+                    float tmass_LQMet= TMass_F(LQ4Momentum.Pt(), LQ4Momentum.Px(),LQ4Momentum.Py(), pfMET, pfMETPhi);
                     
                     //###############################################################################################
                     //  dPhi Jet_MET Categorization
@@ -480,33 +478,45 @@ std:string Working_Dir= ".";
                     //  LQ eta Categorization
                     //###############################################################################################
                     const int size_lqEta = 3;
-                    bool centralLQ = (fabs(LQ.Eta()) < 1.5);
-                    bool EndcapLQ = (fabs(LQ.Eta()) >= 1.5 );
+                    bool BarrelLQ = (fabs(LQ4Momentum.Eta()) < 1.5);
+                    bool EndcapLQ = (fabs(LQ4Momentum.Eta()) >= 1.5 );
                     bool TotLQ = 1;
                     
-                    bool lqEta_category[size_lqEta] = {centralLQ,EndcapLQ,TotLQ};
+                    bool lqEta_category[size_lqEta] = {BarrelLQ,EndcapLQ,TotLQ};
                     std::string lqEta_Cat[size_lqEta] = {"_Barrel", "_Endcap","_TotEta"};
                     
                     //###############################################################################################
-                    //  TTbar control region Categorization
+                    //  TTbar & DY control region Categorization
                     //###############################################################################################
                     const int size_CR = 3;
                     bool signalRegion = numTau+numZboson + numElectron  < 1 ;
-                    bool TTcontrolRegion = (numTau <1 && numZboson < 1 && numElectron > 0 );
+                    bool TTcontrolRegion = (numTau <1 && numZboson < 1 && numElectron > 0 && !isThisJetElectron);
                     bool DYcontrolRegion = (numTau <1 && numZboson > 0 && numElectron < 1 );
-//                    bool signalRegion = numTau+numZboson + numElectron + numBJet < 1 ;
-//                    bool TTcontrolRegion = (numTau <1 && numZboson < 1 && numElectron > 0 && numBJet > 0);
-//                    bool DYcontrolRegion = (numTau <1 && numZboson > 0 && numElectron < 1 && numBJet < 1 );
                     bool region_category[size_CR] = {signalRegion,TTcontrolRegion,DYcontrolRegion};
                     std::string region_Cat[size_CR] = {"", "_ttbarCR","_DYCR"};
                     
                     //###############################################################################################
+                    //  Top Pt Reweighting Cat: The SF is meant to correct only the shape of the pt(top) distribution- not the amount of generated events ( you have to consider that the average weight is not 1 ! ) So we define two category for ttbar events
+                    
+                    //###############################################################################################
+                    int size_topPtRW =2;
+                    
+                    float TotalWeight[2] = {TotalWeight_withTopPtRW,TotalWeight_NoTopPtRW};
+                    std::string topPtRW[2] = {"", "_NoTopRW"};
+                    
+                    if (isTTJets == string::npos) size_topPtRW = 1; // If the sample in not ttbar, don't care about new category
+                    
+                    //###############################################################################################
+                    
+                    
+                    
                     
                     std::string CHL="MuJet";
                     
-                    plotFill("Weight_Mu", LepCor,200,0,2);
-                    plotFill("TotalWeight_Mu",TotalWeight*LepCor,1000,0,10);
-                    plotFill("TotalNonLumiWeight_Mu",TotalWeight*LepCor/LumiWeight,1000,0,10);
+                    plotFill("Weight_Mu", MuonCor,200,0,2);
+                    plotFill("Weight_Ele", ElectronCor,200,0,2);
+                    plotFill("TotalWeight_Mu",TotalWeight[0]*MuonCor,1000,0,10);
+                    plotFill("TotalNonLumiWeight_Mu",TotalWeight[0]*MuonCor/LumiWeight,200,0,2);
                     
                     
                     for (int iso = 0; iso < size_isoCat; iso++) {
@@ -519,53 +529,47 @@ std:string Working_Dir= ".";
                                                 if (lqEta_category[ieta]) {
                                                     for (int iCR = 0; iCR < size_CR; iCR++) {
                                                         if (region_category[iCR]) {
-                                                            
-                                                            
-                                                            if (isWJets!= string::npos) WSCALEFACTORE=WSF_mutau;  // Add W scale factor
-                                                            
-                                                            
-                                                            
-                                                            float FullWeight = TotalWeight * LepCor  * WSCALEFACTORE;
-                                                            std::string FullStringName = MT_Cat[imt] + jetMetPhi_Cat[jpt] + lqEta_Cat[ieta] + region_Cat[iCR] + iso_Cat[iso]  ;
-                                                            
-                                                            
-                                                            
-                                                            //##################
-                                                            //This check is used to make sure that each event is just filled once for any of the categories ==> No doube-counting of events  (this is specially important for ttbar events where we have many jets and leptons)
-                                                            if (!( std::find(HistNamesFilled.begin(), HistNamesFilled.end(), FullStringName) != HistNamesFilled.end())){
-                                                                HistNamesFilled.push_back(FullStringName);
+                                                            for (int itopRW = 0; itopRW < size_topPtRW; itopRW++) {
                                                                 
-                                                                plotFill(CHL+"_tmass_MuMet"+FullStringName,tmass_MuMet,200,0,2000,FullWeight);
-                                                                plotFill(CHL+"_tmass_JetMet"+FullStringName,tmass_JetMet,200,0,2000,FullWeight);
-                                                                plotFill(CHL+"_tmass_LQMet"+FullStringName,tmass_LQMet,200,0,2000,FullWeight);
                                                                 
-                                                                plotFill(CHL+"_JetPt"+FullStringName,jetPt->at(ijet) ,200,0,2000,FullWeight);
-                                                                plotFill(CHL+"_JetEta"+FullStringName,jetEta->at(ijet),100,-2.5,2.5,FullWeight);
-                                                                plotFill(CHL+"_LepPt"+FullStringName,muPt->at(imu),200,0,2000,FullWeight);
-                                                                plotFill(CHL+"_LepEta"+FullStringName,muEta->at(imu),100,-2.5,2.5,FullWeight);
-                                                                plotFill(CHL+"_CloseJetLepPt"+FullStringName,CLoseJetMuPt,1000,0,1000,FullWeight);
-                                                                //                                                            plotFill(CHL+"_CloseJetLepEta"+FullStringName,CLoseJetMuEta,100,-2.5,2.5,FullWeight);
+                                                                if (isWJets!= string::npos) WSCALEFACTORE=WSF_mutau;  // Add W scale factor
                                                                 
-                                                                plotFill(CHL+"_nVtx"+FullStringName,nVtx,50,0,50,FullWeight);
-                                                                plotFill(CHL+"_nVtx_NoPU"+FullStringName,nVtx,50,0,50,TotalWeight * LepCor / PUWeight);
-                                                                
-                                                                plotFill(CHL+"_MET"+FullStringName,pfMET,200,0,2000,FullWeight);
-                                                                plotFill(CHL+"_LQMass"+FullStringName,LQ.M(),200,0,2000,FullWeight);
-                                                                plotFill(CHL+"_LQEta"+FullStringName,LQ.Eta(),300,-3,3,FullWeight);
-                                                                plotFill(CHL+"_LQPt"+FullStringName,LQ.Pt(),200,0,2000,FullWeight);
-                                                                plotFill(CHL+"_genHT"+FullStringName,genHT,200,0,2000,FullWeight);
-                                                                
-                                                                //                                                            plotFill(CHL+"_MuPtOverJetPt"+FullStringName,muPt->at(imu)/jetPt->at(ijet),1000,0,10,FullWeight);
-                                                                //                                                            plotFill(CHL+"_LQPtOverMET"+FullStringName,LQ.Pt()/pfMET,1000,0,10,FullWeight);
-                                                                
-                                                                plotFill(CHL+"_dPhi_Jet_Met"+FullStringName,deltaPhi(Jet4Momentum.Phi(),pfMETPhi),200,0,4,FullWeight);
-                                                                plotFill(CHL+"_dPhi_Mu_Met"+FullStringName,deltaPhi(Mu4Momentum.Phi(),pfMETPhi),200,0,4,FullWeight);
-                                                                
-                                                                plotFill(CHL+"_BosonKFactor"+FullStringName,ZBosonKFactor*WBosonKFactor,200,0,2,FullWeight);
-
+                                                                float FullWeight = TotalWeight[itopRW] * MuonCor *ElectronCor * WSCALEFACTORE;
+                                                                std::string FullStringName = topPtRW[itopRW] + MT_Cat[imt] + jetMetPhi_Cat[jpt] + lqEta_Cat[ieta] + region_Cat[iCR] + iso_Cat[iso]  ;
                                                                 
                                                                 
                                                                 
+                                                                //##################
+                                                                //This check is used to make sure that each event is just filled once for any of the categories ==> No doube-counting of events  (this is specially important for ttbar events where we have many jets and leptons)
+                                                                if (!( std::find(HistNamesFilled.begin(), HistNamesFilled.end(), FullStringName) != HistNamesFilled.end())){
+                                                                    HistNamesFilled.push_back(FullStringName);
+                                                                    
+                                                                    plotFill(CHL+"_tmass_MuMet"+FullStringName,tmass_MuMet,200,0,2000,FullWeight);
+                                                                    plotFill(CHL+"_tmass_JetMet"+FullStringName,tmass_JetMet,200,0,2000,FullWeight);
+                                                                    plotFill(CHL+"_tmass_LQMet"+FullStringName,tmass_LQMet,200,0,2000,FullWeight);
+                                                                    plotFill(CHL+"_MET"+FullStringName,pfMET,200,0,2000,FullWeight);
+                                                                    
+                                                                    plotFill(CHL+"_JetPt"+FullStringName,jetPt->at(ijet) ,200,0,2000,FullWeight);
+                                                                    plotFill(CHL+"_JetEta"+FullStringName,jetEta->at(ijet),120,-3,3,FullWeight);
+                                                                    plotFill(CHL+"_LepPt"+FullStringName,muPt->at(imu),200,0,2000,FullWeight);
+                                                                    plotFill(CHL+"_LepEta"+FullStringName,muEta->at(imu),100,-2.5,2.5,FullWeight);
+                                                                    plotFill(CHL+"_CloseJetLepPt"+FullStringName,CLoseJetMuPt,1000,0,1000,FullWeight);
+                                                                    
+                                                                    plotFill(CHL+"_nVtx"+FullStringName,nVtx,50,0,50,FullWeight);
+                                                                    plotFill(CHL+"_nVtx_NoPU"+FullStringName,nVtx,50,0,50,FullWeight/ PUWeight);
+                                                                    
+                                                                    plotFill(CHL+"_LQMass"+FullStringName,LQ4Momentum.M(),200,0,2000,FullWeight);
+                                                                    plotFill(CHL+"_LQEta"+FullStringName,LQ4Momentum.Eta(),500,-5,5,FullWeight);
+                                                                    plotFill(CHL+"_LQPt"+FullStringName,LQ4Momentum.Pt(),200,0,2000,FullWeight);
+                                                                    
+                                                                    
+                                                                    plotFill(CHL+"_dPhi_Jet_Met"+FullStringName,deltaPhi(Jet4Momentum.Phi(),pfMETPhi),200,0,4,FullWeight);
+                                                                    plotFill(CHL+"_dPhi_Mu_Met"+FullStringName,deltaPhi(Mu4Momentum.Phi(),pfMETPhi),200,0,4,FullWeight);
+                                                                    plotFill(CHL+"_dPhi_Mu_Jet"+FullStringName,deltaPhi(Mu4Momentum.Phi(),Jet4Momentum.Phi()),200,0,4,FullWeight);
+                                                                    
+                                                                    plotFill(CHL+"_BosonKFactor"+FullStringName,ZBosonKFactor*WBosonKFactor,200,0,2,FullWeight);
+                                                                    
+                                                                }
                                                             }
                                                             
                                                         }

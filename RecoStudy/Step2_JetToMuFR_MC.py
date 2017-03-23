@@ -183,13 +183,13 @@ def Make_Mu_FakeRate_MC(channelName):
     #    HistoNum.GetXaxis().SetRangeUser(0,400)
     canv.SetLogy()
 #    canv.SetGridx()
-    canv.SetGridy()
+#    canv.SetGridy()
     HistoNum.SetTitle("")
     if FR_vs_LeptonPT: HistoNum.GetXaxis().SetTitle("#mu p_{T} [GeV]")
     else: HistoNum.GetXaxis().SetTitle("Jet p_{T} [GeV]")
     HistoNum.GetYaxis().SetTitle("#mu Fake Rate  (Tight Iso / Loose Iso)")
     HistoNum.GetYaxis().SetTitleOffset(1.3)
-    HistoNum.GetYaxis().SetRangeUser(0.05,2)
+    HistoNum.GetYaxis().SetRangeUser(0.01,5)
     HistoNum.SetStats(0)
     HistoNum.SetMarkerStyle(20)
     
@@ -208,7 +208,7 @@ def Make_Mu_FakeRate_MC(channelName):
     
     else:
         nPar = 5
-        theFit=TF1("theFit",_FIT_Jet,55,500,nPar)
+        theFit=TF1("theFit",_FIT_Jet,40,500,nPar)
 #        theFit.SetParLimits(0,    0,     0.5);
 ##        theFit.SetParameter(0, 0.03)
 ##        theFit.SetParameter(1, 0)

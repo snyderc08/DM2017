@@ -1348,15 +1348,15 @@ float Cor80X_Trigger_Mu_FIT(float pt,float eta, TH2F* HistoTrg ){
     //  Electron Id/Iso Correction 74X  from HTT group
     ////////////////////////////////////////////////////////////
     
-    
-    //float Cor74X_IDIso_Ele(float pt, float eta,  TH2F * HistoEleSF0p5, TH2F * HistoEleSF5 ){
+//https://twiki.cern.ch/twiki/bin/view/CMS/EgammaIDRecipesRun2#Electron_efficiencies_and_scale    
     float Cor80X_IDIso_Ele(float pt, float eta,  TH2F * HistoEleSF){
         
         if (pt >= 10 && pt < 20 ) ptBIN=1;
-        if (pt >= 20 && pt < 30 ) ptBIN=2;
-        if (pt >= 30 && pt < 40) ptBIN=3;
-        if (pt >= 40 && pt < 50) ptBIN=4;
-        if (pt >= 50 ) ptBIN=5;
+        if (pt >= 20 && pt < 35 ) ptBIN=2;
+        if (pt >= 35 && pt < 50) ptBIN=3;
+        if (pt >= 50 && pt < 90) ptBIN=4;
+        if (pt >= 90 && pt < 150) ptBIN=5;
+        if (pt >= 150 ) ptBIN=6;
         
         if (eta >= -2.5 && eta < -2 ) etaBIN=1;
         if (eta >= -2 && eta < -1.566 ) etaBIN=2;
@@ -1527,7 +1527,7 @@ float Cor80X_Trigger_Mu_FIT(float pt,float eta, TH2F* HistoTrg ){
             return Cor80X_IDIso_Ele(pt,eta,HistoEleSF)*Cor80X_Trg_Ele(pt,eta);
     }
     
-    float getCorrFactorElectron74X_IDOnly(bool isData, float pt, float eta,    TH2F * HistoEleSF ){
+    float getCorrFactorMVA90WPElectron80X(bool isData, float pt, float eta,    TH2F * HistoEleSF ){
         if (isData)
             return 1;
         else
