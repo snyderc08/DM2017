@@ -370,7 +370,7 @@ int main(int argc, char** argv) {
                 if ( (muPFNeuIso->at(1) + muPFPhoIso->at(1) - 0.5* muPFPUIso->at(1) )  > 0.0)
                     IsoMu2= ( muPFChIso->at(1)/muPt->at(1) + muPFNeuIso->at(1) + muPFPhoIso->at(1) - 0.5* muPFPUIso->at(1))/muPt->at(1);
                 
-                if ( IsoMu1 < 0.25  && IsoMu2 < 0.25 && Z4Momentum.M() > 80 && Z4Momentum.M()< 100 ) numZboson++;
+                if (  muPt->at(0) > 60 && muPt->at(1) > 15 && IsoMu1 < 0.25  && IsoMu2 < 0.25 && Z4Momentum.M() > 80 && Z4Momentum.M()< 100 ) numZboson++;
             }
             
             
@@ -459,7 +459,10 @@ int main(int argc, char** argv) {
                         
                         
                         LQ=NewJet4Collection + Mu4Momentum;
-                        if ((numTau+numElectron +numZboson) > 0 && fabs(LQ.Eta()) > 1.5) continue;
+                        if ((numTau+numElectron +numZboson) > 0 || fabs(LQ.Eta()) > 1.5) continue;
+                        bool HighDPhi = deltaPhi(NewJet4Collection.Phi(),jetMETPhi) > 0.5;
+                        if (!HighDPhi) continue;
+                                 
                         //###############################################################################################
                         //  Isolation Categorization
                         //###############################################################################################
@@ -480,12 +483,12 @@ int main(int argc, char** argv) {
                         //###############################################################################################
                         float tmass_MuMet= TMass_F(muPt->at(imu), muPt->at(imu)*cos(muPhi->at(imu)),muPt->at(imu)*sin(muPhi->at(imu)) , jetMET, jetMETPhi);
                         const int size_mTCat = 3;
-                        bool MT0 = tmass_MuMet > 0;
-                        bool MT50 = tmass_MuMet > 50;
                         bool MT100 = tmass_MuMet > 100;
+                        bool MT150 = tmass_MuMet > 150;
+                        bool MT200 = tmass_MuMet > 200;
                         
-                        bool MT_category[size_mTCat] = {MT0,MT50,MT100};
-                        std::string MT_Cat[size_mTCat] = {"_MT0", "_MT50","_MT100"};
+                        bool MT_category[size_mTCat] = {MT100,MT150,MT200};
+                        std::string MT_Cat[size_mTCat] = {"_MT100", "_MT150","_MT200"};
                         
                         //                    float tmass_JetMet= TMass_F(jetPt->at(ijet), jetPt->at(ijet)*cos(jetPhi->at(ijet)),jetPt->at(ijet)*sin(jetPhi->at(ijet)) , pfMET, pfMETPhi);
                         //                    float tmass_LQMet= TMass_F(LQ.Pt(), LQ.Px(),LQ.Py(), pfMET, pfMETPhi);
@@ -496,15 +499,16 @@ int main(int argc, char** argv) {
                         //###############################################################################################
                         
                         const int size_METcut = 5;
+                        bool MET100 = jetMET > 100;
+                        bool MET150 = jetMET > 150;
                         bool MET200 = jetMET > 200;
                         bool MET250 = jetMET > 250;
                         bool MET300 = jetMET > 300;
-                        bool MET350 = jetMET > 350;
-                        bool MET400 = jetMET > 400;
                         
                         
-                        bool MetCut_category[size_METcut] = {MET200,MET250,MET300,MET350,MET400};
-                        std::string MetCut_Cat[size_METcut] = {"_MET200", "_MET250","_MET300", "_MET350","_MET400"};
+                        
+                        bool MetCut_category[size_METcut] = {MET100,MET150,MET200,MET250,MET300};
+                        std::string MetCut_Cat[size_METcut] = {"_MET100", "_MET150","_MET200", "_MET250","_MET300"};
                         
                         
                         //###############################################################################################

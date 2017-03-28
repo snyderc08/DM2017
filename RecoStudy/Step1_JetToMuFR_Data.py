@@ -34,7 +34,7 @@ import os
 
 ROOT.gROOT.SetBatch(True)
 SubRootDir = 'OutFiles_QCD/'
-#SubRootDir = 'OutFiles_QCD_NobJetVeto/'
+#SubRootDir = 'OutFiles_QCD_NoTrgMC/'
 #SubRootDir = 'OutFiles_PreSelection/'
 
 
@@ -293,10 +293,10 @@ def Make_Mu_FakeRate(channelName):
 #        theFit.SetParameter(0, 0.03)
 #        theFit.SetParameter(1, 0)
 #        theFit.SetParameter(2, 0.6)
-        theFit.SetParLimits(1, 0.0001,0.00013)
+        theFit.SetParLimits(1, 0.,1)
         theFit.SetParLimits(2, 0.1,10)
         theFit.SetParLimits(3, 0,1000)
-        theFit.SetParLimits(4, 19, 20)
+        theFit.SetParLimits(4, 18, 19)
 #        theFit.SetParameter(4, 96.6)
 
     

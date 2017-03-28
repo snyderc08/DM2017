@@ -59,22 +59,24 @@ def _FileReturn(Name, channel,cat,HistoName,PostFixJet):
 ####################################################
 ##   Start Making the Datacard Histograms
 ####################################################
-def MakeTheHistogram(channel,NormMC,NormQCD,ShapeQCD,chl,Binning):
+def MakeTheHistogram(channel,NormMC,NormQCD,ShapeQCD,chl,Binning,NormMCTT):
     
     
-    signal = ['DM_Codex_']
+    signal = ['Codex_']
     signalName = ['Codex_']
     mass = [
+    '800',
+    '900',
     '1000',
+    '1100',
     '1200',
+    '1300',
     '1400',
-    '1600',
-    '1800',
-    '2000'
+    '1500'
     ]
 
 
-    TOTMASS = ['1000','1200','1400','1600','1800','2000']
+    TOTMASS = ['800','900','1000','1100','1200','1300','1400','1500']
     category = [""]
 
     
@@ -109,6 +111,7 @@ def MakeTheHistogram(channel,NormMC,NormQCD,ShapeQCD,chl,Binning):
                         NormFile= _FileReturn(Name, channel,NameCat, NormMC, JetScale[jscale])
                         NormHisto=NormFile.Get("XXX")
                 
+                        NormHisto.Scale(0.001)
                         RebinedHist= NormHisto.Rebin(len(Binning)-1,"",Binning)
                         tDirectory.WriteObject(RebinedHist,NameOut)
 
@@ -156,22 +159,39 @@ def MakeTheHistogram(channel,NormMC,NormQCD,ShapeQCD,chl,Binning):
                 Name= "TTJets"
                 NameOut= "TT"+str(JetScaleOut[jscale])
 
-                NormFile= _FileReturn(Name, channel,NameCat, NormMC, JetScale[jscale])
+                
+                print NormMCTT
+                NormFile= _FileReturn(Name, channel,NameCat, NormMCTT, JetScale[jscale])
                 NormHisto=NormFile.Get("XXX")
-            
-                RebinedHist= NormHisto.Rebin(len(Binning)-1,"",Binning)
+                
+                NormFileShape= _FileReturn(Name, channel,NameCat, NormMC, JetScale[jscale])
+                NormHistoShape=NormFileShape.Get("XXX")
+                
+                
+                
+                
+                NormHistoShape.Scale(NormHisto.Integral()*1.0/NormHistoShape.Integral())
+                RebinedHist= NormHistoShape.Rebin(len(Binning)-1,"",Binning)
                 tDirectory.WriteObject(RebinedHist,NameOut)
                 ###############  Systematics on Shape and Norm for  To PT Reweighting ####
                 if  jscale==1:
                     for systTopRW in range(len(SystematicTopPtReWeight)):
                         tDirectory.cd()
-                        Histogram = NormMC.replace("_LQMass","_LQMass"+SystematicTopPtReWeight[systTopRW])
+
+                        HistogramNorm = NormMCTT
+                        HistogramShape = NormMC.replace("_LQMass","_LQMass"+SystematicTopPtReWeight[systTopRW])
+                        
                         NameOut= "TT"+str(Signal_Unc_TopPTRW[systTopRW])
 
-                        NormFile= _FileReturn(Name, channel,NameCat, Histogram, JetScale[jscale])
+                        NormFile= _FileReturn(Name, channel,NameCat, HistogramNorm, JetScale[jscale])
                         NormHisto=NormFile.Get("XXX")
+                        
+                        NormFileShape= _FileReturn(Name, channel,NameCat, HistogramShape, JetScale[jscale])
+                        NormHistoShape=NormFileShape.Get("XXX")
 
-                        RebinedHist= NormHisto.Rebin(len(Binning)-1,"",Binning)
+                        NormHistoShape.Scale(NormHisto.Integral()*1.0/NormHistoShape.Integral())
+                        
+                        RebinedHist= NormHistoShape.Rebin(len(Binning)-1,"",Binning)
                         tDirectory.WriteObject(RebinedHist,NameOut)
                             
     
@@ -255,11 +275,11 @@ def MakeTheHistogram(channel,NormMC,NormQCD,ShapeQCD,chl,Binning):
 
                     print "\n---->   ##########\nlooseQCDShape before=",    DataSampleQCDShapeHist.Integral()
                     
-#                    if (SingleTSampleQCDShapeHist) : DataSampleQCDShapeHist.Add(SingleTSampleQCDShapeHist, -1)
-#                    if (VVSampleQCDShapeHist): DataSampleQCDShapeHist.Add(VVSampleQCDShapeHist, -1)
-#                    DataSampleQCDShapeHist.Add(TTSampleQCDShapeHist, -1)
-#                    DataSampleQCDShapeHist.Add(ZTTSampleQCDShapeHist, -1)
-#                    DataSampleQCDShapeHist.Add(WSampleQCDShapeHist, -1)
+                    if (SingleTSampleQCDShapeHist) : DataSampleQCDShapeHist.Add(SingleTSampleQCDShapeHist, -1)
+                    if (VVSampleQCDShapeHist): DataSampleQCDShapeHist.Add(VVSampleQCDShapeHist, -1)
+                    DataSampleQCDShapeHist.Add(TTSampleQCDShapeHist, -1)
+                    DataSampleQCDShapeHist.Add(ZTTSampleQCDShapeHist, -1)
+                    DataSampleQCDShapeHist.Add(WSampleQCDShapeHist, -1)
                     print "\n---->   ##########\nlooseQCDShaoe after=",    DataSampleQCDShapeHist.Integral()
 
 
@@ -280,14 +300,13 @@ def MakeTheHistogram(channel,NormMC,NormQCD,ShapeQCD,chl,Binning):
                     print "\n##########\nlooseQCDNORM after=",    DataSampleQCDNormHist.Integral()
                     FR_FitMaram=Make_Mu_FakeRate(channel)
                     QCDEstimation=0
-                    for bin in xrange(50,500):
+                    for bin in xrange(50,1000):
                         value=DataSampleQCDNormHist.GetBinContent(bin)
                         if value < 0 : value=0
                         FR= _FIT_Jet_Function(bin+1.5,FR_FitMaram)
+                        if FR> 0.9: FR=0.9
                         QCDEstimation += value * FR/(1-FR)
                     print "\n##########\n QCDEstimation",    QCDEstimation
-
-        #            QCDEstimation= (DataSampleQCDNormHist.Integral()- (TT_qcd+ZTT_qcd+W_qcd+SingleT_qcd+VV_qcd)) * OS_SS_Ratio
 
                     NameOut= "QCD"+str(JetScaleOut[jscale])
                     DataSampleQCDShapeHist.Scale(QCDEstimation/DataSampleQCDShapeHist.Integral())  # The shape is from btag-Loose Need get back norm
@@ -320,12 +339,13 @@ if __name__ == "__main__":
     Binning = array.array("d",[0,100,200,300,400,500,600,700,800,900,1000,1150,1300,1450,1600,1800,2000])
 
 
-    Met_Cat= ["_MET200", "_MET250","_MET300", "_MET350","_MET400"]
-    MT_Cat = ["_MT0", "_MT50","_MT100"]
+    Met_Cat= ["_MET100", "_MET150","_MET200", "_MET250","_MET300"]
+    MT_Cat = ["_MT100", "_MT150","_MT200"]
 
     for met in Met_Cat:
         for mt in MT_Cat:
 
 
             NormMC="_LQMass"+mt+met
-            MakeTheHistogram("MuJet",NormMC+"_Iso","_CloseJetLepPt"+mt+met+"_AntiIso",NormMC+"_AntiIso",0,Binning)
+            NormMCTT="_LQMass_NoTopRW"+mt+met
+            MakeTheHistogram("MuJet",NormMC+"_Iso","_CloseJetLepPt"+mt+met+"_AntiIso",NormMC+"_AntiIso",0,Binning,NormMCTT+"_Iso")

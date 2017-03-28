@@ -3,12 +3,7 @@ import ROOT
 import re
 from array import array
 
-#isLOG=1
-
-
-def _GetSF():
-    
-    return 1
+from Step5_TT_W_ScaleFactor import *
 
 RB_=10
 def add_lumi():
@@ -79,27 +74,23 @@ def MakePlot(FileName,categoriy,HistName,Xaxis,Info,RB_,channel,yMin,isLOG):
     
     QCD=file.Get(categoriy).Get("QCD")
     QCD.Rebin(RB_)
-#
+    
 
     W=file.Get(categoriy).Get("W")
     W.Rebin(RB_)
+    W.Scale(SF_W())
     
 
     TT=file.Get(categoriy).Get("TT")
     TT.Rebin(RB_)
-
-
-
-
+    TT.Scale(SF_TT())
     
     SingleT=file.Get(categoriy).Get("SingleTop")
-#    SingleT=file.Get(categoriy).Get("VV")
     SingleT.Rebin(RB_)
 
     VV=file.Get(categoriy).Get("VV")
-#    if not VV: VV=SingleT.Clone()
     VV.Rebin(RB_)
-#    VV.Scale(.000001)
+
 
     DYS=file.Get(categoriy).Get("ZTT")
     DYS.Rebin(RB_)
@@ -115,14 +106,6 @@ def MakePlot(FileName,categoriy,HistName,Xaxis,Info,RB_,channel,yMin,isLOG):
     Data.SetTitle("")
     Data.GetYaxis().SetTitle("Events")
 
-
-    ################################################################################################################
-    #   Here we compute the TT scale factor
-    #   (Data - allBkg)/TT
-    TTScale=(Data.Integral() - SingleT.Integral() - DYS.Integral() - VV.Integral()- W.Integral() - QCD.Integral()) / TT.Integral()
-    print "##########\nTT Scale factor for = ", FileName.replace('TotalRootForLimit_PreSelection_MuJet',''), "  is ---> ", TTScale, "\n##########"
-    ################################################################################################################
-    TT.Scale(0.81)
 
 #    Signal=file.Get(categoriy).Get("DM_Codex_1400")
 #    Signal.Scale(.1)
@@ -285,8 +268,8 @@ def MakePlot(FileName,categoriy,HistName,Xaxis,Info,RB_,channel,yMin,isLOG):
     pad2.cd()
     
     h1=errorBand.Clone()
-    h1.SetMaximum(2)
-    h1.SetMinimum(0.1)
+    h1.SetMaximum(1.5)
+    h1.SetMinimum(0.5)
     h1.SetMarkerStyle(20)
 
     h3=Data.Clone()
@@ -362,13 +345,13 @@ FileNamesInfo=[
 #    Isolation=["_Iso", "_AntiIso","_Total"]
 Isolation=["_Iso"]
 #MT=["_HighMT"]
-MT= ["_NoMT"]
-#MT= ["_NoMT","_HighMT"]
+#MT= ["_NoMT"]
+MT= ["_NoMT","_HighMT"]
 #    JPT=["_LowDPhi", "_HighDPhi"];
 JPT=[ "_HighDPhi"]
 lqEta= ["_Barrel", "_Endcap","_TotEta"]
 #    lqEta= ["_TotEta"]
-region= ["", "_ttbarCR"]
+region= [""]
 #region= ["_ttbarCR"]
 
 #logStat=[0]

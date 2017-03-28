@@ -150,7 +150,6 @@ def MakeTheHistogram(channel,NormMC,NormQCD,ShapeQCD,NormTTbar):
         NormFile= _FileReturn(Name, channel,NameCat, NormTTbar)
         NormHisto=NormFile.Get("HISTO")
         
-        NormTTbar
 
         if not NormHistoShape:
             raise Exception('Not valid %s'%NameOut)

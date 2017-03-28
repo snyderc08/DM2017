@@ -216,9 +216,9 @@ int main(int argc, char** argv) {
         float LeptonPtCut_=60;
         float TauPtCut_=20;
         float JetPtCut=100;
-        float BJetPtCut=20;
+        float BJetPtCut=30;
         float ElectronPtCut_=15;
-        float CSVCut= 0.8484 ;    // loose is 0.460                 //https://twiki.cern.ch/twiki/bin/viewauth/CMS/BtagRecommendation74X
+        float CSVCut=  0.935  ;    // loose is 0.460                 //https://twiki.cern.ch/twiki/bin/viewauth/CMS/BtagRecommendation80X
         float LeptonIsoCut=0.15;
         
         
@@ -479,8 +479,8 @@ int main(int argc, char** argv) {
                     //###############################################################################################
                     const int size_lqEta = 3;
                     bool BarrelLQ = (fabs(LQ4Momentum.Eta()) < 1.5);
-                    bool EndcapLQ = (fabs(LQ4Momentum.Eta()) >= 1.5 );
-                    bool TotLQ = 1;
+                    bool EndcapLQ = (fabs(LQ4Momentum.Eta()) >= 1.5 && fabs(LQ4Momentum.Eta()) <= 3 );
+                    bool TotLQ = fabs(LQ4Momentum.Eta()) <= 3;
                     
                     bool lqEta_category[size_lqEta] = {BarrelLQ,EndcapLQ,TotLQ};
                     std::string lqEta_Cat[size_lqEta] = {"_Barrel", "_Endcap","_TotEta"};
@@ -489,8 +489,8 @@ int main(int argc, char** argv) {
                     //  TTbar & DY control region Categorization
                     //###############################################################################################
                     const int size_CR = 3;
-                    bool signalRegion = numTau+numZboson + numElectron  < 1 ;
-                    bool TTcontrolRegion = (numTau <1 && numZboson < 1 && numElectron > 0 && !isThisJetElectron);
+                    bool signalRegion = numTau+numZboson + numElectron  < 1  && numBJet < 1;
+                    bool TTcontrolRegion = (numTau <1 && numZboson < 1 && numElectron > 0 && !isThisJetElectron );
                     bool DYcontrolRegion = (numTau <1 && numZboson > 0 && numElectron < 1 );
                     bool region_category[size_CR] = {signalRegion,TTcontrolRegion,DYcontrolRegion};
                     std::string region_Cat[size_CR] = {"", "_ttbarCR","_DYCR"};
@@ -563,9 +563,9 @@ int main(int argc, char** argv) {
                                                                     plotFill(CHL+"_LQPt"+FullStringName,LQ4Momentum.Pt(),200,0,2000,FullWeight);
                                                                     
                                                                     
-                                                                    plotFill(CHL+"_dPhi_Jet_Met"+FullStringName,deltaPhi(Jet4Momentum.Phi(),pfMETPhi),200,0,4,FullWeight);
-                                                                    plotFill(CHL+"_dPhi_Mu_Met"+FullStringName,deltaPhi(Mu4Momentum.Phi(),pfMETPhi),200,0,4,FullWeight);
-                                                                    plotFill(CHL+"_dPhi_Mu_Jet"+FullStringName,deltaPhi(Mu4Momentum.Phi(),Jet4Momentum.Phi()),200,0,4,FullWeight);
+                                                                    plotFill(CHL+"_dPhi_Jet_Met"+FullStringName,deltaPhi(Jet4Momentum.Phi(),pfMETPhi),160,0,3.2,FullWeight);
+                                                                    plotFill(CHL+"_dPhi_Mu_Met"+FullStringName,deltaPhi(Mu4Momentum.Phi(),pfMETPhi),160,0,3.2,FullWeight);
+                                                                    plotFill(CHL+"_dPhi_Mu_Jet"+FullStringName,deltaPhi(Mu4Momentum.Phi(),Jet4Momentum.Phi()),160,0,3.2,FullWeight);
                                                                     
                                                                     plotFill(CHL+"_BosonKFactor"+FullStringName,ZBosonKFactor*WBosonKFactor,200,0,2,FullWeight);
                                                                     
