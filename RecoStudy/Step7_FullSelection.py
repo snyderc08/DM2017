@@ -26,6 +26,8 @@ import array
 ##### Get Jet to Tau FR
 from Step1_JetToMuFR_Data import Make_Mu_FakeRate
 from Step1_JetToMuFR_Data import _FIT_Jet_Function
+from Step5_TT_W_ScaleFactor import SF_W
+from Step5_TT_W_ScaleFactor import SF_TT
 ##### Get Jet to Tau FR
 
 gROOT.Reset()
@@ -35,19 +37,20 @@ import os
 ROOT.gROOT.SetBatch(True)
 SubRootDir = 'OutFiles_FullSelection/'
 verbos_ = False
-TauScale = [""]
-JetScale = ["JetDown", "", "JetUp"]
+JetScale = ["JetESDown", "", "JetESUp"]
+JetResol = ["JetERDown", "", "JetERUp"]
+METScale = ["METUESDown", "", "METUESUp","METJESDown","METJESUp"]
 SystematicTopPtReWeight = ["TopPtRWUp","TopPtRWDown"]
 FinalName = ["_mj"]
 
 ############################################################################################################
-def _FileReturn(Name, channel,cat,HistoName,PostFixJet):
+def _FileReturn(Name, channel,cat,HistoName,PostFixJet,PostFixJetRes,PostFixMET):
 
     if not os.path.exists(SubRootDir):
         os.makedirs(SubRootDir)
     myfile = TFile(SubRootDir + Name + '.root')
-    print "##### --->>>>>>> File name is ", SubRootDir + Name + '.root'  "   and histo is -->  ", channel+HistoName + cat+PostFixJet
-    Histo =  myfile.Get(channel+HistoName + cat+PostFixJet)
+    if verbos_: print "##### --->>>>>>> File name is ", SubRootDir + Name + '.root'  "   and histo is -->  ", channel+HistoName + cat+PostFixJet+PostFixJetRes+PostFixMET
+    Histo =  myfile.Get(channel+HistoName + cat+PostFixJet+PostFixJetRes+PostFixMET)
     if not os.path.exists("Extra"):
         os.makedirs("Extra")
     NewFile=TFile("Extra/XXX.root","RECREATE")
@@ -81,253 +84,261 @@ def MakeTheHistogram(channel,NormMC,NormQCD,ShapeQCD,chl,Binning,NormMCTT):
 
     
 
-    JetScaleOut = ["_CMS_scale_j"+"Down", "", "_CMS_scale_j"+"Up"]
+    JetScaleOut = ["_CMS_scale_jes"+"Down", "", "_CMS_scale_jes"+"Up"]
+    JetResolOut = ["_CMS_scale_jer"+"Down", "", "_CMS_scale_jer"+"Up"]
+    METScaleOut = ["_CMS_scale_met_UES"+"Down", "", "_CMS_scale_met_UES"+"Up","_CMS_scale_met_JES"+"Down", "_CMS_scale_met_JES"+"Up"]
     Signal_Unc_TopPTRW = ["_CMS_top_pt_Reweighting"+"Up","_CMS_top_pt_Reweighting"+"Down"]
 
     myOut = TFile(FinalName[chl]+NormMC+".root" , 'RECREATE') # Name Of the output file
 
 
     for NameCat in category:
-        print "starting NameCat and channel and HistoName ", NameCat, channel, NormMC
+        print "starting NameCat=%s and channel=%s and HistoName=%s "%(NameCat, channel, NormMC)
 
         tDirectory= myOut.mkdir(channel + str(NameCat))
         tDirectory.cd()
-        for tscale in range(len(TauScale)):
-            for jscale in range(len(JetScale)):
-#                if tscale != 1 and jscale!=1 : continue
-#               ################################################
-#               #   Filling Signal
-#    #           ################################################
-                for sig in range(len(signal)):
-                    for m in range(len(mass)):
-
-                        print "--------------------------------------------------->     Processing  Signal ", signal[sig],mass[m]
-                        tDirectory.cd()
-
-                        Name= str(signal[sig])+str(mass[m])
-                        NameOut= str(signalName[sig]) +str(TOTMASS[m])+str(JetScaleOut[jscale])
-
-                                
-                        NormFile= _FileReturn(Name, channel,NameCat, NormMC, JetScale[jscale])
-                        NormHisto=NormFile.Get("XXX")
+        for jscale in range(len(JetScale)):
+            for jres in range(len(JetResol)):
+                for mscale in range(len(METScale)):
                 
-                        NormHisto.Scale(0.001)
-                        RebinedHist= NormHisto.Rebin(len(Binning)-1,"",Binning)
-                        tDirectory.WriteObject(RebinedHist,NameOut)
+                    if jscale != 1 and mscale!=1 : continue
+                    if jscale != 1 and jres!=1 : continue
+                    if jres != 1 and mscale!=1 : continue
+                    ################################################
+                    #   Filling Signal
+                    ################################################
+                    for sig in range(len(signal)):
+                        for m in range(len(mass)):
 
+                            print "--------------------------------------------------->     Processing  Signal ", signal[sig],mass[m]
+                            tDirectory.cd()
 
-                ################################################
-                #  Filling SingleTop
-                ################################################
-                print "--------------------------------------------------->     Processing SingleTop"
-                tDirectory.cd()
-            
-                Name= "SingleTop"
-                NameOut= "SingleTop"+str(JetScaleOut[jscale])
-                
-                NormFile= _FileReturn(Name, channel,NameCat, NormMC, JetScale[jscale])
-                NormHisto=NormFile.Get("XXX")
-                
-                RebinedHist= NormHisto.Rebin(len(Binning)-1,"",Binning)
-                tDirectory.WriteObject(RebinedHist,NameOut)
-                
+                            Name= str(signal[sig])+str(mass[m])
+                            NameOut= str(signalName[sig]) +str(TOTMASS[m])+str(JetScaleOut[jscale])+str(JetResolOut[jres])+str(METScaleOut[mscale])
 
-                ################################################
-                #  Filling VV
-                ################################################
-                print "--------------------------------------------------->     Processing VV"
-                tDirectory.cd()
-            
-                Name= "VV"
-                NameOut= "VV"+str(JetScaleOut[jscale])
-                
-                NormFile= _FileReturn(Name, channel,NameCat, NormMC, JetScale[jscale])
-                NormHisto=NormFile.Get("XXX")
-                
-                RebinedHist= NormHisto.Rebin(len(Binning)-1,"",Binning)
-                tDirectory.WriteObject(RebinedHist,NameOut)
-                
-
-
-
-                ################################################
-                #  Filling TOP
-                ################################################
-                print "--------------------------------------------------->     Processing TOP"
-                tDirectory.cd()
-
-                Name= "TTJets"
-                NameOut= "TT"+str(JetScaleOut[jscale])
-
-                
-                print NormMCTT
-                NormFile= _FileReturn(Name, channel,NameCat, NormMCTT, JetScale[jscale])
-                NormHisto=NormFile.Get("XXX")
-                
-                NormFileShape= _FileReturn(Name, channel,NameCat, NormMC, JetScale[jscale])
-                NormHistoShape=NormFileShape.Get("XXX")
-                
-                
-                
-                
-                NormHistoShape.Scale(NormHisto.Integral()*1.0/NormHistoShape.Integral())
-                RebinedHist= NormHistoShape.Rebin(len(Binning)-1,"",Binning)
-                tDirectory.WriteObject(RebinedHist,NameOut)
-                ###############  Systematics on Shape and Norm for  To PT Reweighting ####
-                if  jscale==1:
-                    for systTopRW in range(len(SystematicTopPtReWeight)):
-                        tDirectory.cd()
-
-                        HistogramNorm = NormMCTT
-                        HistogramShape = NormMC.replace("_LQMass","_LQMass"+SystematicTopPtReWeight[systTopRW])
-                        
-                        NameOut= "TT"+str(Signal_Unc_TopPTRW[systTopRW])
-
-                        NormFile= _FileReturn(Name, channel,NameCat, HistogramNorm, JetScale[jscale])
-                        NormHisto=NormFile.Get("XXX")
-                        
-                        NormFileShape= _FileReturn(Name, channel,NameCat, HistogramShape, JetScale[jscale])
-                        NormHistoShape=NormFileShape.Get("XXX")
-
-                        NormHistoShape.Scale(NormHisto.Integral()*1.0/NormHistoShape.Integral())
-                        
-                        RebinedHist= NormHistoShape.Rebin(len(Binning)-1,"",Binning)
-                        tDirectory.WriteObject(RebinedHist,NameOut)
-                            
-    
-                ################################################
-                #  Filling ZTT
-                ################################################
-                print "--------------------------------------------------->     Processing ZTT"
-                tDirectory.cd()
-
-                Name= "DYJetsToLL"
-                NameOut= "ZTT"+str(JetScaleOut[jscale])
-                
-                NormFile= _FileReturn(Name, channel,NameCat, NormMC, JetScale[jscale])
-                NormHisto=NormFile.Get("XXX")
-                
-                RebinedHist= NormHisto.Rebin(len(Binning)-1,"",Binning)
-                tDirectory.WriteObject(RebinedHist,NameOut)
-
-                ################################################
-                #  Filling W
-                ################################################
-                print "--------------------------------------------------->     Processing W"
-                tDirectory.cd()
-
-                Name="WJetsToLNu"
-                NameOut= "W"+str(JetScaleOut[jscale])
-
-                NormFileWNoCor= _FileReturn(Name, channel,NameCat, NormMC.replace("","") +"", JetScale[jscale])
-                NormHistoWNoCor=NormFileWNoCor.Get("XXX")
-                WNoCorNormaliztaion=NormHistoWNoCor.Integral()
-                
-            
-                NormFile= _FileReturn(Name, channel,NameCat, NormMC, JetScale[jscale])
-                NormHisto=NormFile.Get("XXX")
-                
-                NormHisto.Scale(WNoCorNormaliztaion/NormHisto.Integral())
-                RebinedHist= NormHisto.Rebin(len(Binning)-1,"",Binning)
-                tDirectory.WriteObject(RebinedHist,NameOut)
-
-
-
-                ################################################
-                #  Filling QCD
-                ################################################
-                if jscale==1:
-                    print "--------------------------------------------------->     Processing QCD"
-                    tDirectory.cd()
+                                    
+                            NormFile= _FileReturn(Name, channel,NameCat, NormMC, JetScale[jscale] , JetResol[jres] , METScale[mscale])
+                            NormHisto=NormFile.Get("XXX")
                     
+                            NormHisto.Scale(0.001)
+                            RebinedHist= NormHisto.Rebin(len(Binning)-1,"",Binning)
+                            tDirectory.WriteObject(RebinedHist,NameOut)
+
+
+                    ################################################
+                    #  Filling SingleTop
+                    ################################################
+                    print "--------------------------------------------------->     Processing SingleTop"
+                    tDirectory.cd()
+                
                     Name= "SingleTop"
-                    SingleTSampleQCDNorm= _FileReturn(Name, channel,NameCat, NormQCD, JetScale[jscale])
-                    SingleTSampleQCDShape= _FileReturn(Name, channel,NameCat, ShapeQCD, JetScale[jscale])
+                    NameOut= "SingleTop"+str(JetScaleOut[jscale])+str(JetResolOut[jres])+str(METScaleOut[mscale])
                     
-                    Name= "VV"
-                    VVSampleQCDNorm= _FileReturn(Name, channel,NameCat, NormQCD, JetScale[jscale])
-                    VVSampleQCDShape= _FileReturn(Name, channel,NameCat, ShapeQCD, JetScale[jscale])
-
-                    Name= "TTJets"
-                    TTSampleQCDNorm= _FileReturn(Name, channel,NameCat, NormQCD, JetScale[jscale])
-                    TTSampleQCDShape= _FileReturn(Name, channel,NameCat, ShapeQCD, JetScale[jscale])
-
-                    Name= "DYJetsToLL"
-                    ZTTSampleQCDNorm= _FileReturn(Name, channel,NameCat, NormQCD, JetScale[jscale])
-                    ZTTSampleQCDShape= _FileReturn(Name, channel,NameCat, ShapeQCD, JetScale[jscale])
-
-                    Name= "WJetsToLNu"
-                    WSampleQCDNorm= _FileReturn(Name, channel,NameCat, NormQCD, JetScale[jscale])
-                    WSampleQCDShape= _FileReturn(Name, channel,NameCat, ShapeQCD, JetScale[jscale])
-                                
-                    Name="Data"
-                    DataSampleQCDNorm= _FileReturn(Name, channel,NameCat, NormQCD, JetScale[jscale])
-                    DataSampleQCDShape= _FileReturn(Name, channel,NameCat, ShapeQCD, JetScale[jscale])
-
-
-
-                    SingleTSampleQCDShapeHist=SingleTSampleQCDShape.Get("XXX")
-                    VVSampleQCDShapeHist=VVSampleQCDShape.Get("XXX")
-                    TTSampleQCDShapeHist=TTSampleQCDShape.Get("XXX")
-                    ZTTSampleQCDShapeHist=ZTTSampleQCDShape.Get("XXX")
-                    WSampleQCDShapeHist=WSampleQCDShape.Get("XXX")
-                    DataSampleQCDShapeHist=DataSampleQCDShape.Get("XXX")
-
-                    print "\n---->   ##########\nlooseQCDShape before=",    DataSampleQCDShapeHist.Integral()
-                    
-                    if (SingleTSampleQCDShapeHist) : DataSampleQCDShapeHist.Add(SingleTSampleQCDShapeHist, -1)
-                    if (VVSampleQCDShapeHist): DataSampleQCDShapeHist.Add(VVSampleQCDShapeHist, -1)
-                    DataSampleQCDShapeHist.Add(TTSampleQCDShapeHist, -1)
-                    DataSampleQCDShapeHist.Add(ZTTSampleQCDShapeHist, -1)
-                    DataSampleQCDShapeHist.Add(WSampleQCDShapeHist, -1)
-                    print "\n---->   ##########\nlooseQCDShaoe after=",    DataSampleQCDShapeHist.Integral()
-
-
-                    SingleTSampleQCDNormHist=SingleTSampleQCDNorm.Get("XXX")
-                    VVSampleQCDNormHist=VVSampleQCDNorm.Get("XXX")
-                    TTSampleQCDNormHist=TTSampleQCDNorm.Get("XXX")
-                    ZTTSampleQCDNormHist=ZTTSampleQCDNorm.Get("XXX")
-                    WSampleQCDNormHist=WSampleQCDNorm.Get("XXX")
-                    DataSampleQCDNormHist=DataSampleQCDNorm.Get("XXX")
-                    
-
-                    if (SingleTSampleQCDNormHist) : DataSampleQCDNormHist.Add(SingleTSampleQCDNormHist, -1)
-                    if (VVSampleQCDNormHist): DataSampleQCDNormHist.Add(VVSampleQCDNormHist, -1)
-                    DataSampleQCDNormHist.Add(TTSampleQCDNormHist, -1)
-                    DataSampleQCDNormHist.Add(ZTTSampleQCDNormHist, -1)
-                    DataSampleQCDNormHist.Add(WSampleQCDNormHist, -1)
-                    
-                    print "\n##########\nlooseQCDNORM after=",    DataSampleQCDNormHist.Integral()
-                    FR_FitMaram=Make_Mu_FakeRate(channel)
-                    QCDEstimation=0
-                    for bin in xrange(50,1000):
-                        value=DataSampleQCDNormHist.GetBinContent(bin)
-                        if value < 0 : value=0
-                        FR= _FIT_Jet_Function(bin+1.5,FR_FitMaram)
-                        if FR> 0.9: FR=0.9
-                        QCDEstimation += value * FR/(1-FR)
-                    print "\n##########\n QCDEstimation",    QCDEstimation
-
-                    NameOut= "QCD"+str(JetScaleOut[jscale])
-                    DataSampleQCDShapeHist.Scale(QCDEstimation/DataSampleQCDShapeHist.Integral())  # The shape is from btag-Loose Need get back norm
-                    RebinedHist= DataSampleQCDShapeHist.Rebin(len(Binning)-1,"",Binning)
-                    tDirectory.WriteObject(RebinedHist,NameOut)
-
-                ################################################
-                #  Filling Data
-                ################################################
-                if jscale==1:
-                    print "--------------------------------------------------->     Processing Data"
-                    tDirectory.cd()
-
-                    Name='Data'
-                    NameOut='data_obs'
-
-                    NormFile= _FileReturn(Name, channel,NameCat, NormMC, JetScale[jscale])
+                    NormFile= _FileReturn(Name, channel,NameCat, NormMC, JetScale[jscale] , JetResol[jres] , METScale[mscale] )
                     NormHisto=NormFile.Get("XXX")
-                
+                    
                     RebinedHist= NormHisto.Rebin(len(Binning)-1,"",Binning)
                     tDirectory.WriteObject(RebinedHist,NameOut)
+                    
+
+                    ################################################
+                    #  Filling VV
+                    ################################################
+                    print "--------------------------------------------------->     Processing VV"
+                    tDirectory.cd()
+                
+                    Name= "VV"
+                    NameOut= "VV"+str(JetScaleOut[jscale])+str(JetResolOut[jres])+str(METScaleOut[mscale])
+                    
+                    NormFile= _FileReturn(Name, channel,NameCat, NormMC, JetScale[jscale] , JetResol[jres] , METScale[mscale] )
+                    NormHisto=NormFile.Get("XXX")
+                    
+                    RebinedHist= NormHisto.Rebin(len(Binning)-1,"",Binning)
+                    tDirectory.WriteObject(RebinedHist,NameOut)
+                    
+
+
+
+                    ################################################
+                    #  Filling TOP
+                    ################################################
+                    print "--------------------------------------------------->     Processing TOP"
+                    tDirectory.cd()
+
+                    Name= "TTJets"
+                    NameOut= "TT"+str(JetScaleOut[jscale])+str(JetResolOut[jres])+str(METScaleOut[mscale])
+
+                    
+                    print NormMCTT
+                    NormFile= _FileReturn(Name, channel,NameCat, NormMCTT, JetScale[jscale] , JetResol[jres] , METScale[mscale] )
+                    NormHisto=NormFile.Get("XXX")
+                    
+                    NormFileShape= _FileReturn(Name, channel,NameCat, NormMC, JetScale[jscale] , JetResol[jres] , METScale[mscale] )
+                    NormHistoShape=NormFileShape.Get("XXX")
+                    
+                    
+                    
+                    
+                    NormHistoShape.Scale(NormHisto.Integral()*1.0/NormHistoShape.Integral())
+                    NormHistoShape.Scale(SF_W())
+                    RebinedHist= NormHistoShape.Rebin(len(Binning)-1,"",Binning)
+                    tDirectory.WriteObject(RebinedHist,NameOut)
+                    ###############  Systematics on Shape and Norm for  To PT Reweighting ####
+                    if jscale==1 and mscale==1 and jres==1:
+                        for systTopRW in range(len(SystematicTopPtReWeight)):
+                            tDirectory.cd()
+
+                            HistogramNorm = NormMCTT
+                            HistogramShape = NormMC.replace("_LQMass","_LQMass"+SystematicTopPtReWeight[systTopRW])
+                            
+                            NameOut= "TT"+str(Signal_Unc_TopPTRW[systTopRW])
+
+                            NormFile= _FileReturn(Name, channel,NameCat, HistogramNorm, JetScale[jscale] , JetResol[jres] , METScale[mscale] )
+                            NormHisto=NormFile.Get("XXX")
+                            
+                            NormFileShape= _FileReturn(Name, channel,NameCat, HistogramShape, JetScale[jscale] , JetResol[jres] , METScale[mscale] )
+                            NormHistoShape=NormFileShape.Get("XXX")
+
+                            NormHistoShape.Scale(NormHisto.Integral()*1.0/NormHistoShape.Integral())
+                            NormHistoShape.Scale(SF_W())
+                            RebinedHist= NormHistoShape.Rebin(len(Binning)-1,"",Binning)
+                            tDirectory.WriteObject(RebinedHist,NameOut)
+                                
+        
+                    ################################################
+                    #  Filling ZTT
+                    ################################################
+                    print "--------------------------------------------------->     Processing ZTT"
+                    tDirectory.cd()
+
+                    Name= "DYJetsToLL"
+                    NameOut= "ZTT"+str(JetScaleOut[jscale])+str(JetResolOut[jres])+str(METScaleOut[mscale])
+                    
+                    NormFile= _FileReturn(Name, channel,NameCat, NormMC, JetScale[jscale] , JetResol[jres] , METScale[mscale] )
+                    NormHisto=NormFile.Get("XXX")
+                    
+                    RebinedHist= NormHisto.Rebin(len(Binning)-1,"",Binning)
+                    tDirectory.WriteObject(RebinedHist,NameOut)
+
+                    ################################################
+                    #  Filling W
+                    ################################################
+                    print "--------------------------------------------------->     Processing W"
+                    tDirectory.cd()
+
+                    Name="WJetsToLNu"
+                    NameOut= "W"+str(JetScaleOut[jscale])+str(JetResolOut[jres])+str(METScaleOut[mscale])
+
+                    NormFileWNoCor= _FileReturn(Name, channel,NameCat, NormMC.replace("","") +"", JetScale[jscale] , JetResol[jres] , METScale[mscale] )
+                    NormHistoWNoCor=NormFileWNoCor.Get("XXX")
+                    WNoCorNormaliztaion=NormHistoWNoCor.Integral()
+                    
+                
+                    NormFile= _FileReturn(Name, channel,NameCat, NormMC, JetScale[jscale] , JetResol[jres] , METScale[mscale] )
+                    NormHisto=NormFile.Get("XXX")
+                    
+                    NormHisto.Scale(WNoCorNormaliztaion/NormHisto.Integral())
+                    NormHisto.Scale(SF_W())
+                    RebinedHist= NormHisto.Rebin(len(Binning)-1,"",Binning)
+                    tDirectory.WriteObject(RebinedHist,NameOut)
+
+
+
+                    ################################################
+                    #  Filling QCD
+                    ################################################
+                    if jscale==1 and mscale==1 and jres==1:
+                        print "--------------------------------------------------->     Processing QCD"
+                        tDirectory.cd()
+                        
+                        Name= "SingleTop"
+                        SingleTSampleQCDNorm= _FileReturn(Name, channel,NameCat, NormQCD, JetScale[jscale] , JetResol[jres] , METScale[mscale] )
+                        SingleTSampleQCDShape= _FileReturn(Name, channel,NameCat, ShapeQCD, JetScale[jscale] , JetResol[jres] , METScale[mscale] )
+                        
+                        Name= "VV"
+                        VVSampleQCDNorm= _FileReturn(Name, channel,NameCat, NormQCD, JetScale[jscale] , JetResol[jres] , METScale[mscale] )
+                        VVSampleQCDShape= _FileReturn(Name, channel,NameCat, ShapeQCD, JetScale[jscale] , JetResol[jres] , METScale[mscale] )
+
+                        Name= "TTJets"
+                        TTSampleQCDNorm= _FileReturn(Name, channel,NameCat, NormQCD, JetScale[jscale] , JetResol[jres] , METScale[mscale] )
+                        TTSampleQCDShape= _FileReturn(Name, channel,NameCat, ShapeQCD, JetScale[jscale] , JetResol[jres] , METScale[mscale] )
+
+                        Name= "DYJetsToLL"
+                        ZTTSampleQCDNorm= _FileReturn(Name, channel,NameCat, NormQCD, JetScale[jscale] , JetResol[jres] , METScale[mscale] )
+                        ZTTSampleQCDShape= _FileReturn(Name, channel,NameCat, ShapeQCD, JetScale[jscale] , JetResol[jres] , METScale[mscale] )
+
+                        Name= "WJetsToLNu"
+                        WSampleQCDNorm= _FileReturn(Name, channel,NameCat, NormQCD, JetScale[jscale] , JetResol[jres] , METScale[mscale] )
+                        WSampleQCDShape= _FileReturn(Name, channel,NameCat, ShapeQCD, JetScale[jscale] , JetResol[jres] , METScale[mscale] )
+                                    
+                        Name="Data"
+                        DataSampleQCDNorm= _FileReturn(Name, channel,NameCat, NormQCD, JetScale[jscale] , JetResol[jres] , METScale[mscale] )
+                        DataSampleQCDShape= _FileReturn(Name, channel,NameCat, ShapeQCD, JetScale[jscale] , JetResol[jres] , METScale[mscale] )
+
+
+
+                        SingleTSampleQCDShapeHist=SingleTSampleQCDShape.Get("XXX")
+                        VVSampleQCDShapeHist=VVSampleQCDShape.Get("XXX")
+                        TTSampleQCDShapeHist=TTSampleQCDShape.Get("XXX")
+                        ZTTSampleQCDShapeHist=ZTTSampleQCDShape.Get("XXX")
+                        WSampleQCDShapeHist=WSampleQCDShape.Get("XXX")
+                        DataSampleQCDShapeHist=DataSampleQCDShape.Get("XXX")
+
+                        print "\n---->   ##########\nlooseQCDShape before=",    DataSampleQCDShapeHist.Integral()
+                        
+                        if (SingleTSampleQCDShapeHist) : DataSampleQCDShapeHist.Add(SingleTSampleQCDShapeHist, -1)
+                        if (VVSampleQCDShapeHist): DataSampleQCDShapeHist.Add(VVSampleQCDShapeHist, -1)
+                        DataSampleQCDShapeHist.Add(TTSampleQCDShapeHist, -1)
+                        DataSampleQCDShapeHist.Add(ZTTSampleQCDShapeHist, -1)
+                        DataSampleQCDShapeHist.Add(WSampleQCDShapeHist, -1)
+                        print "\n---->   ##########\nlooseQCDShaoe after=",    DataSampleQCDShapeHist.Integral()
+
+
+                        SingleTSampleQCDNormHist=SingleTSampleQCDNorm.Get("XXX")
+                        VVSampleQCDNormHist=VVSampleQCDNorm.Get("XXX")
+                        TTSampleQCDNormHist=TTSampleQCDNorm.Get("XXX")
+                        ZTTSampleQCDNormHist=ZTTSampleQCDNorm.Get("XXX")
+                        WSampleQCDNormHist=WSampleQCDNorm.Get("XXX")
+                        DataSampleQCDNormHist=DataSampleQCDNorm.Get("XXX")
+                        
+
+                        if (SingleTSampleQCDNormHist) : DataSampleQCDNormHist.Add(SingleTSampleQCDNormHist, -1)
+                        if (VVSampleQCDNormHist): DataSampleQCDNormHist.Add(VVSampleQCDNormHist, -1)
+                        DataSampleQCDNormHist.Add(TTSampleQCDNormHist, -1)
+                        DataSampleQCDNormHist.Add(ZTTSampleQCDNormHist, -1)
+                        DataSampleQCDNormHist.Add(WSampleQCDNormHist, -1)
+                        
+                        print "\n##########\nlooseQCDNORM after=",    DataSampleQCDNormHist.Integral()
+                        FR_FitMaram=Make_Mu_FakeRate(channel)
+                        QCDEstimation=0
+                        for bin in xrange(50,1000):
+                            value=DataSampleQCDNormHist.GetBinContent(bin)
+                            if value < 0 : value=0
+                            FR= _FIT_Jet_Function(bin+1.5,FR_FitMaram)
+                            if FR> 0.9: FR=0.9
+                            QCDEstimation += value * FR/(1-FR)
+                        print "\n##########\n QCDEstimation",    QCDEstimation
+
+                        NameOut= "QCD"+str(JetScaleOut[jscale])+str(JetResolOut[jres])+str(METScaleOut[mscale])
+                        DataSampleQCDShapeHist.Scale(QCDEstimation/DataSampleQCDShapeHist.Integral())  # The shape is from btag-Loose Need get back norm
+                        RebinedHist= DataSampleQCDShapeHist.Rebin(len(Binning)-1,"",Binning)
+                        tDirectory.WriteObject(RebinedHist,NameOut)
+
+                    ################################################
+                    #  Filling Data
+                    ################################################
+                    if jscale==1 and mscale==1 and jres==1:
+                        print "--------------------------------------------------->     Processing Data"
+                        tDirectory.cd()
+
+                        Name='Data'
+                        NameOut='data_obs'
+
+                        NormFile= _FileReturn(Name, channel,NameCat, NormMC, JetScale[jscale] , JetResol[jres] , METScale[mscale] )
+                        NormHisto=NormFile.Get("XXX")
+                    
+                        RebinedHist= NormHisto.Rebin(len(Binning)-1,"",Binning)
+                        tDirectory.WriteObject(RebinedHist,NameOut)
 
 
 
@@ -340,7 +351,7 @@ if __name__ == "__main__":
 
 
     Met_Cat= ["_MET100", "_MET150","_MET200", "_MET250","_MET300"]
-    MT_Cat = ["_MT100", "_MT150","_MT200"]
+    MT_Cat = ["_MT100", "_MT150","_MT200", "_MT250","_MT300"]
 
     for met in Met_Cat:
         for mt in MT_Cat:

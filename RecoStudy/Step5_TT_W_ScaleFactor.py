@@ -45,7 +45,7 @@ def returnSF_W(FileName,TTSF):
     #   Here we compute the W scale factor
     #   (Data - allBkg)/W
     WScale=(Data.Integral() - SingleT.Integral() - DYS.Integral() - VV.Integral()- TT.Integral() - QCD.Integral()) / W.Integral()
-    print "##########\nTT Scale factor for = ", FileName.replace('TotalRootForLimit_PreSelection_MuJet',''), "  is ---> ", WScale, "\n##########"
+    print "##########\nW Scale factor for = ", FileName.replace('TotalRootForLimit_PreSelection_MuJet',''), "  is ---> ", WScale, "\n##########"
     ################################################################################################################
     
     return WScale
