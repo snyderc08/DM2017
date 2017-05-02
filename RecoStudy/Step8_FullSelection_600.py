@@ -38,8 +38,7 @@ ROOT.gROOT.SetBatch(True)
 SubRootDir = 'OutFiles_FullSelection/'
 verbos_ = False
 JetScale = ["JetESDown", "", "JetESUp"]
-#JetResol = ["JetERDown", "", "JetERUp"]
-JetResol = ["JetERDown"]
+JetResol = ["JetERDown", "", "JetERUp"]
 METScale = ["METUESDown", "", "METUESUp","METJESDown","METJESUp"]
 SystematicTopPtReWeight = ["TopPtRWUp","TopPtRWDown"]
 FinalName = ["_mj"]
@@ -66,32 +65,30 @@ def _FileReturn(Name, channel,cat,HistoName,PostFixJet,PostFixJetRes,PostFixMET)
 def MakeTheHistogram(channel,NormMC,NormQCD,ShapeQCD,chl,Binning,NormMCTT):
     
     
-    signal = ['Codex_']
-    signalName = ['Codex_']
+    signal = ['Codex_DMX_']
+    signalName = ['Codex_DMX_']
     mass = [
-    '800',
-    '900',
-    '1000',
-    '1100',
     '1200',
     '1300',
     '1400',
-    '1500'
+    '1500',
+    '1600',
+    '1700',
+    '1800'
     ]
 
 
-    TOTMASS = ['800','900','1000','1100','1200','1300','1400','1500']
+    TOTMASS = ['1200','1300','1400','1500','1600','1700','1800']
     category = [""]
 
     
 
     JetScaleOut = ["_CMS_scale_jes"+"Down", "", "_CMS_scale_jes"+"Up"]
-#    JetResolOut = ["_CMS_scale_jer"+"Down", "", "_CMS_scale_jer"+"Up"]
-    JetResolOut = [""]
+    JetResolOut = ["_CMS_scale_jer"+"Down", "", "_CMS_scale_jer"+"Up"]
     METScaleOut = ["_CMS_scale_met_UES"+"Down", "", "_CMS_scale_met_UES"+"Up","_CMS_scale_met_JES"+"Down", "_CMS_scale_met_JES"+"Up"]
     Signal_Unc_TopPTRW = ["_CMS_top_pt_Reweighting"+"Up","_CMS_top_pt_Reweighting"+"Down"]
 
-    myOut = TFile(FinalName[chl]+NormMC+".root" , 'RECREATE') # Name Of the output file
+    myOut = TFile(FinalName[chl]+NormMC+"_DMX600.root" , 'RECREATE') # Name Of the output file
 
 
     for NameCat in category:
@@ -104,8 +101,8 @@ def MakeTheHistogram(channel,NormMC,NormQCD,ShapeQCD,chl,Binning,NormMCTT):
                 for mscale in range(len(METScale)):
                 
                     if jscale != 1 and mscale!=1 : continue
-                    if jscale != 1 and jres!=0 : continue
-                    if jres != 0 and mscale!=1 : continue
+                    if jscale != 1 and jres!=1 : continue
+                    if jres != 1 and mscale!=1 : continue
                     ################################################
                     #   Filling Signal
                     ################################################
@@ -186,7 +183,7 @@ def MakeTheHistogram(channel,NormMC,NormQCD,ShapeQCD,chl,Binning,NormMCTT):
                     RebinedHist= NormHistoShape.Rebin(len(Binning)-1,"",Binning)
                     tDirectory.WriteObject(RebinedHist,NameOut)
                     ###############  Systematics on Shape and Norm for  To PT Reweighting ####
-                    if jscale==1 and mscale==1 and jres==0:
+                    if jscale==1 and mscale==1 and jres==1:
                         for systTopRW in range(len(SystematicTopPtReWeight)):
                             tDirectory.cd()
 
@@ -249,7 +246,7 @@ def MakeTheHistogram(channel,NormMC,NormQCD,ShapeQCD,chl,Binning,NormMCTT):
                     ################################################
                     #  Filling QCD
                     ################################################
-                    if jscale==1 and mscale==1 and jres==0:
+                    if jscale==1 and mscale==1 and jres==1:
                         print "--------------------------------------------------->     Processing QCD"
                         tDirectory.cd()
                         
@@ -329,7 +326,7 @@ def MakeTheHistogram(channel,NormMC,NormQCD,ShapeQCD,chl,Binning,NormMCTT):
                     ################################################
                     #  Filling Data
                     ################################################
-                    if jscale==1 and mscale==1 and jres==0:
+                    if jscale==1 and mscale==1 and jres==1:
                         print "--------------------------------------------------->     Processing Data"
                         tDirectory.cd()
 
@@ -349,11 +346,11 @@ def MakeTheHistogram(channel,NormMC,NormQCD,ShapeQCD,chl,Binning,NormMCTT):
 
 if __name__ == "__main__":
 
-    Binning = array.array("d",[0,100,200,300,400,500,600,700,800,900,1000,1100,1200,1300,1400,1500,1600,1700,1800,1900,2000])
+    Binning = array.array("d",[0,100,200,300,400,500,600,700,800,900,1000,1150,1300,1450,1600,1800,2000])
 
 
-    Met_Cat= ["_MET100", "_MET150","_MET200", "_MET250","_MET300", "_MET350","_MET400", "_MET450","_MET500"]
-    MT_Cat = ["_MT100", "_MT150","_MT200", "_MT250","_MT300", "_MT350","_MT400", "_MT450","_MT500"]
+    Met_Cat= ["_MET100", "_MET150","_MET200", "_MET250","_MET300"]
+    MT_Cat = ["_MT100", "_MT150","_MT200", "_MT250","_MT300"]
 
     for met in Met_Cat:
         for mt in MT_Cat:

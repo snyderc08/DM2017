@@ -130,14 +130,15 @@ def MakePlot(FileName,HistName,Info):
     l2.Draw("same")
     l3=add_Preliminary()
     l3.Draw("same")
-    l4=ROOT.TPaveText(0.1,0.82,0.3,0.89, "NDC")
+    l4=ROOT.TPaveText(0.1,0.84,0.4,0.89, "NDC")
+    l4.SetFillColor(0)
     l4.AddText(Info)
-    l4.SetBorderSize(   0 )
-    l4.SetFillStyle(    0 )
+    l4.SetBorderSize(   1 )
+#    l4.SetFillStyle(    0 )
     l4.SetTextAlign(   12 )
-    l4.SetTextColor(    1 )
+    l4.SetTextColor(    8 )
     l4.SetTextSize(0.04)
-    l4.SetTextFont (   42 )
+    l4.SetTextFont (   62 )
     l4.Draw('same')
 
     c.SaveAs("_opt_%s.pdf"%mass)
@@ -166,7 +167,7 @@ for mass in Mass:
         j=0
         for mt in MT_Cat:
             j+=1
-            with open('outputCodex/Codex%s%s/limits_LIMITS.json'%(mt,met)) as data_file:
+            with open('outputCodex2/Codex%s%s/limits_LIMITS.json'%(mt,met)) as data_file:
                 data = json.load(data_file)
                 print i,j,data[mass]["exp0"]
                 Hist2D.SetBinContent(i,j,data[mass]["exp0"])

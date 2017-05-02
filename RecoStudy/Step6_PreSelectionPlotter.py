@@ -85,15 +85,14 @@ def MakeTheHistogram(channel,NormMC,NormQCD,ShapeQCD,NormTTbar):
         print "--------------------------------------------------->     Processing Codex1400"
         tDirectory.cd()
         
-        Name= "DM_Codex_1400"
-        NameOut= "DM_Codex_1400"
+        Name= "Codex_1200"
+        NameOut= "Codex_1200"
         
         NormFile= _FileReturn(Name, channel,NameCat, NormMC)
         NormHisto=NormFile.Get("HISTO")
 #        
         if not NormHisto:
-            m=1
-#            raise Exception('Not valid %s'%NameOut)
+            raise Exception('Not valid %s'%NameOut)
         else:
             RebinedHist= NormHisto.Rebin(RB_)
             tDirectory.WriteObject(RebinedHist,NameOut)
@@ -314,14 +313,14 @@ if __name__ == "__main__":
 
 #    Isolation=["_Iso", "_AntiIso","_Total"]
     Isolation=["_Iso"]
-#    MT=["_NoMT"]
-    MT= ["_NoMT","_HighMT"]
+    MT=["_HighMT"]
+#    MT= ["_NoMT","_HighMT"]
 #    JPT=["_LowDPhi", "_HighDPhi"];
     JPT=[ "_HighDPhi"]
     lqEta= ["_Barrel", "_Endcap","_TotEta"]
 #    lqEta= ["_TotEta"]
-    region= ["", "_ttbarCR","_DYCR"]
-#    region= ["", "_DYCR"]
+#    region= ["", "_ttbarCR","_DYCR"]
+    region= [""]
 
     for Norm in PlotName:
         for iso in Isolation:

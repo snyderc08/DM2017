@@ -106,8 +106,8 @@ int main() {
     //! [part5]
     cb.cp().process(ch::JoinStr({sig_procs, {"ZTT", "W", "TT","VV","SingleTop"}}))
     .AddSyst(cb, "lumi_$ERA", "lnN", SystMap<era>::init
-             ({"7TeV"}, 1.022)
-             ({"13TeV"}, 1.062));
+//             ({"7TeV"}, 1.022)
+             ({"13TeV"}, 1.026));
     //! [part5]
     
     //! [part6]

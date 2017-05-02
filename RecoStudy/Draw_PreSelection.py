@@ -107,13 +107,13 @@ def MakePlot(FileName,categoriy,HistName,Xaxis,Info,RB_,channel,yMin,isLOG):
     Data.GetYaxis().SetTitle("Events")
 
 
-#    Signal=file.Get(categoriy).Get("DM_Codex_1400")
-#    Signal.Scale(.1)
-#    Signal.Rebin(RB_)
-#    Signal.SetLineStyle(11)
-#    Signal.SetLineWidth(3)
-#    Signal.SetLineColor(4)
-#    Signal.SetMarkerColor(4)
+    Signal=file.Get(categoriy).Get("Codex_1200")
+    Signal.Scale(3)
+    Signal.Rebin(RB_)
+    Signal.SetLineStyle(11)
+    Signal.SetLineWidth(3)
+    Signal.SetLineColor(4)
+    Signal.SetMarkerColor(4)
 
 
     QCD.SetFillColor(ROOT.TColor.GetColor(408, 106, 154))
@@ -152,6 +152,7 @@ def MakePlot(FileName,categoriy,HistName,Xaxis,Info,RB_,channel,yMin,isLOG):
     Data.SetLineColor(ROOT.kBlack)
     Data.SetLineWidth(2)
     
+    #Making the plot blind
     if FileName.find("LQMass") > 0 :
         print "##################################\n", FileName
         for i in range(Data.GetNbinsX()):
@@ -216,11 +217,11 @@ def MakePlot(FileName,categoriy,HistName,Xaxis,Info,RB_,channel,yMin,isLOG):
     stack.Draw("histsame")
     errorBand.Draw("e2same")
     Data.Draw("esame")
-#    Signal.Draw("histsame")
+    Signal.Draw("histsame")
 
     legende=make_legend()
     legende.AddEntry(Data,"Observed","elp")
-#    legende.AddEntry(Signal,"Codex_1400","l")
+    legende.AddEntry(Signal,"Codex_1200","l")
     legende.AddEntry(TT,"t#bar{t}+jets","f")
     legende.AddEntry(SingleT,"SingleTop","f")
     legende.AddEntry(DYS,"DY #rightarrowll ","f")
@@ -344,18 +345,18 @@ FileNamesInfo=[
 
 #    Isolation=["_Iso", "_AntiIso","_Total"]
 Isolation=["_Iso"]
-#MT=["_HighMT"]
+MT=["_HighMT"]
 #MT= ["_NoMT"]
-MT= ["_NoMT","_HighMT"]
+#MT= ["_NoMT","_HighMT"]
 #    JPT=["_LowDPhi", "_HighDPhi"];
 JPT=[ "_HighDPhi"]
-lqEta= ["_Barrel", "_Endcap","_TotEta"]
-#    lqEta= ["_TotEta"]
+#lqEta= ["_Barrel", "_Endcap","_TotEta"]
+lqEta= ["_TotEta"]
 region= [""]
 #region= ["_ttbarCR"]
 
-#logStat=[0]
-logStat=[1]
+logStat=[0]
+#logStat=[1]
 
 
 for i in range(0,len(FileNamesInfo)):

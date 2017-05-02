@@ -240,7 +240,7 @@ int main(int argc, char** argv) {
         float LeptonIsoCut=0.15;
         
         float jetES[3]={-1,0,1};
-        std::string ResolJet_Cat[3] = {"JetERDown", "", "JetERUp"};
+        std::string ResolJet_Cat[1] = {""};
         std::string ScaleJet_Cat[3] = {"JetESDown", "", "JetESUp"};
         std::string ScaleMETUE_Cat[5] = {"METUESDown", "", "METUESUp","METJESDown","METJESUp"};
         
@@ -449,31 +449,34 @@ int main(int argc, char** argv) {
                 for (int ijet= 0 ; ijet < nJet ; ijet++){
                     
                     
-                    float JetSmearResolution[3]={1,1,1};
-                    if (!isData){
-                        JetSmearResolution[0]=jetP4SmearDo->at(ijet);
-                        JetSmearResolution[1]=jetP4Smear->at(ijet);
-                        JetSmearResolution[2]=jetP4SmearUp->at(ijet);
-                    }
+//                    float JetSmearResolution[3]={1,1,1};
+////                    if (!isData){
+////                        JetSmearResolution[0]=jetP4SmearDo->at(ijet);
+////                        JetSmearResolution[1]=jetP4Smear->at(ijet);
+////                        JetSmearResolution[2]=jetP4SmearUp->at(ijet);
+////                    }
+                        float JetSmearResolution=1;
                     
                     float UESMET[5]={pfMET_T1UESDo,pfMET,pfMET_T1UESUp,pfMET_T1JESDo,pfMET_T1JESUp};
                     float UESMETPhi[5]={pfMETPhi_T1UESDo,pfMETPhi,pfMETPhi_T1UESUp,pfMETPhi_T1JESDo,pfMETPhi_T1JESUp};
                     
                     
-                    for (int jetRes=0;jetRes<3;jetRes++){
+//                    for (int jetRes=0;jetRes<3;jetRes++){  // No need for JER  it has very small effect
+                    for (int jetRes=0;jetRes<1;jetRes++){
                         for (int metUE=0; metUE < 5; metUE++){
                             for (int jetScl=0;jetScl<3;jetScl++){
                     
                                 
                                 // This is to check that we only make the plots only either JES or MET is applied (not both of them simultaneously)!
-                                if (jetRes!=1 && metUE != 1  ) continue;
-                                if (jetRes!=1 && jetScl != 1 ) continue;
+                                if (jetRes!=0 && metUE != 1  ) continue;
+                                if (jetRes!=0 && jetScl != 1 ) continue;
                                 if (metUE != 1 && jetScl != 1 ) continue;
                                 
                                 
                                 Jet4MomentumNonSmear.SetPtEtaPhiE(jetPt->at(ijet),jetEta->at(ijet),jetPhi->at(ijet),jetEn->at(ijet));
 //                                cout << "Jet pt before Smear="<<Jet4MomentumNonSmear.Pt()<<"\t";
-                                Jet4Momentum=Jet4MomentumNonSmear*JetSmearResolution[jetRes];
+//                                Jet4Momentum=Jet4MomentumNonSmear*JetSmearResolution[jetRes];
+                                Jet4Momentum=Jet4MomentumNonSmear*JetSmearResolution;
 //                                cout << "Jet pt after Smear="<<Jet4Momentum.Pt()<<"\n";
                                 
                                 
@@ -523,15 +526,19 @@ int main(int argc, char** argv) {
                                 //  MT Categorization
                                 //###############################################################################################
                                 float tmass_MuMet= TMass_F(muPt->at(imu), muPt->at(imu)*cos(muPhi->at(imu)),muPt->at(imu)*sin(muPhi->at(imu)) , jetMET, jetMETPhi);
-                                const int size_mTCat = 5;
+                                const int size_mTCat = 9;
                                 bool MT100 = tmass_MuMet > 100;
                                 bool MT150 = tmass_MuMet > 150;
                                 bool MT200 = tmass_MuMet > 200;
                                 bool MT250 = tmass_MuMet > 250;
                                 bool MT300 = tmass_MuMet > 300;
+                                bool MT350 = tmass_MuMet > 350;
+                                bool MT400 = tmass_MuMet > 400;
+                                bool MT450 = tmass_MuMet > 450;
+                                bool MT500 = tmass_MuMet > 500;
                                 
-                                bool MT_category[size_mTCat] = {MT100,MT150,MT200,MT250,MT300};
-                                std::string MT_Cat[size_mTCat] = {"_MT100", "_MT150","_MT200", "_MT250","_MT300"};
+                                bool MT_category[size_mTCat] = {MT100,MT150,MT200,MT250,MT300,MT350,MT400,MT450,MT500};
+                                std::string MT_Cat[size_mTCat] = {"_MT100", "_MT150","_MT200", "_MT250","_MT300", "_MT350","_MT400", "_MT450","_MT500"};
                                 
                                 //                    float tmass_JetMet= TMass_F(jetPt->at(ijet), jetPt->at(ijet)*cos(jetPhi->at(ijet)),jetPt->at(ijet)*sin(jetPhi->at(ijet)) , pfMET, pfMETPhi);
                                 //                    float tmass_LQMet= TMass_F(LQ.Pt(), LQ.Px(),LQ.Py(), pfMET, pfMETPhi);
@@ -541,17 +548,21 @@ int main(int argc, char** argv) {
                                 //  Jet Pt Categorization
                                 //###############################################################################################
                                 
-                                const int size_METcut = 5;
+                                const int size_METcut = 9;
                                 bool MET100 = jetMET > 100;
                                 bool MET150 = jetMET > 150;
                                 bool MET200 = jetMET > 200;
                                 bool MET250 = jetMET > 250;
                                 bool MET300 = jetMET > 300;
+                                bool MET350 = jetMET > 350;
+                                bool MET400 = jetMET > 400;
+                                bool MET450 = jetMET > 450;
+                                bool MET500 = jetMET > 500;
                                 
                                 
                                 
-                                bool MetCut_category[size_METcut] = {MET100,MET150,MET200,MET250,MET300};
-                                std::string MetCut_Cat[size_METcut] = {"_MET100", "_MET150","_MET200", "_MET250","_MET300"};
+                                bool MetCut_category[size_METcut] = {MET100,MET150,MET200,MET250,MET300,MET350,MET400,MET450,MET500};
+                                std::string MetCut_Cat[size_METcut] = {"_MET100", "_MET150","_MET200", "_MET250","_MET300", "_MET350","_MET400", "_MET450","_MET500"};
                                 
                                 
                                 //###############################################################################################
