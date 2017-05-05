@@ -219,10 +219,10 @@ def _FIT_Lepton_Function( x,  par) :
 FR_vs_LeptonPT=0
 if FR_vs_LeptonPT:
     ObjectPT="_LepPt"
-    BinningFake = array.array("d",[0,20,30,40,50,60,70,80,90,100,120,150,200,300])
+    BinningFake = array.array("d",[0,60,70,80,90,100,120,150,200])
 else:
     ObjectPT="_CloseJetLepPt"
-    BinningFake = array.array("d",[0,60,80,110,150,200,250,300,400,500,800])
+    BinningFake = array.array("d",[0,60,85,105,150,200,250,300,400,500,600,800])
 #    BinningFake = array.array("d",[0,60,80,110,150,200,300,400,500])
 
 #############################################################################################################
@@ -273,15 +273,15 @@ def Make_Mu_FakeRate(channelName):
     # number of parameters in the fit
     if FR_vs_LeptonPT:
         nPar = 3
-        theFit=TF1("theFit", _FIT_Lepton, 60, 500,nPar)
+        theFit=TF1("theFit", _FIT_Lepton, 60, 200,nPar)
         theFit.SetParameter(0, .2)
         theFit.SetParLimits(0, 0.1, 0.4)
         theFit.SetParameter(1, 4)
         theFit.SetParameter(2, -.30)
-    
+
     else:
         nPar = 5
-        theFit=TF1("theFit",_FIT_Jet,60,400,nPar)
+        theFit=TF1("theFit",_FIT_Jet,65,800,nPar)
 #        theFit.SetParLimits(0,    0,     0.5);
 ##        theFit.SetParameter(0, 0.03)
 ##        theFit.SetParameter(1, 0)
@@ -293,10 +293,13 @@ def Make_Mu_FakeRate(channelName):
 #        theFit.SetParameter(0, 0.03)
 #        theFit.SetParameter(1, 0)
 #        theFit.SetParameter(2, 0.6)
+
         theFit.SetParLimits(1, 0.,1)
         theFit.SetParLimits(2, 0.1,10)
-        theFit.SetParLimits(3, 0,1000)
-        theFit.SetParLimits(4, 18, 19)
+#        theFit.SetParLimits(3, 0,1000)
+#        theFit.SetParLimits(4, 18, 19)
+
+
 #        theFit.SetParameter(4, 96.6)
 
     
@@ -315,8 +318,8 @@ def Make_Mu_FakeRate(channelName):
     L.SetLineWidth(4)
     L.SetLineColor(3)
     L.SetLineStyle(2)
-    L.Draw("same")
-    
+#    L.Draw("same")
+
     legende=make_legend()
     legende.AddEntry(HistoNum,"Jet#rightarrow#mu fake rate","lp")
     legende.AddEntry(theFit,"Fit (Landau+Pol1)","l")

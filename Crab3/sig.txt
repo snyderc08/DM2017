@@ -1,0 +1,81 @@
+
+/DarkMatter\_Codex\_LQ1000\_DM\_400\_X\_420\_TuneCUETP8M1\_13TeV-madgraph& XXX \\
+\hline
+/DarkMatter\_Codex\_LQ1000\_DM\_400\_X\_440\_TuneCUETP8M1\_13TeV-madgraph& XXX \\
+\hline
+/DarkMatter\_Codex\_LQ1000\_DM\_400\_X\_460\_TuneCUETP8M1\_13TeV-madgraph& XXX \\
+\hline
+/DarkMatter\_Codex\_LQ1100\_DM\_450\_X\_475\_TuneCUETP8M1\_13TeV-madgraph& XXX \\
+\hline
+/DarkMatter\_Codex\_LQ1100\_DM\_450\_X\_495\_TuneCUETP8M1\_13TeV-madgraph& XXX \\
+\hline
+/DarkMatter\_Codex\_LQ1100\_DM\_450\_X\_520\_TuneCUETP8M1\_13TeV-madgraph& XXX \\
+\hline
+/DarkMatter\_Codex\_LQ1200\_DM\_500\_X\_525\_TuneCUETP8M1\_13TeV-madgraph& XXX \\
+\hline
+/DarkMatter\_Codex\_LQ1200\_DM\_500\_X\_550\_TuneCUETP8M1\_13TeV-madgraph& XXX \\
+\hline
+/DarkMatter\_Codex\_LQ1200\_DM\_500\_X\_575\_TuneCUETP8M1\_13TeV-madgraph& XXX \\
+\hline
+/DarkMatter\_Codex\_LQ1200\_DM\_600\_X\_600\_TuneCUETP8M1\_13TeV-madgraph& XXX \\
+\hline
+/DarkMatter\_Codex\_LQ1300\_DM\_550\_X\_580\_TuneCUETP8M1\_13TeV-madgraph& XXX \\
+\hline
+/DarkMatter\_Codex\_LQ1300\_DM\_550\_X\_605\_TuneCUETP8M1\_13TeV-madgraph& XXX \\
+\hline
+/DarkMatter\_Codex\_LQ1300\_DM\_550\_X\_635\_TuneCUETP8M1\_13TeV-madgraph& XXX \\
+\hline
+/DarkMatter\_Codex\_LQ1300\_DM\_600\_X\_600\_TuneCUETP8M1\_13TeV-madgraph& XXX \\
+\hline
+/DarkMatter\_Codex\_LQ1400\_DM\_600\_X\_600\_TuneCUETP8M1\_13TeV-madgraph& XXX \\
+\hline
+/DarkMatter\_Codex\_LQ1400\_DM\_600\_X\_630\_TuneCUETP8M1\_13TeV-madgraph& XXX \\
+\hline
+/DarkMatter\_Codex\_LQ1400\_DM\_600\_X\_660\_TuneCUETP8M1\_13TeV-madgraph& XXX \\
+\hline
+/DarkMatter\_Codex\_LQ1400\_DM\_600\_X\_690\_TuneCUETP8M1\_13TeV-madgraph& XXX \\
+\hline
+/DarkMatter\_Codex\_LQ1500\_DM\_600\_X\_600\_TuneCUETP8M1\_13TeV-madgraph& XXX \\
+\hline
+/DarkMatter\_Codex\_LQ1500\_DM\_650\_X\_685\_TuneCUETP8M1\_13TeV-madgraph& XXX \\
+\hline
+/DarkMatter\_Codex\_LQ1500\_DM\_650\_X\_715\_TuneCUETP8M1\_13TeV-madgraph& XXX \\
+\hline
+/DarkMatter\_Codex\_LQ1500\_DM\_650\_X\_750\_TuneCUETP8M1\_13TeV-madgraph& XXX \\
+\hline
+/DarkMatter\_Codex\_LQ1600\_DM\_600\_X\_600\_TuneCUETP8M1\_13TeV-madgraph& XXX \\
+\hline
+/DarkMatter\_Codex\_LQ1600\_DM\_700\_X\_735\_TuneCUETP8M1\_13TeV-madgraph& XXX \\
+\hline
+/DarkMatter\_Codex\_LQ1600\_DM\_700\_X\_770\_TuneCUETP8M1\_13TeV-madgraph& XXX \\
+\hline
+/DarkMatter\_Codex\_LQ1600\_DM\_700\_X\_805\_TuneCUETP8M1\_13TeV-madgraph& XXX \\
+\hline
+/DarkMatter\_Codex\_LQ1700\_DM\_600\_X\_600\_TuneCUETP8M1\_13TeV-madgraph& XXX \\
+\hline
+/DarkMatter\_Codex\_LQ1700\_DM\_750\_X\_790\_TuneCUETP8M1\_13TeV-madgraph& XXX \\
+\hline
+/DarkMatter\_Codex\_LQ1700\_DM\_750\_X\_825\_TuneCUETP8M1\_13TeV-madgraph& XXX \\
+\hline
+/DarkMatter\_Codex\_LQ1700\_DM\_750\_X\_865\_TuneCUETP8M1\_13TeV-madgraph& XXX \\
+\hline
+/DarkMatter\_Codex\_LQ1800\_DM\_600\_X\_600\_TuneCUETP8M1\_13TeV-madgraph& XXX \\
+\hline
+/DarkMatter\_Codex\_LQ1800\_DM\_800\_X\_840\_TuneCUETP8M1\_13TeV-madgraph& XXX \\
+\hline
+/DarkMatter\_Codex\_LQ1800\_DM\_800\_X\_880\_TuneCUETP8M1\_13TeV-madgraph& XXX \\
+\hline
+/DarkMatter\_Codex\_LQ1800\_DM\_800\_X\_920\_TuneCUETP8M1\_13TeV-madgraph& XXX \\
+\hline
+/DarkMatter\_Codex\_LQ1900\_DM\_850\_X\_895\_TuneCUETP8M1\_13TeV-madgraph& XXX \\
+\hline
+/DarkMatter\_Codex\_LQ1900\_DM\_850\_X\_935\_TuneCUETP8M1\_13TeV-madgraph& XXX \\
+\hline
+/DarkMatter\_Codex\_LQ1900\_DM\_850\_X\_975\_TuneCUETP8M1\_13TeV-madgraph& XXX \\
+\hline
+/DarkMatter\_Codex\_LQ2000\_DM\_900\_X\_990\_TuneCUETP8M1\_13TeV-madgraph& XXX \\
+\hline
+/DarkMatter\_Codex\_LQ800\_DM\_300\_X\_330\_TuneCUETP8M1\_13TeV-madgraph& XXX \\
+\hline
+/DarkMatter\_Codex\_LQ900\_DM\_350\_X\_385\_TuneCUETP8M1\_13TeV-madgraph& XXX \\
+\hline
