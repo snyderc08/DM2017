@@ -246,12 +246,14 @@ int main(int argc, char** argv) {
             float WBosonKFactor=1;
             float ZBosonPt=0;
             float ZBosonKFactor=1;
+            int stat=0;
             for (int igen=0;igen < nMC; igen++){
                 if (mcPID->at(igen) == 6 && mcStatus->at(igen) ==62) GenTopPt=mcPt->at(igen) ;
                 if (mcPID->at(igen) == -6 && mcStatus->at(igen) ==62) GenAntiTopPt=mcPt->at(igen);
                 if (fabs(mcPID->at(igen)) ==24   && mcStatus->at(igen) ==22)  WBosonPt= mcPt->at(igen); // In inclusive we have status 62||22||44 while in HTbins we have just 22
-                if (fabs(mcPID->at(igen)) ==23   && mcStatus->at(igen) ==22)  ZBosonPt= mcPt->at(igen);
+                if (fabs(mcPID->at(igen)) ==23)  ZBosonPt= mcPt->at(igen); //FIXME somethime we do not have Z in the DY events
             }
+            
             size_t isTTJets = InputROOT.find("TTJets");
             if (isTTJets!= string::npos) TopPtReweighting = compTopPtWeight(GenTopPt, GenAntiTopPt);
             size_t isWJets = InputROOT.find("WJets");
@@ -568,6 +570,8 @@ int main(int argc, char** argv) {
                                                                     plotFill(CHL+"_dPhi_Mu_Jet"+FullStringName,deltaPhi(Mu4Momentum.Phi(),Jet4Momentum.Phi()),160,0,3.2,FullWeight);
                                                                     
                                                                     plotFill(CHL+"_BosonKFactor"+FullStringName,ZBosonKFactor*WBosonKFactor,200,0,2,FullWeight);
+                                                                    plotFill(CHL+"_WBosonPt"+FullStringName,WBosonPt,150,0,1500,FullWeight);
+                                                                    plotFill(CHL+"_ZBosonPt"+FullStringName,ZBosonPt,150,0,1500,FullWeight);
                                                                     
                                                                 }
                                                             }

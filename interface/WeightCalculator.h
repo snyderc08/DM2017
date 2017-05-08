@@ -39,9 +39,9 @@ float XSection(std::string OutName) {
     
     
     
-    if (OutName.find("WJetsToLNu_Inc") != string::npos) return 50690;   // As we have large cut at Skim, this one is not needed
-    else if (OutName.find("WJetsToLNu_HT-70to100") != string::npos) return 0;
-    else if (OutName.find("WJetsToLNu_HT-100to200") != string::npos) return 1343;
+//    if (OutName.find("WJetsToLNu_Inc") != string::npos) return 50690;   // As we have large cut at Skim, this one is not needed
+//    else if (OutName.find("WJetsToLNu_HT-70to100") != string::npos) return 0;
+     if (OutName.find("WJetsToLNu_HT-100to200") != string::npos) return 1343;
     else if (OutName.find("WJetsToLNu_HT-200to400") != string::npos) return 359.6;
     else if (OutName.find("WJetsToLNu_HT-400to600") != string::npos) return 48.85;
     else if (OutName.find("WJetsToLNu_HT-600to800") != string::npos) return 12.05;
@@ -50,8 +50,8 @@ float XSection(std::string OutName) {
     else if (OutName.find("WJetsToLNu_HT-2500toInf") != string::npos) return 0.03216;
     
     
-    else if (OutName.find("DYJetsToLL_Inc") != string::npos) return 4895 * 1.012; // As we have large cut at Skim, this one is not needed
-    else if (OutName.find("DYJetsToLL_M-50_HT-70to100") != string::npos) return 0;
+//    else if (OutName.find("DYJetsToLL_Inc") != string::npos) return 4895 * 1.012; // As we have large cut at Skim, this one is not needed
+//    else if (OutName.find("DYJetsToLL_M-50_HT-70to100") != string::npos) return 0;
     else if (OutName.find("DYJetsToLL_M-50_HT-100to200") != string::npos) return 148;
     else if (OutName.find("DYJetsToLL_M-50_HT-200to400") != string::npos) return 40.94;
     else if (OutName.find("DYJetsToLL_M-50_HT-400to600") != string::npos) return 5.497;
