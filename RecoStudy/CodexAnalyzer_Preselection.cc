@@ -217,8 +217,10 @@ int main(int argc, char** argv) {
         float TauPtCut_=20;
         float JetPtCut=100;
         float BJetPtCut=30;
+        float SimpleJetPtCut=30;
         float ElectronPtCut_=15;
-        float CSVCut=  0.935  ;    // loose is 0.460                 //https://twiki.cern.ch/twiki/bin/viewauth/CMS/BtagRecommendation80X
+        float CSVCut=   0.9535   ;                  //  https://twiki.cern.ch/twiki/bin/viewauth/CMS/BtagRecommendation80XReReco
+//        float CSVCut=  0.460  ;    // loose is 0.460                 //https://twiki.cern.ch/twiki/bin/viewauth/CMS/BtagRecommendation80X
         float LeptonIsoCut=0.15;
         
         
@@ -246,13 +248,21 @@ int main(int argc, char** argv) {
             float WBosonKFactor=1;
             float ZBosonPt=0;
             float ZBosonKFactor=1;
-            int stat=0;
+            
+            TLorentzVector GenMu4Momentum,GenAntiMu4Momentum;
+            
             for (int igen=0;igen < nMC; igen++){
                 if (mcPID->at(igen) == 6 && mcStatus->at(igen) ==62) GenTopPt=mcPt->at(igen) ;
                 if (mcPID->at(igen) == -6 && mcStatus->at(igen) ==62) GenAntiTopPt=mcPt->at(igen);
                 if (fabs(mcPID->at(igen)) ==24   && mcStatus->at(igen) ==22)  WBosonPt= mcPt->at(igen); // In inclusive we have status 62||22||44 while in HTbins we have just 22
                 if (fabs(mcPID->at(igen)) ==23)  ZBosonPt= mcPt->at(igen); //FIXME somethime we do not have Z in the DY events
+                if ( mcPID->at(igen) ==13  )  GenMu4Momentum.SetPtEtaPhiE(mcPt->at(igen),mcEta->at(igen),mcPhi->at(igen),mcMass->at(igen));
+                if ( mcPID->at(igen) ==-13  )  GenAntiMu4Momentum.SetPtEtaPhiE(mcPt->at(igen),mcEta->at(igen),mcPhi->at(igen),mcMass->at(igen));
+                
             }
+            if (ZBosonPt ==0)
+            ZBosonPt=(GenMu4Momentum+GenAntiMu4Momentum).Pt();  //This is a temp solution to the above problem
+            
             
             size_t isTTJets = InputROOT.find("TTJets");
             if (isTTJets!= string::npos) TopPtReweighting = compTopPtWeight(GenTopPt, GenAntiTopPt);
@@ -356,7 +366,11 @@ int main(int argc, char** argv) {
                 if (jetPFLooseId->at(ijet) > 0.5 && jetPt->at(ijet) > BJetPtCut && fabs(jetEta->at(ijet)) < 2.4 && jetCSV2BJetTags->at(ijet) >  CSVCut )
                     numBJet++;
             }
-            
+            int numJet=0;
+            for (int ijet= 0 ; ijet < nJet ; ijet++){
+                if (jetPFLooseId->at(ijet) > 0.5 && jetPt->at(ijet) > SimpleJetPtCut && fabs(jetEta->at(ijet)) < 2.4 )
+                numJet++;
+            }
             
             //###########       Z boson Veto   ###########################################################
             int numZboson=0;
@@ -455,13 +469,20 @@ int main(int argc, char** argv) {
                     //###############################################################################################
                     float tmass_MuMet= TMass_F(muPt->at(imu), muPt->at(imu)*cos(muPhi->at(imu)),muPt->at(imu)*sin(muPhi->at(imu)) , pfMET, pfMETPhi);
                     
-                    const int size_mTCat = 3;
+                    const int size_mTCat = 8;
+                    
                     bool NoMT = 1;
                     bool LoWMT = (tmass_MuMet < 40);
                     bool HighMT = (tmass_MuMet > 100);
                     
-                    bool MT_category[size_mTCat] = {NoMT,LoWMT,HighMT};
-                    std::string MT_Cat[size_mTCat] = {"_NoMT", "_LowMT","_HighMT"};
+                    bool MT50To100=(tmass_MuMet > 50 && tmass_MuMet <= 100);
+                    bool MT50To150=(tmass_MuMet > 100 && tmass_MuMet <= 150);
+                    bool MT50To200=(tmass_MuMet > 150 && tmass_MuMet <= 200);
+                    bool MT50To250=(tmass_MuMet > 200 && tmass_MuMet <= 250);
+                    bool MT50To300=(tmass_MuMet > 250 && tmass_MuMet <= 300);
+                    
+                    bool MT_category[size_mTCat] = {NoMT,LoWMT,HighMT,MT50To100,MT50To150,MT50To200,MT50To250,MT50To300};
+                    std::string MT_Cat[size_mTCat] = {"_NoMT", "_LowMT","_HighMT","_MT100","_MT150","_MT200","_MT250","_MT300"};
                     
                     float tmass_JetMet= TMass_F(jetPt->at(ijet), jetPt->at(ijet)*cos(jetPhi->at(ijet)),jetPt->at(ijet)*sin(jetPhi->at(ijet)) , pfMET, pfMETPhi);
                     float tmass_LQMet= TMass_F(LQ4Momentum.Pt(), LQ4Momentum.Px(),LQ4Momentum.Py(), pfMET, pfMETPhi);
@@ -479,23 +500,34 @@ int main(int argc, char** argv) {
                     //###############################################################################################
                     //  LQ eta Categorization
                     //###############################################################################################
-                    const int size_lqEta = 3;
-                    bool BarrelLQ = (fabs(LQ4Momentum.Eta()) < 1.5);
-                    bool EndcapLQ = (fabs(LQ4Momentum.Eta()) >= 1.5 && fabs(LQ4Momentum.Eta()) <= 3 );
-                    bool TotLQ = fabs(LQ4Momentum.Eta()) <= 3;
+//                    const int size_lqEta = 3;
+//                    bool BarrelLQ = (fabs(LQ4Momentum.Eta()) < 1.5);
+//                    bool EndcapLQ = (fabs(LQ4Momentum.Eta()) >= 1.5 && fabs(LQ4Momentum.Eta()) <= 3 );
+//                    bool TotLQ = fabs(LQ4Momentum.Eta()) <= 3;
+//                    
+//                    bool lqEta_category[size_lqEta] = {BarrelLQ,EndcapLQ,TotLQ};
+//                    std::string lqEta_Cat[size_lqEta] = {"_Barrel", "_Endcap","_TotEta"};
+                    const int size_lqEta = 1;
+//                    bool BarrelLQ = (fabs(LQ4Momentum.Eta()) < 1.5);
+//                    bool EndcapLQ = (fabs(LQ4Momentum.Eta()) >= 1.5 && fabs(LQ4Momentum.Eta()) <= 3 );
+                    bool TotLQ = 1;
                     
-                    bool lqEta_category[size_lqEta] = {BarrelLQ,EndcapLQ,TotLQ};
-                    std::string lqEta_Cat[size_lqEta] = {"_Barrel", "_Endcap","_TotEta"};
+                    bool lqEta_category[size_lqEta] = {TotLQ};
+                    std::string lqEta_Cat[size_lqEta] = {""};
+                    
                     
                     //###############################################################################################
                     //  TTbar & DY control region Categorization
                     //###############################################################################################
-                    const int size_CR = 3;
-                    bool signalRegion = numTau+numZboson + numElectron  < 1  && numBJet < 1;
+                    const int size_CR = 2;
+//                    bool signalRegion = numTau+numZboson + numElectron  < 1  && numBJet < 1;
+                    bool signalRegion = numTau+numZboson + numElectron  < 1;
                     bool TTcontrolRegion = (numTau <1 && numZboson < 1 && numElectron > 0 && !isThisJetElectron );
-                    bool DYcontrolRegion = (numTau <1 && numZboson > 0 && numElectron < 1 );
-                    bool region_category[size_CR] = {signalRegion,TTcontrolRegion,DYcontrolRegion};
-                    std::string region_Cat[size_CR] = {"", "_ttbarCR","_DYCR"};
+//                    bool DYcontrolRegion = (numTau <1 && numZboson > 0 && numElectron < 1 );
+//                    bool region_category[size_CR] = {signalRegion,TTcontrolRegion,DYcontrolRegion};
+//                    std::string region_Cat[size_CR] = {"", "_ttbarCR","_DYCR"};
+                    bool region_category[size_CR] = {signalRegion,TTcontrolRegion};
+                    std::string region_Cat[size_CR] = {"", "_ttbarCR"};
                     
                     //###############################################################################################
                     //  Top Pt Reweighting Cat: The SF is meant to correct only the shape of the pt(top) distribution- not the amount of generated events ( you have to consider that the average weight is not 1 ! ) So we define two category for ttbar events
@@ -572,6 +604,8 @@ int main(int argc, char** argv) {
                                                                     plotFill(CHL+"_BosonKFactor"+FullStringName,ZBosonKFactor*WBosonKFactor,200,0,2,FullWeight);
                                                                     plotFill(CHL+"_WBosonPt"+FullStringName,WBosonPt,150,0,1500,FullWeight);
                                                                     plotFill(CHL+"_ZBosonPt"+FullStringName,ZBosonPt,150,0,1500,FullWeight);
+                                                                    plotFill(CHL+"_NumJet"+FullStringName,numJet,10,0,10,FullWeight);
+                                                                    plotFill(CHL+"_NumBJet"+FullStringName,numBJet,10,0,10,FullWeight);
                                                                     
                                                                 }
                                                             }

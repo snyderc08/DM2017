@@ -68,16 +68,16 @@ def MakeTheHistogram(channel,NormMC,NormQCD,ShapeQCD,chl,Binning,NormMCTT):
     
     signal = ['Codex_']
     signalName = ['Codex_']
-#    mass = [
-#    '800',
-#    '900',
-#    '1000',
-#    '1100',
-#    '1200',
-#    '1300',
-#    '1400',
-#    '1500'
-#    ]
+    mass = [
+    '800',
+    '900',
+    '1000',
+    '1100',
+    '1200',
+    '1300',
+    '1400',
+    '1500'
+    ]
 
 
 #    TOTMASS = ['800','900','1000','1100','1200','1300','1400','1500']
@@ -110,14 +110,14 @@ def MakeTheHistogram(channel,NormMC,NormQCD,ShapeQCD,chl,Binning,NormMCTT):
                     #   Filling Signal
                     ################################################
                     for sig in range(len(signal)):
-                        for m in range(1,45):
-                            print "===>", str(m)
+                        for m in range(len(mass)):
+                            print "===>", str(mass[m])
 
-                            print "--------------------------------------------------->     Processing  Signal ", signal[sig]+str(m)
+                            print "--------------------------------------------------->     Processing  Signal ", signal[sig]+str(mass[m])
                             tDirectory.cd()
 
-                            Name= str(signal[sig])+str(m)
-                            NameOut= str(signalName[sig]) +str(m)+str(JetScaleOut[jscale])+str(JetResolOut[jres])+str(METScaleOut[mscale])
+                            Name= str(signal[sig])+str(mass[m])
+                            NameOut= str(signalName[sig]) +str(mass[m])+str(JetScaleOut[jscale])+str(JetResolOut[jres])+str(METScaleOut[mscale])
 
                                     
                             NormFile= _FileReturn(Name, channel,NameCat, NormMC, JetScale[jscale] , JetResol[jres] , METScale[mscale])
@@ -353,11 +353,11 @@ if __name__ == "__main__":
     Binning = array.array("d",[0,100,200,300,400,500,600,700,800,900,1000,1100,1200,1300,1400,1500,1600,1700,1800,1900,2000])
 
 
-#    Met_Cat= ["_MET100", "_MET150","_MET200", "_MET250","_MET300", "_MET350","_MET400", "_MET450","_MET500"]
-#    MT_Cat = ["_MT100", "_MT150","_MT200", "_MT250","_MT300", "_MT350","_MT400", "_MT450","_MT500"]
+    Met_Cat= ["_MET100","_MET200", "_MET300","_MET400", "_MET500", "_MET600"]
+    MT_Cat = ["_MT100", "_MT200","_MT300","_MT400", "_MT500", "_MT600"]
 
-    Met_Cat= [ "_MET250"]
-    MT_Cat = ["_MT250"]
+#    Met_Cat= [ "_MET250"]
+#    MT_Cat = ["_MT250"]
 
     for met in Met_Cat:
         for mt in MT_Cat:

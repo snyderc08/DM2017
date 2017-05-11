@@ -24,9 +24,9 @@ def create_ConfogFile(mt,met):
 
 
 
+Met_Cat= ["_MET100","_MET200", "_MET300","_MET400", "_MET500", "_MET600"]
+MT_Cat = ["_MT100", "_MT200","_MT300","_MT400", "_MT500", "_MT600"]
 
-Met_Cat= ["_MET100", "_MET150","_MET200", "_MET250","_MET300"]
-MT_Cat = ["_MT100", "_MT150","_MT200", "_MT250","_MT300"]
 
 grdPack_Generate=open("create_dir.sh","w")
 for met in Met_Cat:

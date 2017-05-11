@@ -11,5 +11,3 @@
 ./CodexAnalyzer_FinalSelection.exe  OutFiles_FullSelection/Codex_1400.root ../ROOT80X/SIG/Codex_LQ1400_DM_600_X_660.root
 ./CodexAnalyzer_FinalSelection.exe  OutFiles_FullSelection/Codex_1500.root ../ROOT80X/SIG/Codex_LQ1500_DM_650_X_715.root
 
-
-

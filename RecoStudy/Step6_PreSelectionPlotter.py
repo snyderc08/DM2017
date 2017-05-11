@@ -35,7 +35,7 @@ import os
 ROOT.gROOT.SetBatch(True)
 #ROOT.gROOT.ProcessLine('.x rootlogon.C')
 SubRootDir = 'OutFiles_PreSelection/'
-#SubRootDir = 'OutFiles_PreSelection100geVjetPt/'
+#SubRootDir = 'OutFiles_PreSelection_LooseBtag/'
 
 
 verbos_ = False
@@ -308,19 +308,22 @@ def MakeTheHistogram(channel,NormMC,NormQCD,ShapeQCD,NormTTbar):
 
 if __name__ == "__main__":
     
-    PlotName= ["_tmass_MuMet","_tmass_JetMet","_tmass_LQMet","_LepEta","_LepPt","_JetPt","_JetEta","_MET","_LQMass","_dPhi_Jet_Met","_dPhi_Mu_Jet","_dPhi_Mu_Met","_LQEta","_nVtx","_nVtx_NoPU"]
+    PlotName=["_NumJet","_NumBJet"]
+#    PlotName=["_LQMass"]
+#    ["_tmass_MuMet","_tmass_JetMet","_tmass_LQMet","_LepEta","_LepPt","_JetPt","_JetEta","_MET","_LQMass","_dPhi_Jet_Met","_dPhi_Mu_Jet","_dPhi_Mu_Met","_LQEta","_nVtx","_nVtx_NoPU"]
+
     
 
 #    Isolation=["_Iso", "_AntiIso","_Total"]
     Isolation=["_Iso"]
-    MT=["_HighMT"]
-#    MT= ["_NoMT","_HighMT"]
+#    MT=["_NoMT", "_LowMT","_HighMT","_MT100","_MT150","_MT200","_MT250","_MT300"]
+    MT= ["_NoMT","_HighMT"]
 #    JPT=["_LowDPhi", "_HighDPhi"];
     JPT=[ "_HighDPhi"]
-    lqEta= ["_Barrel", "_Endcap","_TotEta"]
-#    lqEta= ["_TotEta"]
-#    region= ["", "_ttbarCR","_DYCR"]
-    region= [""]
+#    lqEta= ["_Barrel", "_Endcap","_TotEta"]
+    lqEta= [""]
+    region= ["", "_ttbarCR"]
+#    region= [""]
 
     for Norm in PlotName:
         for iso in Isolation:

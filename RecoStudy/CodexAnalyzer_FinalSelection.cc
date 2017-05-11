@@ -270,12 +270,22 @@ int main(int argc, char** argv) {
             float WBosonKFactor=1;
             float ZBosonPt=0;
             float ZBosonKFactor=1;
+            
+            TLorentzVector GenMu4Momentum,GenAntiMu4Momentum;
+            
             for (int igen=0;igen < nMC; igen++){
                 if (mcPID->at(igen) == 6 && mcStatus->at(igen) ==62) GenTopPt=mcPt->at(igen) ;
                 if (mcPID->at(igen) == -6 && mcStatus->at(igen) ==62) GenAntiTopPt=mcPt->at(igen);
                 if (fabs(mcPID->at(igen)) ==24   && mcStatus->at(igen) ==22)  WBosonPt= mcPt->at(igen); // In inclusive we have status 62||22||44 while in HTbins we have just 22
-                if (fabs(mcPID->at(igen)) ==23   && mcStatus->at(igen) ==22)  ZBosonPt= mcPt->at(igen);
+                if (fabs(mcPID->at(igen)) ==23)  ZBosonPt= mcPt->at(igen); //FIXME somethime we do not have Z in the DY events
+                if ( mcPID->at(igen) ==13  )  GenMu4Momentum.SetPtEtaPhiE(mcPt->at(igen),mcEta->at(igen),mcPhi->at(igen),mcMass->at(igen));
+                if ( mcPID->at(igen) ==-13  )  GenAntiMu4Momentum.SetPtEtaPhiE(mcPt->at(igen),mcEta->at(igen),mcPhi->at(igen),mcMass->at(igen));
+                
             }
+            if (ZBosonPt ==0)
+            ZBosonPt=(GenMu4Momentum+GenAntiMu4Momentum).Pt();  //This is a temp solution to the above problem
+            
+            
             size_t isTTJets = InputROOT.find("TTJets");
             if (isTTJets!= string::npos) TopPtReweighting = compTopPtWeight(GenTopPt, GenAntiTopPt);
             size_t isWJets = InputROOT.find("WJets");
@@ -527,19 +537,24 @@ int main(int argc, char** argv) {
                                 //  MT Categorization
                                 //###############################################################################################
                                 float tmass_MuMet= TMass_F(muPt->at(imu), muPt->at(imu)*cos(muPhi->at(imu)),muPt->at(imu)*sin(muPhi->at(imu)) , jetMET, jetMETPhi);
-                                const int size_mTCat = 9;
+                                const int size_mTCat = 6;
                                 bool MT100 = tmass_MuMet > 100;
-                                bool MT150 = tmass_MuMet > 150;
+//                                bool MT150 = tmass_MuMet > 150;
                                 bool MT200 = tmass_MuMet > 200;
-                                bool MT250 = tmass_MuMet > 250;
+//                                bool MT250 = tmass_MuMet > 250;
                                 bool MT300 = tmass_MuMet > 300;
-                                bool MT350 = tmass_MuMet > 350;
+//                                bool MT350 = tmass_MuMet > 350;
                                 bool MT400 = tmass_MuMet > 400;
-                                bool MT450 = tmass_MuMet > 450;
+//                                bool MT450 = tmass_MuMet > 450;
                                 bool MT500 = tmass_MuMet > 500;
+                                bool MT600 = tmass_MuMet > 600;
                                 
-                                bool MT_category[size_mTCat] = {MT100,MT150,MT200,MT250,MT300,MT350,MT400,MT450,MT500};
-                                std::string MT_Cat[size_mTCat] = {"_MT100", "_MT150","_MT200", "_MT250","_MT300", "_MT350","_MT400", "_MT450","_MT500"};
+//                                bool MT_category[size_mTCat] = {MT100,MT150,MT200,MT250,MT300,MT350,MT400,MT450,MT500};
+//                                std::string MT_Cat[size_mTCat] = {"_MT100", "_MT150","_MT200", "_MT250","_MT300", "_MT350","_MT400", "_MT450","_MT500"};
+                                bool MT_category[size_mTCat] = {MT100,MT200,MT300,MT400,MT500,MT600};
+                                std::string MT_Cat[size_mTCat] = {"_MT100", "_MT200","_MT300","_MT400", "_MT500", "_MT600"};
+//                                bool MT_category[size_mTCat] = {MT250};
+//                                std::string MT_Cat[size_mTCat] = {"_MT250"};
                                 
                                 //                    float tmass_JetMet= TMass_F(jetPt->at(ijet), jetPt->at(ijet)*cos(jetPhi->at(ijet)),jetPt->at(ijet)*sin(jetPhi->at(ijet)) , pfMET, pfMETPhi);
                                 //                    float tmass_LQMet= TMass_F(LQ.Pt(), LQ.Px(),LQ.Py(), pfMET, pfMETPhi);
@@ -549,21 +564,27 @@ int main(int argc, char** argv) {
                                 //  Jet Pt Categorization
                                 //###############################################################################################
                                 
-                                const int size_METcut = 9;
+                                const int size_METcut = 6;
                                 bool MET100 = jetMET > 100;
-                                bool MET150 = jetMET > 150;
+//                                bool MET150 = jetMET > 150;
                                 bool MET200 = jetMET > 200;
-                                bool MET250 = jetMET > 250;
+//                                bool MET250 = jetMET > 250;
                                 bool MET300 = jetMET > 300;
-                                bool MET350 = jetMET > 350;
+//                                bool MET350 = jetMET > 350;
                                 bool MET400 = jetMET > 400;
-                                bool MET450 = jetMET > 450;
+//                                bool MET450 = jetMET > 450;
                                 bool MET500 = jetMET > 500;
+                                bool MET600 = jetMET > 600;
                                 
                                 
                                 
-                                bool MetCut_category[size_METcut] = {MET100,MET150,MET200,MET250,MET300,MET350,MET400,MET450,MET500};
-                                std::string MetCut_Cat[size_METcut] = {"_MET100", "_MET150","_MET200", "_MET250","_MET300", "_MET350","_MET400", "_MET450","_MET500"};
+//                                bool MetCut_category[size_METcut] = {MET100,MET150,MET200,MET250,MET300,MET350,MET400,MET450,MET500};
+//                                std::string MetCut_Cat[size_METcut] = {"_MET100", "_MET150","_MET200", "_MET250","_MET300", "_MET350","_MET400", "_MET450","_MET500"};
+                            bool MetCut_category[size_METcut] = {MET100,MET200,MET300,MET400,MET500,MET600};
+                            std::string MetCut_Cat[size_METcut] = {"_MET100","_MET200", "_MET300","_MET400", "_MET500", "_MET600"};
+
+//                                bool MetCut_category[size_METcut] = {MET250};
+//                                std::string MetCut_Cat[size_METcut] = {"_MET250"};
                                 
                                 
                                 //###############################################################################################
@@ -618,7 +639,7 @@ int main(int argc, char** argv) {
                                                                 
                                                                 plotFill(CHL+"_CloseJetLepPt"+FullStringName,CLoseJetMuPt,1000,0,1000,FullWeight);
                                                                 plotFill(CHL+"_LQMass"+FullStringName,LQ.M(),300,0,3000,FullWeight);
-                                                                plotFill(CHL+"_LQEta"+FullStringName,LQ.Eta(),100,-5,5,FullWeight);
+//                                                                plotFill(CHL+"_LQEta"+FullStringName,LQ.Eta(),100,-5,5,FullWeight);
                                                                 
                                                                 if (isTTJets!= string::npos) plotFill(CHL+"_LQMassTopPtRWUp"+FullStringName,LQ.M(),nBin,binMin,binMax,FullWeight * TopPtReweighting);
                                                                 if (isTTJets!= string::npos) plotFill(CHL+"_LQMassTopPtRWDown"+FullStringName,LQ.M(),nBin,binMin,binMax,FullWeight / TopPtReweighting);

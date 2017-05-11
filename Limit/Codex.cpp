@@ -60,8 +60,8 @@ int main() {
     
     
     //! [part2]
-    vector<string> masses = ch::MassesFromRange("800-1500:100");
-    //vector<string> masses = ch::MassesFromRange("1-54:1");
+//    vector<string> masses = ch::MassesFromRange("800-1500:100");
+    vector<string> masses = ch::MassesFromRange("1-44:1");
     // Or equivalently, specify the mass points explicitly:
     //    vector<string> masses = {"120", "125", "130", "135"};
     //! [part2]
@@ -107,7 +107,7 @@ int main() {
     cb.cp().process(ch::JoinStr({sig_procs, {"ZTT", "W", "TT","VV","SingleTop"}}))
     .AddSyst(cb, "lumi_$ERA", "lnN", SystMap<era>::init
 //             ({"7TeV"}, 1.022)
-             ({"13TeV"}, 1.026));
+             ({"13TeV"}, 1.025));
     //! [part5]
     
     //! [part6]
@@ -130,8 +130,8 @@ int main() {
     cb.cp().process(JoinStr({sig_procs, {"ZTT", "W", "TT","VV","SingleTop"}}))
     .AddSyst(cb, "CMS_scale_jes", "shape", SystMap<>::init(1.00));
     
-    cb.cp().process(JoinStr({sig_procs, {"ZTT", "W", "TT","VV","SingleTop"}}))
-    .AddSyst(cb, "CMS_scale_jer", "shape", SystMap<>::init(1.00));
+//    cb.cp().process(JoinStr({sig_procs, {"ZTT", "W", "TT","VV","SingleTop"}}))
+//    .AddSyst(cb, "CMS_scale_jer", "shape", SystMap<>::init(1.00));
     
     cb.cp().process(JoinStr({sig_procs, {"ZTT", "W", "TT","VV","SingleTop"}}))
     .AddSyst(cb, "CMS_scale_met_UES", "shape", SystMap<>::init(1.00));
@@ -238,7 +238,7 @@ int main() {
     << "\n";
     
     
-    string folder = "outputCodex/Codex_MT100_MET100/LIMITS";
+    string folder = "outputCodex_May11/Codex_MT100_MET100/LIMITS";
     boost::filesystem::create_directories(folder);
     boost::filesystem::create_directories(folder + "/common");
     for (auto m : masses) {
