@@ -308,21 +308,21 @@ def MakeTheHistogram(channel,NormMC,NormQCD,ShapeQCD,NormTTbar):
 
 if __name__ == "__main__":
     
-    PlotName=["_NumJet","_NumBJet"]
+    PlotName=["_tmass_MuMet","_LepEta","_LepPt","_JetPt","_JetEta","_MET","_LQMass","_dPhi_Jet_Met","_dPhi_Mu_Jet","_dPhi_Mu_Met","_NumJet","_NumBJet"]
+#    PlotName=["_NumJet","_NumBJet"]
 #    PlotName=["_LQMass"]
-#    ["_tmass_MuMet","_tmass_JetMet","_tmass_LQMet","_LepEta","_LepPt","_JetPt","_JetEta","_MET","_LQMass","_dPhi_Jet_Met","_dPhi_Mu_Jet","_dPhi_Mu_Met","_LQEta","_nVtx","_nVtx_NoPU"]
 
     
 
 #    Isolation=["_Iso", "_AntiIso","_Total"]
     Isolation=["_Iso"]
 #    MT=["_NoMT", "_LowMT","_HighMT","_MT100","_MT150","_MT200","_MT250","_MT300"]
-    MT= ["_NoMT","_HighMT"]
-#    JPT=["_LowDPhi", "_HighDPhi"];
+    MT= ["_LowMT","_HighMT","_MT100","_MT150","_MT200","_MT300","_MT400"]
+#    MT=["_HighMT"]
     JPT=[ "_HighDPhi"]
 #    lqEta= ["_Barrel", "_Endcap","_TotEta"]
     lqEta= [""]
-    region= ["", "_ttbarCR"]
+    region= ["", "_ttbarCRDiLep","_ttbarCRSingleLep"]
 #    region= [""]
 
     for Norm in PlotName:

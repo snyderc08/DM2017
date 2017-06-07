@@ -96,17 +96,19 @@ def MakePlot(FileName,HistName,Info):
 
     Data.GetXaxis().SetBinLabel(1,'E_{T}^{miss} > 100 GeV')
 #    Data.GetXaxis().SetLabelAngle(45)  It seems that this function is not defined in the PYROOT!!!!!! ChangeLable
-    Data.GetXaxis().SetBinLabel(2,'E_{T}^{miss} > 150 GeV')
-    Data.GetXaxis().SetBinLabel(3,'E_{T}^{miss} > 200 GeV')
-    Data.GetXaxis().SetBinLabel(4,'E_{T}^{miss} > 250 GeV')
-    Data.GetXaxis().SetBinLabel(5,'E_{T}^{miss} > 300 GeV')
+    Data.GetXaxis().SetBinLabel(2,'E_{T}^{miss} > 200 GeV')
+    Data.GetXaxis().SetBinLabel(3,'E_{T}^{miss} > 300 GeV')
+    Data.GetXaxis().SetBinLabel(4,'E_{T}^{miss} > 400 GeV')
+    Data.GetXaxis().SetBinLabel(5,'E_{T}^{miss} > 500 GeV')
+    Data.GetXaxis().SetBinLabel(6,'E_{T}^{miss} > 600 GeV')
 
     Data.GetYaxis().RotateTitle(0)
     Data.GetYaxis().SetBinLabel(1,'M_{T}>100')
-    Data.GetYaxis().SetBinLabel(2,'M_{T}>150')
-    Data.GetYaxis().SetBinLabel(3,'M_{T}>200')
-    Data.GetYaxis().SetBinLabel(4,'M_{T}>250')
-    Data.GetYaxis().SetBinLabel(5,'M_{T}>300')
+    Data.GetYaxis().SetBinLabel(2,'M_{T}>200')
+    Data.GetYaxis().SetBinLabel(3,'M_{T}>300')
+    Data.GetYaxis().SetBinLabel(4,'M_{T}>400')
+    Data.GetYaxis().SetBinLabel(5,'M_{T}>500')
+    Data.GetYaxis().SetBinLabel(6,'M_{T}>600')
     
     
     
@@ -116,7 +118,8 @@ def MakePlot(FileName,HistName,Info):
     Data.GetZaxis().SetLabelSize(0.035);
     Data.GetZaxis().SetTitleSize(0.045);
     Data.GetZaxis().SetTitleFont(42);
-    Data.GetZaxis().SetRangeUser(0.5, 8);
+#    Data.GetZaxis().SetRangeUser(0.4, 8);
+    Data.GetZaxis().SetRangeUser(0.2, 5);
     c.SetLogz()
     ROOT.gStyle.SetPalette(74)
     Data.Draw("COLZtext");
@@ -130,7 +133,7 @@ def MakePlot(FileName,HistName,Info):
     l2.Draw("same")
     l3=add_Preliminary()
     l3.Draw("same")
-    l4=ROOT.TPaveText(0.1,0.84,0.4,0.89, "NDC")
+    l4=ROOT.TPaveText(0.1,0.85,0.4,0.90, "NDC")
     l4.SetFillColor(0)
     l4.AddText(Info)
     l4.SetBorderSize(   1 )
@@ -141,7 +144,8 @@ def MakePlot(FileName,HistName,Info):
     l4.SetTextFont (   62 )
     l4.Draw('same')
 
-    c.SaveAs("_opt_%s.pdf"%mass)
+    c.SaveAs("_opt_Sig_%s.pdf"%mass)
+#    c.SaveAs("_opt_Lim_%s.pdf"%mass)
 
 
 
@@ -149,14 +153,17 @@ def MakePlot(FileName,HistName,Info):
 
 
 
+#Inout_Dir='outputCodex_May11_NewSignificance'
+#Inout_Dir='outputCodex_May11_NewLimit_WithBtag'
+#Inout_Dir='outputCodex_May11_NewLimit_WithBtag'
+Inout_Dir='outputCodex_May11_NewSignificance_WithBtagVeto'
 
-
-Met_Cat= ["_MET100", "_MET150","_MET200", "_MET250","_MET300"]
-MT_Cat = ["_MT100", "_MT150","_MT200", "_MT250","_MT300"]
+Met_Cat= ["_MET100","_MET200", "_MET300","_MET400", "_MET500", "_MET600"]
+MT_Cat = ["_MT100", "_MT200","_MT300","_MT400", "_MT500", "_MT600"]
 
 
 OutFile=TFile("file.root","RECREATE")
-Hist2D=TH2F("2d","2d",5,0,5,5,0,5)
+Hist2D=TH2F("2d","2d",6,0,6,6,0,6)
 Mass=['800.0','900.0','1000.0','1100.0','1200.0','1300.0','1400.0','1500.0']
 Sample=['LQ800_DM300','LQ900_DM350','LQ1000_DM400','LQ1100_DM450','LQ1200_DM500','LQ1300_DM550','LQ1400_DM600','LQ1500_DM650']
 
@@ -167,10 +174,13 @@ for mass in Mass:
         j=0
         for mt in MT_Cat:
             j+=1
-            with open('outputCodex2/Codex%s%s/limits_LIMITS.json'%(mt,met)) as data_file:
+#            with open('%s/Codex%s%s/limits_LIMITS.json'%(Inout_Dir,mt,met)) as data_file:
+            with open('%s/Codex%s%s/limits_Signif_LIMITS.json'%(Inout_Dir,mt,met)) as data_file:
                 data = json.load(data_file)
-                print i,j,data[mass]["exp0"]
-                Hist2D.SetBinContent(i,j,data[mass]["exp0"])
+#                print i,j,data[mass]["exp0"]
+                print i,j,data[mass]["obs"]
+#                Hist2D.SetBinContent(i,j,data[mass]["exp0"])
+                Hist2D.SetBinContent(i,j,data[mass]["obs"])
     OutFile.WriteObject(Hist2D,mass)
 OutFile.Close()
 

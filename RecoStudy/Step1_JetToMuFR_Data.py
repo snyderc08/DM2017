@@ -33,8 +33,8 @@ import os
 
 
 ROOT.gROOT.SetBatch(True)
-SubRootDir = 'OutFiles_QCD/'
-#SubRootDir = 'OutFiles_QCD_NoTrgMC/'
+#SubRootDir = 'OutFiles_QCD/'
+SubRootDir = 'OutFiles_QCD_NoTrgMC/'
 #SubRootDir = 'OutFiles_PreSelection/'
 
 
@@ -209,10 +209,16 @@ def _FIT_Jet_Function(x, p):
 
 
 
-def _FIT_Lepton( x,  par) :
-    return par[0] / (par[0]+ par[1]*math.exp(par[2] * x[0]))
-def _FIT_Lepton_Function( x,  par) :
-    return par[0] / (par[0]+ par[1]*math.exp(par[2] * x))
+def _FIT_Lepton( x,  p) :
+    Land = p[2] * TMath.Landau(x[0], p[3], p[4])
+    Pol0 = p[0]+p[1]*x[0]
+    return Land + Pol0
+#    return par[0] / (par[0]+ par[1]*math.exp(par[2] * x[0]))
+def _FIT_Lepton_Function( x,  p) :
+    Land = p[2] * TMath.Landau(x, p[3], p[4])
+    Pol0 = p[0]+p[1]*x
+    return Land + Pol0
+#    return par[0] / (par[0]+ par[1]*math.exp(par[2] * x))
 
 
 
@@ -239,10 +245,11 @@ def Make_Mu_FakeRate(channelName):
 
 
     
-    ShapeNum=MakeTheHistogram(channelName,HistoFakeNum,HistoFakeNum,BinningFake,1)
-    HistoNum=ShapeNum.Get("HISTO")
+    
     ShapeDeNum=MakeTheHistogram(channelName,HistoFakeDeNum,HistoFakeDeNum,BinningFake,1)
     HistoDeNum=ShapeDeNum.Get("HISTO")
+    ShapeNum=MakeTheHistogram(channelName,HistoFakeNum,HistoFakeNum,BinningFake,1)
+    HistoNum=ShapeNum.Get("HISTO")
     
     print "\n---------------------------------------------------------------------------\n"
     print "overal FR = ",  HistoNum.Integral(), "/",  HistoDeNum.Integral(), "  =  ", HistoNum.Integral()/ HistoDeNum.Integral(), "\n"
@@ -272,7 +279,7 @@ def Make_Mu_FakeRate(channelName):
     #####  Fit parameters for fake rate v.s. muon Pt
     # number of parameters in the fit
     if FR_vs_LeptonPT:
-        nPar = 3
+        nPar = 5
         theFit=TF1("theFit", _FIT_Lepton, 60, 200,nPar)
         theFit.SetParameter(0, .2)
         theFit.SetParLimits(0, 0.1, 0.4)
@@ -345,14 +352,14 @@ def Make_Mu_FakeRate(channelName):
 #    categ.Draw()
 
 
-    canv.SaveAs("muFakeRate"+channelName+".pdf")
-    canv.SaveAs("muFakeRate"+channelName+".root")
+    canv.SaveAs("muFakeRate"+ObjectPT+".pdf")
+    canv.SaveAs("muFakeRate"+ObjectPT+".root")
     
     
-    if FR_vs_LeptonPT:
-        return FitParam[0],FitParam[1],FitParam[2]
-    else:
-        return FitParam[0],FitParam[1],FitParam[2],FitParam[3],FitParam[4]
+#    if FR_vs_LeptonPT:
+#        return FitParam[0],FitParam[1],FitParam[2]
+#    else:
+    return FitParam[0],FitParam[1],FitParam[2],FitParam[3],FitParam[4]
 
 
 ##########################################    ##########################################    ##########################################

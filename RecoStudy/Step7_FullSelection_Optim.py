@@ -26,7 +26,7 @@ import array
 ##### Get Jet to Tau FR
 from Step1_JetToMuFR_Data import Make_Mu_FakeRate
 from Step1_JetToMuFR_Data import _FIT_Jet_Function
-#from Step5_TT_W_ScaleFactor import SF_W
+from Step5_TT_W_ScaleFactor import SF_W
 from Step5_TT_W_ScaleFactor import SF_TT
 ##### Get Jet to Tau FR
 
@@ -35,7 +35,7 @@ import os
 
 
 ROOT.gROOT.SetBatch(True)
-SubRootDir = 'OutFiles_FullSelection/'
+SubRootDir = 'OutFiles_Optimization/'
 verbos_ = False
 JetScale = ["JetESDown", "", "JetESUp"]
 #JetResol = ["JetERDown", "", "JetERUp"]
@@ -183,7 +183,7 @@ def MakeTheHistogram(channel,NormMC,NormQCD,ShapeQCD,chl,Binning,NormMCTT):
                     
                     
                     NormHistoShape.Scale(NormHisto.Integral()*1.0/NormHistoShape.Integral())
-                    NormHistoShape.Scale(1)
+                    NormHistoShape.Scale(SF_TT())
                     RebinedHist= NormHistoShape.Rebin(len(Binning)-1,"",Binning)
                     tDirectory.WriteObject(RebinedHist,NameOut)
                     ###############  Systematics on Shape and Norm for  To PT Reweighting ####
@@ -203,7 +203,7 @@ def MakeTheHistogram(channel,NormMC,NormQCD,ShapeQCD,chl,Binning,NormMCTT):
                             NormHistoShape=NormFileShape.Get("XXX")
 
                             NormHistoShape.Scale(NormHisto.Integral()*1.0/NormHistoShape.Integral())
-                            NormHistoShape.Scale(1)
+                            NormHistoShape.Scale(SF_TT())
                             RebinedHist= NormHistoShape.Rebin(len(Binning)-1,"",Binning)
                             tDirectory.WriteObject(RebinedHist,NameOut)
                                 
@@ -241,7 +241,7 @@ def MakeTheHistogram(channel,NormMC,NormQCD,ShapeQCD,chl,Binning,NormMCTT):
                     NormHisto=NormFile.Get("XXX")
                     
                     NormHisto.Scale(WNoCorNormaliztaion/NormHisto.Integral())
-                    NormHisto.Scale(1)
+                    NormHisto.Scale(SF_W())
                     RebinedHist= NormHisto.Rebin(len(Binning)-1,"",Binning)
                     tDirectory.WriteObject(RebinedHist,NameOut)
 

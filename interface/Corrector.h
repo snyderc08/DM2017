@@ -21,8 +21,45 @@ using namespace std;
 
 
 
-
-
+float getBtagEfficiency(bool isData, bool passCSV, float pt, float eta, TH2F ** Btagg_TT){
+    
+    
+    if ( isData) return 1;
+    
+    
+    
+    int ptBIN;
+    if ( pt < 50 ) ptBIN=1;
+    if (pt >= 50 && pt < 70 ) ptBIN=2;
+    if (pt >= 70 && pt < 100 ) ptBIN=3;
+    if (pt >= 100 && pt < 140) ptBIN=4;
+    if (pt >= 140 && pt < 200) ptBIN=5;
+    if (pt >= 200 && pt < 300) ptBIN=6;
+    if (pt >= 300 && pt < 600) ptBIN=7;
+    if (pt >= 600 ) ptBIN=8;
+    
+    int etaBIN;
+    if (eta >= 0 && eta < 0.8 ) etaBIN=1;
+    if (eta >= 0.8 && eta < 1.5 ) etaBIN=2;
+    if (eta >= 1.5 ) etaBIN=3;
+    
+    
+    
+    TH2F * TTSF0_btagged=Btagg_TT[0];
+    TH2F * TTSF0_total=Btagg_TT[1];
+    TH2F * TTSF5_btagged=Btagg_TT[2];
+    TH2F * TTSF5_total=Btagg_TT[3];
+    
+//    cout << "Btag efficiency is = "<< pt << " ptBIN " <<ptBIN << "   "<<eta << " etaBIN " << etaBIN <<"  ratio=  " <<TTSF0_btagged->GetBinContent(ptBIN,etaBIN) << "    "<<TTSF0_total->GetBinContent(ptBIN,etaBIN) <<"\n";
+    
+    
+    if (passCSV)
+    return  TTSF5_btagged->GetBinContent(ptBIN,etaBIN)*1.0/TTSF5_total->GetBinContent(ptBIN,etaBIN);
+    else
+    return  TTSF0_btagged->GetBinContent(ptBIN,etaBIN)*1.0/TTSF0_total->GetBinContent(ptBIN,etaBIN);
+    
+    
+}
 
 
 
@@ -36,6 +73,19 @@ float LandauFunc(float x){
     return Land;
     
 }
+
+
+
+// For light Jet
+//2	 incl	 central	2	0	2.4	20	1000	0	1	 "0.963886+198.253/(x*x)+0.000871904*x"
+
+//  for btagged jet
+//2	 comb	 central	1	-2.4	2.4	20	1000	0	1	 "0.817647*((1.+(0.038703*x))/(1.+(0.0312388*x)))"
+//2	 comb	 central	0	-2.4	2.4	20	1000	0	1	 "0.817647*((1.+(0.038703*x))/(1.+(0.0312388*x)))"
+
+
+
+
 //-----------------------------------------------------------------------------
 //https://twiki.cern.ch/twiki/bin/view/CMS/BTagCalibration
 
@@ -164,20 +214,27 @@ float LandauFunc(float x){
 
 // Aplly Btag Scale Factor ----------------------------------------------------------------
 
-float GetBJetSF(float x, float jetEta, float jetHadFlvr){
+float GetBJetSF(bool isData, float x, float jetEta, float jetHadFlvr){
     
     //    cout<< "--->Btag    pt= "<<x<<  "   jetHadFlvr" <<jetHadFlvr<< "  SF="<<1.05636+0.000920353*x+-7.85916e-07*x*x+1.92221e-11*x*x*x <<"   "<< 0.931535+(1.40704e-05*x) <<"\n";
     
+    if (isData) return 1;
+    else {
     if (jetHadFlvr ==0 )
-        return 1.05636+0.000920353*x+-7.85916e-07*x*x+1.92221e-11*x*x*x ;
-    //        return  1.00317+0.000204778*x+7.49098e-07*x*x+-9.52146e-10*x*x*x;
+        return 0.971945+163.215/(x*x)+0.000517836*x ;
     else if (jetHadFlvr ==4 || jetHadFlvr ==5 )
-        return 0.931535+(1.40704e-05*x);
-    //        return 0.747498*((1.+(0.473236*x))/(1.+(0.375778*x)));
+        return 0.817647*((1.+(0.038703*x))/(1.+(0.0312388*x)));
     else
         return 1;
+    }
 }
 
+
+
+//2	 comb	 central	1	-2.4	2.4	20	1000	0	1	 "0.817647*((1.+(0.038703*x))/(1.+(0.0312388*x)))"
+//2	 comb	 central	0	-2.4	2.4	20	1000	0	1	 "0.817647*((1.+(0.038703*x))/(1.+(0.0312388*x)))"
+//
+//2	 incl	 central	2	0	2.4	20	1000	0	1	 "0.971945+163.215/(x*x)+0.000517836*x"
 
 
 float GetBJetSFUp (float x, float jetEta, float jetHadFlvr){
@@ -349,14 +406,14 @@ float compTopPtWeight(float top1Pt, float top2Pt) {
 //    TF1 *TriggerWeightBarrel = new TF1("AddTriggerWeightMuTauBarrel", "1 - 9.01280e-04*(x - 140) + 4.81592e-07*(x - 140)*(x-140)", 0., 800.);
 //    TF1 *TriggerWeightEndcaps = new TF1("AddTriggerWeightMuTauEndcaps", "1 - 1.81148e-03*(x - 60) + 5.44335e-07*(x - 60)*(x-60)", 0., 800.);
 //
-//    //    Double_t DataValBarrel_pt = 0.3 + 0.7 * TriggerWeightBarrel->Eval(a.pt);
+//    //    Double_t DataValBarrel_pt = 0.3 + 0.7 * TriggerWeightBarrel->Eval(pt);
 //    //    Double_t DataValBarrel_800 = 0.3 + 0.7 * TriggerWeightBarrel->Eval(800.);
 //    //
-//    //    Double_t DataValEndcaps_pt = 0.3 + 0.7 * TriggerWeightEndcaps->Eval(a.pt);
+//    //    Double_t DataValEndcaps_pt = 0.3 + 0.7 * TriggerWeightEndcaps->Eval(pt);
 //    //    Double_t DataValEndcaps_400 = 0.3 + 0.7 * TriggerWeightEndcaps->Eval(400.);
 //    float ratioABCD= 0.62457;
 //    float OneMinratioABCD= 1- ratioABCD;
-//    if (a.pt > 140 && a.pt < 800 && fabs(a.eta) < 1.5) return (OneMinratioABCD + ratioABCD * TriggerWeightBarrel->Eval(a.pt));
+//    if (pt > 140 && pt < 800 && fabs(a.eta) < 1.5) return (OneMinratioABCD + ratioABCD * TriggerWeightBarrel->Eval(a.pt));
 //    else if (a.pt >= 800 && fabs(a.eta) <= 1.5) return (OneMinratioABCD + ratioABCD * TriggerWeightBarrel->Eval(800.));
 //    else if (a.pt > 60 && a.pt < 400 && fabs(a.eta) > 1.5) return (OneMinratioABCD + ratioABCD * TriggerWeightEndcaps->Eval(a.pt));
 //    else if (a.pt >= 400 && fabs(a.eta) >= 1.5) return (OneMinratioABCD + ratioABCD * TriggerWeightEndcaps->Eval(400.));

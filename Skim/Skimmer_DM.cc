@@ -82,15 +82,15 @@ void Skimmer::Loop(TString outputName, int skm)
         TLorentzVector Mu4Momentum, Jet4Momentum;
         
   
-        if(pfMET < 80) continue;
+        if(pfMET < 100) continue;
         hcount->Fill(3);
 
         //MuJet
         for (int imu = 0; imu < nMu; ++imu){
-            float IsoMu=muPFChIso->at(imu)/muPt->at(imu);
-            if ( (muPFNeuIso->at(imu) + muPFPhoIso->at(imu) - 0.5* muPFPUIso->at(imu) )  > 0.0)
-                IsoMu= ( muPFChIso->at(imu)/muPt->at(imu) + muPFNeuIso->at(imu) + muPFPhoIso->at(imu) - 0.5* muPFPUIso->at(imu))/muPt->at(imu);
-            if (muPt->at(imu) > 60 && (muIDbit->at(imu) >> 2 & 1) && fabs(muEta->at(imu)) < 2.4 &&  IsoMu < 1.0 ){
+//            float IsoMu=muPFChIso->at(imu)/muPt->at(imu);
+//            if ( (muPFNeuIso->at(imu) + muPFPhoIso->at(imu) - 0.5* muPFPUIso->at(imu) )  > 0.0)
+//                IsoMu= ( muPFChIso->at(imu)/muPt->at(imu) + muPFNeuIso->at(imu) + muPFPhoIso->at(imu) - 0.5* muPFPUIso->at(imu))/muPt->at(imu);
+            if (muPt->at(imu) > 60 && (muIDbit->at(imu) >> 2 & 1) && fabs(muEta->at(imu)) < 2.4){
                 Mu4Momentum.SetPtEtaPhiM(muPt->at(imu),muEta->at(imu),muPhi->at(imu),MuMass);
                 
                 for (int ijet = 0; ijet < nJet; ++ijet){

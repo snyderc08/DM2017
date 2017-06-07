@@ -27,14 +27,15 @@ def create_ConfogFile(mt,met):
 Met_Cat= ["_MET100","_MET200", "_MET300","_MET400", "_MET500", "_MET600"]
 MT_Cat = ["_MT100", "_MT200","_MT300","_MT400", "_MT500", "_MT600"]
 
+DirectoryName='outputCodex_May11'
 
 grdPack_Generate=open("create_dir.sh","w")
 for met in Met_Cat:
     for mt in MT_Cat:
         create_ConfogFile(mt,met)
         grdPack_Generate.write('Codex%s%s\n'%(mt,met))
-        grdPack_Generate.write('cp run_rhw.sh outputCodex/Codex%s%s/.\n'%(mt,met))
-        grdPack_Generate.write('cd outputCodex/Codex%s%s/.\n'%(mt,met))
+        grdPack_Generate.write('cp run_rhw.sh %s/Codex%s%s/.\n'%(DirectoryName,mt,met))
+        grdPack_Generate.write('cd %s/Codex%s%s/.\n'%(DirectoryName,mt,met))
         grdPack_Generate.write('sh run_rhw.sh\n')
         grdPack_Generate.write('cd ../../. \n')
 grdPack_Generate.close()

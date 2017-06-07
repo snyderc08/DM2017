@@ -15,5 +15,7 @@
 
 ./CodexAnalyzer_Preselection.exe  OutFiles_PreSelection/Data.root ../ROOT80X/SingleMu.root
 
+./CodexAnalyzer_Preselection.exe  OutFiles_PreSelection/Codex_1200.root ../ROOT80X/PrivateSample/Codex_LQ1200_DM_500_X_550.root
+
 
 

@@ -60,8 +60,8 @@ int main() {
     
     
     //! [part2]
-    vector<string> masses = ch::MassesFromRange("800-1500:100");
-//    vector<string> masses = ch::MassesFromRange("1-44:1");
+//    vector<string> masses = ch::MassesFromRange("800-1500:100");
+    vector<string> masses = ch::MassesFromRange("1-44:1");
     // Or equivalently, specify the mass points explicitly:
     //    vector<string> masses = {"120", "125", "130", "135"};
     //! [part2]
@@ -85,7 +85,7 @@ int main() {
     for (string era : {"13TeV"}) {
         for (string chn : chns) {
             
-            string file = aux_shapes + input_folders[chn] + "/_mj_LQMass_MT100_MET100_Iso.root";
+            string file = aux_shapes + input_folders[chn] + "/_mj_LQMass_Final.root";
             cb.cp().channel({chn}).era({era}).backgrounds().ExtractShapes(
                                                                           file, "$BIN/$PROCESS", "$BIN/$PROCESS_$SYSTEMATIC");
             cb.cp().channel({chn}).era({era}).signals().ExtractShapes(
@@ -192,11 +192,11 @@ int main() {
     
     //! [part7]
     cb.cp().backgrounds().ExtractShapes(
-                                        aux_shapes + "/_mj_LQMass_MT100_MET100_Iso.root",
+                                        aux_shapes + "/_mj_LQMass_Final.root",
                                         "$BIN/$PROCESS",
                                         "$BIN/$PROCESS_$SYSTEMATIC");
     cb.cp().signals().ExtractShapes(
-                                    aux_shapes + "/_mj_LQMass_MT100_MET100_Iso.root",
+                                    aux_shapes + "/_mj_LQMass_Final.root",
                                     "$BIN/$PROCESS$MASS",
                                     "$BIN/$PROCESS$MASS_$SYSTEMATIC");
     
@@ -238,7 +238,7 @@ int main() {
     << "\n";
     
     
-    string folder = "outputCodex_May11/Codex_MT100_MET100/LIMITS";
+    string folder = "outputCodex_Final_V1/LIMITS";
     boost::filesystem::create_directories(folder);
     boost::filesystem::create_directories(folder + "/common");
     for (auto m : masses) {

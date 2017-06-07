@@ -65,9 +65,11 @@ def LQXS(LQ):
         else: return 0
 
 
-#BR=0.5*0.5*2  # 50% Branching ratio for visible and invisible
-BR=1  # 50% Branching ratio for visible and invisible
+BR=0.5*0.5*2  # 50% Branching ratio for visible and invisible
+#BR=1  # 50% Branching ratio for visible and invisible
 
+
+FinalSampleDirectory='limits_LIMITS.json'
 
 
 lqmass=[800,900,1000,1100,1200,1300,1400,1500]
@@ -87,7 +89,7 @@ def GetDMBin(DM):
 
 
 
-with open('limits_LIMITS.json') as data_file:
+with open(FinalSampleDirectory) as data_file:
     data = json.load(data_file)
 
     for bin, M in enumerate(MassXS,1):

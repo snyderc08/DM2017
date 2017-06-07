@@ -22,6 +22,10 @@
 #include "vector"
 using namespace std;
 
+float TMass_F(float pt3lep, float px3lep, float py3lep, float met, float metPhi) {
+    return sqrt(pow(pt3lep + met, 2) - pow(px3lep + met * cos(metPhi), 2) - pow(py3lep + met * sin(metPhi), 2));
+}
+
 class Skimmer {
 public :
    TTree          *fChain;   //!pointer to the analyzed TTree or TChain

@@ -158,6 +158,7 @@ def MakePlot(FileName,categoriy,HistName,Xaxis,MaxRange,sig,sigLeg,XSection, Sta
 
     for i in range(Data.GetNbinsX()):
         if i > 6 : Data.SetBinContent(i+1,0)
+        if i > 6 : Data.SetBinError(i+1,0)
     
 
     ######  Add OverFlow Bin
@@ -228,9 +229,9 @@ def MakePlot(FileName,categoriy,HistName,Xaxis,MaxRange,sig,sigLeg,XSection, Sta
 
     Data.GetXaxis().SetLabelSize(0)
     
-#    if Status == "LOG" :Data.SetMaximum(Data.GetMaximum()*2000); Data.SetMinimum(0.00001)
-    if Status == "LOG" :Data.SetMaximum(999); Data.SetMinimum(0.01)
-    if Status=="Normal": Data.SetMaximum(Data.GetMaximum()*1) ;  Data.SetMinimum(0)
+    if Status == "LOG" :Data.SetMaximum(Data.GetMaximum()*2000); Data.SetMinimum(0.00001)
+#    if Status == "LOG" :Data.SetMaximum(999); Data.SetMinimum(0.01)
+    if Status=="Normal": Data.SetMaximum(Data.GetMaximum()*2) ;  Data.SetMinimum(0)
 
 
     Data.GetXaxis().SetRangeUser(200,MaxRange)
@@ -371,7 +372,7 @@ def MakePlot(FileName,categoriy,HistName,Xaxis,MaxRange,sig,sigLeg,XSection, Sta
 
 
 FileNamesInfo=[
-               ["postfit_shapes.root","Codex__mj_1_13TeV_prefit","#it{M}_{LQ} [GeV]","#mu j ",2000,"Codex_","LQ 1TeV (DM 300 GeV)",10],
+               ["postfit_shapes.root","Codex__mj_1_13TeV_prefit","#it{M}_{LQ} [GeV]","#mu j ",2000,"Codex_","LQ 1200GeV (DM 400 GeV)",10],
                ]
 
 
