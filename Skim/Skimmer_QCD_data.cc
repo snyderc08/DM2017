@@ -90,7 +90,7 @@ void Skimmer::Loop(TString outputName, int skm)
             if (muPt->at(imu) > 60 && (muIDbit->at(imu) >> 2 & 1) && fabs(muEta->at(imu)) < 2.4){
                 Mu4Momentum.SetPtEtaPhiM(muPt->at(imu),muEta->at(imu),muPhi->at(imu),MuMass);
                 
-                float MT= TMass_F(muPt->at(imu), muPx->at(imu), muPy->at(imu), pfMET, pfMETPhi);
+                float MT= TMass_F(muPt->at(imu), muPt->at(imu)*cos(muPhi->at(imu)) , muPt->at(imu)*sin(muPhi->at(imu)), pfMET, pfMETPhi);
                 
                 if (MT > 40) continue;
                 
