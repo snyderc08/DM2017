@@ -34,8 +34,8 @@ import os
 
 ROOT.gROOT.SetBatch(True)
 #SubRootDir = 'OutFiles_QCD/'
-SubRootDir = 'OutFiles_QCD_NoTrgMC/'
-#SubRootDir = 'OutFiles_PreSelection/'
+#SubRootDir = 'OutFiles_QCD_NoTrgMC/'
+SubRootDir = 'OutFiles_QCD_40GeVMeT/'
 
 
 verbos_ = False
@@ -225,7 +225,7 @@ def _FIT_Lepton_Function( x,  p) :
 FR_vs_LeptonPT=0
 if FR_vs_LeptonPT:
     ObjectPT="_LepPt"
-    BinningFake = array.array("d",[0,60,70,80,90,100,120,150,200])
+    BinningFake = array.array("d",[0,60,70,80,90,100,120,160])
 else:
     ObjectPT="_CloseJetLepPt"
     BinningFake = array.array("d",[0,60,85,105,150,200,250,300,400,500,600,800])
@@ -251,6 +251,7 @@ def Make_Mu_FakeRate(channelName):
     ShapeNum=MakeTheHistogram(channelName,HistoFakeNum,HistoFakeNum,BinningFake,1)
     HistoNum=ShapeNum.Get("HISTO")
     
+    
     print "\n---------------------------------------------------------------------------\n"
     print "overal FR = ",  HistoNum.Integral(), "/",  HistoDeNum.Integral(), "  =  ", HistoNum.Integral()/ HistoDeNum.Integral(), "\n"
     print "---------------------------------------------------------------------------\n\n"
@@ -267,7 +268,7 @@ def Make_Mu_FakeRate(channelName):
     HistoNum.SetTitle("")
     if FR_vs_LeptonPT: HistoNum.GetXaxis().SetTitle("#mu p_{T} [GeV]")
     else: HistoNum.GetXaxis().SetTitle("Jet p_{T} [GeV]")
-    HistoNum.GetYaxis().SetTitle("#mu Fake Rate  (Tight Iso / Loose Iso)")
+    HistoNum.GetYaxis().SetTitle("#mu Fake Rate  (Tight Iso + Id/ Tight Id)")
     HistoNum.GetYaxis().SetTitleOffset(1.3)
     HistoNum.GetYaxis().SetRangeUser(0.011,5)
     HistoNum.SetStats(0)
@@ -280,7 +281,7 @@ def Make_Mu_FakeRate(channelName):
     # number of parameters in the fit
     if FR_vs_LeptonPT:
         nPar = 5
-        theFit=TF1("theFit", _FIT_Lepton, 60, 200,nPar)
+        theFit=TF1("theFit", _FIT_Lepton, 60, 150,nPar)
         theFit.SetParameter(0, .2)
         theFit.SetParLimits(0, 0.1, 0.4)
         theFit.SetParameter(1, 4)
@@ -288,7 +289,7 @@ def Make_Mu_FakeRate(channelName):
 
     else:
         nPar = 5
-        theFit=TF1("theFit",_FIT_Jet,65,800,nPar)
+        theFit=TF1("theFit",_FIT_Jet,70,800,nPar)
 #        theFit.SetParLimits(0,    0,     0.5);
 ##        theFit.SetParameter(0, 0.03)
 ##        theFit.SetParameter(1, 0)

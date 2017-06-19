@@ -38,7 +38,7 @@ SubRootDir = 'OutFiles_PreSelection/'
 #SubRootDir = 'OutFiles_PreSelection_LooseBtag/'
 
 
-verbos_ = False
+verbos_ = True
 RB_=1
 
 #signal = ['LQ_']
@@ -308,17 +308,17 @@ def MakeTheHistogram(channel,NormMC,NormQCD,ShapeQCD,NormTTbar):
 
 if __name__ == "__main__":
     
-    PlotName=["_tmass_MuMet","_LepEta","_LepPt","_JetPt","_JetEta","_MET","_LQMass","_dPhi_Jet_Met","_dPhi_Mu_Jet","_dPhi_Mu_Met","_NumJet","_NumBJet"]
+#    PlotName=["_tmass_MuMet","_LepEta","_LepPt","_JetPt","_JetEta","_MET","_LQMass","_dPhi_Jet_Met","_dPhi_Mu_Jet","_dPhi_Mu_Met","_NumJet","_NumBJet"]
 #    PlotName=["_NumJet","_NumBJet"]
-#    PlotName=["_LQMass"]
+    PlotName=["_LQMass"]
 
     
 
 #    Isolation=["_Iso", "_AntiIso","_Total"]
     Isolation=["_Iso"]
 #    MT=["_NoMT", "_LowMT","_HighMT","_MT100","_MT150","_MT200","_MT250","_MT300"]
-    MT= ["_LowMT","_HighMT","_MT100","_MT150","_MT200","_MT300","_MT400"]
-#    MT=["_HighMT"]
+#    MT= ["_LowMT","_HighMT","_MT100","_MT150","_MT200","_MT300","_MT400"]
+    MT=["_HighMT"]
     JPT=[ "_HighDPhi"]
 #    lqEta= ["_Barrel", "_Endcap","_TotEta"]
     lqEta= [""]
@@ -335,7 +335,8 @@ if __name__ == "__main__":
                             channel='MuJet'
                             
                             NormMC=Norm+mt+jpt+etalq+reg+iso
-                            NormQCD="_CloseJetLepPt"+mt+jpt+etalq+reg+"_AntiIso"
+#                            NormQCD="_CloseJetLepPt"+mt+jpt+etalq+reg+"_AntiIso"
+                            NormQCD="_LepPt"+mt+jpt+etalq+reg+"_AntiIso"
                             ShapeQCD=Norm+mt+jpt+etalq+reg+"_AntiIso"
                             NormTTbar=Norm+"_NoTopRW"+mt+jpt+etalq+reg+iso
                             

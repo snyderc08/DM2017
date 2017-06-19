@@ -634,9 +634,9 @@ int main(int argc, char** argv) {
                                                                     //                                                                    plotFill(CHL+"_tmass_LQMet"+FullStringName,tmass_LQMet,200,0,2000,FullWeight);
                                                                     plotFill(CHL+"_MET"+FullStringName,pfMET,200,0,2000,FullWeight);
                                                                     
-                                                                    plotFill(CHL+"_JetPt"+FullStringName,jetPt->at(ijet) ,200,0,2000,FullWeight);
+                                                                    plotFill(CHL+"_JetPt"+FullStringName,jetPt->at(ijet) ,2000,0,2000,FullWeight);
                                                                     plotFill(CHL+"_JetEta"+FullStringName,jetEta->at(ijet),120,-3,3,FullWeight);
-                                                                    plotFill(CHL+"_LepPt"+FullStringName,muPt->at(imu),200,0,2000,FullWeight);
+                                                                    plotFill(CHL+"_LepPt"+FullStringName,muPt->at(imu),2000,0,2000,FullWeight);
                                                                     plotFill(CHL+"_LepEta"+FullStringName,muEta->at(imu),100,-2.5,2.5,FullWeight);
                                                                     plotFill(CHL+"_CloseJetLepPt"+FullStringName,CLoseJetMuPt,1000,0,1000,FullWeight);
                                                                     
