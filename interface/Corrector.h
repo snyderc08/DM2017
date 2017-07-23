@@ -1553,11 +1553,26 @@ float Cor80X_Trigger_Mu_FIT(float pt,float eta, TH2F* HistoTrg ){
     }
 
 
+float getCorrFactorDiMuon80X(bool isData, float pt, float eta, TH2F ** HistoId, TH2F ** HistoIso,TH2F ** HistoTrg, TGraphAsymmErrors * graph) {
+    
+    if (isData)
+        return 1;
+    else{
+        float Weighted_IDSF=CalcWeightedObj(Cor80X_ID_Mu_BCDEF(pt,eta,HistoId[0]), Cor80X_ID_Mu_GH(pt,eta,HistoId[1]));
+        float Weighted_IsoSF=CalcWeightedObj(Cor80X_Iso_Mu_BCDEF(pt,eta,HistoIso[0]), Cor80X_Iso_Mu_GH(pt,eta,HistoIso[1]));
+//        float Weighted_TriggerSF=CalcWeightedObj(Cor80X_Trigger_Mu_BCDEF(pt,eta,HistoTrg[0]), Cor80X_Trigger_Mu_GH(pt,eta,HistoTrg[1]));
+        float Weighted_TriggerSF=1;
+        float Tracking_SF=Cor80X_TRK_Mu_Full2016(eta, graph);
+        return (Weighted_IDSF * Weighted_IsoSF * Tracking_SF * Weighted_TriggerSF);
+    }
+    
+}
 
 
 
 
-    float getCorrFactorMuon74X(bool isData, float pt, float eta, TH2F * HistoId, TH2F * HistoIso,TH2F * HistoTrg) {
+
+float getCorrFactorMuon74X(bool isData, float pt, float eta, TH2F * HistoId, TH2F * HistoIso,TH2F * HistoTrg) {
         
         if (isData)
             return 1;
