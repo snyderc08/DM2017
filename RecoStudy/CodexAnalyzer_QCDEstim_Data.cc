@@ -477,8 +477,8 @@ std:string Working_Dir= ".";
                     const int size_jetMetPhi = 2;
 //                    bool lowDPhi = (deltaPhi(Jet4Momentum.Phi(),pfMETPhi) < 0.5 || deltaPhi(Mu4Momentum.Phi(),pfMETPhi) < 0.5 );
 //                    bool HighDPhi = (deltaPhi(Jet4Momentum.Phi(),pfMETPhi) >= 0.5 && deltaPhi(Mu4Momentum.Phi(),pfMETPhi) >= 0.5  );
-                    bool lowDPhi = deltaPhi(LeadJet4Momentum.Phi(),pfMETPhi) < 0.5;
-                    bool HighDPhi = deltaPhi(LeadJet4Momentum.Phi(),pfMETPhi) > 0.5;
+                    bool lowDPhi = deltaPhi(Jet4Momentum.Phi(),pfMETPhi) < 0.5;
+                    bool HighDPhi = deltaPhi(Jet4Momentum.Phi(),pfMETPhi) > 0.5;
                     
                     bool jetMetPhi_category[size_jetMetPhi] = {lowDPhi,HighDPhi};
                     std::string jetMetPhi_Cat[size_jetMetPhi] = {"_LowDPhi", "_HighDPhi"};
