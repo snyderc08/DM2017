@@ -1,6 +1,6 @@
 import csv
-with open('Felix_Uppercontour_Delta01.csv','rb') as csvfile:
+with open('Felix_Lowercontour_Delta01.csv','rb') as csvfile:
          spamreader = csv.reader(csvfile, delimiter=' ', quotechar='|')
-         for row in spamreader:
+         for i, row in enumerate(spamreader):
             M= ', '.join(row)
-            print M.split(',')[1]
+            print i,M.split(',')[1], str(i+M.split(',')[1])

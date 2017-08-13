@@ -332,7 +332,7 @@ int main(int argc, char** argv) {
                                                         
                                                         plotFill(CHL+"_JetPt"+FullStringName,jetPt->at(ijet) ,100,0,500,FullWeight);
                                                         plotFill(CHL+"_JetEta"+FullStringName,jetEta->at(ijet),100,-2.5,2.5,FullWeight);
-                                                        plotFill(CHL+"_LepPt"+FullStringName,muPt->at(imu),100,0,500,FullWeight);
+                                                        plotFill(CHL+"_LepPt"+FullStringName,muPt->at(imu),1000,0,1000,FullWeight);
                                                         plotFill(CHL+"_LepEta"+FullStringName,muEta->at(imu),100,-2.5,2.5,FullWeight);
                                                         plotFill(CHL+"_CloseJetLepPt"+FullStringName,CLoseJetMuPt,1000,0,1000,FullWeight);
                                                         plotFill(CHL+"_CloseJetLepEta"+FullStringName,CLoseJetMuEta,100,-2.5,2.5,FullWeight);

@@ -229,7 +229,7 @@ def MakePlot(FileName,categoriy,HistName,Xaxis,MaxRange,sig,sigLeg,XSection, Sta
 
     Data.GetXaxis().SetLabelSize(0)
     
-    if Status == "LOG" :Data.SetMaximum(Data.GetMaximum()*2000); Data.SetMinimum(0.00001)
+    if Status == "LOG" :Data.SetMaximum(Data.GetMaximum()*2000); Data.SetMinimum(0.001)
 #    if Status == "LOG" :Data.SetMaximum(999); Data.SetMinimum(0.01)
     if Status=="Normal": Data.SetMaximum(Data.GetMaximum()*2) ;  Data.SetMinimum(0)
 

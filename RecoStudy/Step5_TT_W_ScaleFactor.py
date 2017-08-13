@@ -68,7 +68,7 @@ def returnSF_W(FileName,TTSF):
     
     return WScale
 
-Mass=['_HighMT','_MT100','_MT150','_MT200','_MT300','_MT400']
+MTRange=['_HighMT','_MT50To150','_MT100','_MT150','_MT200','_MT300','_MT400']
 
 
 
@@ -80,11 +80,11 @@ def SF_TT(Name):
 
 
 #Mass=['_HighMT']
-for mass in Mass:
-    NameW= 'TotalRootForLimit_PreSelection_MuJet_LQMass%s_HighDPhi_Iso.root'%mass
-    NameTT='TotalRootForLimit_PreSelection_MuJet_LQMass%s_HighDPhi_ttbarCRSingleLep_Iso.root'%mass
-#    NameTT='TotalRootForLimit_PreSelection_MuJet_LQMass%s_HighDPhi_ttbarCRDiLep_Iso.root'%mass
-    print "\n\n######### ",mass, " #########"
+for mt in MTRange:
+    NameW= 'TotalRootForLimit_PreSelection_MuJet_LQMass%s_HighDPhi_Iso.root'%mt
+    NameTT='TotalRootForLimit_PreSelection_MuJet_LQMass%s_HighDPhi_ttbarCRSingleLep_Iso.root'%mt
+#    NameTT='TotalRootForLimit_PreSelection_MuJet_LQMass%s_HighDPhi_ttbarCRDiLep_Iso.root'%mt
+    print "\n\n######### ",mt, " #########"
     returnSF_W(NameW,SF_TT(NameTT))
 
 
@@ -95,9 +95,9 @@ def SF_TT_DiLep():
     return returnSF_TT('TotalRootForLimit_PreSelection_MuJet_LQMass_HighMT_HighDPhi_ttbarCRDiLep_Iso.root')
 
 def SF_W_SingleLep():
-    return returnSF_W('TotalRootForLimit_PreSelection_MuJet_LQMass_HighMT_HighDPhi_Iso.root',SF_TT_SingleLep())
+    return returnSF_W('TotalRootForLimit_PreSelection_MuJet_LQMass_MT50To150_HighDPhi_Iso.root',SF_TT_SingleLep())
 
 def SF_W_DiLep():
-    return returnSF_W('TotalRootForLimit_PreSelection_MuJet_LQMass_HighMT_HighDPhi_Iso.root',SF_TT_DiLep())
+    return returnSF_W('TotalRootForLimit_PreSelection_MuJet_LQMass_MT50To150_HighDPhi_Iso.root',SF_TT_DiLep())
 
 

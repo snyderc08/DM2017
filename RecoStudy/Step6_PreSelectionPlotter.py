@@ -35,11 +35,14 @@ import os
 ROOT.gROOT.SetBatch(True)
 #ROOT.gROOT.ProcessLine('.x rootlogon.C')
 SubRootDir = 'OutFiles_PreSelection/'
-#SubRootDir = 'OutFiles_PreSelection_LooseBtag/'
+#SubRootDir = 'OutFiles_PreSelection_OldKFactor/'
+#SubRootDir = 'OutFiles_PreSelection_dPhiOverLapWithJetOnly/'
+#SubRootDir = 'OutFiles_PreSelection_OnlydPhiLeadJet/'
 
 
 verbos_ = True
 RB_=1
+includeSignal= False
 
 #signal = ['LQ_']
 #signalName = ['LQ_']
@@ -78,24 +81,25 @@ def MakeTheHistogram(channel,NormMC,NormQCD,ShapeQCD,NormTTbar):
 
         tDirectory= OutFile.mkdir(channel + str(NameCat))
         tDirectory.cd()
-
-        ################################################
-        #   Filling Signal
-        ################################################
-        print "--------------------------------------------------->     Processing Codex1400"
-        tDirectory.cd()
         
-        Name= "Codex_1200"
-        NameOut= "Codex_1200"
-        
-        NormFile= _FileReturn(Name, channel,NameCat, NormMC)
-        NormHisto=NormFile.Get("HISTO")
-#        
-        if not NormHisto:
-            raise Exception('Not valid %s'%NameOut)
-        else:
-            RebinedHist= NormHisto.Rebin(RB_)
-            tDirectory.WriteObject(RebinedHist,NameOut)
+        if includeSignal:
+            ################################################
+            #   Filling Signal
+            ################################################
+            print "--------------------------------------------------->     Processing Codex1400"
+            tDirectory.cd()
+            
+            Name= "Codex_1200"
+            NameOut= "Codex_1200"
+            
+            NormFile= _FileReturn(Name, channel,NameCat, NormMC)
+            NormHisto=NormFile.Get("HISTO")
+    #        
+            if not NormHisto:
+                raise Exception('Not valid %s'%NameOut)
+            else:
+                RebinedHist= NormHisto.Rebin(RB_)
+                tDirectory.WriteObject(RebinedHist,NameOut)
 
         ################################################
         #  Filling SingleTop
@@ -316,9 +320,10 @@ if __name__ == "__main__":
 
     Isolation=["_Iso", "_AntiIso","_Total"]
 #    Isolation=["_Iso"]
-#    MT=["_NoMT", "_LowMT","_HighMT","_MT100","_MT150","_MT200","_MT250","_MT300"]
-#    MT= ["_LowMT","_HighMT","_MT100","_MT150","_MT200","_MT300","_MT400"]
-    MT=["_HighMT"]
+#    MT=["_MT400"]
+    MT= ["_NoMT","_HighMT","_MT50To150","_MT100","_MT150","_MT200","_MT300","_MT400"]
+#    MT= ["_NoMT","_HighMT","_MT100","_MT150","_MT200","_MT300","_MT400"]
+#    MT=["_MT50To150"]
     JPT=[ "_HighDPhi"]
 #    lqEta= ["_Barrel", "_Endcap","_TotEta"]
     lqEta= [""]

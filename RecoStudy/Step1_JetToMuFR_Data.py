@@ -33,9 +33,11 @@ import os
 
 
 ROOT.gROOT.SetBatch(True)
-#SubRootDir = 'OutFiles_QCD/'
+SubRootDir = 'OutFiles_QCD/'
 #SubRootDir = 'OutFiles_QCD_NoTrgMC/'
-SubRootDir = 'OutFiles_QCD_40GeVMeT/'
+#SubRootDir = 'OutFiles_QCD_40GeVMeT/'
+#SubRootDir = 'OutFiles_QCD_MET40_noOverLapJet/'
+#SubRootDir = 'OutFiles_QCD_Org/'
 
 
 verbos_ = False
@@ -97,6 +99,8 @@ def _FileReturn(Name, channel,HistoName):
         os.makedirs(SubRootDir)
     myfile = TFile(SubRootDir + Name + '.root')
     Histo =  myfile.Get(channel+HistoName)
+#    if Name != "Data":
+#        Histo.Scale(1)
     if verbos_: print "0--------->>>>>>  ",SubRootDir,Name, channel+HistoName
     if not os.path.exists("Extra"):
         os.makedirs("Extra")
@@ -109,7 +113,7 @@ def _FileReturn(Name, channel,HistoName):
 ####################################################
 ##   Start Making the Datacard Histograms
 ####################################################
-def MakeTheHistogram(channel,NormQCD,ShapeQCD,Binning,doBinning):
+def MakeTheHistogram(channel,NormQCD,ShapeQCD,Binning,doBinning,HistoType):
     
     
     
@@ -181,6 +185,20 @@ def MakeTheHistogram(channel,NormQCD,ShapeQCD,Binning,doBinning):
             else : RebinedHist= DataSampleQCDShapeHist
             #            tDirectory.WriteObject(RebinedHist,NameOut)
             
+            
+            
+            #####   This part is for making the QCD purity plot    Draw_QCDPurity.py
+            HistoTypeFile=TFile("Extra/%s.root"%HistoType,"RECREATE")
+            HistoTypeFile.WriteObject(RebinedHist,"HISTO")
+            HistoTypeFile.WriteObject(DataSampleQCDNormHist,"data")
+            HistoTypeFile.WriteObject(WSampleQCDNormHist,"W")
+            HistoTypeFile.WriteObject(ZTTSampleQCDNormHist,"ZTT")
+            HistoTypeFile.WriteObject(TTSampleQCDNormHist,"TT")
+            HistoTypeFile.WriteObject(VVSampleQCDNormHist,"VV")
+            HistoTypeFile.WriteObject(SingleTSampleQCDNormHist,"SingleT")
+            ################################################################################
+            
+            
             NewShapeForQCD=TFile("Extra/HISTO.root","RECREATE")
             NewShapeForQCD.WriteObject(RebinedHist,"HISTO")
             NewShapeForQCD.WriteObject(DataSampleQCDNormHist,"data")
@@ -189,6 +207,9 @@ def MakeTheHistogram(channel,NormQCD,ShapeQCD,Binning,doBinning):
             NewShapeForQCD.WriteObject(TTSampleQCDNormHist,"TT")
             NewShapeForQCD.WriteObject(VVSampleQCDNormHist,"VV")
             NewShapeForQCD.WriteObject(SingleTSampleQCDNormHist,"SingleT")
+            
+            
+            
             return NewShapeForQCD
 
 
@@ -211,24 +232,26 @@ def _FIT_Jet_Function(x, p):
 
 def _FIT_Lepton( x,  p) :
     Land = p[2] * TMath.Landau(x[0], p[3], p[4])
-    Pol0 = p[0]+p[1]*x[0]
+#    Pol0 = p[0]+p[1]*x[0]
+    Pol0 = p[0]
     return Land + Pol0
 #    return par[0] / (par[0]+ par[1]*math.exp(par[2] * x[0]))
 def _FIT_Lepton_Function( x,  p) :
     Land = p[2] * TMath.Landau(x, p[3], p[4])
-    Pol0 = p[0]+p[1]*x
+#    Pol0 = p[0]+p[1]*x
+    Pol0 = p[0]
     return Land + Pol0
 #    return par[0] / (par[0]+ par[1]*math.exp(par[2] * x))
 
 
 
-FR_vs_LeptonPT=0
+FR_vs_LeptonPT=1
 if FR_vs_LeptonPT:
     ObjectPT="_LepPt"
-    BinningFake = array.array("d",[0,60,70,80,90,100,120,160])
+    BinningFake = array.array("d",[0,60,70,80,90,100,110,120,130,150,175,200,240,300])
 else:
     ObjectPT="_CloseJetLepPt"
-    BinningFake = array.array("d",[0,60,85,105,150,200,250,300,400,500,600,800])
+    BinningFake = array.array("d",[0,60,80,100,120,150,200,250,300,400,500,600,800])
 #    BinningFake = array.array("d",[0,60,80,110,150,200,300,400,500])
 
 #############################################################################################################
@@ -246,9 +269,9 @@ def Make_Mu_FakeRate(channelName):
 
     
     
-    ShapeDeNum=MakeTheHistogram(channelName,HistoFakeDeNum,HistoFakeDeNum,BinningFake,1)
+    ShapeDeNum=MakeTheHistogram(channelName,HistoFakeDeNum,HistoFakeDeNum,BinningFake,1,"qcdPurity_DeNum%s"%ObjectPT)
     HistoDeNum=ShapeDeNum.Get("HISTO")
-    ShapeNum=MakeTheHistogram(channelName,HistoFakeNum,HistoFakeNum,BinningFake,1)
+    ShapeNum=MakeTheHistogram(channelName,HistoFakeNum,HistoFakeNum,BinningFake,1,"qcdPurity_Num%s"%ObjectPT)
     HistoNum=ShapeNum.Get("HISTO")
     
     
@@ -262,7 +285,7 @@ def Make_Mu_FakeRate(channelName):
     canv = TCanvas("canv", "histograms", 600, 600)
     #    HistoNum.SetMinimum(0.5)
     #    HistoNum.GetXaxis().SetRangeUser(0,400)
-    canv.SetLogy()
+    if not FR_vs_LeptonPT: canv.SetLogy()
 #    canv.SetGridx()
 #    canv.SetGridy()
     HistoNum.SetTitle("")
@@ -270,7 +293,8 @@ def Make_Mu_FakeRate(channelName):
     else: HistoNum.GetXaxis().SetTitle("Jet p_{T} [GeV]")
     HistoNum.GetYaxis().SetTitle("#mu Fake Rate  (Tight Iso + Id/ Tight Id)")
     HistoNum.GetYaxis().SetTitleOffset(1.3)
-    HistoNum.GetYaxis().SetRangeUser(0.011,5)
+    HistoNum.GetYaxis().SetRangeUser(0,.8)
+    if not FR_vs_LeptonPT:  HistoNum.GetYaxis().SetRangeUser(0.011,5)
     HistoNum.SetStats(0)
     HistoNum.SetMarkerStyle(20)
     
@@ -281,10 +305,10 @@ def Make_Mu_FakeRate(channelName):
     # number of parameters in the fit
     if FR_vs_LeptonPT:
         nPar = 5
-        theFit=TF1("theFit", _FIT_Lepton, 60, 150,nPar)
-        theFit.SetParameter(0, .2)
-        theFit.SetParLimits(0, 0.1, 0.4)
-        theFit.SetParameter(1, 4)
+        theFit=TF1("theFit", _FIT_Lepton, 60, 300,nPar)
+        theFit.SetParameter(0, .25)
+        theFit.SetParLimits(0, 0.1, 0.3)
+        theFit.SetParameter(1, 0.1)
         theFit.SetParameter(2, -.30)
 
     else:

@@ -34,8 +34,9 @@ import os
 
 ROOT.gROOT.SetBatch(True)
 #ROOT.gROOT.ProcessLine('.x rootlogon.C')
-SubRootDir = 'OutFiles_DiMu/'
-#SubRootDir = 'OutFiles_PreSelection_LooseBtag/'
+#SubRootDir = 'OutFiles_DiMu/'
+#SubRootDir = 'OutFiles_DiMu_ScaledWZ/'
+SubRootDir = 'OutFiles_DiMu_NoZScale/'
 
 
 verbos_ = True
@@ -71,7 +72,8 @@ def _FileReturn(Name, channel,cat,HistoName):
 ####################################################
 def MakeTheHistogram(channel,NormMC,NormQCD,ShapeQCD,NormTTbar):
     
-    OutFile = TFile("TotalRootForLimit_PreSelection_DiMu_"+channel + NormMC+".root" , 'RECREATE') # Name Of the output file
+#    OutFile = TFile("TotalRoot_DiMu_ScaledWZ"+channel + NormMC+".root" , 'RECREATE') # Name Of the output file
+    OutFile = TFile("TotalRoot_DiMu_NoZScale"+channel + NormMC+".root" , 'RECREATE') # Name Of the output file
 
     for NameCat in category:
         print "\nstarting NameCat and channel and HistoName ", NameCat, channel, NormMC
@@ -318,26 +320,24 @@ if __name__ == "__main__":
     Isolation=["_Iso"]
 #    MT=["_NoMT", "_LowMT","_HighMT","_MT100","_MT150","_MT200","_MT250","_MT300"]
 #    MT= ["_LowMT","_HighMT","_MT100","_MT150","_MT200","_MT300","_MT400"]
-    MT=["_NoMT"]
+    MT=["_NoMT","_HighMT"]
     JPT=[ "_HighDPhi"]
-#    lqEta= ["_Barrel", "_Endcap","_TotEta"]
-    lqEta= [""]
-    region= [""]
-#    region= [""]
 
     for Norm in PlotName:
         for iso in Isolation:
             for mt in MT:
                 for jpt in JPT:
-                    for etalq in lqEta:
-                        for reg in region:
-                        
-                            channel='MuJet'
-                            
-                            NormMC=Norm+mt+jpt+etalq+reg+iso
+
+                    channel='MuJet'
+                    
+                    NormMC=Norm+mt+jpt+iso
 #                            NormQCD="_CloseJetLepPt"+mt+jpt+etalq+reg+"_AntiIso"
-                            NormQCD="_LepPt"+mt+jpt+etalq+reg+"_AntiIso"
-                            ShapeQCD=Norm+mt+jpt+etalq+reg+"_AntiIso"
-                            NormTTbar=Norm+"_NoTopRW"+mt+jpt+etalq+reg+iso
-                            
-                            MakeTheHistogram(channel,NormMC,NormQCD,ShapeQCD,NormTTbar)
+                    NormQCD="_LepPt"+mt+jpt+"_AntiIso"
+                    ShapeQCD=Norm+mt+jpt+"_AntiIso"
+                    NormTTbar=Norm+"_NoTopRW"+mt+jpt+iso
+                    
+                    MakeTheHistogram(channel,NormMC,NormQCD,ShapeQCD,NormTTbar)
+
+
+
+

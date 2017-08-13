@@ -55,7 +55,7 @@ def make_legend():
         return output
 
 
-def MakePlot(FileName,categoriy,HistName,Xaxis,Info,RB_,channel,yMin,isLOG,ttbarCR,MTLegend):
+def MakePlot(FileName,categoriy,HistName,Xaxis,Info,RB_,channel,yMin,isLOG,ttbarCR,MTLegend,legName):
     ROOT.gStyle.SetFrameLineWidth(3)
     ROOT.gStyle.SetLineWidth(3)
     ROOT.gStyle.SetOptStat(0)
@@ -113,13 +113,13 @@ def MakePlot(FileName,categoriy,HistName,Xaxis,Info,RB_,channel,yMin,isLOG,ttbar
     Data.GetYaxis().SetTitle("Events")
 
 
-    Signal=file.Get(categoriy).Get("Codex_1200")
-    Signal.Scale(1.50E-03*.5)
-    Signal.Rebin(RB_)
-    Signal.SetLineStyle(11)
-    Signal.SetLineWidth(3)
-    Signal.SetLineColor(4)
-    Signal.SetMarkerColor(4)
+#    Signal=file.Get(categoriy).Get("Codex_1200")
+#    Signal.Scale(1.50E-03*.5)
+#    Signal.Rebin(RB_)
+#    Signal.SetLineStyle(11)
+#    Signal.SetLineWidth(3)
+#    Signal.SetLineColor(4)
+#    Signal.SetMarkerColor(4)
 
 
     QCD.SetFillColor(ROOT.TColor.GetColor(408, 106, 154))
@@ -223,11 +223,11 @@ def MakePlot(FileName,categoriy,HistName,Xaxis,Info,RB_,channel,yMin,isLOG,ttbar
     stack.Draw("histsame")
     errorBand.Draw("e2same")
     Data.Draw("esame")
-    Signal.Draw("histsame")
+#    Signal.Draw("histsame")
 
     legende=make_legend()
     legende.AddEntry(Data,"Observed","elp")
-    legende.AddEntry(Signal,"Codex_1200","l")
+#    legende.AddEntry(Signal,"Codex_1200","l")
     legende.AddEntry(TT,"t#bar{t}+jets","f")
     legende.AddEntry(SingleT,"SingleTop","f")
     legende.AddEntry(DYS,"DY #rightarrowll ","f")
@@ -247,15 +247,15 @@ def MakePlot(FileName,categoriy,HistName,Xaxis,Info,RB_,channel,yMin,isLOG,ttbar
 
     pad1.RedrawAxis()
 
-    categ  = ROOT.TPaveText(0.18, 0.5+0.013, 0.43, 0.70+0.155, "NDC")
+    categ  = ROOT.TPaveText(0.2, 0.5+0.013, 0.43, 0.60+0.155, "NDC")
     categ.SetBorderSize(   0 )
     categ.SetFillStyle(    0 )
     categ.SetTextAlign(   12 )
-    categ.SetTextSize ( 0.04 )
+    categ.SetTextSize ( 0.055 )
     categ.SetTextColor(    1 )
     categ.SetTextFont (   41 )
     #       if i==1 or i==3: 
-    categ.AddText(ttbarCR)
+    categ.AddText(legName)
 #    categ.AddText(MTLegend)
     #       else :
     #        categ.AddText("SS")
@@ -323,20 +323,20 @@ def MakePlot(FileName,categoriy,HistName,Xaxis,Info,RB_,channel,yMin,isLOG,ttbar
     ROOT.gPad.RedrawAxis()
 
     c.Modified()
-    c.SaveAs("_plot"+FileName.replace('TotalRootForLimit_PreSelection_MuJet','').replace('.root','')+str(isLOG)+".pdf")
+    c.SaveAs("_plot_TTbar"+FileName.replace('TotalRootForLimit_PreSelection_MuJet','').replace('.root','')+str(isLOG)+".pdf")
 
 
 FileNamesInfo=[
 #               ["_tmass_JetMet","M_{T}(jet,MET) (GeV)","",5,1],
 #               ["_tmass_LQMet","M_{T}(LQ,MET)  (GeV)","",5,1],
-               ["_LepPt","lepton p_{T} (GeV)","",5,1],
+               ["_LepPt","lepton p_{T} (GeV)","",50,1],
                ["_LepEta","lepton #eta ","",5,10],
-               ["_JetPt","jet p_{T} (GeV)","",5,1],
+               ["_JetPt","jet p_{T} (GeV)","",50,1],
                ["_JetEta","jet #eta ","",5,10],
 #               ["_nVtx","# of vertex","",1,10],
 #               ["_nVtx_NoPU","# of vertex before PU reweighting","",1,10],
                ["_MET","MET  (GeV)","",5,1],
-               ["_LQMass","M_{LQ}   (GeV)","",5,1],
+               ["_LQMass","M_{LQ}   (GeV)","",10,1],
                ["_tmass_MuMet","M_{T}(#mu,MET) (GeV)","",5,1],
                ["_dPhi_Jet_Met","#Delta#phi (jet,MET)","",5,1],
                ["_dPhi_Mu_Jet","#Delta#phi (#mu,jet)","",5,1],
@@ -359,7 +359,8 @@ JPT=[ "_HighDPhi"]
 #lqEta= ["_Barrel", "_Endcap","_TotEta"]
 lqEta= [""]
 region= [""]
-region= ["","_ttbarCRDiLep","_ttbarCRSingleLep"]
+region= [["_ttbarCRDiLep","DiLepton CR"],["_ttbarCRSingleLep","SingleLepton CR"]]
+#LegendName= ["DiLepton CR","SingleLepton CR"]
 #region= ["_ttbarCRDiLep","_ttbarCRSingleLep"]
 
 #logStat=[0]
@@ -381,10 +382,10 @@ for i in range(0,len(FileNamesInfo)):
                     for reg in region:
                         for isLOG in logStat:
                     
-                            FileName="TotalRootForLimit_PreSelection_"+"MuJet"+NormMC+mt+jpt+etalq+reg+iso+".root"
-                            Info=NormMC+mt+jpt+etalq+reg+iso
+                            FileName="TotalRootForLimit_PreSelection_"+"MuJet"+NormMC+mt+jpt+etalq+reg[0]+iso+".root"
+                            Info=NormMC+mt+jpt+etalq+reg[0]+iso
                             print "---->", FileName
-                            MakePlot(FileName,"MuJet","",axisName,Info,Bin,"",yMin,isLOG,reg,mt)
+                            MakePlot(FileName,"MuJet","",axisName,Info,Bin,"",yMin,isLOG,reg[0],mt,reg[1])
 
 
 

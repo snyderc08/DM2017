@@ -26,6 +26,8 @@ import array
 ##### Get Jet to Tau FR
 from Step2_JetToMuFR_MC import Make_Mu_FakeRate_MC
 from Step2_JetToMuFR_MC import _FIT_Jet_Function
+from Step2_JetToMuFR_MC import _FIT_Lepton_Function
+#from Step2_JetToMuFR_MC import _FIT_Lepton
 ##### Get Jet to Tau FR
 
 gROOT.Reset()
@@ -36,7 +38,8 @@ import os
 
 ROOT.gROOT.SetBatch(True)
 
-SubRootDir = 'OutFiles_QCD/'
+SubRootDir = 'OutFiles_QCD_MC/'
+#SubRootDir = 'OutFiles_QCD_NoTrgMC/'
 
 
 
@@ -103,15 +106,29 @@ def MakeTheHistogram(channel,NormMC,NormQCD,ShapeQCD):
         DataSampleQCDNormHist=DataSampleQCDNorm.Get("XXX")
         FR_FitMaram=Make_Mu_FakeRate_MC(channel)
         QCDEstimation=0
-            
-        for bin in xrange(50,1000):
+
+
+#This is for FR parametrized in terms of muon Pt
+#        for bin in xrange(40,2000):
+#            value=DataSampleQCDNormHist.GetBinContent(bin)
+#            if value < 0 : value=0
+#            FR= _FIT_Jet_Function(bin+1.5,FR_FitMaram)
+##            print "Bin, value , FR= ",bin, value , FR
+#            if FR> 0.9: FR=0.9
+#            QCDEstimation += value * FR/(1-FR)
+##            QCDEstimation += value * FR
+
+
+
+        for bin in xrange(40,1000):
             value=DataSampleQCDNormHist.GetBinContent(bin)
-            if value < 0 : value=0
-            FR= _FIT_Jet_Function(bin+1.5,FR_FitMaram)
-#            print "Bin, value , FR= ",bin, value , FR
-            if FR> 0.9: FR=0.9
+#            if value < 0 : value=0
+            FR= _FIT_Lepton_Function(bin+1.5,FR_FitMaram)
+                #            print "Bin, value , FR= ",bin, value , FR
+#                if FR> 0.9: FR=0.9
             QCDEstimation += value * FR/(1-FR)
 #            QCDEstimation += value * FR
+
 
         print "\n##########\n QCDEstimation",    QCDEstimation
         NameOut= "QCD"
@@ -133,6 +150,7 @@ def MakeTheHistogram(channel,NormMC,NormQCD,ShapeQCD):
 
         NormFile= _FileReturn(Name, channel,NameCat, NormMC)
         NormHisto=NormFile.Get("XXX")
+        print "\n##########\n QCD Obs",    NormHisto.Integral()
         
         RebinedHist= NormHisto.Rebin(RB_)
         tDirectory.WriteObject(RebinedHist,NameOut)
@@ -155,5 +173,6 @@ if __name__ == "__main__":
 
     PlotName= ["_tmass_MuMet","_tmass_JetMet","_tmass_LQMet","_LepEta","_LepPt","_JetPt","_JetEta","_MET","_LQMass","_dPhi_Jet_Met","_dPhi_Mu_Met"]
     for NormMC in PlotName:
-        MakeTheHistogram("MuJet",NormMC+"_HighMT"+"_RelaxDPhi"+"_Iso","_CloseJetLepPt"+"_HighMT"+"_RelaxDPhi"+"_AntiIso",NormMC+"_HighMT"+"_RelaxDPhi"+"_Total")
+#        MakeTheHistogram("MuJet",NormMC+"_HighMT"+"_RelaxDPhi"+"_Iso","_CloseJetLepPt"+"_HighMT"+"_RelaxDPhi"+"_AntiIso",NormMC+"_HighMT"+"_RelaxDPhi"+"_Total")
+        MakeTheHistogram("MuJet",NormMC+"_HighMT"+"_RelaxDPhi"+"_Iso","_LepPt"+"_HighMT"+"_RelaxDPhi"+"_AntiIso",NormMC+"_HighMT"+"_RelaxDPhi"+"_Total")
 

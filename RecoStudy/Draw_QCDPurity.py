@@ -23,7 +23,7 @@ import array
 gROOT.Reset()
 import os
 
-Binning = array.array("d",[0,60,85,105,150,200,250,300,400,500,600,800])
+
 
 RB_=10
 def add_lumi():
@@ -75,7 +75,7 @@ def make_legend():
         return output
 
 
-def MakePlot(FileName,categoriy,HistName,Xaxis,Info,RB_,channel,yMin,isLOG,ttbarCR,Sample):
+def MakePlot(FileName,categoriy,HistName,Xaxis,Info,RB_,channel,yMin,isLOG,ttbarCR,Sample,Binning):
     ROOT.gStyle.SetFrameLineWidth(3)
     ROOT.gStyle.SetLineWidth(3)
     ROOT.gStyle.SetOptStat(0)
@@ -344,8 +344,23 @@ def MakePlot(FileName,categoriy,HistName,Xaxis,Info,RB_,channel,yMin,isLOG,ttbar
     c.SaveAs("_plot"+Sample+str(isLOG)+".pdf")
 
 
+#
+#-rw-r--r--  1 abdollah  48669 Aug  4 12:10 qcdPurity_Num_CloseJetLepPt.root
+#-rw-r--r--  1 abdollah  54495 Aug  4 12:10 qcdPurity_DeNum_CloseJetLepPt.root
+#-rw-r--r--  1 abdollah  51235 Aug  4 12:11 qcdPurity_Num_LepPt.root
+#-rw-r--r--  1 abdollah  52063 Aug  4 12:11 qcdPurity_DeNum_LepPt.root
+#
+#
 
-MakePlot("Extra/QCD_DeNum.root","","Denumerator","Jet p_{T} (GeV)","",10,"",1,0,"","Denum")
-MakePlot("Extra/QCD_Num.root","","Numerator","Jet p_{T} (GeV)","",10,"",1,0,"","Num")
+Binning = array.array("d",[0,60,80,100,120,150,200,250,300,400,500,600,800])
+MakePlot("Extra/qcdPurity_DeNum_CloseJetLepPt.root","","Denumerator","Jet p_{T} (GeV)","",10,"",1,0,"","DenumCloseJet",Binning)
+MakePlot("Extra/qcdPurity_Num_CloseJetLepPt.root","","Numerator","Jet p_{T} (GeV)","",10,"",1,0,"","NumCloseJet",Binning)
+
+
+
+Binning = array.array("d",[0,60,70,80,90,100,110,120,130,150,175,200,230,260,300])
+MakePlot("Extra/qcdPurity_DeNum_LepPt.root","","Denumerator"," #mu p_{T} (GeV)","",10,"",1,0,"","DenumLep",Binning)
+MakePlot("Extra/qcdPurity_Num_LepPt.root","","Numerator","#mu p_{T} (GeV)","",10,"",1,0,"","NumLep",Binning)
+
 
 

@@ -77,11 +77,20 @@ int main(int argc, char** argv) {
     //########################################
     // W and DY K-factor files
     //########################################
-    TFile * KFactor= TFile::Open("../interface/pileup-hists/kfactors.root");
+//    TFile * KFactor= TFile::Open("../interface/pileup-hists/kfactors.root");
+//    TH1F * WLO= (TH1F *) KFactor->Get("WJets_LO/inv_pt");
+//    TH1F * WNLO= (TH1F *) KFactor->Get("EWKcorr/W");
+//    TH1F * ZLO= (TH1F *) KFactor->Get("ZJets_LO/inv_pt");
+//    TH1F * ZNLO= (TH1F *) KFactor->Get("EWKcorr/Z");
+//
+    
+    TFile * KFactor= TFile::Open("../interface/NewKFactor/kfactor_vjet_qcd/kfactor_24bins.root");
     TH1F * WLO= (TH1F *) KFactor->Get("WJets_LO/inv_pt");
     TH1F * WNLO= (TH1F *) KFactor->Get("EWKcorr/W");
     TH1F * ZLO= (TH1F *) KFactor->Get("ZJets_LO/inv_pt");
     TH1F * ZNLO= (TH1F *) KFactor->Get("EWKcorr/Z");
+    
+    
     
     
     
@@ -532,20 +541,23 @@ int main(int argc, char** argv) {
                     //###############################################################################################
                     float tmass_MuMet= TMass_F(muPt->at(imu), muPt->at(imu)*cos(muPhi->at(imu)),muPt->at(imu)*sin(muPhi->at(imu)) , pfMET, pfMETPhi);
                     
-                    const int size_mTCat = 8;
+                    const int size_mTCat = 11;
                     
                     bool NoMT = 1;
                     bool LoWMT = (tmass_MuMet < 40);
                     bool HighMT = (tmass_MuMet > 100);
                     
+                    bool MT50To150=(tmass_MuMet > 50 && tmass_MuMet <= 150);
                     bool MTTo100=(tmass_MuMet > 50 && tmass_MuMet <= 100);
                     bool MTTo150=(tmass_MuMet > 100 && tmass_MuMet <= 150);
                     bool MTTo200=(tmass_MuMet > 150 && tmass_MuMet <= 200);
                     bool MTTo300=(tmass_MuMet > 200 && tmass_MuMet <= 300);
-                    bool MTTo400=(tmass_MuMet > 300 );
+                    bool MTTo400=(tmass_MuMet > 300 && tmass_MuMet <= 400);
+                    bool MTTo500=(tmass_MuMet > 400 && tmass_MuMet <= 500);
+                    bool MTTo600=(tmass_MuMet > 500 );
                     
-                    bool MT_category[size_mTCat] = {NoMT,LoWMT,HighMT,MTTo100,MTTo150,MTTo200,MTTo300,MTTo400};
-                    std::string MT_Cat[size_mTCat] = {"_NoMT", "_LowMT","_HighMT","_MT100","_MT150","_MT200","_MT300","_MT400"};
+                    bool MT_category[size_mTCat] = {NoMT,LoWMT,HighMT,MT50To150,MTTo100,MTTo150,MTTo200,MTTo300,MTTo400,MTTo500,MTTo600};
+                    std::string MT_Cat[size_mTCat] = {"_NoMT", "_LowMT","_HighMT","_MT50To150","_MT100","_MT150","_MT200","_MT300","_MT400","_MT500","_MT600"};
                     
                     float tmass_JetMet= TMass_F(jetPt->at(ijet), jetPt->at(ijet)*cos(jetPhi->at(ijet)),jetPt->at(ijet)*sin(jetPhi->at(ijet)) , pfMET, pfMETPhi);
                     float tmass_LQMet= TMass_F(LQ4Momentum.Pt(), LQ4Momentum.Px(),LQ4Momentum.Py(), pfMET, pfMETPhi);
@@ -556,10 +568,8 @@ int main(int argc, char** argv) {
                     const int size_jetMetPhi = 2;
                     bool lowDPhi = (deltaPhi(Jet4Momentum.Phi(),pfMETPhi) < 0.5 || deltaPhi(Mu4Momentum.Phi(),pfMETPhi) < 0.5 );
                     bool HighDPhi = (deltaPhi(Jet4Momentum.Phi(),pfMETPhi) >= 0.5 && deltaPhi(Mu4Momentum.Phi(),pfMETPhi) >= 0.5  );
-//                    bool lowDPhi = METisCloseToJet;
-//                    bool HighDPhi = !METisCloseToJet;
-//                    bool lowDPhi = 1;
-//                    bool HighDPhi = 1;
+//                    bool lowDPhi = deltaPhi(Jet4Momentum.Phi(),pfMETPhi) < 0.5;
+//                    bool HighDPhi = deltaPhi(Jet4Momentum.Phi(),pfMETPhi) > 0.5;
                     
                     bool jetMetPhi_category[size_jetMetPhi] = {lowDPhi,HighDPhi};
                     std::string jetMetPhi_Cat[size_jetMetPhi] = {"_LowDPhi", "_HighDPhi"};
@@ -624,7 +634,8 @@ int main(int argc, char** argv) {
                     
                     for (int iso = 0; iso < size_isoCat; iso++) {
                         if (Iso_category[iso]) {
-                            for (int imt = 0; imt < size_mTCat; imt++) {
+                            for (int imt = 0; imt < 9; imt++) {
+//                            for (int imt = 0; imt < size_mTCat; imt++) {
                                 if (MT_category[imt]) {
                                     for (int jpt = 0; jpt < size_jetMetPhi; jpt++) {
                                         if (jetMetPhi_category[jpt]) {

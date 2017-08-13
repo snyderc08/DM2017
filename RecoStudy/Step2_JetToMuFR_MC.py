@@ -33,8 +33,9 @@ import os
 
 
 ROOT.gROOT.SetBatch(True)
-SubRootDir = 'OutFiles_QCD/'
+SubRootDir = 'OutFiles_QCD_MC/'
 #SubRootDir = 'OutFiles_PreSelectionQCD/'
+#SubRootDir = 'OutFiles_QCD_NoTrgMC/'
 
 
 verbos_ = False
@@ -132,14 +133,22 @@ def _FIT_Jet_Function(x, p):
 
 
 
-def _FIT_Lepton( x,  par) :
-    return par[0] / (par[0]+ par[1]*math.exp(par[2] * x[0]))
-def _FIT_Lepton_Function( x,  par) :
-    return par[0] / (par[0]+ par[1]*math.exp(par[2] * x))
+def _FIT_Lepton( x,  p) :
+    Land = p[2] * TMath.Landau(x[0], p[3], p[4])
+#    Pol0 = p[0]+p[1]*x[0]
+    Pol0 = p[0] + p[1]
+    return Land + Pol0
+#    return par[0] / (par[0]+ par[1]*math.exp(par[2] * x[0]))
+def _FIT_Lepton_Function( x,  p) :
+    Land = p[2] * TMath.Landau(x, p[3], p[4])
+#    Pol0 = p[0]+p[1]*x
+    Pol0 = p[0] + p[1]
+    return Land + Pol0
+#    return par[0] / (par[0]+ par[1]*math.exp(par[2] * x))
 
 
 
-FR_vs_LeptonPT=0
+FR_vs_LeptonPT=1
 if FR_vs_LeptonPT:
     ObjectPT="_LepPt"
     BinningFake = array.array("d",[0,20,30,40,50,60,70,80,90,100,120,150,200,300])
@@ -151,7 +160,7 @@ else:
 #############################################################################################################
 ##   Calculating the Fake Rate ---> "Linear Fit, 2 parameters"
 #############################################################################################################
-Binning = array.array("d",[0,30,50,60,70,85,100,115,130,150,200,250,300,400,500])
+#Binning = array.array("d",[0,30,50,60,70,85,100,115,130,150,200,250,300,400,500])
 def Make_Mu_FakeRate_MC(channelName):
     
     
@@ -165,11 +174,11 @@ def Make_Mu_FakeRate_MC(channelName):
     
     ShapeNum=MakeTheHistogram(channelName,HistoFakeNum,HistoFakeNum,BinningFake,1)
     HistoNumX=ShapeNum.Get("XXX")
-    HistoNum= HistoNumX.Rebin(len(Binning)-1,"",Binning)
+    HistoNum= HistoNumX.Rebin(len(BinningFake)-1,"",BinningFake)
     
     ShapeDeNum=MakeTheHistogram(channelName,HistoFakeDeNum,HistoFakeDeNum,BinningFake,1)
     HistoDeNumX=ShapeDeNum.Get("XXX")
-    HistoDeNum= HistoDeNumX.Rebin(len(Binning)-1,"",Binning)
+    HistoDeNum= HistoDeNumX.Rebin(len(BinningFake)-1,"",BinningFake)
     
     print "\n---------------------------------------------------------------------------\n"
     print "overal FR = ", HistoNum.Integral()/ HistoDeNum.Integral(), "\n"
@@ -181,15 +190,16 @@ def Make_Mu_FakeRate_MC(channelName):
     canv = TCanvas("canv", "histograms", 600, 600)
     #    HistoNum.SetMinimum(0.5)
     #    HistoNum.GetXaxis().SetRangeUser(0,400)
-    canv.SetLogy()
+    if not FR_vs_LeptonPT: canv.SetLogy()
 #    canv.SetGridx()
 #    canv.SetGridy()
     HistoNum.SetTitle("")
     if FR_vs_LeptonPT: HistoNum.GetXaxis().SetTitle("#mu p_{T} [GeV]")
     else: HistoNum.GetXaxis().SetTitle("Jet p_{T} [GeV]")
-    HistoNum.GetYaxis().SetTitle("#mu Fake Rate  (Tight Iso / Loose Iso)")
+    HistoNum.GetYaxis().SetTitle("#mu Fake Rate  (Tight Id + Iso / Tight Iso)")
     HistoNum.GetYaxis().SetTitleOffset(1.3)
-    HistoNum.GetYaxis().SetRangeUser(0.01,5)
+    HistoNum.GetYaxis().SetRangeUser(0.01,1)
+    if not FR_vs_LeptonPT: HistoNum.GetYaxis().SetRangeUser(0.01,5)
     HistoNum.SetStats(0)
     HistoNum.SetMarkerStyle(20)
     
@@ -199,11 +209,11 @@ def Make_Mu_FakeRate_MC(channelName):
     #####  Fit parameters for fake rate v.s. muon Pt
     # number of parameters in the fit
     if FR_vs_LeptonPT:
-        nPar = 3
-        theFit=TF1("theFit", _FIT_Lepton, 80, 500,nPar)
-        theFit.SetParameter(0, .2)
+        nPar = 5
+        theFit=TF1("theFit", _FIT_Lepton, 40, 300,nPar)
+        theFit.SetParameter(0, .35)
         theFit.SetParLimits(0, 0.1, 0.4)
-        theFit.SetParameter(1, 4)
+        theFit.SetParameter(1, 0.1)
         theFit.SetParameter(2, -.30)
     
     else:
@@ -262,7 +272,7 @@ def Make_Mu_FakeRate_MC(channelName):
     
     
     if FR_vs_LeptonPT:
-        return FitParam[0],FitParam[1],FitParam[2]
+        return FitParam[0],FitParam[1],FitParam[2],FitParam[3],FitParam[4]
     else:
         return FitParam[0],FitParam[1],FitParam[2],FitParam[3],FitParam[4]
 

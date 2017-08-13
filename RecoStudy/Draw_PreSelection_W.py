@@ -78,19 +78,14 @@ def MakePlot(FileName,categoriy,HistName,Xaxis,Info,RB_,channel,yMin,isLOG,ttbar
 
     W=file.Get(categoriy).Get("W")
     W.Rebin(RB_)
-    if ttbarCR=="" :  W.Scale(SF_W_SingleLep())
-    if ttbarCR=="_ttbarCRSingleLep" :  W.Scale(SF_W_SingleLep())
-    if ttbarCR=="_ttbarCRDiLep" :  W.Scale(SF_W_DiLep())
-    W.Scale(1)
+    W.Scale(SF_W_SingleLep())
     
 
     TT=file.Get(categoriy).Get("TT")
     TT.Rebin(RB_)
-    TT.Scale(1)
-    if ttbarCR=="" :  TT.Scale(SF_TT_SingleLep())
-    if ttbarCR=="_ttbarCRSingleLep" :  TT.Scale(SF_TT_SingleLep())
-    if ttbarCR=="_ttbarCRDiLep" :  TT.Scale(SF_TT_DiLep())
-
+    TT.Scale(SF_TT_SingleLep())
+    
+    
     SingleT=file.Get(categoriy).Get("SingleTop")
     SingleT.Rebin(RB_)
 
@@ -113,13 +108,13 @@ def MakePlot(FileName,categoriy,HistName,Xaxis,Info,RB_,channel,yMin,isLOG,ttbar
     Data.GetYaxis().SetTitle("Events")
 
 
-    Signal=file.Get(categoriy).Get("Codex_1200")
-    Signal.Scale(1.50E-03*.5)
-    Signal.Rebin(RB_)
-    Signal.SetLineStyle(11)
-    Signal.SetLineWidth(3)
-    Signal.SetLineColor(4)
-    Signal.SetMarkerColor(4)
+#    Signal=file.Get(categoriy).Get("Codex_1200")
+#    Signal.Scale(1.50E-03*.5)
+#    Signal.Rebin(RB_)
+#    Signal.SetLineStyle(11)
+#    Signal.SetLineWidth(3)
+#    Signal.SetLineColor(4)
+#    Signal.SetMarkerColor(4)
 
 
     QCD.SetFillColor(ROOT.TColor.GetColor(408, 106, 154))
@@ -142,11 +137,6 @@ def MakePlot(FileName,categoriy,HistName,Xaxis,Info,RB_,channel,yMin,isLOG,ttbar
 #        Data.SetBinContent(Data.GetNbinsX(),Data.GetBinContent(Data.GetNbinsX()+1)+Data.GetBinContent(Data.GetNbinsX()))
 
 
-
-
-
-
-
     Data.SetMarkerStyle(20)
     Data.SetMarkerSize(1)
     QCD.SetLineColor(ROOT.kBlack)
@@ -158,22 +148,6 @@ def MakePlot(FileName,categoriy,HistName,Xaxis,Info,RB_,channel,yMin,isLOG,ttbar
     Data.SetLineColor(ROOT.kBlack)
     Data.SetLineWidth(2)
     
-#    #Making the plot blind
-#    if FileName.find("LQMass") > 0 :
-#        print "##################################\n", FileName
-#        for i in range(Data.GetNbinsX()):
-#            if i > 15 : Data.SetBinContent(i+1,0)
-#
-#    if FileName.find("MET") > 0 :
-#        print "##################################\n", FileName
-#        for i in range(Data.GetNbinsX()):
-#            if i > 9 : Data.SetBinContent(i+1,0)
-#
-#    if FileName.find("tmass_MuMet") > 0 :
-#        print "##################################\n", FileName
-#        for i in range(Data.GetNbinsX()):
-#                if i > 9 : Data.SetBinContent(i+1,0)
-
 
 
 
@@ -223,11 +197,11 @@ def MakePlot(FileName,categoriy,HistName,Xaxis,Info,RB_,channel,yMin,isLOG,ttbar
     stack.Draw("histsame")
     errorBand.Draw("e2same")
     Data.Draw("esame")
-    Signal.Draw("histsame")
+#    Signal.Draw("histsame")
 
     legende=make_legend()
     legende.AddEntry(Data,"Observed","elp")
-    legende.AddEntry(Signal,"Codex_1200","l")
+#    legende.AddEntry(Signal,"Codex_1200","l")
     legende.AddEntry(TT,"t#bar{t}+jets","f")
     legende.AddEntry(SingleT,"SingleTop","f")
     legende.AddEntry(DYS,"DY #rightarrowll ","f")
@@ -247,16 +221,16 @@ def MakePlot(FileName,categoriy,HistName,Xaxis,Info,RB_,channel,yMin,isLOG,ttbar
 
     pad1.RedrawAxis()
 
-    categ  = ROOT.TPaveText(0.18, 0.5+0.013, 0.43, 0.70+0.155, "NDC")
+    categ  = ROOT.TPaveText(0.23, 0.5+0.013, 0.49, 0.53+0.155, "NDC")
     categ.SetBorderSize(   0 )
     categ.SetFillStyle(    0 )
     categ.SetTextAlign(   12 )
     categ.SetTextSize ( 0.04 )
     categ.SetTextColor(    1 )
-    categ.SetTextFont (   41 )
-    #       if i==1 or i==3: 
-    categ.AddText(ttbarCR)
-#    categ.AddText(MTLegend)
+#    categ.SetTextFont (   41 )
+    #       if i==1 or i==3:
+    categ.AddText("W Control Region")
+    categ.AddText(" 50 <m_{T} (#mu,MET) <150 GeV ")
     #       else :
     #        categ.AddText("SS")
     categ.Draw()
@@ -323,44 +297,32 @@ def MakePlot(FileName,categoriy,HistName,Xaxis,Info,RB_,channel,yMin,isLOG,ttbar
     ROOT.gPad.RedrawAxis()
 
     c.Modified()
-    c.SaveAs("_plot"+FileName.replace('TotalRootForLimit_PreSelection_MuJet','').replace('.root','')+str(isLOG)+".pdf")
+    c.SaveAs("_plot_W_CR_50To150"+FileName.replace('TotalRootForLimit_PreSelection_MuJet','').replace('.root','')+str(isLOG)+".pdf")
 
 
 FileNamesInfo=[
 #               ["_tmass_JetMet","M_{T}(jet,MET) (GeV)","",5,1],
 #               ["_tmass_LQMet","M_{T}(LQ,MET)  (GeV)","",5,1],
-               ["_LepPt","lepton p_{T} (GeV)","",5,1],
+               ["_LepPt","lepton p_{T} (GeV)","",50,1],
                ["_LepEta","lepton #eta ","",5,10],
-               ["_JetPt","jet p_{T} (GeV)","",5,1],
+               ["_JetPt","jet p_{T} (GeV)","",50,1],
                ["_JetEta","jet #eta ","",5,10],
-#               ["_nVtx","# of vertex","",1,10],
-#               ["_nVtx_NoPU","# of vertex before PU reweighting","",1,10],
                ["_MET","MET  (GeV)","",5,1],
                ["_LQMass","M_{LQ}   (GeV)","",5,1],
                ["_tmass_MuMet","M_{T}(#mu,MET) (GeV)","",5,1],
                ["_dPhi_Jet_Met","#Delta#phi (jet,MET)","",5,1],
                ["_dPhi_Mu_Jet","#Delta#phi (#mu,jet)","",5,1],
-#               ["_LQEta","#eta_{LQ}","",10,10],
-               ["_NumJet","Jet multiplicity","",1,1],
-               ["_NumBJet","BJet multiplicity","",1,1],
+               ["_dPhi_Mu_Met","#Delta#phi (#mu,MET)","",5,1],
                ]
 
 
 
-#    Isolation=["_Iso", "_AntiIso","_Total"]
 
 Isolation=["_Iso"]
-MT=["_HighMT"]
-#MT= ["_MT100","_MT150"]
-#MT_legend= [" 50 < M_{T} < 100","100 < M_{T} < 150"]
-#MT= ["_NoMT","_HighMT"]
-#    JPT=["_LowDPhi", "_HighDPhi"];
+MT=["_MT50To150"]
 JPT=[ "_HighDPhi"]
-#lqEta= ["_Barrel", "_Endcap","_TotEta"]
 lqEta= [""]
 region= [""]
-region= ["","_ttbarCRDiLep","_ttbarCRSingleLep"]
-#region= ["_ttbarCRDiLep","_ttbarCRSingleLep"]
 
 #logStat=[0]
 logStat=[1]
@@ -387,18 +349,3 @@ for i in range(0,len(FileNamesInfo)):
                             MakePlot(FileName,"MuJet","",axisName,Info,Bin,"",yMin,isLOG,reg,mt)
 
 
-
-#MakeTheHistogram("MuJet",NormMC+mt+jpt+dr+iso,NormMC+mt+jpt+dr+iso,"",1)
-#
-#
-#
-#
-#
-#for ch in channelDirectory:
-#    for cat in Category:
-#        for i in range(0,len(FileNamesInfo)):
-#
-##            FileName="TotalRootForLimit_PreSelection_"+ch+FileNamesInfo[i][0]+"_OS.root"
-#            FileName="TotalRootForLimit_PreSelection_"+ch+FileNamesInfo[i][0]+".root"
-#            MakePlot(FileName,ch+cat,FileNamesInfo[i][0],FileNamesInfo[i][1],FileNamesInfo[i][2],FileNamesInfo[i][3],ch+cat)
-#

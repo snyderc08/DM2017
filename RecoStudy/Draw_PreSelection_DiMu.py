@@ -24,8 +24,9 @@ import array
 gROOT.Reset()
 import os
 
-Binning = array.array("d",[0,100,200,300,400,500,600,700,800,900,1000,1200,1400,2000])
-#Binning = array.array("d",[60,70,72,74,76,78,80,82,84,86,88,90,92,94,96,98,100,110])
+
+BinningLQ = array.array("d",[0,50,100,150,200,250,300,350,400,450,500,550,600,650,700,800,900,1000,1200,1400,2000])
+BinningM = array.array("d",[60,70,72,74,76,78,80,82,84,86,88,90,92,94,96,98,100,110,120])
 
 
 from Step5_TT_W_ScaleFactor import *
@@ -83,7 +84,7 @@ def make_legend():
         return output
 
 
-def MakePlot(FileName,categoriy,HistName,Xaxis,Info,RB_,channel,yMin,isLOG,ttbarCR,MTLegend):
+def MakePlot(FileName,categoriy,HistName,Xaxis,Info,RB_,channel,yMin,isLOG,scale,MTLegend,Binning):
     ROOT.gStyle.SetFrameLineWidth(3)
     ROOT.gStyle.SetLineWidth(3)
     ROOT.gStyle.SetOptStat(0)
@@ -117,9 +118,9 @@ def MakePlot(FileName,categoriy,HistName,Xaxis,Info,RB_,channel,yMin,isLOG,ttbar
     TT= TT_.Rebin(len(Binning)-1,"",Binning)
 #    TT.Rebin(RB_)
 #    TT.Scale(1)
-    if ttbarCR=="" :  TT.Scale(SF_TT_SingleLep())
-    if ttbarCR=="_ttbarCRSingleLep" :  TT.Scale(SF_TT_SingleLep())
-    if ttbarCR=="_ttbarCRDiLep" :  TT.Scale(SF_TT_DiLep())
+    TT.Scale(SF_TT_SingleLep())
+#    if ttbarCR=="_ttbarCRSingleLep" :  TT.Scale(SF_TT_SingleLep())
+#    if ttbarCR=="_ttbarCRDiLep" :  TT.Scale(SF_TT_DiLep())
 
     SingleT_=file.Get(categoriy).Get("SingleTop")
     SingleT= SingleT_.Rebin(len(Binning)-1,"",Binning)
@@ -283,16 +284,16 @@ def MakePlot(FileName,categoriy,HistName,Xaxis,Info,RB_,channel,yMin,isLOG,ttbar
 
     pad1.RedrawAxis()
 
-    categ  = ROOT.TPaveText(0.18, 0.5+0.013, 0.43, 0.70+0.155, "NDC")
+    categ  = ROOT.TPaveText(0.22, 0.5+0.013, 0.43, 0.50+0.155, "NDC")
     categ.SetBorderSize(   0 )
     categ.SetFillStyle(    0 )
     categ.SetTextAlign(   12 )
-    categ.SetTextSize ( 0.04 )
+    categ.SetTextSize ( 0.05 )
     categ.SetTextColor(    1 )
     categ.SetTextFont (   41 )
     #       if i==1 or i==3: 
-    categ.AddText(ttbarCR)
-    categ.AddText(MTLegend)
+    categ.AddText(scale.replace("TotalRoot_DiMu_","").replace("MuJet",""))
+    categ.AddText(MTLegend.replace("_",""))
     #       else :
     #        categ.AddText("SS")
     categ.Draw()
@@ -312,8 +313,8 @@ def MakePlot(FileName,categoriy,HistName,Xaxis,Info,RB_,channel,yMin,isLOG,ttbar
     pad2.cd()
     
     h1=errorBand.Clone()
-    h1.SetMaximum(1.5)
-    h1.SetMinimum(0.5)
+    h1.SetMaximum(1.8)
+    h1.SetMinimum(0.2)
     h1.SetMarkerStyle(20)
 
     h3=Data.Clone()
@@ -359,7 +360,13 @@ def MakePlot(FileName,categoriy,HistName,Xaxis,Info,RB_,channel,yMin,isLOG,ttbar
     ROOT.gPad.RedrawAxis()
 
     c.Modified()
-    c.SaveAs("_plot_DiMu"+FileName.replace('TotalRootForLimit_PreSelection_DiMu_MuJet','').replace('.root','')+str(isLOG)+".pdf")
+    c.SaveAs("_plot_DiMu"+scale+FileName.replace('TotalRootForLimit_PreSelection_DiMu_MuJet','').replace('.root','')+str(isLOG)+".pdf")
+
+
+
+
+
+
 
 
 FileNamesInfo=[
@@ -372,9 +379,9 @@ FileNamesInfo=[
 ##               ["_nVtx","# of vertex","",1,10],
 ##               ["_nVtx_NoPU","# of vertex before PU reweighting","",1,10],
 #               ["_MET","MET  (GeV)","",5,1],
-               ["_LQMass","M_{LQ}   (GeV)","",10,.1],
-               ["_WMass","M_{#mu^{+}#mu^{-}} shifted to W Mass   (GeV)","",10,.1],
-               ["_ZMass","M_{#mu^{+}#mu^{-}}   (GeV)","",10,.1],
+               ["_LQMass","M_{LQ}   (GeV)","",10,.1,BinningLQ],
+               ["_WMass","M_{#mu^{+}#mu^{-}} shifted to W Mass   (GeV)","",10,.1,BinningM],
+               ["_ZMass","M_{#mu^{+}#mu^{-}}   (GeV)","",10,.1,BinningM],
 #               ["_tmass_MuMet","M_{T}(#mu,MET) (GeV)","",5,1],
 #               ["_dPhi_Jet_Met","#Delta#phi (jet,MET)","",5,1],
 #               ["_dPhi_Mu_Jet","#Delta#phi (#mu,jet)","",5,1],
@@ -386,26 +393,14 @@ FileNamesInfo=[
                ]
 
 
-
-
-#    Isolation=["_Iso", "_AntiIso","_Total"]
-
 Isolation=["_Iso"]
-MT=["_NoMT"]
-#MT= ["_MT100","_MT150"]
-#MT_legend= [" 50 < M_{T} < 100","100 < M_{T} < 150"]
-#MT= ["_NoMT","_HighMT"]
-#    JPT=["_LowDPhi", "_HighDPhi"];
+MT=["_NoMT","_HighMT"]
 JPT=[ "_HighDPhi"]
-#lqEta= ["_Barrel", "_Endcap","_TotEta"]
-lqEta= [""]
-region= [""]
-#region= ["","_ttbarCRDiLep","_ttbarCRSingleLep"]
-#region= ["_ttbarCRDiLep","_ttbarCRSingleLep"]
 
-#logStat=[0]
-logStat=[1]
+logStat=[0]
+#logStat=[1]
 
+Scales=["TotalRoot_DiMu_ScaledWZMuJet","TotalRoot_DiMu_NoZScaleMuJet"]
 
 for i in range(0,len(FileNamesInfo)):
     
@@ -414,32 +409,17 @@ for i in range(0,len(FileNamesInfo)):
     nothing=FileNamesInfo[i][2]
     Bin=FileNamesInfo[i][3]
     yMin=FileNamesInfo[i][4]
+    Binning=FileNamesInfo[i][5]
     
     for iso in Isolation:
         for mt in MT:
             for jpt in JPT:
-                for etalq in lqEta:
-                    for reg in region:
-                        for isLOG in logStat:
-                    
-                            FileName="TotalRootForLimit_PreSelection_DiMu_"+"MuJet"+NormMC+mt+jpt+etalq+reg+iso+".root"
-                            Info=NormMC+mt+jpt+etalq+reg+iso
-                            print "---->", FileName
-                            MakePlot(FileName,"MuJet","",axisName,Info,Bin,"",yMin,isLOG,reg,mt)
+                for isLOG in logStat:
+                    for scale in Scales:
+            
+                        FileName=scale+NormMC+mt+jpt+iso+".root"
+                        Info=NormMC+mt+jpt+iso
+                        print "---->", FileName
+                        MakePlot(FileName,"MuJet","",axisName,Info,Bin,"",yMin,isLOG,scale,mt,Binning)
 
 
-
-#MakeTheHistogram("MuJet",NormMC+mt+jpt+dr+iso,NormMC+mt+jpt+dr+iso,"",1)
-#
-#
-#
-#
-#
-#for ch in channelDirectory:
-#    for cat in Category:
-#        for i in range(0,len(FileNamesInfo)):
-#
-##            FileName="TotalRootForLimit_PreSelection_"+ch+FileNamesInfo[i][0]+"_OS.root"
-#            FileName="TotalRootForLimit_PreSelection_"+ch+FileNamesInfo[i][0]+".root"
-#            MakePlot(FileName,ch+cat,FileNamesInfo[i][0],FileNamesInfo[i][1],FileNamesInfo[i][2],FileNamesInfo[i][3],ch+cat)
-#
