@@ -648,22 +648,22 @@ int main(int argc, char** argv) {
                                     for (int jpt = 0; jpt < size_jetMetPhi; jpt++) {
                                         if (jetMetPhi_category[jpt]) {
                                             for (int ieta = 0; ieta < size_lqEta; ieta++) {
-                                                if (lqEta_category[ieta]) {
+//                                                if (lqEta_category[ieta]) {
                                                     for (int iCR = 0; iCR < size_CR; iCR++) {
                                                         //                                                        if (region_category[iCR]) {
                                                         //                                                            for (int itopRW = 0; itopRW < size_topPtRW; itopRW++) {
                                                         
                                                         
-                                                        float FullWeight = TotalWeight * MuonCor *ElectronCor * FinalBTagSF;
-                                                        std::string FullStringName =  MT_Cat[imt] + jetMetPhi_Cat[jpt] + lqEta_Cat[ieta] + region_Cat[iCR] + iso_Cat[iso]  ;
+//                                                        float FullWeight = TotalWeight * MuonCor *ElectronCor * FinalBTagSF;
+//                                                        std::string FullStringName =  MT_Cat[imt] + jetMetPhi_Cat[jpt] + lqEta_Cat[ieta] + region_Cat[iCR] + iso_Cat[iso]  ;
                                                         
                                                         
                                                         
                                                         //##################
                                                         //This check is used to make sure that each event is just filled once for any of the categories ==> No doube-counting of events  (this is specially important for ttbar events where we have many jets and leptons)
-                                                        if (!( std::find(HistNamesFilled.begin(), HistNamesFilled.end(), FullStringName) != HistNamesFilled.end())){
-                                                            HistNamesFilled.push_back(FullStringName);
-                                                            
+//                                                        if (!( std::find(HistNamesFilled.begin(), HistNamesFilled.end(), FullStringName) != HistNamesFilled.end())){
+//                                                            HistNamesFilled.push_back(FullStringName);
+                                                        
                                                             
                                                             
 //                                                            plotFill(CHL+"_tmass_MuMet"+FullStringName,tmass_MuMet,200,0,2000,FullWeight);
@@ -684,8 +684,8 @@ cout<<"nothing\n";
                                                             //                                                                }
                                                             //                                                            }
                                                             
-                                                        }
-                                                    }
+//                                                        }
+//                                                    }
                                                 }
                                             }
                                         }
