@@ -554,29 +554,29 @@ int main(int argc, char** argv) {
                     //###############################################################################################
                     bool LepPassIsolation= IsoMu < LeptonIsoCut;
                     
-                    const int size_isoCat = 3;
+                    const int size_isoCat = 1;
                     bool Isolation = LepPassIsolation;
-                    bool AntiIsolation =  !LepPassIsolation;
-                    bool Total = 1;
+//                    bool AntiIsolation =  !LepPassIsolation;
+//                    bool Total = 1;
                     
-                    bool Iso_category[size_isoCat] = {Isolation, AntiIsolation,Total};
-                    std::string iso_Cat[size_isoCat] = {"_Iso", "_AntiIso","_Total"};
+                    bool Iso_category[size_isoCat] = {Isolation};
+                    std::string iso_Cat[size_isoCat] = {"_Iso"};
                     //###############################################################################################
                     //  MT Categorization
                     //###############################################################################################
                     float tmass_MuMet= TMass_F(muPt->at(imu), muPt->at(imu)*cos(muPhi->at(imu)),muPt->at(imu)*sin(muPhi->at(imu)) , pfMET, pfMETPhi);
                     
-                    const int size_mTCat = 4;
+                    const int size_mTCat = 2;
                     
                     bool NoMT = 1;
-                    bool LoWMT = (tmass_MuMet < 40);
+//                    bool LoWMT = (tmass_MuMet < 40);
                     bool HighMT = (tmass_MuMet > 100);
                     
-                    bool MT50To150=(tmass_MuMet > 50 && tmass_MuMet <= 150);
-                    bool MTTo600=(tmass_MuMet > 500 );
+//                    bool MT50To150=(tmass_MuMet > 50 && tmass_MuMet <= 150);
+//                    bool MTTo600=(tmass_MuMet > 500 );
                     
-                    bool MT_category[size_mTCat] = {NoMT,LoWMT,HighMT,MTTo600};
-                    std::string MT_Cat[size_mTCat] = {"_NoMT", "_LowMT","_HighMT","_MT600"};
+                    bool MT_category[size_mTCat] = {NoMT,HighMT};
+                    std::string MT_Cat[size_mTCat] = {"_NoMT", "_HighMT"};
                     
                     float tmass_JetMet= TMass_F(jetPt->at(ijet), jetPt->at(ijet)*cos(jetPhi->at(ijet)),jetPt->at(ijet)*sin(jetPhi->at(ijet)) , pfMET, pfMETPhi);
                     float tmass_LQMet= TMass_F(LQ4Momentum.Pt(), LQ4Momentum.Px(),LQ4Momentum.Py(), pfMET, pfMETPhi);
@@ -584,11 +584,11 @@ int main(int argc, char** argv) {
                     //###############################################################################################
                     //  dPhi Jet_MET Categorization
                     //###############################################################################################
-                    const int size_jetMetPhi = 2;
-                    bool lowDPhi = (deltaPhi(Jet4Momentum.Phi(),pfMETPhi) < 0.5 || deltaPhi(Mu4Momentum.Phi(),pfMETPhi) < 0.5 );
+                    const int size_jetMetPhi = 1;
+//                    bool lowDPhi = (deltaPhi(Jet4Momentum.Phi(),pfMETPhi) < 0.5 || deltaPhi(Mu4Momentum.Phi(),pfMETPhi) < 0.5 );
                     bool HighDPhi = (deltaPhi(Jet4Momentum.Phi(),pfMETPhi) >= 0.5 && deltaPhi(Mu4Momentum.Phi(),pfMETPhi) >= 0.5  );
-                    bool jetMetPhi_category[size_jetMetPhi] = {lowDPhi,HighDPhi};
-                    std::string jetMetPhi_Cat[size_jetMetPhi] = {"_LowDPhi", "_HighDPhi"};
+                    bool jetMetPhi_category[size_jetMetPhi] = {HighDPhi};
+                    std::string jetMetPhi_Cat[size_jetMetPhi] = {"_HighDPhi"};
                     
                     //###############################################################################################
                     //  LQ eta Categorization
@@ -603,7 +603,7 @@ int main(int argc, char** argv) {
                     //###############################################################################################
                     //  TTbar & DY control region Categorization
                     //###############################################################################################
-                    const int size_CR = 3;
+                    const int size_CR = 1;
                     bool signalRegion = numTau+numZboson + numElectron  < 1  && numBJet < 1;
                     //                    bool signalRegion = numTau+numZboson + numElectron  < 1;
                     bool TTcontrolRegion_DiLep = (numTau <1 && numZboson < 1 && numElectron > 0 && !isThisJetElectron );
@@ -612,8 +612,8 @@ int main(int argc, char** argv) {
                     //                    bool DYcontrolRegion = (numTau <1 && numZboson > 0 && numElectron < 1 );
                     //                    bool region_category[size_CR] = {signalRegion,TTcontrolRegion,DYcontrolRegion};
                     //                    std::string region_Cat[size_CR] = {"", "_ttbarCR","_DYCR"};
-                    bool region_category[size_CR] = {signalRegion,TTcontrolRegion_DiLep,TTcontrolRegion_SingleLep};
-                    std::string region_Cat[size_CR] = {"", "_ttbarCRDiLep","_ttbarCRSingleLep"};
+                    bool region_category[size_CR] = {signalRegion};
+                    std::string region_Cat[size_CR] = {""};
                     
                     //###############################################################################################
                     //  Top Pt Reweighting Cat: The SF is meant to correct only the shape of the pt(top) distribution- not the amount of generated events ( you have to consider that the average weight is not 1 ! ) So we define two category for ttbar events
@@ -666,11 +666,11 @@ int main(int argc, char** argv) {
                                                             
                                                             
                                                             plotFill(CHL+"_tmass_MuMet"+FullStringName,tmass_MuMet,200,0,2000,FullWeight);
-                                                            plotFill(CHL+"_MET"+FullStringName,pfMET,200,0,2000,FullWeight);
+//                                                            plotFill(CHL+"_MET"+FullStringName,pfMET,200,0,2000,FullWeight);
                                                             plotFill(CHL+"_JetPt"+FullStringName,jetPt->at(ijet) ,2000,0,2000,FullWeight);
                                                             plotFill(CHL+"_LepPt"+FullStringName,muPt->at(imu),2000,0,2000,FullWeight);
                                                             plotFill(CHL+"_LQMass"+FullStringName,LQ4Momentum.M(),200,0,2000,FullWeight);
-                                                            plotFill(CHL+"_BosonKFactor"+FullStringName,ZBosonKFactor*WBosonKFactor,200,0,2,FullWeight);
+//                                                            plotFill(CHL+"_BosonKFactor"+FullStringName,ZBosonKFactor*WBosonKFactor,200,0,2,FullWeight);
                                                             
                                                             plotFill(CHL+"_WBosonPt"+FullStringName,WBosonPt,150,0,1500,FullWeight);
                                                             plotFill(CHL+"_WBosonPt_KFactor"+FullStringName,WBosonPt,150,0,1500,FullWeight*WBosonKFactor);
