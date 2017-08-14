@@ -666,20 +666,20 @@ int main(int argc, char** argv) {
                                                             
                                                             
                                                             
-                                                            plotFill(CHL+"_tmass_MuMet"+FullStringName,tmass_MuMet,200,0,2000,FullWeight);
-                                                            plotFill(CHL+"_MET"+FullStringName,pfMET,200,0,2000,FullWeight);
-                                                            plotFill(CHL+"_JetPt"+FullStringName,jetPt->at(ijet) ,2000,0,2000,FullWeight);
-                                                            plotFill(CHL+"_LepPt"+FullStringName,muPt->at(imu),2000,0,2000,FullWeight);
-                                                            plotFill(CHL+"_LQMass"+FullStringName,LQ4Momentum.M(),200,0,2000,FullWeight);
-                                                            plotFill(CHL+"_BosonKFactor"+FullStringName,ZBosonKFactor*WBosonKFactor,200,0,2,FullWeight);
+//                                                            plotFill(CHL+"_tmass_MuMet"+FullStringName,tmass_MuMet,200,0,2000,FullWeight);
+//                                                            plotFill(CHL+"_MET"+FullStringName,pfMET,200,0,2000,FullWeight);
+//                                                            plotFill(CHL+"_JetPt"+FullStringName,jetPt->at(ijet) ,2000,0,2000,FullWeight);
+//                                                            plotFill(CHL+"_LepPt"+FullStringName,muPt->at(imu),2000,0,2000,FullWeight);
+//                                                            plotFill(CHL+"_LQMass"+FullStringName,LQ4Momentum.M(),200,0,2000,FullWeight);
+//                                                            plotFill(CHL+"_BosonKFactor"+FullStringName,ZBosonKFactor*WBosonKFactor,200,0,2,FullWeight);
+//                                                            
+//                                                            plotFill(CHL+"_WBosonPt"+FullStringName,WBosonPt,150,0,1500,FullWeight);
+//                                                            plotFill(CHL+"_WBosonPt_KFactor"+FullStringName,WBosonPt,150,0,1500,FullWeight*WBosonKFactor);
+//                                                            
+//                                                            plotFill(CHL+"_ZBosonPt"+FullStringName,ZBosonPt,150,0,1500,FullWeight);
+//                                                            plotFill(CHL+"_ZBosonPt_KFactor"+FullStringName,ZBosonPt,150,0,1500,FullWeight*ZBosonKFactor);
                                                             
-                                                            plotFill(CHL+"_WBosonPt"+FullStringName,WBosonPt,150,0,1500,FullWeight);
-                                                            plotFill(CHL+"_WBosonPt_KFactor"+FullStringName,WBosonPt,150,0,1500,FullWeight*WBosonKFactor);
-                                                            
-                                                            plotFill(CHL+"_ZBosonPt"+FullStringName,ZBosonPt,150,0,1500,FullWeight);
-                                                            plotFill(CHL+"_ZBosonPt_KFactor"+FullStringName,ZBosonPt,150,0,1500,FullWeight*ZBosonKFactor);
-                                                            
-                                                            
+cout<<"nothing\n";
                                                             
                                                             //                                                                }
                                                             //                                                            }
