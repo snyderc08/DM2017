@@ -148,7 +148,6 @@ float XSection(std::string OutName) {
     
     
     
-    DYJetsToLL_Pt-400To600_FXFX
     
     
 //    hadd FXFX/WJetsToLNu_FXFX.root                   *WJetsToLNu_FXFX*
