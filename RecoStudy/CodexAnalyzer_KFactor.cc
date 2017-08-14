@@ -323,13 +323,12 @@ int main(int argc, char** argv) {
                 
                 if (HistoTot){
                     
-//                    if (isFXFX !=string::npos) {
-                        LumiWeight = weightCalc_Stitching(HistoTot, InputROOT, WBosonPt,ZBosonPt,W_EventsNLO, Z_EventsNLO);
-//                }
+                    if (isFXFX !=string::npos) {
+                        LumiWeight = weightCalc_Stitching(HistoTot, InputROOT, WBosonPt,ZBosonPt,W_EventsNLO, Z_EventsNLO);}
                     
-//                    else{
-//                         LumiWeight = weightCalc(HistoTot, InputROOT);
-//                    }
+                    else{
+                         LumiWeight = weightCalc(HistoTot, InputROOT);
+                    }
                 }
                 
                 GetGenWeight=genWeight;
@@ -567,7 +566,7 @@ int main(int argc, char** argv) {
                     //###############################################################################################
                     float tmass_MuMet= TMass_F(muPt->at(imu), muPt->at(imu)*cos(muPhi->at(imu)),muPt->at(imu)*sin(muPhi->at(imu)) , pfMET, pfMETPhi);
                     
-                    const int size_mTCat = 5;
+                    const int size_mTCat = 4;
                     
                     bool NoMT = 1;
                     bool LoWMT = (tmass_MuMet < 40);
@@ -577,7 +576,7 @@ int main(int argc, char** argv) {
                     bool MTTo600=(tmass_MuMet > 500 );
                     
                     bool MT_category[size_mTCat] = {NoMT,LoWMT,HighMT,MTTo600};
-                    std::string MT_Cat[size_mTCat] = {"_NoMT", "_LowMT","_HighMT","_MT50To150","_MT600"};
+                    std::string MT_Cat[size_mTCat] = {"_NoMT", "_LowMT","_HighMT","_MT600"};
                     
                     float tmass_JetMet= TMass_F(jetPt->at(ijet), jetPt->at(ijet)*cos(jetPhi->at(ijet)),jetPt->at(ijet)*sin(jetPhi->at(ijet)) , pfMET, pfMETPhi);
                     float tmass_LQMet= TMass_F(LQ4Momentum.Pt(), LQ4Momentum.Px(),LQ4Momentum.Py(), pfMET, pfMETPhi);
@@ -642,50 +641,50 @@ int main(int argc, char** argv) {
                     
                     for (int iso = 0; iso < size_isoCat; iso++) {
                         if (Iso_category[iso]) {
-                            for (int imt = 0; imt < 9; imt++) {
+                            for (int imt = 0; imt < size_mTCat; imt++) {
                                 //                            for (int imt = 0; imt < size_mTCat; imt++) {
                                 if (MT_category[imt]) {
                                     for (int jpt = 0; jpt < size_jetMetPhi; jpt++) {
                                         if (jetMetPhi_category[jpt]) {
                                             for (int ieta = 0; ieta < size_lqEta; ieta++) {
-//                                                if (lqEta_category[ieta]) {
+                                                if (lqEta_category[ieta]) {
                                                     for (int iCR = 0; iCR < size_CR; iCR++) {
                                                         //                                                        if (region_category[iCR]) {
                                                         //                                                            for (int itopRW = 0; itopRW < size_topPtRW; itopRW++) {
                                                         
                                                         
-//                                                        float FullWeight = TotalWeight * MuonCor *ElectronCor * FinalBTagSF;
-//                                                        std::string FullStringName =  MT_Cat[imt] + jetMetPhi_Cat[jpt] + lqEta_Cat[ieta] + region_Cat[iCR] + iso_Cat[iso]  ;
+                                                        float FullWeight = TotalWeight * MuonCor *ElectronCor * FinalBTagSF;
+                                                        std::string FullStringName =  MT_Cat[imt] + jetMetPhi_Cat[jpt] + lqEta_Cat[ieta] + region_Cat[iCR] + iso_Cat[iso]  ;
                                                         
                                                         
                                                         
                                                         //##################
                                                         //This check is used to make sure that each event is just filled once for any of the categories ==> No doube-counting of events  (this is specially important for ttbar events where we have many jets and leptons)
-//                                                        if (!( std::find(HistNamesFilled.begin(), HistNamesFilled.end(), FullStringName) != HistNamesFilled.end())){
-//                                                            HistNamesFilled.push_back(FullStringName);
-                                                        
+                                                        if (!( std::find(HistNamesFilled.begin(), HistNamesFilled.end(), FullStringName) != HistNamesFilled.end())){
+                                                            HistNamesFilled.push_back(FullStringName);
                                                             
                                                             
-//                                                            plotFill(CHL+"_tmass_MuMet"+FullStringName,tmass_MuMet,200,0,2000,FullWeight);
-//                                                            plotFill(CHL+"_MET"+FullStringName,pfMET,200,0,2000,FullWeight);
-//                                                            plotFill(CHL+"_JetPt"+FullStringName,jetPt->at(ijet) ,2000,0,2000,FullWeight);
-//                                                            plotFill(CHL+"_LepPt"+FullStringName,muPt->at(imu),2000,0,2000,FullWeight);
-//                                                            plotFill(CHL+"_LQMass"+FullStringName,LQ4Momentum.M(),200,0,2000,FullWeight);
-//                                                            plotFill(CHL+"_BosonKFactor"+FullStringName,ZBosonKFactor*WBosonKFactor,200,0,2,FullWeight);
-//                                                            
-//                                                            plotFill(CHL+"_WBosonPt"+FullStringName,WBosonPt,150,0,1500,FullWeight);
-//                                                            plotFill(CHL+"_WBosonPt_KFactor"+FullStringName,WBosonPt,150,0,1500,FullWeight*WBosonKFactor);
-//                                                            
-//                                                            plotFill(CHL+"_ZBosonPt"+FullStringName,ZBosonPt,150,0,1500,FullWeight);
-//                                                            plotFill(CHL+"_ZBosonPt_KFactor"+FullStringName,ZBosonPt,150,0,1500,FullWeight*ZBosonKFactor);
                                                             
-cout<<"nothing\n";
+                                                            plotFill(CHL+"_tmass_MuMet"+FullStringName,tmass_MuMet,200,0,2000,FullWeight);
+                                                            plotFill(CHL+"_MET"+FullStringName,pfMET,200,0,2000,FullWeight);
+                                                            plotFill(CHL+"_JetPt"+FullStringName,jetPt->at(ijet) ,2000,0,2000,FullWeight);
+                                                            plotFill(CHL+"_LepPt"+FullStringName,muPt->at(imu),2000,0,2000,FullWeight);
+                                                            plotFill(CHL+"_LQMass"+FullStringName,LQ4Momentum.M(),200,0,2000,FullWeight);
+                                                            plotFill(CHL+"_BosonKFactor"+FullStringName,ZBosonKFactor*WBosonKFactor,200,0,2,FullWeight);
+                                                            
+                                                            plotFill(CHL+"_WBosonPt"+FullStringName,WBosonPt,150,0,1500,FullWeight);
+                                                            plotFill(CHL+"_WBosonPt_KFactor"+FullStringName,WBosonPt,150,0,1500,FullWeight*WBosonKFactor);
+                                                            
+                                                            plotFill(CHL+"_ZBosonPt"+FullStringName,ZBosonPt,150,0,1500,FullWeight);
+                                                            plotFill(CHL+"_ZBosonPt_KFactor"+FullStringName,ZBosonPt,150,0,1500,FullWeight*ZBosonKFactor);
+                                                            
+                                                            
                                                             
                                                             //                                                                }
                                                             //                                                            }
                                                             
-//                                                        }
-//                                                    }
+                                                        }
+                                                    }
                                                 }
                                             }
                                         }
