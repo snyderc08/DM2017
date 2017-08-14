@@ -235,8 +235,8 @@ float XSection(std::string OutName) {
 
 vector <float> W_PTBinNLO(std::string FileLoc){
     
-    const int WSizeNLO=6;
-    std::string W_ROOTFilesNLO[WSizeNLO]={"WJetsToLNu_FXFX.root", "WJetsToLNu_Pt-50To100_FXFX.root", "WJetsToLNu_Pt-100To250_FXFX.root","WJetsToLNu_Pt-250To400_FXFX.root","WJetsToLNu_Pt-400To600_FXFX.root", "WJetsToLNu_Pt-600ToInf_FXFX.root"};
+    const int WSizeNLO=5;
+    std::string W_ROOTFilesNLO[WSizeNLO]={"WJetsToLNu_FXFX.root",  "WJetsToLNu_Pt-100To250_FXFX.root","WJetsToLNu_Pt-250To400_FXFX.root","WJetsToLNu_Pt-400To600_FXFX.root", "WJetsToLNu_Pt-600ToInf_FXFX.root"};
     
     vector<float> W_eventsNLO;
     W_eventsNLO.clear();
@@ -464,11 +464,11 @@ float weightCalc_Stitching(TH1F *Histo,std::string outputName , float WPt, float
             if (WPt <= 100)                  return   luminosity / (W_eventsNLO[0] / XSection("WJetsToLNu_FXFX"));
             
             
-            else if (WPt > 50 && WPt <= 100)return   luminosity / (W_eventsNLO[1] / XSection("WJetsToLNu_Pt-50To100_FXFX") + W_eventsNLO[0] / XSection("WJetsToLNu_FXFX"));
-            else if (WPt > 100 && WPt <= 250)return   luminosity / (W_eventsNLO[2] / XSection("WJetsToLNu_Pt-100To250_FXFX") + W_eventsNLO[0] / XSection("WJetsToLNu_FXFX"));
-            else if (WPt > 250 && WPt <=400) return   luminosity / (W_eventsNLO[3] / XSection("WJetsToLNu_Pt-250To400_FXFX") + W_eventsNLO[0] / XSection("WJetsToLNu_FXFX"));
-            else if (WPt > 400 && WPt <=600) return   luminosity / (W_eventsNLO[4] / XSection("WJetsToLNu_Pt-400To600_FXFX") + W_eventsNLO[0] / XSection("WJetsToLNu_FXFX"));
-            else if (WPt > 600 )               return   luminosity / (W_eventsNLO[5] / XSection("WJetsToLNu_Pt-600ToInf_FXFX") + W_eventsNLO[0] / XSection("WJetsToLNu_FXFX"));
+//            else if (WPt > 50 && WPt <= 100)return   luminosity / (W_eventsNLO[1] / XSection("WJetsToLNu_Pt-50To100_FXFX") + W_eventsNLO[0] / XSection("WJetsToLNu_FXFX"));
+            else if (WPt > 100 && WPt <= 250)return   luminosity / (W_eventsNLO[1] / XSection("WJetsToLNu_Pt-100To250_FXFX") + W_eventsNLO[0] / XSection("WJetsToLNu_FXFX"));
+            else if (WPt > 250 && WPt <=400) return   luminosity / (W_eventsNLO[2] / XSection("WJetsToLNu_Pt-250To400_FXFX") + W_eventsNLO[0] / XSection("WJetsToLNu_FXFX"));
+            else if (WPt > 400 && WPt <=600) return   luminosity / (W_eventsNLO[3] / XSection("WJetsToLNu_Pt-400To600_FXFX") + W_eventsNLO[0] / XSection("WJetsToLNu_FXFX"));
+            else if (WPt > 600 )               return   luminosity / (W_eventsNLO[4] / XSection("WJetsToLNu_Pt-600ToInf_FXFX") + W_eventsNLO[0] / XSection("WJetsToLNu_FXFX"));
             else   {cout<<"**********   wooow  ********* There is a problem here\n";return 0;}
         }
     

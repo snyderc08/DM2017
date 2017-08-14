@@ -118,7 +118,7 @@ int main(int argc, char** argv) {
         size_t isFXFX = InputROOT.find("FXFX");
         
         
-        std::string ROOTLoc= "/Users/abdollah1/GIT_abdollah110/DM2017/ROOT80X/";
+        std::string ROOTLoc= "../ROOT80X/FXFX/";
         //                vector<float> DY_Events = DY_HTBin(ROOTLoc);
         //                vector<float> W_Events = W_HTBin(ROOTLoc);
         vector<float> W_EventsNLO ;
