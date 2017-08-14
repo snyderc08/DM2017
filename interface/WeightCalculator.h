@@ -233,25 +233,52 @@ float XSection(std::string OutName) {
 
 
 
-//vector <float> W_PTBinNLO(std::string FileLoc){
-//    
-//    const int WSizeNLO=5;
-//    std::string W_ROOTFilesNLO[WSizeNLO]={"DIR/WJetsToLNu_FXFX.root", "DIR/WJetsToLNu_Pt-100To250_FXFX.root","DIR/WJetsToLNu_Pt-250To400_FXFX.root","DIR/WJetsToLNu_Pt-400To600_FXFX.root", "DIR/WJetsToLNu_Pt-600ToInf_FXFX.root"};
-//    
-//    vector<float> W_eventsNLO;
-//    W_eventsNLO.clear();
-//    
-//    for (int i=0; i <WSizeNLO;i++){
-//        
-//        TFile * File_WNLO = new TFile((FileLoc+W_ROOTFilesNLO[i]).c_str());
-//        TH1F * Histo_WNLO = (TH1F*) File_WNLO->Get("hcount");
-//        W_eventsNLO.push_back(Histo_WNLO->GetBinContent(2));
-//        cout<<"Number of proccessed evenets for "<<W_ROOTFilesNLO[i]<<" = "<<Histo_WNLO->GetBinContent(2)<<"\n";
-//    }
-//    
-//    return W_eventsNLO ;
-//    
-//}
+vector <float> W_PTBinNLO(std::string FileLoc){
+    
+    const int WSizeNLO=6;
+    std::string W_ROOTFilesNLO[WSizeNLO]={"WJetsToLNu_FXFX.root", "WJetsToLNu_Pt-50To100_FXFX.root", "WJetsToLNu_Pt-100To250_FXFX.root","WJetsToLNu_Pt-250To400_FXFX.root","WJetsToLNu_Pt-400To600_FXFX.root", "WJetsToLNu_Pt-600ToInf_FXFX.root"};
+    
+    vector<float> W_eventsNLO;
+    W_eventsNLO.clear();
+    
+    for (int i=0; i <WSizeNLO;i++){
+        
+        TFile * File_WNLO = new TFile((FileLoc+W_ROOTFilesNLO[i]).c_str());
+        TH1F * Histo_WNLO = (TH1F*) File_WNLO->Get("hcount");
+        W_eventsNLO.push_back(Histo_WNLO->GetBinContent(2));
+        cout<<"Number of proccessed evenets for "<<W_ROOTFilesNLO[i]<<" = "<<Histo_WNLO->GetBinContent(2)<<"\n";
+    }
+    
+    return W_eventsNLO ;
+    
+}
+
+
+
+
+
+
+vector <float> Z_PTBinNLO(std::string FileLoc){
+    
+    const int ZSizeNLO=5;
+    std::string Z_ROOTFilesNLO[ZSizeNLO]={"DYJetsToLL_M-50_FXFX.root", "DYJetsToLL_Pt-100To250_FXFX.root", "DYJetsToLL_Pt-250To400_FXFX.root","DYJetsToLL_Pt-400To650_FXFX.root","DYJetsToLL_Pt-650ToInf_FXFX.root"};
+    
+    vector<float> Z_eventsNLO;
+    Z_eventsNLO.clear();
+    
+    for (int i=0; i <ZSizeNLO;i++){
+        
+        TFile * File_ZNLO = new TFile((FileLoc+Z_ROOTFilesNLO[i]).c_str());
+        TH1F * Histo_ZNLO = (TH1F*) File_ZNLO->Get("hcount");
+        Z_eventsNLO.push_back(Histo_ZNLO->GetBinContent(2));
+        cout<<"Number of proccessed evenets for "<<Z_ROOTFilesNLO[i]<<" = "<<Histo_ZNLO->GetBinContent(2)<<"\n";
+    }
+    
+    return Z_eventsNLO ;
+    
+}
+
+
 
 
 
@@ -357,6 +384,124 @@ float XSection(std::string OutName) {
     
 }
 
+
+
+
+
+
+
+
+
+
+
+float weightCalc_Stitching(TH1F *Histo,std::string outputName , float WPt, float ZPt, vector<float> W_eventsNLO,vector<float> Z_eventsNLO) {
+
+    
+    
+    
+    stringstream ss(outputName);
+    
+    string token;
+    string M;
+    while (getline(ss,token, '/'))  M=token;
+    
+    std::string FirstPart = "";
+    std::string LastPart = ".root";
+    std::string newOut = M.substr(FirstPart.size());
+    newOut = newOut.substr(0, newOut.size() - LastPart.size());
+    //    cout<<"--->  Check Name is "<<newOut<<"\n";
+    
+    
+    
+    float LOtoNLO_DY = 1; // Now we boson have pt dependent SF
+    
+    float LOtoNLO_W = 1;  // Now we boson have pt dependent SF
+    float luminosity=    35867;
+    
+    
+    size_t isSingleMu = outputName.find("SingleMu");
+    size_t isSingleEle = outputName.find("SingleEle");
+    
+        size_t isWjet = outputName.find("WJets");
+        size_t isFXFX = outputName.find("FXFX");
+        size_t isDYJet = outputName.find("DYJets");
+    
+    
+//    if (isSingleMu != string::npos || isSingleEle!= string::npos)   return 1;
+//    
+//        if (isWjet != string::npos && isFXFX==string::npos) {
+//    
+//            //        return luminosity*LOtoNLO_W / (W_events[0] / XSection("WJetsToLNu_Inc"));
+//    
+//    
+//            if (genHT <= 100) return luminosity*LOtoNLO_W / (W_events[0] / XSection("WJetsToLNu_Inc"));
+//    
+//            else if (genHT > 100 && genHT <= 200) return  luminosity*LOtoNLO_W / (W_events[1] / XSection("WJetsToLNu_HT-100To200") + W_events[0] / XSection("WJetsToLNu_Inc"));
+//            else if (genHT > 200 && genHT <=400) return   luminosity*LOtoNLO_W / (W_events[2] / XSection("WJetsToLNu_HT-200To400") + W_events[0] / XSection("WJetsToLNu_Inc"));
+//            else if (genHT > 400 && genHT <=600) return   luminosity*LOtoNLO_W / (W_events[3] / XSection("WJetsToLNu_HT-400To600") + W_events[0] / XSection("WJetsToLNu_Inc"));
+//            else if (genHT > 600 && genHT <=800) return   luminosity*LOtoNLO_W / (W_events[4] / XSection("WJetsToLNu_HT-600To800") + W_events[0] / XSection("WJetsToLNu_Inc"));
+//            else if (genHT > 800 && genHT <=1200) return  luminosity*LOtoNLO_W / (W_events[5] / XSection("WJetsToLNu_HT-800To1200") + W_events[0] / XSection("WJetsToLNu_Inc"));
+//            else if (genHT > 1200 && genHT <=2500) return luminosity*LOtoNLO_W / (W_events[6] / XSection("WJetsToLNu_HT-1200To2500") + W_events[0] / XSection("WJetsToLNu_Inc"));
+//            else if (genHT > 2500) return                 luminosity*LOtoNLO_W / (W_events[7] / XSection("WJetsToLNu_HT-2500ToInf") + W_events[0] / XSection("WJetsToLNu_Inc"));
+//            else   {cout<<"**********   wooow  ********* There is a problem here\n";return 0;}
+//    
+//    
+//        }
+//    
+    
+    
+    
+    
+ 
+    
+    
+
+    
+    
+    
+         if (isWjet != string::npos && isFXFX != string::npos) {
+    
+            if (WPt <= 100)                  return   luminosity / (W_eventsNLO[0] / XSection("WJetsToLNu_FXFX"));
+            
+            
+            else if (WPt > 50 && WPt <= 100)return   luminosity / (W_eventsNLO[1] / XSection("WJetsToLNu_Pt-50To100_FXFX") + W_eventsNLO[0] / XSection("WJetsToLNu_FXFX"));
+            else if (WPt > 100 && WPt <= 250)return   luminosity / (W_eventsNLO[2] / XSection("WJetsToLNu_Pt-100To250_FXFX") + W_eventsNLO[0] / XSection("WJetsToLNu_FXFX"));
+            else if (WPt > 250 && WPt <=400) return   luminosity / (W_eventsNLO[3] / XSection("WJetsToLNu_Pt-250To400_FXFX") + W_eventsNLO[0] / XSection("WJetsToLNu_FXFX"));
+            else if (WPt > 400 && WPt <=600) return   luminosity / (W_eventsNLO[4] / XSection("WJetsToLNu_Pt-400To600_FXFX") + W_eventsNLO[0] / XSection("WJetsToLNu_FXFX"));
+            else if (WPt > 600 )               return   luminosity / (W_eventsNLO[5] / XSection("WJetsToLNu_Pt-600ToInf_FXFX") + W_eventsNLO[0] / XSection("WJetsToLNu_FXFX"));
+            else   {cout<<"**********   wooow  ********* There is a problem here\n";return 0;}
+        }
+    
+    
+        else if (isDYJet != string::npos && isFXFX != string::npos) {
+            
+            if (ZPt <= 100)                  return   luminosity / (Z_eventsNLO[0] / XSection("DYJetsToLL_M-50_FXFX"));
+            else if (ZPt > 100 && ZPt <= 250)return   luminosity / (Z_eventsNLO[1] / XSection("DYJetsToLL_Pt-100To250_FXFX") + Z_eventsNLO[0] / XSection("DYJetsToLL_M-50_FXFX"));
+            else if (ZPt > 250 && ZPt <=400) return   luminosity / (Z_eventsNLO[2] / XSection("DYJetsToLL_Pt-250To400_FXFX") + Z_eventsNLO[0] / XSection("DYJetsToLL_M-50_FXFX"));
+            else if (ZPt > 400 && ZPt <=600) return   luminosity / (Z_eventsNLO[3] / XSection("DYJetsToLL_Pt-400To600_FXFX") + Z_eventsNLO[0] / XSection("DYJetsToLL_M-50_FXFX"));
+            else if (ZPt > 600 )               return   luminosity / (Z_eventsNLO[4] / XSection("DYJetsToLL_Pt-600ToInf_FXFX") + Z_eventsNLO[0] / XSection("DYJetsToLL_M-50_FXFX"));
+            else   {cout<<"**********   wooow  ********* There is a problem here\n";return 0;}
+        }
+    
+    
+    
+    
+    //    else if (isDYJet != string::npos) {
+    //
+    //        if (genHT <= 100) return luminosity*LOtoNLO_DY / (DY_events[0] / XSection("DYJetsToLL_Inc"));
+    //        else if (genHT > 100 && genHT <= 200) return  luminosity*LOtoNLO_DY / (DY_events[1] / XSection("DYJetsToLL_M-50_HT-100to200") + DY_events[0] / XSection("DYJetsToLL_Inc"));
+    //        else if (genHT > 200 && genHT <=400) return luminosity*LOtoNLO_DY / (DY_events[2] / XSection("DYJetsToLL_M-50_HT-200to400") + DY_events[0] / XSection("DYJetsToLL_Inc"));
+    //        else if (genHT > 400 && genHT <=600) return luminosity*LOtoNLO_DY / (DY_events[3] / XSection("DYJetsToLL_M-50_HT-400to600") + DY_events[0] / XSection("DYJetsToLL_Inc"));
+    //        else if (genHT > 600) return luminosity*LOtoNLO_DY / (DY_events[4] / XSection("DYJetsToLL_M-50_HT-600toInf") + DY_events[0] / XSection("DYJetsToLL_Inc"));
+    //        else   {cout<<"**********   wooow  ********* There is a problem here\n";return 0;}
+    //    }
+    
+    
+    else
+        return luminosity * XSection(newOut)*1.0 / Histo->GetBinContent(2);
+    
+    
+}
 
 
 
