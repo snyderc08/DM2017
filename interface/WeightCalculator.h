@@ -140,7 +140,7 @@ float XSection(std::string OutName) {
     
     
     else if (OutName.find("DYJetsToLL_M-50_FXFX") != string::npos) return          5765.4 ;
-    else if (OutName.find(" DYJetsToLL_Pt-100To250_FXFX") != string::npos) return   83.12 ;
+    else if (OutName.find("DYJetsToLL_Pt-100To250_FXFX") != string::npos) return   83.12 ;
     else if (OutName.find("DYJetsToLL_Pt-250To400_FXFX") != string::npos) return   3.047 ;
     else if (OutName.find("DYJetsToLL_Pt-400To650_FXFX") != string::npos) return   0.3921 ;
     else if (OutName.find("DYJetsToLL_Pt-650ToInf_FXFX") != string::npos) return   0.03636 ;
