@@ -396,7 +396,7 @@ vector <float> Z_PTBinNLO(std::string FileLoc){
 
 float weightCalc_Stitching(TH1F *Histo,std::string outputName , float WPt, float ZPt, vector<float> W_eventsNLO,vector<float> Z_eventsNLO) {
 
-    
+    cout <<"WPt "<< WPt<<  "  ZPt" <<ZPt  <<"\n";
     
     
     stringstream ss(outputName);

@@ -323,12 +323,13 @@ int main(int argc, char** argv) {
                 
                 if (HistoTot){
                     
-                    if (isFXFX !=string::npos) {
-                        LumiWeight = weightCalc_Stitching(HistoTot, InputROOT, WBosonPt,ZBosonPt,W_EventsNLO, Z_EventsNLO);}
+//                    if (isFXFX !=string::npos) {
+                        LumiWeight = weightCalc_Stitching(HistoTot, InputROOT, WBosonPt,ZBosonPt,W_EventsNLO, Z_EventsNLO);
+//                }
                     
-                    else{
-                         LumiWeight = weightCalc(HistoTot, InputROOT);
-                    }
+//                    else{
+//                         LumiWeight = weightCalc(HistoTot, InputROOT);
+//                    }
                 }
                 
                 GetGenWeight=genWeight;
