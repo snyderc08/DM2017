@@ -368,7 +368,7 @@ float Get_W_Z_BosonKFactor(float WBosonPt, TH1F* WLO, TH1F* WNLO){
             kfactor=NLO/LO;
         }
     
-//    cout << " WBosonPt = " << WBosonPt << "   & kfactor=" << kfactor<<"\n";
+//    cout << " WBosonPt = " << WBosonPt << "   & kfactor=" << kfactor<< "  WLO->GetBinCenter(1)="<<WLO->GetBinCenter(1) << " width=" << WLO->GetBinWidth(1)  <<  "\n";
     return kfactor;
     
     

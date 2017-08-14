@@ -128,14 +128,55 @@ float XSection(std::string OutName) {
     else if (OutName.find("QCD_Pt-20toInf_MuEnrichedPt15") != string::npos) return     720648000  * 0.00042 ;
     else if (OutName.find("QCD") != string::npos) return     720648000  * 0.00042 ;
     
+//    https://twiki.cern.ch/twiki/bin/viewauth/CMS/SummaryTable1G25ns#W_jets
+    
+    else if (OutName.find("WJetsToLNu_FXFX") != string::npos) return  61526.7   ;
+    else if (OutName.find("WJetsToLNu_Pt-50To100_FXFX") != string::npos) return  8053   ;
+    else if (OutName.find("WJetsToLNu_Pt-100To250_FXFX") != string::npos) return  676.3   ;
+    else if (OutName.find("WJetsToLNu_Pt-250To400_FXFX") != string::npos) return  23.94   ;
+    else if (OutName.find("WJetsToLNu_Pt-400To600_FXFX") != string::npos) return  3.031   ;
+    else if (OutName.find("WJetsToLNu_Pt-600ToInf_FXFX") != string::npos) return  0.4524   ;
     
     
-//    else if (OutName.find("WJetsToLNu_FXFX") != string::npos) return  61526.7   ;
-//    else if (OutName.find("WJetsToLNu_Pt-50To100_FXFX") != string::npos) return  8053   ;
-//    else if (OutName.find("WJetsToLNu_Pt-100To250_FXFX") != string::npos) return  676.3   ;
-//    else if (OutName.find("WJetsToLNu_Pt-250To400_FXFX") != string::npos) return  23.94   ;
-//    else if (OutName.find("WJetsToLNu_Pt-400To600_FXFX") != string::npos) return  3.031   ;
-//    else if (OutName.find("WJetsToLNu_Pt-600ToInf_FXFX") != string::npos) return  0.4524   ;
+    
+    else if (OutName.find("DYJetsToLL_M-50_FXFX") != string::npos) return          5765.4 ;
+    else if (OutName.find(" DYJetsToLL_Pt-100To250_FXFX") != string::npos) return   83.12 ;
+    else if (OutName.find("DYJetsToLL_Pt-250To400_FXFX") != string::npos) return   3.047 ;
+    else if (OutName.find("DYJetsToLL_Pt-400To650_FXFX") != string::npos) return   0.3921 ;
+    else if (OutName.find("DYJetsToLL_Pt-650ToInf_FXFX") != string::npos) return   0.03636 ;
+    
+    
+    
+    
+    
+    
+//    hadd FXFX/WJetsToLNu_FXFX.root                   *WJetsToLNu_FXFX*
+//    hadd FXFX/WJetsToLNu_Pt-50To100_FXFX.root        *WJetsToLNu_Pt-50To100*FXFX*
+//    hadd FXFX/WJetsToLNu_Pt-100To250_FXFX.root       *WJetsToLNu_Pt-100To250*FXFX*
+//    hadd FXFX/WJetsToLNu_Pt-250To400_FXFX.root       *WJetsToLNu_Pt-250To400*FXFX*
+//    hadd FXFX/WJetsToLNu_Pt-400To600_FXFX.root       *WJetsToLNu_Pt-400To600*FXFX*
+//    hadd FXFX/WJetsToLNu_Pt-600ToInf_FXFX.root       *WJetsToLNu_Pt-600ToInf*FXFX*
+//    hadd FXFX/DYJetsToLL_M-50_FXFX.root              *DYJetsToLL_M-50*FXFX*
+//    hadd FXFX/DYJetsToLL_Pt-100To250_FXFX.root       *DYJetsToLL_Pt-100To250_FXFX*
+//    hadd FXFX/DYJetsToLL_Pt-250To400_FXFX.root       *DYJetsToLL_Pt-250To400_FXFX*
+//    hadd FXFX/DYJetsToLL_Pt-400To650_FXFX.root       *DYJetsToLL_Pt-400To650_FXFX*
+//    hadd FXFX/DYJetsToLL_Pt-650ToInf_FXFX.root       *DYJetsToLL_Pt-650ToInf_FXFX*
+    
+    
+    
+
+    
+    
+    
+//    /DYJetsToLL M-10to50 TuneCUETP8M1 13TeV-amcatnloFXFX-pythia8    18610
+//    /DYJetsToLL_M-50_FXFX        5765.4
+//    /DYToLL_0J_13TeV-amcatnloFXFX-pythia8           4757
+//    /DYToLL_1J_13TeV-amcatnloFXFX-pythia8       884.4
+//    /DYToLL_2J_13TeV-amcatnloFXFX-pythia8      338.9
+    
+    
+    
+    
     
     
     
