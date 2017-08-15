@@ -179,6 +179,17 @@ int main(int argc, char** argv) {
                 if (fabs(mcPID->at(igen)) ==24   && mcStatus->at(igen) ==22)  WBosonPt= mcPt->at(igen); // In inclusive we have status 62||22||44 while in HTbins we have just 22
                 if (fabs(mcPID->at(igen)) ==23)  ZBosonPt= mcPt->at(igen); //FIXME somethime we do not have Z in the DY events
                 
+                if ( fabs(mcPID->at(igen)) ==24 ) plotFill("W_Status",mcStatus->at(igen),150,0,150);
+                
+                if ( fabs(mcPID->at(igen)) ==23 ) plotFill("Z_Status",mcStatus->at(igen),150,0,150);
+                
+                if ( ( fabs(mcPID->at(igen)) ==11  ||  fabs(mcPID->at(igen)) ==13 || fabs(mcPID->at(igen)) ==15 )  &&  ((mcMomPID->at(igen))== fabs(mcPID->at(igen)) ||  (mcMomPID->at(igen))==24)  ) plotFill("Lep_StatusW",mcStatus->at(igen),150,0,150);
+                
+                
+                
+                
+                if (( fabs(mcPID->at(igen)) ==11  ||  fabs(mcPID->at(igen)) ==13 || fabs(mcPID->at(igen)) ==15 )  &&  ((mcMomPID->at(igen))== fabs(mcPID->at(igen)) || (mcMomPID->at(igen))== 23        ))plotFill("Lep_StatusZ",mcStatus->at(igen),150,0,150);
+                
                 
                 
                 
