@@ -56,12 +56,13 @@ def MakeCompare(InputRoot,Cat,hist1,hist2,hist3,Name):
 
 
 
-process=['TT','W','SingleTop','VV','ZTT','Codex_1000']
-UncUp=['_CMS_scale_jesUp','_CMS_scale_jerUp','_CMS_scale_met_UESUp','_CMS_scale_met_JESUp']
-UncDown=['_CMS_scale_jesDown','_CMS_scale_jerDown','_CMS_scale_met_UESDown','_CMS_scale_met_JESDown']
+process=['TT','W','SingleTop','VV','ZTT','Codex_1200']
+UncUp=['_CMS_scale_jesUp','_CMS_scale_jesUp','_CMS_scale_met_UESUp','_CMS_scale_met_JESUp']
+UncDown=['_CMS_scale_jesDown','_CMS_scale_jesDown','_CMS_scale_met_UESDown','_CMS_scale_met_JESDown']
 
 
 for pro in process:
     for i in range(0,4):
-        MakeCompare('_mj_LQMass_MT250_MET250_Iso.root','MuJet',pro,pro+UncUp[i],pro+UncDown[i],pro+UncDown[i])
+        MakeCompare('../Limit/outputCodex_May11_NewSignificance_WithBtagVeto/Codex_MT500_MET100/limits/common/Codex_mj.input.root','Codex__mj_1_13TeV',pro,pro+UncUp[i],pro+UncDown[i],pro+UncDown[i])
+#        MakeCompare('_mj_LQMass_MT250_MET250_Iso.root','MuJet',pro,pro+UncUp[i],pro+UncDown[i],pro+UncDown[i])
 

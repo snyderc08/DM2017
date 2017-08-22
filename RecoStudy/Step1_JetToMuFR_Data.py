@@ -220,46 +220,52 @@ def _FIT_Jet(x, p):
     Land = p[2] * TMath.Landau(x[0], p[3], p[4])
     Pol0 = p[0]+p[1]*x[0]
     return Land + Pol0
-#    return Land
-
-def _FIT_Jet_Function(x, p):
-    Land = p[2] * TMath.Landau(x, p[3], p[4])
-    Pol0 = p[0]+p[1]*x
-    return Land + Pol0
-#    return Land
-
 
 
 def _FIT_Lepton( x,  p) :
     Land = p[2] * TMath.Landau(x[0], p[3], p[4])
-#    Pol0 = p[0]+p[1]*x[0]
     Pol0 = p[0]
     return Land + Pol0
-#    return par[0] / (par[0]+ par[1]*math.exp(par[2] * x[0]))
-def _FIT_Lepton_Function( x,  p) :
-    Land = p[2] * TMath.Landau(x, p[3], p[4])
-#    Pol0 = p[0]+p[1]*x
-    Pol0 = p[0]
-    return Land + Pol0
-#    return par[0] / (par[0]+ par[1]*math.exp(par[2] * x))
 
 
+#############################################################################################################
+##   Aplly the Fit Functions (to measure the fake rate )
+#############################################################################################################
+def ApplyTheFakeRate(x, p,parametrization):
 
-FR_vs_LeptonPT=1
-if FR_vs_LeptonPT:
-    ObjectPT="_LepPt"
-    BinningFake = array.array("d",[0,60,70,80,90,100,110,120,130,150,175,200,240,300])
-else:
-    ObjectPT="_CloseJetLepPt"
-    BinningFake = array.array("d",[0,60,80,100,120,150,200,250,300,400,500,600,800])
-#    BinningFake = array.array("d",[0,60,80,110,150,200,300,400,500])
+    if parametrization=='Jet':
+        Land = p[2] * TMath.Landau(x, p[3], p[4])
+        Pol0 = p[0]+p[1]*x
+        return Land + Pol0
+    elif parametrization=='Lepton':
+        Land = p[2] * TMath.Landau(x, p[3], p[4])
+        Pol0 = p[0]
+        return Land + Pol0
+    else:
+        raise Exception("Not a valid parametrization")
+
 
 #############################################################################################################
 ##   Calculating the Fake Rate ---> "Linear Fit, 2 parameters"
 #############################################################################################################
-def Make_Mu_FakeRate(channelName):
+def Make_Mu_FakeRate(channelName,Parametrization):
     
     
+    
+    if Parametrization=='Lepton':
+        ObjectPT="_LepPt"
+        FR_vs_LeptonPT=1
+        BinningFake = array.array("d",[0,60,70,80,90,100,110,120,130,150,175,200,240,300])
+    elif Parametrization=='Jet':
+        ObjectPT="_CloseJetLepPt"
+        FR_vs_LeptonPT=0
+        BinningFake = array.array("d",[0,60,80,100,120,150,200,250,300,400,500,600,800])
+    #    BinningFake = array.array("d",[0,60,80,110,150,200,300,400,500])
+    else:
+        raise Exception("Not a valid parametrization")
+
+
+
     
     
     HistoFakeNum=ObjectPT+"_LowMT_LowDPhi_TotEta_Iso"
@@ -299,10 +305,9 @@ def Make_Mu_FakeRate(channelName):
     HistoNum.SetMarkerStyle(20)
     
     
-    #    ######  Fit parameters for fake rate v.s. Jet Pt
-    
+
     #####  Fit parameters for fake rate v.s. muon Pt
-    # number of parameters in the fit
+
     if FR_vs_LeptonPT:
         nPar = 5
         theFit=TF1("theFit", _FIT_Lepton, 60, 300,nPar)
@@ -343,13 +348,13 @@ def Make_Mu_FakeRate(channelName):
     FitParam=theFit.GetParameters()
     theFit.Draw("SAME")
 
-    FitParamTot=FitParam[0],FitParam[1],FitParam[2],FitParam[3],FitParam[4]
-    FR_at_400=_FIT_Jet_Function(400,FitParamTot)
-    
-    L=r.TLine(400, FR_at_400, 800, FR_at_400)
-    L.SetLineWidth(4)
-    L.SetLineColor(3)
-    L.SetLineStyle(2)
+#    FitParamTot=FitParam[0],FitParam[1],FitParam[2],FitParam[3],FitParam[4]
+#    FR_at_400=_FIT_Jet_Function(400,FitParamTot)
+
+#    L=r.TLine(400, FR_at_400, 800, FR_at_400)
+#    L.SetLineWidth(4)
+#    L.SetLineColor(3)
+#    L.SetLineStyle(2)
 #    L.Draw("same")
 
     legende=make_legend()
@@ -392,7 +397,8 @@ def Make_Mu_FakeRate(channelName):
 ##########################################    ##########################################    ##########################################
 
 if __name__ == "__main__":
-    FR_FitMaram=Make_Mu_FakeRate("MuJet")
+    FR_FitMaram=Make_Mu_FakeRate("MuJet","Lepton")
+    FR_FitMaram=Make_Mu_FakeRate("MuJet","Jet")
 
 
 

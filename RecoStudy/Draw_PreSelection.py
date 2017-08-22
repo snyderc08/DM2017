@@ -5,7 +5,7 @@ from array import array
 
 from Step5_TT_W_ScaleFactor import *
 
-RB_=10
+RB_=20
 def add_lumi():
     lowX=0.69
     lowY=0.835
@@ -81,12 +81,12 @@ def MakePlot(FileName,categoriy,HistName,Xaxis,Info,RB_,channel,yMin,isLOG,ttbar
     if ttbarCR=="" :  W.Scale(SF_W_SingleLep())
     if ttbarCR=="_ttbarCRSingleLep" :  W.Scale(SF_W_SingleLep())
     if ttbarCR=="_ttbarCRDiLep" :  W.Scale(SF_W_DiLep())
-    W.Scale(1)
-    
+#    W.Scale(1)
+
 
     TT=file.Get(categoriy).Get("TT")
     TT.Rebin(RB_)
-    TT.Scale(1)
+#    TT.Scale(1)
     if ttbarCR=="" :  TT.Scale(SF_TT_SingleLep())
     if ttbarCR=="_ttbarCRSingleLep" :  TT.Scale(SF_TT_SingleLep())
     if ttbarCR=="_ttbarCRDiLep" :  TT.Scale(SF_TT_DiLep())
@@ -158,21 +158,22 @@ def MakePlot(FileName,categoriy,HistName,Xaxis,Info,RB_,channel,yMin,isLOG,ttbar
     Data.SetLineColor(ROOT.kBlack)
     Data.SetLineWidth(2)
     
-#    #Making the plot blind
-#    if FileName.find("LQMass") > 0 :
-#        print "##################################\n", FileName
-#        for i in range(Data.GetNbinsX()):
+    #Making the plot blind
+    if FileName.find("LQMass") > 0 :
+        print "##################################\n", FileName
+        for i in range(Data.GetNbinsX()):
 #            if i > 15 : Data.SetBinContent(i+1,0)
-#
-#    if FileName.find("MET") > 0 :
-#        print "##################################\n", FileName
-#        for i in range(Data.GetNbinsX()):
-#            if i > 9 : Data.SetBinContent(i+1,0)
-#
-#    if FileName.find("tmass_MuMet") > 0 :
-#        print "##################################\n", FileName
-#        for i in range(Data.GetNbinsX()):
-#                if i > 9 : Data.SetBinContent(i+1,0)
+            if i > 6 : Data.SetBinContent(i+1,0)
+
+    if FileName.find("MET") > 0 :
+        print "##################################\n", FileName
+        for i in range(Data.GetNbinsX()):
+            if i > 9 : Data.SetBinContent(i+1,0)
+
+    if FileName.find("tmass_MuMet") > 0 :
+        print "##################################\n", FileName
+        for i in range(Data.GetNbinsX()):
+                if i > 9 : Data.SetBinContent(i+1,0)
 
 
 
@@ -323,26 +324,26 @@ def MakePlot(FileName,categoriy,HistName,Xaxis,Info,RB_,channel,yMin,isLOG,ttbar
     ROOT.gPad.RedrawAxis()
 
     c.Modified()
-    c.SaveAs("_plot"+FileName.replace('TotalRootForLimit_PreSelection_MuJet','').replace('.root','')+str(isLOG)+".pdf")
+    c.SaveAs("_plot_variosMT"+FileName.replace('TotalRootForLimit_PreSelection_MuJet','').replace('.root','')+str(isLOG)+".pdf")
 
 
 FileNamesInfo=[
-#               ["_tmass_JetMet","M_{T}(jet,MET) (GeV)","",5,1],
-#               ["_tmass_LQMet","M_{T}(LQ,MET)  (GeV)","",5,1],
-               ["_LepPt","lepton p_{T} (GeV)","",5,1],
-               ["_LepEta","lepton #eta ","",5,10],
-               ["_JetPt","jet p_{T} (GeV)","",5,1],
-               ["_JetEta","jet #eta ","",5,10],
-#               ["_nVtx","# of vertex","",1,10],
-#               ["_nVtx_NoPU","# of vertex before PU reweighting","",1,10],
-               ["_MET","MET  (GeV)","",5,1],
-               ["_LQMass","M_{LQ}   (GeV)","",5,1],
-               ["_tmass_MuMet","M_{T}(#mu,MET) (GeV)","",5,1],
-               ["_dPhi_Jet_Met","#Delta#phi (jet,MET)","",5,1],
-               ["_dPhi_Mu_Jet","#Delta#phi (#mu,jet)","",5,1],
-#               ["_LQEta","#eta_{LQ}","",10,10],
-               ["_NumJet","Jet multiplicity","",1,1],
-               ["_NumBJet","BJet multiplicity","",1,1],
+##               ["_tmass_JetMet","M_{T}(jet,MET) (GeV)","",5,1],
+##               ["_tmass_LQMet","M_{T}(LQ,MET)  (GeV)","",5,1],
+#               ["_LepPt","lepton p_{T} (GeV)","",5,1],
+#               ["_LepEta","lepton #eta ","",5,10],
+#               ["_JetPt","jet p_{T} (GeV)","",5,1],
+#               ["_JetEta","jet #eta ","",5,10],
+##               ["_nVtx","# of vertex","",1,10],
+##               ["_nVtx_NoPU","# of vertex before PU reweighting","",1,10],
+#               ["_MET","MET  (GeV)","",5,1],
+               ["_LQMass","M_{LQ}   (GeV)","",10,1],
+#               ["_tmass_MuMet","M_{T}(#mu,MET) (GeV)","",5,1],
+#               ["_dPhi_Jet_Met","#Delta#phi (jet,MET)","",5,1],
+#               ["_dPhi_Mu_Jet","#Delta#phi (#mu,jet)","",5,1],
+##               ["_LQEta","#eta_{LQ}","",10,10],
+#               ["_NumJet","Jet multiplicity","",1,1],
+#               ["_NumBJet","BJet multiplicity","",1,1],
                ]
 
 
@@ -350,16 +351,18 @@ FileNamesInfo=[
 #    Isolation=["_Iso", "_AntiIso","_Total"]
 
 Isolation=["_Iso"]
-MT=["_HighMT"]
+#MT=["_HighMT"]
+MT= ["_NoMT","_HighMT","_MT50To150","_MT100","_MT150","_MT200","_MT300","_MT400"]
 #MT= ["_MT100","_MT150"]
 #MT_legend= [" 50 < M_{T} < 100","100 < M_{T} < 150"]
 #MT= ["_NoMT","_HighMT"]
 #    JPT=["_LowDPhi", "_HighDPhi"];
 JPT=[ "_HighDPhi"]
+
 #lqEta= ["_Barrel", "_Endcap","_TotEta"]
 lqEta= [""]
 region= [""]
-region= ["","_ttbarCRDiLep","_ttbarCRSingleLep"]
+#region= ["","_ttbarCRDiLep","_ttbarCRSingleLep"]
 #region= ["_ttbarCRDiLep","_ttbarCRSingleLep"]
 
 #logStat=[0]

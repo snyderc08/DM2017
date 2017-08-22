@@ -33,6 +33,8 @@ ULong64_t       HLTPhoIsPrescaled;
 ULong64_t       HLTJetIsPrescaled;
 vector<int>     *phoPrescale;
 vector<float>   *pdf;
+vector<float>   *pdfSystWeight;
+Float_t         pdfWeight;
 Float_t         pthat;
 Float_t         processID;
 Float_t         genWeight;

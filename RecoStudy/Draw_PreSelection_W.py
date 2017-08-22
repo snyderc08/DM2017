@@ -301,18 +301,18 @@ def MakePlot(FileName,categoriy,HistName,Xaxis,Info,RB_,channel,yMin,isLOG,ttbar
 
 
 FileNamesInfo=[
-#               ["_tmass_JetMet","M_{T}(jet,MET) (GeV)","",5,1],
-#               ["_tmass_LQMet","M_{T}(LQ,MET)  (GeV)","",5,1],
-               ["_LepPt","lepton p_{T} (GeV)","",50,1],
-               ["_LepEta","lepton #eta ","",5,10],
-               ["_JetPt","jet p_{T} (GeV)","",50,1],
-               ["_JetEta","jet #eta ","",5,10],
-               ["_MET","MET  (GeV)","",5,1],
-               ["_LQMass","M_{LQ}   (GeV)","",5,1],
-               ["_tmass_MuMet","M_{T}(#mu,MET) (GeV)","",5,1],
-               ["_dPhi_Jet_Met","#Delta#phi (jet,MET)","",5,1],
-               ["_dPhi_Mu_Jet","#Delta#phi (#mu,jet)","",5,1],
-               ["_dPhi_Mu_Met","#Delta#phi (#mu,MET)","",5,1],
+##               ["_tmass_JetMet","M_{T}(jet,MET) (GeV)","",5,1],
+##               ["_tmass_LQMet","M_{T}(LQ,MET)  (GeV)","",5,1],
+#               ["_LepPt","lepton p_{T} (GeV)","",50,1],
+#               ["_LepEta","lepton #eta ","",5,10],
+#               ["_JetPt","jet p_{T} (GeV)","",50,1],
+#               ["_JetEta","jet #eta ","",5,10],
+#               ["_MET","MET  (GeV)","",5,1],
+               ["_LQMass","M_{LQ}   (GeV)","",10,1],
+#               ["_tmass_MuMet","M_{T}(#mu,MET) (GeV)","",5,1],
+#               ["_dPhi_Jet_Met","#Delta#phi (jet,MET)","",5,1],
+#               ["_dPhi_Mu_Jet","#Delta#phi (#mu,jet)","",5,1],
+#               ["_dPhi_Mu_Met","#Delta#phi (#mu,MET)","",5,1],
                ]
 
 

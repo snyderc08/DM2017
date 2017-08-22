@@ -3,7 +3,7 @@ import ROOT
 from ROOT import *
 import array
 
-rb_=array.array("d",[0,50,100,150,200,250,300,375,450,525,600,700,1000])
+rb_ = array.array("d",[0,100,200,300,400,500,600,700,800,900,1000,1100,1200,1300,1400,1500,1600,1700,1800,1900,2000])
 
 def MakeCompare(root1,hist1,name1, root2,hist2, name2,root3, hist3,name3,Name,Sample):
     
@@ -65,7 +65,7 @@ def MakeCompare(root1,hist1,name1, root2,hist2, name2,root3, hist3,name3,Name,Sa
     Histo1.SetTitle("")
 #    Histo1.Setlabel("")
     Histo1.GetYaxis().SetTitle("Events")
-    Histo1.GetXaxis().SetRangeUser(50,1000)    
+#    Histo1.GetXaxis().SetRangeUser(50,1000)    
 
 
 
@@ -99,14 +99,12 @@ def MakeCompare(root1,hist1,name1, root2,hist2, name2,root3, hist3,name3,Name,Sa
     Histo3.Draw('same')
     
     
-    categ  = ROOT.TPaveText(0.63, 0.4+0.013, 0.89, 0.5+0.1, "NDC")
+    categ  = ROOT.TPaveText(0.65, 0.4+0.013, 0.85, 0.5+0.1, "NDC")
     categ.SetBorderSize(   0 )
     categ.SetFillStyle(    0 )
     categ.SetTextAlign(   12 )
     categ.SetTextSize ( 0.08 )
     categ.SetTextColor(    1 )
-    #    categ.SetTextFont (   41 )
-    #       if i==1 or i==3:
     categ.AddText(Sample)
     categ.Draw()
     
@@ -145,23 +143,18 @@ def MakeCompare(root1,hist1,name1, root2,hist2, name2,root3, hist3,name3,Name,Sa
     
     
     h1=Histo1.Clone()
-    h1.SetMaximum(2)
-    h1.SetMinimum(0)
+    h1.SetMaximum(1.5)
+    h1.SetMinimum(0.5)
     h1.SetMarkerStyle(20)
     h1.SetMarkerColor(2)
     h1.GetXaxis().SetTitle('boson p_{T} (GeV)')
     
     h5=Histo3.Clone()
-    h5.SetMaximum(2)
-    h5.SetMinimum(0)
     h5.SetMarkerStyle(24)
     h5.SetMarkerColor(4)
     
     
     h2=Histo2.Clone()
-#    h3=Histo3.Clone()
-
-    
     
     
     h1.Sumw2()
@@ -184,22 +177,21 @@ def MakeCompare(root1,hist1,name1, root2,hist2, name2,root3, hist3,name3,Name,Sa
     h1.GetXaxis().SetTitle("")
     h1.GetXaxis().SetLabelSize(0.08)
     h1.GetYaxis().SetLabelSize(0.08)
-    h1.GetYaxis().SetTitle("NLO/LO")
+    h1.GetYaxis().SetTitle("Ratio to  Nominal")
     h1.GetXaxis().SetNdivisions(505)
     h1.GetYaxis().SetNdivisions(5)
     h1.GetXaxis().SetTitleSize(0.15)
-    h1.GetYaxis().SetTitleSize(0.15)
+    h1.GetYaxis().SetTitleSize(0.1)
     h1.GetYaxis().SetTitleOffset(0.56)
     h1.GetXaxis().SetTitleOffset(1.04)
     h1.GetXaxis().SetLabelSize(0.11)
     h1.GetYaxis().SetLabelSize(0.11)
     h1.GetXaxis().SetTitleFont(42)
     h1.GetYaxis().SetTitleFont(42)
-    h1.GetXaxis().SetTitle('boson p_{T} (GeV)')
+    h1.GetXaxis().SetTitle(' M_{#muj}(GeV)')
     
-    h1.Draw("ep2")
-    h5.Draw("ep2same")
-#    h3.Draw("E0psame")
+    h1.Draw()
+    h5.Draw("same")
 
     c.cd()
     pad1.Draw()
@@ -210,41 +202,35 @@ def MakeCompare(root1,hist1,name1, root2,hist2, name2,root3, hist3,name3,Name,Sa
     
     
     
-    c.SaveAs('kfactor%s.pdf'%Name)
+    c.SaveAs('_ShapeSys_Compare_%s.pdf'%Name)
 
 
 location='OutFiles_LO/'
 
 
-plotInput=[
-[location+'WJetsToLNu_FXFX.root','_WBosonPt','NLO (amc@NLO)'],
-[location+'WJetsToLNu_LO.root','_WBosonPt','LO (Madgraph)'],
-[location+'WJetsToLNu_LO.root','_WBosonPt_KFactor','LO (Madgraph) weighted by NLO from MonoJet '],
-]
-
-list=[]
-for i in range(0,3):
-    for j in range(0,3):
-        list.append(plotInput[i][j])
-
-
-MakeCompare(list[0],list[1],list[2],list[3],list[4],list[5],list[6],list[7],list[8],'_W','W+Jet')
-
-
-plotInput2=[
-           [location+'DYJetsToLL_FXFX.root','_ZBosonPt','NLO (amc@NLO)'],
-           [location+'DYJetsToLL_LO.root','_ZBosonPt','LO (Madgraph)'],
-           [location+'DYJetsToLL_LO.root','_ZBosonPt_KFactor','LO (Madgraph) weighted by NLO from MonoJet '],
-           ]
-
-list2=[]
-for i in range(0,3):
-    for j in range(0,3):
-        list2.append(plotInput2[i][j])
-
-
-print '++>',list2[4]
-MakeCompare(list2[0],list2[1],list2[2],list2[3],list2[4],list2[5],list2[6],list2[7],list2[8],'_Z','Z+Jet')
 
 
 
+process=['TT','W','SingleTop','VV','ZTT','Codex_1200']
+Unc=['jes','met_UES','met_JES']
+
+
+Input='../Limit/outputCodex_May11_NewSignificance_WithBtagVeto/Codex_MT500_MET100/limits/common/Codex_mj.input.root'
+dir='Codex__mj_1_13TeV'
+
+for pro in process:
+    for unc in Unc:
+
+        plotInput=[
+        [Input,'%s/%s_CMS_scale_%sUp'%(dir,pro,unc),'%sUp'%unc],
+        [Input,'%s/%s'%(dir,pro),'Nominal'],
+        [Input,'%s/%s_CMS_scale_%sDown'%(dir,pro,unc),'%sDown'%unc],
+        ]
+
+        list=[]
+        for i in range(0,3):
+            for j in range(0,3):
+                list.append(plotInput[i][j])
+
+
+        MakeCompare(list[0],list[1],list[2],list[3],list[4],list[5],list[6],list[7],list[8],pro+unc,pro)

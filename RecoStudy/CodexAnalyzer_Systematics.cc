@@ -95,8 +95,8 @@ int main(int argc, char** argv) {
         TFile * myFile = TFile::Open(f_Double->GetName());
         TH1F * HistoTot = (TH1F*) myFile->Get("hcount");
         
-        //        TTree *Run_Tree = (TTree*) f_Double->Get("ggNtuplizer/EventTree");
-        TTree *Run_Tree = (TTree*) f_Double->Get("EventTree");
+                TTree *Run_Tree = (TTree*) f_Double->Get("ggNtuplizer/EventTree");
+//        TTree *Run_Tree = (TTree*) f_Double->Get("EventTree");
         
         cout.setf(ios::fixed, ios::floatfield);
         cout.precision(6);
@@ -230,6 +230,12 @@ int main(int argc, char** argv) {
         Run_Tree->SetBranchAddress("metFilters",&metFilters);
         Run_Tree->SetBranchAddress("genHT",&genHT);
         
+        Run_Tree->SetBranchAddress("pdfSystWeight",&pdfSystWeight);
+        Run_Tree->SetBranchAddress("pdfWeight",&pdfWeight);
+        
+        
+
+        
         
         //###############################################################################################
         //  Weight Calculation
@@ -267,6 +273,17 @@ int main(int argc, char** argv) {
             if (isData && (metFilters!=1536)) continue;
             std::vector<string> HistNamesFilled;
             HistNamesFilled.clear();
+            
+            //###############################################################################################
+            //  Systematic Weight Calculation
+            //###############################################################################################
+            for (int isys=0; isys < pdfSystWeight->size(); isys++){
+                
+//                cout<<isys<<" "<<pdfSystWeight->at(isys)/pdfWeight<<"\n";
+                plotFill("___Sys_"+std::to_string(isys),pdfSystWeight->at(isys)/pdfWeight, 500,0,5);
+            }
+            
+            
             //###############################################################################################
             //  Weight Calculation
             //###############################################################################################
@@ -361,18 +378,9 @@ int main(int argc, char** argv) {
             int numBJet=0;
             int numlightJet=0;
             float EffJet =1;
-            
             float SF=1;
-            float SFUp=1;
-            float SFDown=1;
-            
             float P_Data_P_mc=1;
-            float P_Data_P_mcUp=1;
-            float P_Data_P_mcDown=1;
-            
             float FinalBTagSF=1;
-            float FinalBTagSFUp=1;
-            float FinalBTagSFDown=1;
             
             
             for (int ijet= 0 ; ijet < nJet ; ijet++){
@@ -393,22 +401,14 @@ int main(int argc, char** argv) {
                     else{
                         EffJet= getBtagEfficiency( isData, 0,  jetPt->at(ijet), fabs(jetEta->at(ijet)), Btagg_TT);
                         numlightJet++;
-                        
                         SF=GetBJetSF(isData,jetPt->at(ijet), jetPt->at(ijet), HadronFlavor);
-                        SFUp=GetBJetSFUp(isData,jetPt->at(ijet), jetPt->at(ijet), HadronFlavor);
-                        SFDown=GetBJetSFDown(isData,jetPt->at(ijet), jetPt->at(ijet), HadronFlavor);
-                        
                         P_Data_P_mc=(1-SF*EffJet)/(1-EffJet);
-                        P_Data_P_mcUp=(1-SFUp*EffJet)/(1-EffJet);
-                        P_Data_P_mcDown=(1-SFDown*EffJet)/(1-EffJet);
                         
                     }
                     
                 }
                 
                 FinalBTagSF *=P_Data_P_mc;
-                FinalBTagSFUp *=P_Data_P_mcUp;
-                FinalBTagSFDown *=P_Data_P_mcDown;
             }
             if (isData) FinalBTagSF=1;
             
@@ -655,8 +655,6 @@ int main(int argc, char** argv) {
                                                                 
                                                                 plotFill(CHL+"_CloseJetLepPt"+FullStringName,CLoseJetMuPt,1000,0,1000,FullWeight);
                                                                 plotFill(CHL+"_LQMass"+FullStringName,LQ.M(),300,0,3000,FullWeight);
-                                                                plotFill(CHL+"_LQMass_BtagUp"+FullStringName,LQ.M(),300,0,3000,FullWeight*FinalBTagSFUp/FinalBTagSF);
-                                                                plotFill(CHL+"_LQMass_BtagDown"+FullStringName,LQ.M(),300,0,3000,FullWeight*FinalBTagSFDown/FinalBTagSF);
                                                                 //                                                                plotFill(CHL+"_LQEta"+FullStringName,LQ.Eta(),100,-5,5,FullWeight);
                                                                 
                                                                 if (isTTJets!= string::npos) plotFill(CHL+"_LQMassTopPtRWUp"+FullStringName,LQ.M(),nBin,binMin,binMax,FullWeight * TopPtReweighting);
