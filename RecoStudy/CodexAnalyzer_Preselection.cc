@@ -79,17 +79,20 @@ int main(int argc, char** argv) {
     //########################################
 //    TFile * KFactor= TFile::Open("../interface/pileup-hists/kfactors.root");
 //    TH1F * WLO= (TH1F *) KFactor->Get("WJets_LO/inv_pt");
-//    TH1F * WNLO= (TH1F *) KFactor->Get("EWKcorr/W");
+//    TH1F * WNLO_ewk= (TH1F *) KFactor->Get("EWKcorr/W");
 //    TH1F * ZLO= (TH1F *) KFactor->Get("ZJets_LO/inv_pt");
-//    TH1F * ZNLO= (TH1F *) KFactor->Get("EWKcorr/Z");
+//    TH1F * ZNLO_ewk= (TH1F *) KFactor->Get("EWKcorr/Z");
 //
     
     TFile * KFactor= TFile::Open("../interface/NewKFactor/kfactor_vjet_qcd/kfactor_24bins.root");
-    TH1F * WLO= (TH1F *) KFactor->Get("WJets_LO/inv_pt");
-    TH1F * WNLO= (TH1F *) KFactor->Get("EWKcorr/W");
-    TH1F * ZLO= (TH1F *) KFactor->Get("ZJets_LO/inv_pt");
-    TH1F * ZNLO= (TH1F *) KFactor->Get("EWKcorr/Z");
     
+    TH1F * WLO= (TH1F *) KFactor->Get("WJets_LO/inv_pt");
+    TH1F * WNLO_ewk= (TH1F *) KFactor->Get("EWKcorr/W");
+    TH1F * WNLO_qcd= (TH1F *) KFactor->Get("WJets_012j_NLO/nominal");
+    
+    TH1F * ZLO= (TH1F *) KFactor->Get("DYJets_LO/inv_pt");
+    TH1F * ZNLO_ewk= (TH1F *) KFactor->Get("EWKcorr/DY");
+    TH1F * ZNLO_qcd= (TH1F *) KFactor->Get("DYJets_012j_NLO/nominal");
     
     
     
@@ -134,8 +137,17 @@ int main(int argc, char** argv) {
         //        TH2F * DataSF5_total= (TH2F *) DataEff->Get("BSF_FLV5_Total");
         
         
+        //######################################## New K-factor fitted with a line
         
+        TFile * kfactorW=TFile::Open("kfactor_W.root");
+        TH1F* HistkfactorW= (TH1F*) kfactorW->Get("KFcator");
+        float kf_W_1=HistkfactorW->GetBinContent(1);
+        float kf_W_2=HistkfactorW->GetBinContent(2);
         
+        TFile * kfactorZ=TFile::Open("kfactor_Z.root");
+        TH1F* HistkfactorZ= (TH1F*) kfactorZ->Get("KFcator");
+        float kf_Z_1=HistkfactorZ->GetBinContent(1);
+        float kf_Z_2=HistkfactorZ->GetBinContent(2);
         
         //########################################   General Info
         Run_Tree->SetBranchAddress("isData", &isData);
@@ -292,15 +304,18 @@ int main(int argc, char** argv) {
                 ZBosonPt=(GenMu4Momentum+GenAntiMu4Momentum).Pt();  //This is a temp solution to the above problem
                  
 //                    cout << (GenMu4Momentum+GenAntiMu4Momentum).M()<<"\t";
-                    if( fabs((GenMu4Momentum+GenAntiMu4Momentum).M() - 91.) <5. && modPDGId!=23 && modPDGId==AntimodPDGId)  cout<<"bosonpt= " << ZBosonPt<<  "   dif= " <<fabs((GenMu4Momentum+GenAntiMu4Momentum).Pt() - ZBosonPt)<< "  mother="<<modPDGId<<"\n";
-            
+//                    if( fabs((GenMu4Momentum+GenAntiMu4Momentum).M() - 91.) <5. && modPDGId!=23 && modPDGId==AntimodPDGId)  cout<<"bosonpt= " << ZBosonPt<<  "   dif= " <<fabs((GenMu4Momentum+GenAntiMu4Momentum).Pt() - ZBosonPt)<< "  mother="<<modPDGId<<"\n";
+//            
             
             size_t isTTJets = InputROOT.find("TTJets");
             if (isTTJets!= string::npos) TopPtReweighting = compTopPtWeight(GenTopPt, GenAntiTopPt);
             size_t isWJets = InputROOT.find("WJets");
-            if (isWJets!= string::npos) WBosonKFactor=Get_W_Z_BosonKFactor(WBosonPt,WLO,WNLO);  //Swtch ON only for LO Madgraph sample
+            cout << "boson pt= "<< WBosonPt <<" from bin=  "<< Get_W_Z_BosonKFactor(WBosonPt,WLO,WNLO_qcd) << "  from Fit= "<<kf_W_1 + (kf_W_2 * WBosonPt) <<"\n";
+//            if (isWJets!= string::npos) WBosonKFactor=Get_W_Z_BosonKFactor(WBosonPt,WLO,WNLO_ewk);  //Swtch ON only for LO Madgraph sample
+            if (isWJets!= string::npos) WBosonKFactor= kf_W_1 + kf_W_2 * WBosonPt;
             size_t isDYJets = InputROOT.find("DYJets");
-            if (isDYJets!= string::npos) ZBosonKFactor=Get_W_Z_BosonKFactor(ZBosonPt,ZLO,ZNLO);  //Swtch ON only for LO Madgraph sample
+//            if (isDYJets!= string::npos) ZBosonKFactor=Get_W_Z_BosonKFactor(ZBosonPt,ZLO,ZNLO_ewk);  //Swtch ON only for LO Madgraph sample
+            if (isDYJets!= string::npos) ZBosonKFactor= kf_Z_1 + kf_Z_2 * ZBosonPt;
             
             //###############################################################################################
             float LumiWeight = 1;
@@ -555,11 +570,17 @@ int main(int argc, char** argv) {
                     bool MT50To150=(tmass_MuMet > 50 && tmass_MuMet <= 150);
                     bool MTTo100=(tmass_MuMet > 50 && tmass_MuMet <= 100);
                     bool MTTo150=(tmass_MuMet > 100 && tmass_MuMet <= 150);
-                    bool MTTo200=(tmass_MuMet > 150 && tmass_MuMet <= 200);
-                    bool MTTo300=(tmass_MuMet > 200 && tmass_MuMet <= 300);
-                    bool MTTo400=(tmass_MuMet > 300 && tmass_MuMet <= 400);
-                    bool MTTo500=(tmass_MuMet > 400 && tmass_MuMet <= 500);
-                    bool MTTo600=(tmass_MuMet > 500 );
+//                    bool MTTo200=(tmass_MuMet > 150 && tmass_MuMet <= 200);
+//                    bool MTTo300=(tmass_MuMet > 200 && tmass_MuMet <= 300);
+//                    bool MTTo400=(tmass_MuMet > 300 && tmass_MuMet <= 400);
+//                    bool MTTo500=(tmass_MuMet > 400 && tmass_MuMet <= 500);
+                    bool MTTo600=tmass_MuMet > 500 ;
+                    
+                    bool MTTo200=tmass_MuMet > 200 ;
+                    bool MTTo300=tmass_MuMet > 300 ;
+                    bool MTTo400=tmass_MuMet > 400 ;
+                    bool MTTo500=tmass_MuMet > 500 ;
+                    
                     
                     bool MT_category[size_mTCat] = {NoMT,LoWMT,HighMT,MT50To150,MTTo100,MTTo150,MTTo200,MTTo300,MTTo400,MTTo500,MTTo600};
                     std::string MT_Cat[size_mTCat] = {"_NoMT", "_LowMT","_HighMT","_MT50To150","_MT100","_MT150","_MT200","_MT300","_MT400","_MT500","_MT600"};
@@ -639,8 +660,8 @@ int main(int argc, char** argv) {
                     
                     for (int iso = 0; iso < size_isoCat; iso++) {
                         if (Iso_category[iso]) {
-                            for (int imt = 0; imt < 9; imt++) {
-//                            for (int imt = 0; imt < size_mTCat; imt++) {
+//                            for (int imt = 0; imt < 9; imt++) {
+                            for (int imt = 0; imt < size_mTCat; imt++) {
                                 if (MT_category[imt]) {
                                     for (int jpt = 0; jpt < size_jetMetPhi; jpt++) {
                                         if (jetMetPhi_category[jpt]) {

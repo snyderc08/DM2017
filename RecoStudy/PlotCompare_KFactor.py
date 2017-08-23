@@ -5,6 +5,14 @@ import array
 
 rb_=array.array("d",[0,50,100,150,200,250,300,375,450,525,600,700,1000])
 
+
+def _Fit_Line(x,p):
+    return p[0]+p[1]*x[0]
+
+def Get_Boson_KFactor(x,p):
+    return p[0]+p[1]*x
+
+
 def MakeCompare(root1,hist1,name1, root2,hist2, name2,root3, hist3,name3,Name,Sample):
     
     ROOT.gStyle.SetFrameLineWidth(3)
@@ -166,14 +174,10 @@ def MakeCompare(root1,hist1,name1, root2,hist2, name2,root3, hist3,name3,Name,Sa
     
     h1.Sumw2()
     h2.Sumw2()
-    
-    
     h5.Sumw2()
-#    h3.Sumw2()
 
     h1.SetStats(0)
     h2.SetStats(0)
-#    h3.SetStats(0)
     h5.SetStats(0)
     h1.SetTitle("")
     
@@ -197,9 +201,25 @@ def MakeCompare(root1,hist1,name1, root2,hist2, name2,root3, hist3,name3,Name,Sa
     h1.GetYaxis().SetTitleFont(42)
     h1.GetXaxis().SetTitle('boson p_{T} (GeV)')
     
+    
+    
+    
+    nPar = 2
+    ##### The ratio plot for mono-LQ
     h1.Draw("ep2")
+    theFit1=TF1("theFit", _Fit_Line, 0, 1000,nPar)
+    h1.Fit("theFit","R0")
+    theFit1.SetLineColor(2)
+    theFit1.Draw("SAME")
+    
+    
+    ##### The ratio plot for mono-LQ
     h5.Draw("ep2same")
-#    h3.Draw("E0psame")
+    theFit5=TF1("theFit", _Fit_Line, 150, 1000,nPar)
+    h5.Fit("theFit","R0")
+    theFit5.SetLineColor(4)
+    FitParameter=theFit5.GetParameters()
+    theFit5.Draw("SAME")
 
     c.cd()
     pad1.Draw()
@@ -211,6 +231,15 @@ def MakeCompare(root1,hist1,name1, root2,hist2, name2,root3, hist3,name3,Name,Sa
     
     
     c.SaveAs('kfactor%s.pdf'%Name)
+    outF=TFile('kfactor%s.root'%Name,'RECREATE')
+    outHist=TH1F('KFcator','',2,0,2)
+    outHist.SetBinContent(1,FitParameter[0])
+    outHist.SetBinContent(2,FitParameter[1])
+    outHist.Write()
+    outF.Write()
+    outF.Close()
+
+    return FitParameter
 
 
 location='OutFiles_LO/'
@@ -227,8 +256,10 @@ for i in range(0,3):
     for j in range(0,3):
         list.append(plotInput[i][j])
 
+def get_Factor_W():
+    MakeCompare(list[0],list[1],list[2],list[3],list[4],list[5],list[6],list[7],list[8],'_W','W+Jet')
 
-MakeCompare(list[0],list[1],list[2],list[3],list[4],list[5],list[6],list[7],list[8],'_W','W+Jet')
+
 
 
 plotInput2=[
@@ -243,8 +274,12 @@ for i in range(0,3):
         list2.append(plotInput2[i][j])
 
 
-print '++>',list2[4]
-MakeCompare(list2[0],list2[1],list2[2],list2[3],list2[4],list2[5],list2[6],list2[7],list2[8],'_Z','Z+Jet')
+def get_Factor_Z():
+    MakeCompare(list2[0],list2[1],list2[2],list2[3],list2[4],list2[5],list2[6],list2[7],list2[8],'_Z','Z+Jet')
 
+
+
+get_Factor_W()
+get_Factor_Z()
 
 

@@ -319,10 +319,10 @@ if __name__ == "__main__":
 
 #    "_NoMT", "_LowMT","_HighMT","_MT50To150","_MT100","_MT150","_MT200","_MT300","_MT400","_MT500","_MT600"
 
-    Isolation=["_Iso", "_AntiIso","_Total"]
-#    Isolation=["_Iso"]
+#    Isolation=["_Iso", "_AntiIso","_Total"]
+    Isolation=["_Iso"]
 #    MT=["_MT400"]
-    MT= ["_NoMT","_HighMT","_MT50To150","_MT100","_MT150","_MT200","_MT300","_MT400"]
+    MT= ["_NoMT","_HighMT","_MT50To150","_MT100","_MT150","_MT200","_MT300","_MT400","_MT600"]
 #    MT= ["_NoMT","_HighMT","_MT100","_MT150","_MT200","_MT300","_MT400"]
 #    MT=["_MT50To150"]
     JPT=[ "_HighDPhi"]

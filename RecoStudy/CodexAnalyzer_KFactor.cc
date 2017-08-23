@@ -48,9 +48,16 @@ int main(int argc, char** argv) {
     
     
     TH1F * WLO= (TH1F *) KFactor->Get("WJets_LO/inv_pt");
-    TH1F * WNLO= (TH1F *) KFactor->Get("WJets_012j_NLO/nominal");
+    TH1F * WNLO_ewk= (TH1F *) KFactor->Get("EWKcorr/W");
+    TH1F * WNLO_qcd= (TH1F *) KFactor->Get("WJets_012j_NLO/nominal");
+    
     TH1F * ZLO= (TH1F *) KFactor->Get("DYJets_LO/inv_pt");
-    TH1F * ZNLO= (TH1F *) KFactor->Get("DYJets_012j_NLO/nominal");
+    TH1F * ZNLO_ewk= (TH1F *) KFactor->Get("EWKcorr/DY");
+    TH1F * ZNLO_qcd= (TH1F *) KFactor->Get("DYJets_012j_NLO/nominal");
+    
+    
+//    TH1F * ZLO= (TH1F *) KFactor->Get("DYJets_LO/inv_pt");
+//    TH1F * ZNLO= (TH1F *) KFactor->Get("DYJets_012j_NLO/nominal");
     
     
     
