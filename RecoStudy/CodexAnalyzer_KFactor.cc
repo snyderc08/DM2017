@@ -235,14 +235,14 @@ int main(int argc, char** argv) {
             
             
             if (isWJets!= string::npos) {
-                WBosonKFactor=Get_W_Z_BosonKFactor(WBosonPt,WLO,WNLO);  //Swtch ON only for LO Madgraph sample
+                WBosonKFactor=Get_W_Z_BosonKFactor(WBosonPt,WLO,WNLO_ewk);  //Swtch ON only for LO Madgraph sample
             }
             if (isDYJets!= string::npos) {
                 
                 
                 if (LepsfromZ.size() ==2)             ZBosonPt= (LepsfromZ[0]+LepsfromZ[1]).Pt();
                 
-                ZBosonKFactor=Get_W_Z_BosonKFactor(ZBosonPt,ZLO,ZNLO);  //Swtch ON only for LO Madgraph sample
+                ZBosonKFactor=Get_W_Z_BosonKFactor(ZBosonPt,ZLO,ZNLO_ewk);  //Swtch ON only for LO Madgraph sample
             }
             
             //###############################################################################################
