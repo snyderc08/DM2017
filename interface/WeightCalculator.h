@@ -34,14 +34,14 @@ float XSection(std::string OutName) {
     //    https://docs.google.com/spreadsheets/d/1rWM3AlFKO8IJVaeoQkWZYWwSvicQ1QCXYSzH74QyZqE/edit?alt=json#gid=398123591
     
     
-
     
     
     
     
-//    if (OutName.find("WJetsToLNu_Inc") != string::npos) return 50690;   // As we have large cut at Skim, this one is not needed
-//    else if (OutName.find("WJetsToLNu_HT-70to100") != string::npos) return 1372;
-     if (OutName.find("WJetsToLNu_HT-100to200") != string::npos) return 1343;
+    
+    //    if (OutName.find("WJetsToLNu_Inc") != string::npos) return 50690;   // As we have large cut at Skim, this one is not needed
+    //    else if (OutName.find("WJetsToLNu_HT-70to100") != string::npos) return 1372;
+    if (OutName.find("WJetsToLNu_HT-100to200") != string::npos) return 1343;
     else if (OutName.find("WJetsToLNu_HT-200to400") != string::npos) return 359.6;
     else if (OutName.find("WJetsToLNu_HT-400to600") != string::npos) return 48.85;
     else if (OutName.find("WJetsToLNu_HT-600to800") != string::npos) return 12.05;
@@ -50,7 +50,7 @@ float XSection(std::string OutName) {
     else if (OutName.find("WJetsToLNu_HT-2500toInf") != string::npos) return 0.03216;
     
     
-//    else if (OutName.find("DYJetsToLL_Inc") != string::npos) return 4895 * 1.012; // As we have large cut at Skim, this one is not needed
+    //    else if (OutName.find("DYJetsToLL_Inc") != string::npos) return 4895 * 1.012; // As we have large cut at Skim, this one is not needed
     else if (OutName.find("DYJetsToLL_M-50_HT-70to100") != string::npos) return 175.3; // from 	EXO-16-049
     else if (OutName.find("DYJetsToLL_M-50_HT-100to200") != string::npos) return 148;
     else if (OutName.find("DYJetsToLL_M-50_HT-200to400") != string::npos) return 40.94;
@@ -59,7 +59,7 @@ float XSection(std::string OutName) {
     else if (OutName.find("DYJetsToLL_M-50_HT-800to1200") != string::npos) return 0.625;
     else if (OutName.find("DYJetsToLL_M-50_HT-1200to2500") != string::npos) return 0.151;
     else if (OutName.find("DYJetsToLL_M-50_HT-2500toInf") != string::npos) return 0.003647;
-
+    
     
     //Di-boson
     else if (OutName.find("WW") != string::npos) return 115.0;
@@ -67,19 +67,6 @@ float XSection(std::string OutName) {
     else if (OutName.find("ZZ") != string::npos) return 16.523;
     
     
-    
-//    /ST_tW_antitop_5f_inclusiveDecays_13TeV-powheg-pythia8_TuneCUETP8M1/RunIISummer16MiniAODv2-PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6_ext1-v1/MINIAODSIM
-//    /ST_tW_top_5f_inclusiveDecays_13TeV-powheg-pythia8_TuneCUETP8M1/RunIISummer16MiniAODv2-PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6_ext1-v1/MINIAODSIM
-//    /ST_t-channel_top_4f_inclusiveDecays_13TeV-powhegV2-madspin-pythia8_TuneCUETP8M1/RunIISummer16MiniAODv2-PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/MINIAODSIM
-//    /ST_t-channel_antitop_4f_inclusiveDecays_13TeV-powhegV2-madspin-pythia8_TuneCUETP8M1/RunIISummer16MiniAODv2-PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/MINIAODSIM
-    
-    
-//    -rw-r--r--  1 abdollah1  228379582 Feb 27 13:15 ../ROOT80X/ST_t-channel_antitop_4f_inclusiveDecays.root
-//    -rw-r--r--  1 abdollah1  450329489 Feb 27 13:15 ../ROOT80X/ST_t-channel_top_4f_inclusiveDecays.root
-//    -rw-r--r--  1 abdollah1  312186239 Feb 27 13:15 ../ROOT80X/ST_tW_antitop_5f.root
-//    -rw-r--r--  1 abdollah1  317698343 Feb 27 13:16 ../ROOT80X/ST_tW_top_5f.root
-//
-//    
     
     //SingleTop
     else if (OutName.find("ST_t-channel_antitop") != string::npos) return 80.95;
@@ -128,7 +115,7 @@ float XSection(std::string OutName) {
     else if (OutName.find("QCD_Pt-20toInf_MuEnrichedPt15") != string::npos) return     720648000  * 0.00042 ;
     else if (OutName.find("QCD") != string::npos) return     720648000  * 0.00042 ;
     
-//    https://twiki.cern.ch/twiki/bin/viewauth/CMS/SummaryTable1G25ns#W_jets
+    //    https://twiki.cern.ch/twiki/bin/viewauth/CMS/SummaryTable1G25ns#W_jets
     
     else if (OutName.find("WJetsToLNu_FXFX") != string::npos) return  61526.7   ;
     else if (OutName.find("WJetsToLNu_Pt-50To100_FXFX") != string::npos) return  8053   ;
@@ -149,39 +136,6 @@ float XSection(std::string OutName) {
     
     
     
-    
-//    hadd FXFX/WJetsToLNu_FXFX.root                   *WJetsToLNu_FXFX*
-//    hadd FXFX/WJetsToLNu_Pt-50To100_FXFX.root        *WJetsToLNu_Pt-50To100*FXFX*
-//    hadd FXFX/WJetsToLNu_Pt-100To250_FXFX.root       *WJetsToLNu_Pt-100To250*FXFX*
-//    hadd FXFX/WJetsToLNu_Pt-250To400_FXFX.root       *WJetsToLNu_Pt-250To400*FXFX*
-//    hadd FXFX/WJetsToLNu_Pt-400To600_FXFX.root       *WJetsToLNu_Pt-400To600*FXFX*
-//    hadd FXFX/WJetsToLNu_Pt-600ToInf_FXFX.root       *WJetsToLNu_Pt-600ToInf*FXFX*
-//    hadd FXFX/DYJetsToLL_M-50_FXFX.root              *DYJetsToLL_M-50*FXFX*
-//    hadd FXFX/DYJetsToLL_Pt-100To250_FXFX.root       *DYJetsToLL_Pt-100To250_FXFX*
-//    hadd FXFX/DYJetsToLL_Pt-250To400_FXFX.root       *DYJetsToLL_Pt-250To400_FXFX*
-//    hadd FXFX/DYJetsToLL_Pt-400To650_FXFX.root       *DYJetsToLL_Pt-400To650_FXFX*
-//    hadd FXFX/DYJetsToLL_Pt-650ToInf_FXFX.root       *DYJetsToLL_Pt-650ToInf_FXFX*
-    
-    
-    
-
-    
-    
-    
-//    /DYJetsToLL M-10to50 TuneCUETP8M1 13TeV-amcatnloFXFX-pythia8    18610
-//    /DYJetsToLL_M-50_FXFX        5765.4
-//    /DYToLL_0J_13TeV-amcatnloFXFX-pythia8           4757
-//    /DYToLL_1J_13TeV-amcatnloFXFX-pythia8       884.4
-//    /DYToLL_2J_13TeV-amcatnloFXFX-pythia8      338.9
-    
-    
-    
-    
-    
-    
-    
-    
-    
     else {
         cout<<"\n\n*********\nNot Listed in XSection menu !!!! Watch cout    "<<OutName<< "\n\n*********\n";
         return 1;
@@ -189,49 +143,56 @@ float XSection(std::string OutName) {
 }
 
 
+//##################################################################
+//   Needed for Stitching for LO W and Z
+//##################################################################
 
 
 //vector <float> W_HTBin(std::string FileLoc){
-//    
+//
 //    const int WSize=8;
 //    std::string W_ROOTFiles[WSize]={"WJetsToLNu_Inc.root", "WJetsToLNu_HT-100To200.root","WJetsToLNu_HT-200To400.root","WJetsToLNu_HT-400To600.root", "WJetsToLNu_HT-600To800.root","WJetsToLNu_HT-800To1200.root","WJetsToLNu_HT-1200To2500.root","WJetsToLNu_HT-2500ToInf.root"};
-//    
+//
 //    vector<float> W_events;
 //    W_events.clear();
-//    
+//
 //    for (int i=0; i <WSize;i++){
-//        
+//
 //        TFile * File_W = new TFile((FileLoc+W_ROOTFiles[i]).c_str());
 //        TH1F * Histo_W = (TH1F*) File_W->Get("hcount");
 //        W_events.push_back(Histo_W->GetBinContent(2));
 //        cout<<"Number of proccessed evenets for "<<W_ROOTFiles[i]<<" = "<<Histo_W->GetBinContent(2)<<"\n";
 //    }
-//    
+//
 //    return W_events ;
-//    
+//
 //}
 
 //vector <float> DY_HTBin(std::string FileLoc){
-//    
+//
 //    const int DYSize=5;
 //    std::string DY_ROOTFiles[DYSize]={"DYJetsToLL_M-50_Inc.root", "DYJetsToLL_M-50_HT-100to200.root","DYJetsToLL_M-50_HT-200to400.root","DYJetsToLL_M-50_HT-400to600.root", "DYJetsToLL_M-50_HT-600toInf.root"};
-//    
+//
 //    vector<float> DY_events;
 //    DY_events.clear();
-//    
+//
 //    for (int i=0; i < DYSize;i++){
-//        
+//
 //        TFile * File_DY = new TFile((FileLoc+DY_ROOTFiles[i]).c_str());
 //        TH1F * Histo_DY= (TH1F*) File_DY->Get("hcount");
 //        DY_events.push_back(Histo_DY->GetBinContent(2));
 //        cout<<"Number of proccessed evenets for "<<DY_ROOTFiles[i]<<" = "<<Histo_DY->GetBinContent(2)<<"\n";
 //    }
-//    
+//
 //    return DY_events ;
-//    
+//
 //}
 
 
+
+//##################################################################
+//   Fill out a vector with the lumi weight for each FXFX W sample
+//##################################################################
 
 vector <float> W_PTBinNLO(std::string FileLoc){
     
@@ -256,7 +217,9 @@ vector <float> W_PTBinNLO(std::string FileLoc){
 
 
 
-
+//##################################################################
+//   Fill out a vector with the lumi weight for each FXFX DY sample
+//##################################################################
 
 vector <float> Z_PTBinNLO(std::string FileLoc){
     
@@ -285,15 +248,16 @@ vector <float> Z_PTBinNLO(std::string FileLoc){
 
 
 
+//####################################################################################################################################
+//####################################################################################################################################
+//####################################################################################################################################
+//     For Analysis
+//####################################################################################################################################
+//####################################################################################################################################
+//####################################################################################################################################
 
 
-
-
-
-//float weightCalc(TH1F *Histo,std::string outputName , float genHT , float WPt, vector<float> W_events, vector<float> DY_events, vector<float> W_eventsNLO) {
-    float weightCalc(TH1F *Histo,std::string outputName) {
-    
-    //    cout<< "outputName is "<<outputName << "  and histoname is " <<Histo->GetName()<<  " Histo->GetBinContent(1)="<<Histo->GetBinContent(1)<< " XSection(wjet)=" <<XSection("WJets")<<"\n";
+float weightCalc(TH1F *Histo,std::string outputName) {
     
     
     stringstream ss(outputName);
@@ -306,17 +270,12 @@ vector <float> Z_PTBinNLO(std::string FileLoc){
     std::string LastPart = ".root";
     std::string newOut = M.substr(FirstPart.size());
     newOut = newOut.substr(0, newOut.size() - LastPart.size());
-//    cout<<"--->  Check Name is "<<newOut<<"\n";
     
     
     //    float LOtoNLO_DY = 1.230888662;
     float LOtoNLO_DY = 1; // Now we boson have pt dependent SF
     //    float LOtoNLO_W = 1.213783784;
     float LOtoNLO_W = 1;  // Now we boson have pt dependent SF
-    //    float luminosity=2154;
-    //    float luminosity=    3990;
-    //    float luminosity=    6260;
-    //    float luminosity=    9235;
     //    float luminosity=    12900;
     float luminosity=    35867;
     
@@ -324,58 +283,8 @@ vector <float> Z_PTBinNLO(std::string FileLoc){
     size_t isSingleMu = outputName.find("SingleMu");
     size_t isSingleEle = outputName.find("SingleEle");
     
-    //    size_t isWjet = outputName.find("WJets");
-    //    size_t isFXFX = outputName.find("FXFX");
-    //    size_t isDYJet = outputName.find("DYJets");
-    
     
     if (isSingleMu != string::npos || isSingleEle!= string::npos)   return 1;
-    
-    //    else if (isWjet != string::npos && isFXFX==string::npos) {
-    //
-    //        //        return luminosity*LOtoNLO_W / (W_events[0] / XSection("WJetsToLNu_Inc"));
-    //
-    //
-    //        if (genHT <= 100) return luminosity*LOtoNLO_W / (W_events[0] / XSection("WJetsToLNu_Inc"));
-    //
-    //        else if (genHT > 100 && genHT <= 200) return  luminosity*LOtoNLO_W / (W_events[1] / XSection("WJetsToLNu_HT-100To200") + W_events[0] / XSection("WJetsToLNu_Inc"));
-    //        else if (genHT > 200 && genHT <=400) return   luminosity*LOtoNLO_W / (W_events[2] / XSection("WJetsToLNu_HT-200To400") + W_events[0] / XSection("WJetsToLNu_Inc"));
-    //        else if (genHT > 400 && genHT <=600) return   luminosity*LOtoNLO_W / (W_events[3] / XSection("WJetsToLNu_HT-400To600") + W_events[0] / XSection("WJetsToLNu_Inc"));
-    //        else if (genHT > 600 && genHT <=800) return   luminosity*LOtoNLO_W / (W_events[4] / XSection("WJetsToLNu_HT-600To800") + W_events[0] / XSection("WJetsToLNu_Inc"));
-    //        else if (genHT > 800 && genHT <=1200) return  luminosity*LOtoNLO_W / (W_events[5] / XSection("WJetsToLNu_HT-800To1200") + W_events[0] / XSection("WJetsToLNu_Inc"));
-    //        else if (genHT > 1200 && genHT <=2500) return luminosity*LOtoNLO_W / (W_events[6] / XSection("WJetsToLNu_HT-1200To2500") + W_events[0] / XSection("WJetsToLNu_Inc"));
-    //        else if (genHT > 2500) return                 luminosity*LOtoNLO_W / (W_events[7] / XSection("WJetsToLNu_HT-2500ToInf") + W_events[0] / XSection("WJetsToLNu_Inc"));
-    //        else   {cout<<"**********   wooow  ********* There is a problem here\n";return 0;}
-    //
-    //
-    //    }
-    
-    
-    
-    
-    //    else if (isWjet != string::npos && isFXFX != string::npos) {
-    //
-    //        if (WPt <= 100)                  return   luminosity / (W_eventsNLO[0] / XSection("WJetsToLNu_FXFX"));
-    //        else if (WPt > 100 && WPt <= 250)return   luminosity / (W_eventsNLO[1] / XSection("WJetsToLNu_Pt-100To250_FXFX") + W_eventsNLO[0] / XSection("WJetsToLNu_FXFX"));
-    //        else if (WPt > 250 && WPt <=400) return   luminosity / (W_eventsNLO[2] / XSection("WJetsToLNu_Pt-250To400_FXFX") + W_eventsNLO[0] / XSection("WJetsToLNu_FXFX"));
-    //        else if (WPt > 400 && WPt <=600) return   luminosity / (W_eventsNLO[3] / XSection("WJetsToLNu_Pt-400To600_FXFX") + W_eventsNLO[0] / XSection("WJetsToLNu_FXFX"));
-    //        else if (WPt > 600 )               return   luminosity / (W_eventsNLO[4] / XSection("WJetsToLNu_Pt-600ToInf_FXFX") + W_eventsNLO[0] / XSection("WJetsToLNu_FXFX"));
-    //
-    //        else   {cout<<"**********   wooow  ********* There is a problem here\n";return 0;}
-    //
-    //    }
-    
-    
-    
-    //    else if (isDYJet != string::npos) {
-    //
-    //        if (genHT <= 100) return luminosity*LOtoNLO_DY / (DY_events[0] / XSection("DYJetsToLL_Inc"));
-    //        else if (genHT > 100 && genHT <= 200) return  luminosity*LOtoNLO_DY / (DY_events[1] / XSection("DYJetsToLL_M-50_HT-100to200") + DY_events[0] / XSection("DYJetsToLL_Inc"));
-    //        else if (genHT > 200 && genHT <=400) return luminosity*LOtoNLO_DY / (DY_events[2] / XSection("DYJetsToLL_M-50_HT-200to400") + DY_events[0] / XSection("DYJetsToLL_Inc"));
-    //        else if (genHT > 400 && genHT <=600) return luminosity*LOtoNLO_DY / (DY_events[3] / XSection("DYJetsToLL_M-50_HT-400to600") + DY_events[0] / XSection("DYJetsToLL_Inc"));
-    //        else if (genHT > 600) return luminosity*LOtoNLO_DY / (DY_events[4] / XSection("DYJetsToLL_M-50_HT-600toInf") + DY_events[0] / XSection("DYJetsToLL_Inc"));
-    //        else   {cout<<"**********   wooow  ********* There is a problem here\n";return 0;}
-    //    }
     
     
     else
@@ -385,122 +294,52 @@ vector <float> Z_PTBinNLO(std::string FileLoc){
 }
 
 
-
-
-
-
-
-
-
+//####################################################################################################################################
+//####################################################################################################################################
+//####################################################################################################################################
+//     ONLY for FXFX sample for K-factor Study
+//####################################################################################################################################
+//####################################################################################################################################
+//####################################################################################################################################
 
 
 float weightCalc_Stitching(TH1F *Histo,std::string outputName , float WPt, float ZPt, vector<float> W_eventsNLO,vector<float> Z_eventsNLO) {
-
-
     
-    
-    stringstream ss(outputName);
-    
-    string token;
-    string M;
-    while (getline(ss,token, '/'))  M=token;
-    
-    std::string FirstPart = "";
-    std::string LastPart = ".root";
-    std::string newOut = M.substr(FirstPart.size());
-    newOut = newOut.substr(0, newOut.size() - LastPart.size());
-    //    cout<<"--->  Check Name is "<<newOut<<"\n";
-    
-    
-    
-    float LOtoNLO_DY = 1; // Now we boson have pt dependent SF
-    
-    float LOtoNLO_W = 1;  // Now we boson have pt dependent SF
     float luminosity=    35867;
     
+    size_t isWjet = outputName.find("WJets");
+    size_t isFXFX = outputName.find("FXFX");
+    size_t isDYJet = outputName.find("DYJets");
     
-    size_t isSingleMu = outputName.find("SingleMu");
-    size_t isSingleEle = outputName.find("SingleEle");
+    //##################################################################
+    //   Stitching for  FXFX W sample
+    //##################################################################
+    if (isWjet != string::npos && isFXFX != string::npos) {
+        
+        if (WPt <= 100)                  return   luminosity / (W_eventsNLO[0] / XSection("WJetsToLNu_FXFX"));
+        
+        else if (WPt > 100 && WPt <= 250)return   luminosity / (W_eventsNLO[1] / XSection("WJetsToLNu_Pt-100To250_FXFX") + W_eventsNLO[0] / XSection("WJetsToLNu_FXFX"));
+        else if (WPt > 250 && WPt <=400) return   luminosity / (W_eventsNLO[2] / XSection("WJetsToLNu_Pt-250To400_FXFX") + W_eventsNLO[0] / XSection("WJetsToLNu_FXFX"));
+        else if (WPt > 400 && WPt <=600) return   luminosity / (W_eventsNLO[3] / XSection("WJetsToLNu_Pt-400To600_FXFX") + W_eventsNLO[0] / XSection("WJetsToLNu_FXFX"));
+        else if (WPt > 600 )               return   luminosity / (W_eventsNLO[4] / XSection("WJetsToLNu_Pt-600ToInf_FXFX") + W_eventsNLO[0] / XSection("WJetsToLNu_FXFX"));
+        else   {cout<<"**********   wooow  ********* There is a problem here\n";return 0;}
+    }
+    //##################################################################
+    //   Stitching for  FXFX DY sample
+    //##################################################################
+    else if (isDYJet != string::npos && isFXFX != string::npos) {
+        
+        if (ZPt <= 100)                  return   luminosity / (Z_eventsNLO[0] / XSection("DYJetsToLL_M-50_FXFX"));
+        else if (ZPt > 100 && ZPt <= 250)return   luminosity / (Z_eventsNLO[1] / XSection("DYJetsToLL_Pt-100To250_FXFX") + Z_eventsNLO[0] / XSection("DYJetsToLL_M-50_FXFX"));
+        else if (ZPt > 250 && ZPt <=400) return   luminosity / (Z_eventsNLO[2] / XSection("DYJetsToLL_Pt-250To400_FXFX") + Z_eventsNLO[0] / XSection("DYJetsToLL_M-50_FXFX"));
+        else if (ZPt > 400 && ZPt <=600) return   luminosity / (Z_eventsNLO[3] / XSection("DYJetsToLL_Pt-400To650_FXFX") + Z_eventsNLO[0] / XSection("DYJetsToLL_M-50_FXFX"));
+        else if (ZPt > 600 )               return   luminosity / (Z_eventsNLO[4] / XSection("DYJetsToLL_Pt-650ToInf_FXFX") + Z_eventsNLO[0] / XSection("DYJetsToLL_M-50_FXFX"));
+        else   {cout<<"**********   wooow  ********* There is a problem here\n";return 0;}
+    }
     
-        size_t isWjet = outputName.find("WJets");
-        size_t isFXFX = outputName.find("FXFX");
-        size_t isDYJet = outputName.find("DYJets");
-    
-    
-//    if (isSingleMu != string::npos || isSingleEle!= string::npos)   return 1;
-//    
-//        if (isWjet != string::npos && isFXFX==string::npos) {
-//    
-//            //        return luminosity*LOtoNLO_W / (W_events[0] / XSection("WJetsToLNu_Inc"));
-//    
-//    
-//            if (genHT <= 100) return luminosity*LOtoNLO_W / (W_events[0] / XSection("WJetsToLNu_Inc"));
-//    
-//            else if (genHT > 100 && genHT <= 200) return  luminosity*LOtoNLO_W / (W_events[1] / XSection("WJetsToLNu_HT-100To200") + W_events[0] / XSection("WJetsToLNu_Inc"));
-//            else if (genHT > 200 && genHT <=400) return   luminosity*LOtoNLO_W / (W_events[2] / XSection("WJetsToLNu_HT-200To400") + W_events[0] / XSection("WJetsToLNu_Inc"));
-//            else if (genHT > 400 && genHT <=600) return   luminosity*LOtoNLO_W / (W_events[3] / XSection("WJetsToLNu_HT-400To600") + W_events[0] / XSection("WJetsToLNu_Inc"));
-//            else if (genHT > 600 && genHT <=800) return   luminosity*LOtoNLO_W / (W_events[4] / XSection("WJetsToLNu_HT-600To800") + W_events[0] / XSection("WJetsToLNu_Inc"));
-//            else if (genHT > 800 && genHT <=1200) return  luminosity*LOtoNLO_W / (W_events[5] / XSection("WJetsToLNu_HT-800To1200") + W_events[0] / XSection("WJetsToLNu_Inc"));
-//            else if (genHT > 1200 && genHT <=2500) return luminosity*LOtoNLO_W / (W_events[6] / XSection("WJetsToLNu_HT-1200To2500") + W_events[0] / XSection("WJetsToLNu_Inc"));
-//            else if (genHT > 2500) return                 luminosity*LOtoNLO_W / (W_events[7] / XSection("WJetsToLNu_HT-2500ToInf") + W_events[0] / XSection("WJetsToLNu_Inc"));
-//            else   {cout<<"**********   wooow  ********* There is a problem here\n";return 0;}
-//    
-//    
-//        }
-//    
-    
-    
-    
-    
- 
-    
-    
-
-    
-    
-    
-         if (isWjet != string::npos && isFXFX != string::npos) {
-    
-            if (WPt <= 100)                  return   luminosity / (W_eventsNLO[0] / XSection("WJetsToLNu_FXFX"));
-            
-            
-//            else if (WPt > 50 && WPt <= 100)return   luminosity / (W_eventsNLO[1] / XSection("WJetsToLNu_Pt-50To100_FXFX") + W_eventsNLO[0] / XSection("WJetsToLNu_FXFX"));
-            else if (WPt > 100 && WPt <= 250)return   luminosity / (W_eventsNLO[1] / XSection("WJetsToLNu_Pt-100To250_FXFX") + W_eventsNLO[0] / XSection("WJetsToLNu_FXFX"));
-            else if (WPt > 250 && WPt <=400) return   luminosity / (W_eventsNLO[2] / XSection("WJetsToLNu_Pt-250To400_FXFX") + W_eventsNLO[0] / XSection("WJetsToLNu_FXFX"));
-            else if (WPt > 400 && WPt <=600) return   luminosity / (W_eventsNLO[3] / XSection("WJetsToLNu_Pt-400To600_FXFX") + W_eventsNLO[0] / XSection("WJetsToLNu_FXFX"));
-            else if (WPt > 600 )               return   luminosity / (W_eventsNLO[4] / XSection("WJetsToLNu_Pt-600ToInf_FXFX") + W_eventsNLO[0] / XSection("WJetsToLNu_FXFX"));
-            else   {cout<<"**********   wooow  ********* There is a problem here\n";return 0;}
-        }
-    
-    
-        else if (isDYJet != string::npos && isFXFX != string::npos) {
-            
-            if (ZPt <= 100)                  return   luminosity / (Z_eventsNLO[0] / XSection("DYJetsToLL_M-50_FXFX"));
-            else if (ZPt > 100 && ZPt <= 250)return   luminosity / (Z_eventsNLO[1] / XSection("DYJetsToLL_Pt-100To250_FXFX") + Z_eventsNLO[0] / XSection("DYJetsToLL_M-50_FXFX"));
-            else if (ZPt > 250 && ZPt <=400) return   luminosity / (Z_eventsNLO[2] / XSection("DYJetsToLL_Pt-250To400_FXFX") + Z_eventsNLO[0] / XSection("DYJetsToLL_M-50_FXFX"));
-            else if (ZPt > 400 && ZPt <=600) return   luminosity / (Z_eventsNLO[3] / XSection("DYJetsToLL_Pt-400To650_FXFX") + Z_eventsNLO[0] / XSection("DYJetsToLL_M-50_FXFX"));
-            else if (ZPt > 600 )               return   luminosity / (Z_eventsNLO[4] / XSection("DYJetsToLL_Pt-650ToInf_FXFX") + Z_eventsNLO[0] / XSection("DYJetsToLL_M-50_FXFX"));
-            else   {cout<<"**********   wooow  ********* There is a problem here\n";return 0;}
-        }
-    
-    
-    
-    
-    //    else if (isDYJet != string::npos) {
-    //
-    //        if (genHT <= 100) return luminosity*LOtoNLO_DY / (DY_events[0] / XSection("DYJetsToLL_Inc"));
-    //        else if (genHT > 100 && genHT <= 200) return  luminosity*LOtoNLO_DY / (DY_events[1] / XSection("DYJetsToLL_M-50_HT-100to200") + DY_events[0] / XSection("DYJetsToLL_Inc"));
-    //        else if (genHT > 200 && genHT <=400) return luminosity*LOtoNLO_DY / (DY_events[2] / XSection("DYJetsToLL_M-50_HT-200to400") + DY_events[0] / XSection("DYJetsToLL_Inc"));
-    //        else if (genHT > 400 && genHT <=600) return luminosity*LOtoNLO_DY / (DY_events[3] / XSection("DYJetsToLL_M-50_HT-400to600") + DY_events[0] / XSection("DYJetsToLL_Inc"));
-    //        else if (genHT > 600) return luminosity*LOtoNLO_DY / (DY_events[4] / XSection("DYJetsToLL_M-50_HT-600toInf") + DY_events[0] / XSection("DYJetsToLL_Inc"));
-    //        else   {cout<<"**********   wooow  ********* There is a problem here\n";return 0;}
-    //    }
-    
-    
-    else
-        return luminosity * XSection(newOut)*1.0 / Histo->GetBinContent(2);
-    
-    
+    else{
+        cout<<"\n\n*********\nNot a FXFX sample  !!!! Watch cout    "<<outputName<< "\n\n*********\n";
+        return 1;}
 }
 
 

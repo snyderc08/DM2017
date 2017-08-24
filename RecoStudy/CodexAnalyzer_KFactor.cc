@@ -1,3 +1,11 @@
+//############################################################
+//This code is to measure the K-factor for both LO and NLO
+// This will be run on both LO W/Z sammples (in this laptop) and FXFX samples (in cmslpc)
+// The output of this code will be stored in OutFiles_LO/ directory
+// After that the PlotCompare_KFactor.py script is run to make the boson=pt k-factor
+//############################################################
+
+
 #include "../interface/CodexAnalyzer.h"
 #include "../interface/WeightCalculator.h"
 #include "../interface/Corrector.h"
@@ -56,14 +64,8 @@ int main(int argc, char** argv) {
     TH1F * ZNLO_qcd= (TH1F *) KFactor->Get("DYJets_012j_NLO/nominal");
     
     
-//    TH1F * ZLO= (TH1F *) KFactor->Get("DYJets_LO/inv_pt");
-//    TH1F * ZNLO= (TH1F *) KFactor->Get("DYJets_012j_NLO/nominal");
-    
-    
-    
     for (int k = 0; k < input.size(); k++) {
         
-        //std::string input = *(argv + 2);
         TFile *f_Double = TFile::Open(input[k].c_str());
         cout << "\n  Now is running on ------->   " << std::string(f_Double->GetName()) << "\n";
         
@@ -83,9 +85,8 @@ int main(int argc, char** argv) {
         size_t isFXFX = InputROOT.find("FXFX");
         
         
+        //  This part should be only used for NLO samples (located at cmslpc)
         std::string ROOTLoc= "../ROOT80X/FXFX/";
-        //                vector<float> DY_Events = DY_HTBin(ROOTLoc);
-        //                vector<float> W_Events = W_HTBin(ROOTLoc);
         vector<float> W_EventsNLO ;
         vector<float> Z_EventsNLO ;
         if (isFXFX !=string::npos){
@@ -162,9 +163,12 @@ int main(int argc, char** argv) {
             float GenAntiTopPt=0;
             float TopPtReweighting = 1;
             float WBosonPt=0;
-            float WBosonKFactor=1;
+            float WBosonKFactor_NLOewk=1;
+            float WBosonKFactor_NLOonlyewk=1;
             float ZBosonPt=0;
-            float ZBosonKFactor=1;
+            float ZBosonKFactor_NLOewk=1;
+            float ZBosonKFactor_NLOonlyewk=1;
+
             int modPDGId=-10;
             int AntimodPDGId=-10;
             
@@ -235,14 +239,16 @@ int main(int argc, char** argv) {
             
             
             if (isWJets!= string::npos) {
-                WBosonKFactor=Get_W_Z_BosonKFactor(WBosonPt,WLO,WNLO_ewk);  //Swtch ON only for LO Madgraph sample
+                WBosonKFactor_NLOewk=Get_W_Z_BosonKFactor(WBosonPt,WLO,WNLO_ewk);  //Swtch ON only for LO Madgraph sample
+                WBosonKFactor_NLOonlyewk=Get_W_Z_BosonKFactor(WBosonPt,WNLO_qcd,WNLO_ewk);  //Swtch ON only for LO Madgraph sample
             }
             if (isDYJets!= string::npos) {
                 
                 
                 if (LepsfromZ.size() ==2)             ZBosonPt= (LepsfromZ[0]+LepsfromZ[1]).Pt();
                 
-                ZBosonKFactor=Get_W_Z_BosonKFactor(ZBosonPt,ZLO,ZNLO_ewk);  //Swtch ON only for LO Madgraph sample
+                ZBosonKFactor_NLOewk=Get_W_Z_BosonKFactor(ZBosonPt,ZLO,ZNLO_ewk);  //Swtch ON only for LO Madgraph sample
+                ZBosonKFactor_NLOonlyewk=Get_W_Z_BosonKFactor(ZBosonPt,ZNLO_qcd,ZNLO_ewk);  //Swtch ON only for LO Madgraph sample
             }
             
             //###############################################################################################
@@ -265,21 +271,18 @@ int main(int argc, char** argv) {
             
             
             
-            
-            
-            
-            
-            
             //############################################################################################
             //   Making Plots
             //############################################################################################
             float TotalWeight= LumiWeight * GetGenWeight;
             
             plotFill("_WBosonPt",WBosonPt,150,0,1500,TotalWeight);
-            plotFill("_WBosonPt_KFactor",WBosonPt,150,0,1500,TotalWeight*WBosonKFactor);
+            plotFill("_WBosonPt_KFactor",WBosonPt,150,0,1500,TotalWeight*WBosonKFactor_NLOewk);
+            plotFill("_WBosonPt_KFactor_OnlyEWK",WBosonPt,150,0,1500,TotalWeight*WBosonKFactor_NLOonlyewk);
             
             plotFill("_ZBosonPt",ZBosonPt,150,0,1500,TotalWeight);
-            plotFill("_ZBosonPt_KFactor",ZBosonPt,150,0,1500,TotalWeight*ZBosonKFactor);
+            plotFill("_ZBosonPt_KFactor",ZBosonPt,150,0,1500,TotalWeight*ZBosonKFactor_NLOewk);
+            plotFill("_ZBosonPt_KFactor_OnlyEWK",ZBosonPt,150,0,1500,TotalWeight*ZBosonKFactor_NLOonlyewk);
             
             
         } //End of Tree

@@ -307,12 +307,18 @@ int main(int argc, char** argv) {
 //                    if( fabs((GenMu4Momentum+GenAntiMu4Momentum).M() - 91.) <5. && modPDGId!=23 && modPDGId==AntimodPDGId)  cout<<"bosonpt= " << ZBosonPt<<  "   dif= " <<fabs((GenMu4Momentum+GenAntiMu4Momentum).Pt() - ZBosonPt)<< "  mother="<<modPDGId<<"\n";
 //            
             
+                    
+            //######################## Top Pt Reweighting
             size_t isTTJets = InputROOT.find("TTJets");
             if (isTTJets!= string::npos) TopPtReweighting = compTopPtWeight(GenTopPt, GenAntiTopPt);
+                    
+                    
+            //######################## W K-factor
             size_t isWJets = InputROOT.find("WJets");
-            cout << "boson pt= "<< WBosonPt <<" from bin=  "<< Get_W_Z_BosonKFactor(WBosonPt,WLO,WNLO_qcd) << "  from Fit= "<<kf_W_1 + (kf_W_2 * WBosonPt) <<"\n";
 //            if (isWJets!= string::npos) WBosonKFactor=Get_W_Z_BosonKFactor(WBosonPt,WLO,WNLO_ewk);  //Swtch ON only for LO Madgraph sample
             if (isWJets!= string::npos) WBosonKFactor= kf_W_1 + kf_W_2 * WBosonPt;
+                    
+            //######################## Z K-factor
             size_t isDYJets = InputROOT.find("DYJets");
 //            if (isDYJets!= string::npos) ZBosonKFactor=Get_W_Z_BosonKFactor(ZBosonPt,ZLO,ZNLO_ewk);  //Swtch ON only for LO Madgraph sample
             if (isDYJets!= string::npos) ZBosonKFactor= kf_Z_1 + kf_Z_2 * ZBosonPt;

@@ -231,6 +231,7 @@ int main(int argc, char** argv) {
         Run_Tree->SetBranchAddress("genHT",&genHT);
         
         Run_Tree->SetBranchAddress("pdfSystWeight",&pdfSystWeight);
+        Run_Tree->SetBranchAddress("pdfSystWeightId",&pdfSystWeightId);
         Run_Tree->SetBranchAddress("pdfWeight",&pdfWeight);
         
         
@@ -277,10 +278,14 @@ int main(int argc, char** argv) {
             //###############################################################################################
             //  Systematic Weight Calculation
             //###############################################################################################
+            int counter=0;
             for (int isys=0; isys < pdfSystWeight->size(); isys++){
-                
+                if (atoi(pdfSystWeightId->at(isys).c_str()) > 109 && atoi(pdfSystWeightId->at(isys).c_str()) < 210){
 //                cout<<isys<<" "<<pdfSystWeight->at(isys)/pdfWeight<<"\n";
-                plotFill("___Sys_"+std::to_string(isys),pdfSystWeight->at(isys)/pdfWeight, 500,0,5);
+                plotFill("___Sys_"+std::to_string(counter),pdfSystWeight->at(isys)/pdfWeight, 500,0,5);
+                    counter++;
+                }
+//                cout<< atoi(pdfSystWeightId->at(isys).c_str())<<"\n";
             }
             
             
