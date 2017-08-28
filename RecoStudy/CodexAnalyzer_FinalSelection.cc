@@ -650,6 +650,11 @@ int main(int argc, char** argv) {
                                                                 HistNamesFilled.push_back(FullStringName);
                                                                 
                                                                 
+                                                                
+                                                                plotFill(CHL+"_JetPt"+FullStringName,NewJet4Collection.Pt() ,200,0,2000,FullWeight);
+                                                                plotFill(CHL+"_LepPt"+FullStringName,Mu4Momentum.Pt(),200,0,2000,FullWeight);
+                                                                
+                                                                
                                                                 plotFill(CHL+"_tmass_MuMet"+FullStringName,tmass_MuMet,200,0,2000,FullWeight);
                                                                 plotFill(CHL+"_MET"+FullStringName,UESMET[metUE],200,0,2000,FullWeight);
                                                                 

@@ -25,7 +25,7 @@ import array
 
 ##### Get Jet to Tau FR
 from Step1_JetToMuFR_Data import Make_Mu_FakeRate
-from Step1_JetToMuFR_Data import _FIT_Jet_Function
+from Step1_JetToMuFR_Data import *
 ##### Get Jet to Tau FR
 
 gROOT.Reset()
@@ -35,8 +35,8 @@ import os
 ROOT.gROOT.SetBatch(True)
 #ROOT.gROOT.ProcessLine('.x rootlogon.C')
 #SubRootDir = 'OutFiles_DiMu/'
-#SubRootDir = 'OutFiles_DiMu_ScaledWZ/'
-SubRootDir = 'OutFiles_DiMu_NoZScale/'
+#SubRootDir = 'OutFiles_DiMu_ScaledWZ'
+#SubRootDir = 'OutFiles_DiMu_NoZScale/'
 
 
 verbos_ = True
@@ -52,11 +52,11 @@ RB_=1
 category = [""]
 
 ############################################################################################################
-def _FileReturn(Name, channel,cat,HistoName):
+def _FileReturn(SubRootDir,Name, channel,cat,HistoName):
 
     if not os.path.exists(SubRootDir):
         os.makedirs(SubRootDir)
-    myfile = TFile(SubRootDir + Name + '.root')
+    myfile = TFile(SubRootDir + "/"+Name + '.root')
     if verbos_: print "##### --->>>>>>> File name is ", SubRootDir + Name + '.root'  "   and histo is -->  ", channel+HistoName + cat
     Histo =  myfile.Get(channel+HistoName + cat)
     if not os.path.exists("Extra"):
@@ -70,10 +70,9 @@ def _FileReturn(Name, channel,cat,HistoName):
 ####################################################
 ##   Start Making the Datacard Histograms
 ####################################################
-def MakeTheHistogram(channel,NormMC,NormQCD,ShapeQCD,NormTTbar):
+def MakeTheHistogram(SubRootDir,channel,NormMC,NormQCD,ShapeQCD,NormTTbar):
     
-#    OutFile = TFile("TotalRoot_DiMu_ScaledWZ"+channel + NormMC+".root" , 'RECREATE') # Name Of the output file
-    OutFile = TFile("TotalRoot_DiMu_NoZScale"+channel + NormMC+".root" , 'RECREATE') # Name Of the output file
+    OutFile = TFile(("TotalRoot_DiMu_"+SubRootDir+channel + NormMC+".root").replace('_OutFiles_DiMu','') , 'RECREATE') # Name Of the output file
 
     for NameCat in category:
         print "\nstarting NameCat and channel and HistoName ", NameCat, channel, NormMC
@@ -90,7 +89,7 @@ def MakeTheHistogram(channel,NormMC,NormQCD,ShapeQCD,NormTTbar):
 #        Name= "Codex_1200"
 #        NameOut= "Codex_1200"
 #        
-#        NormFile= _FileReturn(Name, channel,NameCat, NormMC)
+#        NormFile= _FileReturn(SubRootDir,Name, channel,NameCat, NormMC)
 #        NormHisto=NormFile.Get("HISTO")
 ##        
 #        if not NormHisto:
@@ -108,7 +107,7 @@ def MakeTheHistogram(channel,NormMC,NormQCD,ShapeQCD,NormTTbar):
         Name= "SingleTop"
         NameOut= "SingleTop"
         
-        NormFile= _FileReturn(Name, channel,NameCat, NormMC)
+        NormFile= _FileReturn(SubRootDir,Name, channel,NameCat, NormMC)
         NormHisto=NormFile.Get("HISTO")
         
         if not NormHisto:
@@ -126,7 +125,7 @@ def MakeTheHistogram(channel,NormMC,NormQCD,ShapeQCD,NormTTbar):
         Name= "VV"
         NameOut= "VV"
         
-        NormFile= _FileReturn(Name, channel,NameCat, NormMC)
+        NormFile= _FileReturn(SubRootDir,Name, channel,NameCat, NormMC)
         NormHisto=NormFile.Get("HISTO")
         
         if not NormHisto:
@@ -145,10 +144,10 @@ def MakeTheHistogram(channel,NormMC,NormQCD,ShapeQCD,NormTTbar):
         Name= "TTJets"
         NameOut= "TT"
 
-        NormFileShape= _FileReturn(Name, channel,NameCat, NormMC)
+        NormFileShape= _FileReturn(SubRootDir,Name, channel,NameCat, NormMC)
         NormHistoShape=NormFileShape.Get("HISTO")
         
-        NormFile= _FileReturn(Name, channel,NameCat, NormTTbar)
+        NormFile= _FileReturn(SubRootDir,Name, channel,NameCat, NormTTbar)
         NormHisto=NormFile.Get("HISTO")
         
 
@@ -170,7 +169,7 @@ def MakeTheHistogram(channel,NormMC,NormQCD,ShapeQCD,NormTTbar):
         Name= "DYJetsToLL"
         NameOut= "ZTT"
 
-        NormFile= _FileReturn(Name, channel,NameCat, NormMC)
+        NormFile= _FileReturn(SubRootDir,Name, channel,NameCat, NormMC)
         NormHisto=NormFile.Get("HISTO")
 
         if not NormHisto:
@@ -190,7 +189,7 @@ def MakeTheHistogram(channel,NormMC,NormQCD,ShapeQCD,NormTTbar):
         Name="WJetsToLNu"
         NameOut= "W"
 
-        NormFile= _FileReturn(Name, channel,NameCat, NormMC)
+        NormFile= _FileReturn(SubRootDir,Name, channel,NameCat, NormMC)
         NormHisto=NormFile.Get("HISTO")
             
         if not NormHisto:
@@ -207,28 +206,28 @@ def MakeTheHistogram(channel,NormMC,NormQCD,ShapeQCD,NormTTbar):
 #        tDirectory.cd()
 #        
 #        Name= "SingleTop"
-#        SingleTSampleQCDNorm= _FileReturn(Name, channel,NameCat, NormQCD)
-#        SingleTSampleQCDShape= _FileReturn(Name, channel,NameCat, ShapeQCD)
+#        SingleTSampleQCDNorm= _FileReturn(SubRootDir,Name, channel,NameCat, NormQCD)
+#        SingleTSampleQCDShape= _FileReturn(SubRootDir,Name, channel,NameCat, ShapeQCD)
 #        
 #        Name= "VV"
-#        VVSampleQCDNorm= _FileReturn(Name, channel,NameCat, NormQCD)
-#        VVSampleQCDShape= _FileReturn(Name, channel,NameCat, ShapeQCD)
+#        VVSampleQCDNorm= _FileReturn(SubRootDir,Name, channel,NameCat, NormQCD)
+#        VVSampleQCDShape= _FileReturn(SubRootDir,Name, channel,NameCat, ShapeQCD)
 #
 #        Name= "TTJets"
-#        TTSampleQCDNorm= _FileReturn(Name, channel,NameCat, NormQCD)
-#        TTSampleQCDShape= _FileReturn(Name, channel,NameCat, ShapeQCD)
+#        TTSampleQCDNorm= _FileReturn(SubRootDir,Name, channel,NameCat, NormQCD)
+#        TTSampleQCDShape= _FileReturn(SubRootDir,Name, channel,NameCat, ShapeQCD)
 #
 #        Name= "DYJetsToLL"
-#        ZTTSampleQCDNorm= _FileReturn(Name, channel,NameCat, NormQCD)
-#        ZTTSampleQCDShape= _FileReturn(Name, channel,NameCat, ShapeQCD)
+#        ZTTSampleQCDNorm= _FileReturn(SubRootDir,Name, channel,NameCat, NormQCD)
+#        ZTTSampleQCDShape= _FileReturn(SubRootDir,Name, channel,NameCat, ShapeQCD)
 #
 #        Name= "WJetsToLNu"
-#        WSampleQCDNorm= _FileReturn(Name, channel,NameCat, NormQCD)
-#        WSampleQCDShape= _FileReturn(Name, channel,NameCat, ShapeQCD)
+#        WSampleQCDNorm= _FileReturn(SubRootDir,Name, channel,NameCat, NormQCD)
+#        WSampleQCDShape= _FileReturn(SubRootDir,Name, channel,NameCat, ShapeQCD)
 #                    
 #        Name="Data"
-#        DataSampleQCDNorm= _FileReturn(Name, channel,NameCat, NormQCD)
-#        DataSampleQCDShape= _FileReturn(Name, channel,NameCat, ShapeQCD)
+#        DataSampleQCDNorm= _FileReturn(SubRootDir,Name, channel,NameCat, NormQCD)
+#        DataSampleQCDShape= _FileReturn(SubRootDir,Name, channel,NameCat, ShapeQCD)
 #
 #
 #
@@ -291,7 +290,7 @@ def MakeTheHistogram(channel,NormMC,NormQCD,ShapeQCD,NormTTbar):
         NameOut='data_obs'
 
 
-        NormFile= _FileReturn(Name, channel,NameCat, NormMC)
+        NormFile= _FileReturn(SubRootDir,Name, channel,NameCat, NormMC)
         NormHisto=NormFile.Get("HISTO")
         
         if not NormHisto:
@@ -320,7 +319,7 @@ if __name__ == "__main__":
     Isolation=["_Iso"]
 #    MT=["_NoMT", "_LowMT","_HighMT","_MT100","_MT150","_MT200","_MT250","_MT300"]
 #    MT= ["_LowMT","_HighMT","_MT100","_MT150","_MT200","_MT300","_MT400"]
-    MT=["_NoMT","_HighMT"]
+    MT=["_NoMT","_HighMT","_MT150","_MT200"]
     JPT=[ "_HighDPhi"]
 
     for Norm in PlotName:
@@ -336,7 +335,11 @@ if __name__ == "__main__":
                     ShapeQCD=Norm+mt+jpt+"_AntiIso"
                     NormTTbar=Norm+"_NoTopRW"+mt+jpt+iso
                     
-                    MakeTheHistogram(channel,NormMC,NormQCD,ShapeQCD,NormTTbar)
+                    
+
+                    MakeTheHistogram('OutFiles_DiMu_ScaledWZ',channel,NormMC,NormQCD,ShapeQCD,NormTTbar)
+                    MakeTheHistogram('OutFiles_DiMu_NoZScale',channel,NormMC,NormQCD,ShapeQCD,NormTTbar)
+                    MakeTheHistogram('OutFiles_DiMu_RealDiMu',channel,NormMC,NormQCD,ShapeQCD,NormTTbar)
 
 
 

@@ -1,3 +1,9 @@
+// This code is to estimate the QCD scale and  pdf uncertainty
+// The input root files are located in ../ROOT80X/ForSystematic/   directory
+// The output would be OutFiles_SignalPDF/ directory
+//After running the RunFullSamples_PDF.sh, one need to run a script to get the envelop for QCD scale v.s. mass & PDF v.s. mass & QCD scale v.s. bins of the M_lj & PDF v.s. bins of the M_lj 
+
+
 #include "../interface/CodexAnalyzer.h"
 #include "../interface/WeightCalculator.h"
 #include "../interface/Corrector.h"
@@ -95,7 +101,7 @@ int main(int argc, char** argv) {
         TFile * myFile = TFile::Open(f_Double->GetName());
         TH1F * HistoTot = (TH1F*) myFile->Get("hcount");
         
-                TTree *Run_Tree = (TTree*) f_Double->Get("ggNtuplizer/EventTree");
+                        TTree *Run_Tree = (TTree*) f_Double->Get("ggNtuplizer/EventTree");
 //        TTree *Run_Tree = (TTree*) f_Double->Get("EventTree");
         
         cout.setf(ios::fixed, ios::floatfield);
@@ -235,7 +241,7 @@ int main(int argc, char** argv) {
         Run_Tree->SetBranchAddress("pdfWeight",&pdfWeight);
         
         
-
+        
         
         
         //###############################################################################################
@@ -278,14 +284,15 @@ int main(int argc, char** argv) {
             //###############################################################################################
             //  Systematic Weight Calculation
             //###############################################################################################
-            int counter=0;
+            int counterSys=0;
             for (int isys=0; isys < pdfSystWeight->size(); isys++){
+                cout<<isys<<" id="<<pdfSystWeightId->at(isys)<<"  weight="<<pdfSystWeight->at(isys)/pdfWeight<<"\n";
                 if (atoi(pdfSystWeightId->at(isys).c_str()) > 109 && atoi(pdfSystWeightId->at(isys).c_str()) < 210){
-//                cout<<isys<<" "<<pdfSystWeight->at(isys)/pdfWeight<<"\n";
-                plotFill("___Sys_"+std::to_string(counter),pdfSystWeight->at(isys)/pdfWeight, 500,0,5);
-                    counter++;
+                    
+                    plotFill("___Sys_"+std::to_string(counterSys),pdfSystWeight->at(isys)/pdfWeight, 500,0,5);
+                    counterSys++;
                 }
-//                cout<< atoi(pdfSystWeightId->at(isys).c_str())<<"\n";
+                //                cout<< atoi(pdfSystWeightId->at(isys).c_str())<<"\n";
             }
             
             
@@ -547,6 +554,9 @@ int main(int argc, char** argv) {
                                 if (metUE != 1 && jetScl != 1 ) continue;
                                 
                                 
+                                if (jetRes!=0 ||  jetScl!=1 ||  metUE !=1 ) continue;
+                                
+                                
                                 Jet4MomentumNonSmear.SetPtEtaPhiE(jetPt->at(ijet),jetEta->at(ijet),jetPhi->at(ijet),jetEn->at(ijet));
                                 //                                cout << "Jet pt before Smear="<<Jet4MomentumNonSmear.Pt()<<"\t";
                                 //                                Jet4Momentum=Jet4MomentumNonSmear*JetSmearResolution[jetRes];
@@ -639,11 +649,18 @@ int main(int argc, char** argv) {
                                 
                                 for (int iso = 0; iso < size_isoCat; iso++) {
                                     if (Iso_category[iso]) {
+                                        if (iso> 0) continue;
                                         for (int imt = 0; imt < size_mTCat; imt++) {
                                             if (MT_category[imt]) {
                                                 for (int jpt = 0; jpt < size_METcut; jpt++) {
                                                     if (MetCut_category[jpt]) {
                                                         for (int itopRW = 0; itopRW < size_topPtRW; itopRW++) {
+                                                            if (itopRW> 0) continue;
+                                                            
+                                                            
+                                                            
+                                                            
+                                                            
                                                             
                                                             
                                                             
@@ -655,16 +672,29 @@ int main(int argc, char** argv) {
                                                                 HistNamesFilled.push_back(FullStringName);
                                                                 
                                                                 
-                                                                plotFill(CHL+"_tmass_MuMet"+FullStringName,tmass_MuMet,200,0,2000,FullWeight);
-                                                                plotFill(CHL+"_MET"+FullStringName,UESMET[metUE],200,0,2000,FullWeight);
+                                                                plotFill(CHL+"_LQMass"+FullStringName,LQ.M(),20,0,2000,FullWeight);
                                                                 
-                                                                plotFill(CHL+"_CloseJetLepPt"+FullStringName,CLoseJetMuPt,1000,0,1000,FullWeight);
-                                                                plotFill(CHL+"_LQMass"+FullStringName,LQ.M(),300,0,3000,FullWeight);
-                                                                //                                                                plotFill(CHL+"_LQEta"+FullStringName,LQ.Eta(),100,-5,5,FullWeight);
-                                                                
-                                                                if (isTTJets!= string::npos) plotFill(CHL+"_LQMassTopPtRWUp"+FullStringName,LQ.M(),nBin,binMin,binMax,FullWeight * TopPtReweighting);
-                                                                if (isTTJets!= string::npos) plotFill(CHL+"_LQMassTopPtRWDown"+FullStringName,LQ.M(),nBin,binMin,binMax,FullWeight / TopPtReweighting);
-                                                                
+                                                                int counterscale=0;
+                                                                int counterpdf=0;
+                                                                for (int isys=0; isys < pdfSystWeight->size(); isys++){
+                                                                    
+                                                                    // QCD Scale Uncertainty
+                                                                    if (atoi(pdfSystWeightId->at(isys).c_str()) > 0 && atoi(pdfSystWeightId->at(isys).c_str()) < 10){
+                                                                        
+                                                                        plotFill(CHL+"_LQMass_Scale"+std::to_string(counterscale)+FullStringName,LQ.M(),20,0,2000,FullWeight*pdfSystWeight->at(isys)/pdfWeight);
+                                                                        counterscale++;
+                                                                        
+                                                                    }
+                                                                    
+                                                                    
+                                                                    //PDF Uncertainty
+                                                                    if (atoi(pdfSystWeightId->at(isys).c_str()) > 109 && atoi(pdfSystWeightId->at(isys).c_str()) < 210){
+                                                                        
+                                                                        plotFill(CHL+"_LQMass_PDF"+std::to_string(counterpdf)+FullStringName,LQ.M(),20,0,2000,FullWeight*pdfSystWeight->at(isys)/pdfWeight);
+                                                                        counterpdf++;
+                                                                        
+                                                                    }
+                                                                }
                                                             }
                                                         }
                                                     }

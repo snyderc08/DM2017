@@ -1,3 +1,11 @@
+// This code is used for the Ersatz study where we select a dimuon and then replace one muon with MET
+// This code can be run twice one with shifting the S mass to W mass and once without that [Note the correct one is to scale the mass]
+//Mu4Momentum_i=(80.3/91.2)*Mu4Momentum_i;
+//Mu4Momentum_j=(80.3/91.2)*Mu4Momentum_j;
+// The output will be stored in 2 different directory and then the Step6_PreSelectionPlotter_DiMu.py is run and  then the plots are made with CodexAnalyzer_DiMu.cc
+
+
+
 #include "../interface/CodexAnalyzer.h"
 #include "../interface/WeightCalculator.h"
 #include "../interface/Corrector.h"
@@ -545,7 +553,7 @@ int main(int argc, char** argv) {
                     
 //                    cout <<"Check whether it is on rest mass "<< (Mu4Momentum_i+Mu4Momentum_j).Pt()<<"\n";
 
-//   Just disabled this to address Adidh comments
+//   Just disabled this to address Adish comments
 //                    Mu4Momentum_i=(80.3/91.2)*Mu4Momentum_i;
 //                    Mu4Momentum_j=(80.3/91.2)*Mu4Momentum_j;
                     
@@ -568,9 +576,11 @@ int main(int argc, char** argv) {
                     }
                     
                     
-                    
-                    float newMET_x = pfMET * TMath::Cos(pfMETPhi) + BadMuon.Px() ;
-                    float newMET_y = pfMET * TMath::Sin(pfMETPhi) + BadMuon.Py() ;
+// I just test how the excess look like if we do not add one muon to MET
+//                    float newMET_x = pfMET * TMath::Cos(pfMETPhi) + BadMuon.Px() ;
+//                    float newMET_y = pfMET * TMath::Sin(pfMETPhi) + BadMuon.Py() ;
+                    float newMET_x = pfMET * TMath::Cos(pfMETPhi) ;
+                    float newMET_y = pfMET * TMath::Sin(pfMETPhi) ;
                     
                     float newMET = sqrt (pow(newMET_x,2)+ pow(newMET_y,2));
                     
@@ -612,15 +622,16 @@ int main(int argc, char** argv) {
                         //###############################################################################################
                         float tmass_MuMet= TMass_F(GoodMuon.Pt(), GoodMuon.Px(),GoodMuon.Py() , newMET, newMETPhi);
                         
-                        const int size_mTCat = 4;
+                        const int size_mTCat = 5;
                         
                         bool NoMT = 1;
                         bool LoWMT = (tmass_MuMet < 40);
                         bool HighMT = (tmass_MuMet > 100);
-                        bool MTTo500=(tmass_MuMet > 500 );
+                        bool MTTo150=(tmass_MuMet > 150 );
+                        bool MTTo200=(tmass_MuMet > 200 );
                         
-                        bool MT_category[size_mTCat] = {NoMT,LoWMT,HighMT,MTTo500};
-                        std::string MT_Cat[size_mTCat] = {"_NoMT", "_LowMT","_HighMT","_MT500"};
+                        bool MT_category[size_mTCat] = {NoMT,LoWMT,HighMT,MTTo150,MTTo200};
+                        std::string MT_Cat[size_mTCat] = {"_NoMT", "_LowMT","_HighMT","_MT150","_MT200"};
                         
                         float tmass_JetMet= TMass_F(jetPt->at(ijet), jetPt->at(ijet)*cos(jetPhi->at(ijet)),jetPt->at(ijet)*sin(jetPhi->at(ijet)) , newMET, newMETPhi);
                         float tmass_LQMet= TMass_F(LQ4Momentum.Pt(), LQ4Momentum.Px(),LQ4Momentum.Py(), newMET, newMETPhi);

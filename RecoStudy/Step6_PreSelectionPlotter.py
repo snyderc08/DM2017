@@ -26,7 +26,6 @@ import array
 ##### Get Jet to Tau FR
 from Step1_JetToMuFR_Data import Make_Mu_FakeRate
 from Step1_JetToMuFR_Data import *
-#from Step1_JetToMuFR_Data import _FIT_Lepton_Function
 ##### Get Jet to Tau FR
 
 gROOT.Reset()
@@ -95,12 +94,13 @@ def MakeTheHistogram(channel,NormMC,NormQCD,ShapeQCD,NormTTbar):
             
             NormFile= _FileReturn(Name, channel,NameCat, NormMC)
             NormHisto=NormFile.Get("HISTO")
-    #        
-            if not NormHisto:
-                raise Exception('Not valid %s'%NameOut)
-            else:
-                RebinedHist= NormHisto.Rebin(RB_)
-                tDirectory.WriteObject(RebinedHist,NameOut)
+    
+            if NormHisto:
+                if not NormHisto:
+                    raise Exception('Not valid %s'%NameOut)
+                else:
+                    RebinedHist= NormHisto.Rebin(RB_)
+                    tDirectory.WriteObject(RebinedHist,NameOut)
 
         ################################################
         #  Filling SingleTop
@@ -313,23 +313,23 @@ def MakeTheHistogram(channel,NormMC,NormQCD,ShapeQCD,NormTTbar):
 
 if __name__ == "__main__":
     
-#    PlotName=["_tmass_MuMet","_LepEta","_LepPt","_JetPt","_JetEta","_MET","_LQMass","_dPhi_Jet_Met","_dPhi_Mu_Jet","_dPhi_Mu_Met","_NumJet","_NumBJet"]
+    PlotName=["_tmass_MuMet","_LepEta","_LepPt","_JetPt","_JetEta","_MET","_LQMass","_dPhi_Jet_Met","_dPhi_Mu_Jet","_dPhi_Mu_Met","_NumJet","_NumBJet"]
 #    PlotName=["_NumJet","_NumBJet"]
-    PlotName=["_LQMass"]
+#    PlotName=["_LQMass"]
 
 #    "_NoMT", "_LowMT","_HighMT","_MT50To150","_MT100","_MT150","_MT200","_MT300","_MT400","_MT500","_MT600"
 
 #    Isolation=["_Iso", "_AntiIso","_Total"]
     Isolation=["_Iso"]
 #    MT=["_MT400"]
-    MT= ["_NoMT","_HighMT","_MT50To150","_MT100","_MT150","_MT200","_MT300","_MT400","_MT600"]
+    MT= ["_NoMT","_HighMT","_MT50To150","_MT100","_MT150","_MT200","_MT300","_MT400","_MT500"]
 #    MT= ["_NoMT","_HighMT","_MT100","_MT150","_MT200","_MT300","_MT400"]
 #    MT=["_MT50To150"]
     JPT=[ "_HighDPhi"]
 #    lqEta= ["_Barrel", "_Endcap","_TotEta"]
     lqEta= [""]
-#    region= ["", "_ttbarCRDiLep","_ttbarCRSingleLep"]
-    region= [""]
+    region= ["", "_ttbarCRDiLep","_ttbarCRSingleLep"]
+#    region= [""]
 
     for Norm in PlotName:
         for iso in Isolation:

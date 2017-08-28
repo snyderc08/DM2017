@@ -394,13 +394,13 @@ FileNamesInfo=[
 
 
 Isolation=["_Iso"]
-MT=["_NoMT","_HighMT"]
+MT=["_NoMT","_HighMT","_MT150","_MT200"]
 JPT=[ "_HighDPhi"]
 
 logStat=[0]
 #logStat=[1]
 
-Scales=["TotalRoot_DiMu_ScaledWZMuJet","TotalRoot_DiMu_NoZScaleMuJet"]
+Scales=["TotalRoot_DiMu_ScaledWZMuJet","TotalRoot_DiMu_NoZScaleMuJet","TotalRoot_DiMu_RealDiMuMuJet"]
 
 for i in range(0,len(FileNamesInfo)):
     

@@ -125,7 +125,7 @@ def MakeCompare(root1,hist1,name1, root2,hist2, name2,root3, hist3,name3,Name,Sa
     leg.SetLineWidth(1)
     leg.SetLineStyle(0)
     leg.SetFillStyle(0)
-    leg.SetTextSize(0.04)
+    leg.SetTextSize(0.035)
 #    leg.SetBorderSize(0)
     leg.SetTextFont(62)
     leg.AddEntry(Histo1,name1,'lp')
@@ -210,15 +210,16 @@ def MakeCompare(root1,hist1,name1, root2,hist2, name2,root3, hist3,name3,Name,Sa
     theFit1=TF1("theFit", _Fit_Line, 0, 1000,nPar)
     h1.Fit("theFit","R0")
     theFit1.SetLineColor(2)
+    FitParameter_monoLQ=theFit1.GetParameters()
     theFit1.Draw("SAME")
     
     
-    ##### The ratio plot for mono-LQ
+    ##### The ratio plot for mono-jet
     h5.Draw("ep2same")
     theFit5=TF1("theFit", _Fit_Line, 150, 1000,nPar)
     h5.Fit("theFit","R0")
     theFit5.SetLineColor(4)
-    FitParameter=theFit5.GetParameters()
+    FitParameter_monoJet=theFit5.GetParameters()
     theFit5.Draw("SAME")
 
     c.cd()
@@ -233,22 +234,25 @@ def MakeCompare(root1,hist1,name1, root2,hist2, name2,root3, hist3,name3,Name,Sa
     c.SaveAs('kfactor%s.pdf'%Name)
     outF=TFile('kfactor%s.root'%Name,'RECREATE')
     outHist=TH1F('KFcator','',2,0,2)
-    outHist.SetBinContent(1,FitParameter[0])
-    outHist.SetBinContent(2,FitParameter[1])
+    outHist.SetBinContent(1,FitParameter_monoLQ[0])
+    outHist.SetBinContent(2,FitParameter_monoLQ[1])
+#    outHist.SetBinContent(1,FitParameter_monoJet[0])
+#    outHist.SetBinContent(2,FitParameter_monoJet[1])
     outHist.Write()
     outF.Write()
     outF.Close()
 
-    return FitParameter
+    return FitParameter_monoLQ
+#    return FitParameter_monoJet
 
 
 location='OutFiles_LO/'
 
 
 plotInput=[
-[location+'WJetsToLNu_FXFX.root','_WBosonPt','NLO (amc@NLO)'],
-[location+'WJetsToLNu_LO.root','_WBosonPt','LO (Madgraph)'],
-[location+'WJetsToLNu_LO.root','_WBosonPt_KFactor','LO (Madgraph) weighted by NLO from MonoJet '],
+[location+'WJetsToLNu_FXFX.root','_WBosonPt_KFactor_OnlyEWK','NLO(amc@NLO)+ NLO-EWK'],
+[location+'WJetsToLNu_LO.root','_WBosonPt','LO(Madgraph)'],
+[location+'WJetsToLNu_LO.root','_WBosonPt_KFactor','LO(Madgraph)+ NLO-QCD(from MonoJet)+ NLO-EWK'],
 ]
 
 list=[]
@@ -263,9 +267,9 @@ def get_Factor_W():
 
 
 plotInput2=[
-           [location+'DYJetsToLL_FXFX.root','_ZBosonPt','NLO (amc@NLO)'],
-           [location+'DYJetsToLL_LO.root','_ZBosonPt','LO (Madgraph)'],
-           [location+'DYJetsToLL_LO.root','_ZBosonPt_KFactor','LO (Madgraph) weighted by NLO from MonoJet '],
+           [location+'DYJetsToLL_FXFX.root','_ZBosonPt_KFactor_OnlyEWK','NLO(amc@NLO)+ NLO-EWK'],
+           [location+'DYJetsToLL_LO.root','_ZBosonPt','LO(Madgraph)'],
+           [location+'DYJetsToLL_LO.root','_ZBosonPt_KFactor','LO(Madgraph)+ NLO-QCD(from MonoJet)+ NLO-EWK'],
            ]
 
 list2=[]
