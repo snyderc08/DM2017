@@ -95,7 +95,8 @@ with open(FinalSampleDirectory) as data_file:
     for bin, M in enumerate(MassXS,1):
         XbinLQ=GetLQBin(M[1])
         YbinDM=GetDMBin(M[2])
-        print 'hlimitxsec2->SetBinContent(%d,%d,%f); // Bin_%d_LQ_%d_DM_%d_X_%d'%(XbinLQ,YbinDM,data[str(M[0])]["exp0"],M[0], M[1], M[2], M[3])
+#        print 'hlimitxsec2->SetBinContent(%d,%d,%f); // Bin_%d_LQ_%d_DM_%d_X_%d'%(XbinLQ,YbinDM,data[str(M[0])]["exp0"],M[0], M[1], M[2], M[3])
+        print 'hlimitxsec2->SetBinContent(%d,%d,%f); // Bin_%d_LQ_%d_DM_%d_X_%d'%(XbinLQ,YbinDM,data[str(M[0])]["exp0"]/(LQXS(M[1])* 1000 * BR),M[0], M[1], M[2], M[3])
 
 
 

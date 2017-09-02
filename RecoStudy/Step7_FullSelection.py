@@ -21,13 +21,14 @@ from ROOT import gRandom
 from ROOT import gSystem
 from ctypes import *
 import ROOT as r
-import array
+import re
+from array import array
+
 
 ##### Get Jet to Tau FR
 from Step1_JetToMuFR_Data import Make_Mu_FakeRate
-from Step1_JetToMuFR_Data import _FIT_Jet_Function
-from Step5_TT_W_ScaleFactor import SF_W
-from Step5_TT_W_ScaleFactor import SF_TT
+from Step1_JetToMuFR_Data import *
+from Step5_TT_W_ScaleFactor import *
 ##### Get Jet to Tau FR
 
 gROOT.Reset()
@@ -183,9 +184,27 @@ def MakeTheHistogram(channel,NormMC,NormQCD,ShapeQCD,chl,Binning,NormMCTT):
                     
                     
                     NormHistoShape.Scale(NormHisto.Integral()*1.0/NormHistoShape.Integral())
-                    NormHistoShape.Scale(SF_TT())
+                    NormHistoShape.Scale(SF_TT_SingleLep())
                     RebinedHist= NormHistoShape.Rebin(len(Binning)-1,"",Binning)
                     tDirectory.WriteObject(RebinedHist,NameOut)
+                    
+                    
+                    ###############  Systematics on Shape and Norm for  qcd Scale ####
+                    if jscale==1 and mscale==1 and jres==0:
+                        qcdScaleTT=TFile('QCDScale_TT.root','R')
+                        ttScaleUp=qcdScaleTT.Get('qcdScaleUp')
+                        ttScaleDown=qcdScaleTT.Get('qcdScaleDown')
+                
+                        ScaleUpTT=RebinedHist.Clone()
+                        ScaleDownTT=RebinedHist.Clone()
+                        for ibin in range(RebinedHist.GetNbinsX()):
+                            ScaleUpTT.SetBinContent(ibin+1,RebinedHist.GetBinContent(ibin+1)*ttScaleUp.GetBinContent(ibin+1))
+                            ScaleDownTT.SetBinContent(ibin+1,RebinedHist.GetBinContent(ibin+1)*ttScaleDown.GetBinContent(ibin+1))
+                    
+                        tDirectory.WriteObject(ScaleUpTT,'TT_qcdScaleUp')
+                        tDirectory.WriteObject(ScaleDownTT,'TT_qcdScaleDown')
+                    
+    
                     ###############  Systematics on Shape and Norm for  To PT Reweighting ####
                     if jscale==1 and mscale==1 and jres==0:
                         for systTopRW in range(len(SystematicTopPtReWeight)):
@@ -203,7 +222,7 @@ def MakeTheHistogram(channel,NormMC,NormQCD,ShapeQCD,chl,Binning,NormMCTT):
                             NormHistoShape=NormFileShape.Get("XXX")
 
                             NormHistoShape.Scale(NormHisto.Integral()*1.0/NormHistoShape.Integral())
-                            NormHistoShape.Scale(SF_TT())
+                            NormHistoShape.Scale(SF_TT_SingleLep())
                             RebinedHist= NormHistoShape.Rebin(len(Binning)-1,"",Binning)
                             tDirectory.WriteObject(RebinedHist,NameOut)
                                 
@@ -241,9 +260,25 @@ def MakeTheHistogram(channel,NormMC,NormQCD,ShapeQCD,chl,Binning,NormMCTT):
                     NormHisto=NormFile.Get("XXX")
                     
                     NormHisto.Scale(WNoCorNormaliztaion/NormHisto.Integral())
-                    NormHisto.Scale(SF_W())
+                    NormHisto.Scale(SF_W_SingleLep())
                     RebinedHist= NormHisto.Rebin(len(Binning)-1,"",Binning)
                     tDirectory.WriteObject(RebinedHist,NameOut)
+                    
+                    
+                    ###############  Systematics on Shape and Norm for  qcd Scale ####
+                    if jscale==1 and mscale==1 and jres==0:
+                        qcdScaleW=TFile('QCDScale_W.root','R')
+                        wScaleUp=qcdScaleW.Get('qcdScaleUp')
+                        wScaleDown=qcdScaleW.Get('qcdScaleDown')
+                        
+                        ScaleUpW=RebinedHist.Clone()
+                        ScaleDownW=RebinedHist.Clone()
+                        for ibin in range(RebinedHist.GetNbinsX()):
+                            ScaleUpW.SetBinContent(ibin+1,RebinedHist.GetBinContent(ibin+1)*wScaleUp.GetBinContent(ibin+1))
+                            ScaleDownW.SetBinContent(ibin+1,RebinedHist.GetBinContent(ibin+1)*wScaleDown.GetBinContent(ibin+1))
+                        
+                        tDirectory.WriteObject(ScaleUpW,'W_qcdScaleUp')
+                        tDirectory.WriteObject(ScaleDownW,'W_qcdScaleDown')
 
 
 
@@ -311,16 +346,31 @@ def MakeTheHistogram(channel,NormMC,NormQCD,ShapeQCD,chl,Binning,NormMCTT):
                         DataSampleQCDNormHist.Add(ZTTSampleQCDNormHist, -1)
                         DataSampleQCDNormHist.Add(WSampleQCDNormHist, -1)
                         
-                        print "\n##########\nlooseQCDNORM after=",    DataSampleQCDNormHist.Integral()
-                        FR_FitMaram=Make_Mu_FakeRate(channel)
+                        
+                        
+                        
+                        print "\n##########\nlooseQCDNORM after=",    DataSampleQCDNormHist.Integral()                        
+                        FR_FitMaram=Make_Mu_FakeRate(channel,'Lepton')
                         QCDEstimation=0
                         for bin in xrange(50,1000):
                             value=DataSampleQCDNormHist.GetBinContent(bin)
                             if value < 0 : value=0
-                            FR= _FIT_Jet_Function(bin+1.5,FR_FitMaram)
+                            FR= ApplyTheFakeRate(bin+1.5,FR_FitMaram,'Lepton')
                             if FR> 0.9: FR=0.9
                             QCDEstimation += value * FR/(1-FR)
-                        print "\n##########\n QCDEstimation",    QCDEstimation
+                        if verbos_: print "\n##########\n QCDEstimation",    QCDEstimation
+
+
+#                        print "\n##########\nlooseQCDNORM after=",    DataSampleQCDNormHist.Integral()
+#                        FR_FitMaram=Make_Mu_FakeRate(channel)
+#                        QCDEstimation=0
+#                        for bin in xrange(50,1000):
+#                            value=DataSampleQCDNormHist.GetBinContent(bin)
+#                            if value < 0 : value=0
+#                            FR= _FIT_Jet_Function(bin+1.5,FR_FitMaram)
+#                            if FR> 0.9: FR=0.9
+#                            QCDEstimation += value * FR/(1-FR)
+#                        print "\n##########\n QCDEstimation",    QCDEstimation
 
                         NameOut= "QCD"+str(JetScaleOut[jscale])+str(JetResolOut[jres])+str(METScaleOut[mscale])
                         DataSampleQCDShapeHist.Scale(QCDEstimation/DataSampleQCDShapeHist.Integral())  # The shape is from btag-Loose Need get back norm
@@ -350,7 +400,7 @@ def MakeTheHistogram(channel,NormMC,NormQCD,ShapeQCD,chl,Binning,NormMCTT):
 
 if __name__ == "__main__":
 
-    Binning = array.array("d",[0,100,200,300,400,500,600,700,800,900,1000,1100,1200,1300,1400,1500,1600,1700,1800,1900,2000])
+    Binning = array("d",[0,100,200,300,400,500,600,700,800,900,1000,1100,1200,1300,1400,1500,1600,1700,1800,1900,2000])
 
 
 #    Met_Cat= ["_MET100", "_MET150","_MET200", "_MET250","_MET300", "_MET350","_MET400", "_MET450","_MET500"]

@@ -256,7 +256,7 @@ def MakePlot(FileName,categoriy,HistName,Xaxis,Info,RB_,channel,yMin,isLOG,ttbar
     categ.SetTextFont (   41 )
     #       if i==1 or i==3: 
     categ.AddText(legName)
-#    categ.AddText(MTLegend)
+    categ.AddText(MTLegend)
     #       else :
     #        categ.AddText("SS")
     categ.Draw()
@@ -350,7 +350,8 @@ FileNamesInfo=[
 #    Isolation=["_Iso", "_AntiIso","_Total"]
 
 Isolation=["_Iso"]
-MT=["_HighMT"]
+#MT=["_HighMT"]
+MT= ["_NoMT","_HighMT","_MT50To150","_MT100","_MT150","_MT200","_MT300","_MT400","_MT500"]
 #MT= ["_MT100","_MT150"]
 #MT_legend= [" 50 < M_{T} < 100","100 < M_{T} < 150"]
 #MT= ["_NoMT","_HighMT"]

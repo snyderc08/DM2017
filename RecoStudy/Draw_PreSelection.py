@@ -255,9 +255,10 @@ def MakePlot(FileName,categoriy,HistName,Xaxis,Info,RB_,channel,yMin,isLOG,ttbar
     categ.SetTextSize ( 0.04 )
     categ.SetTextColor(    1 )
     categ.SetTextFont (   41 )
-    #       if i==1 or i==3: 
-    categ.AddText(ttbarCR)
+    #       if i==1 or i==3:
     categ.AddText(MTLegend)
+    categ.AddText(ttbarCR)
+#    categ.AddText(MTLegend)
     #       else :
     #        categ.AddText("SS")
     categ.Draw()

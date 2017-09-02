@@ -117,6 +117,93 @@ double intersection(double m1, double m2,
 
 
 void DMLimit_2D(){
+    
+    
+    //  This part is for calculating the DM relic density band
+    
+    
+    char buffer[1024] ;
+    char *record,*line,*rec1,*rec2,*subtoken, *savedEndd1;
+    char *recordHigh,*lineHigh,*rec1High,*rec2High,*subtokenHigh, *savedEndd1High;
+    
+    const Int_t nrelic = 700;
+    vector <float> x__;
+    vector <float> ymax__;
+    vector <float> ymin__;
+    
+    FILE *HighContour = fopen("Felix_Uppercontour_Delta01.csv","r");
+    while((lineHigh=fgets(buffer,sizeof(buffer),HighContour))!=NULL)
+    {
+        
+        
+        recordHigh = strtok(lineHigh,";");
+        subtokenHigh = strtok_r(recordHigh, ",",&savedEndd1High);
+        
+        
+        
+        x__.push_back(atof(recordHigh));
+        ymax__.push_back(atof(savedEndd1High));
+        
+        
+        
+    }
+    
+    
+    FILE *LowContour = fopen("Felix_Lowercontour_Delta01.csv","r");
+    while((line=fgets(buffer,sizeof(buffer),LowContour))!=NULL)
+    {
+        
+        
+        record = strtok(line,";");
+        subtoken = strtok_r(record, ",",&savedEndd1);
+        
+        
+        ymin__.push_back(atof(savedEndd1));
+        
+        
+        
+    }
+    
+    
+    
+    
+    
+    ///////////////
+    
+    
+    const Int_t n = 800;
+    Double_t x[n], y[n],ymin[n], ymax[n];
+    Int_t i;
+    for (i=0;i<n;i++) {
+        x[i] = i+750;
+        
+        if (i < 50){
+            ymax[i] = ymax__[0];
+            ymin[i] = ymin__[0];
+        }
+        else if (i > 750){
+            ymax[i] = ymax__[700];
+            ymin[i] = ymin__[700];
+            
+        }
+        else{
+        
+        ymax[i] = ymax__[i-50];
+        ymin[i] = ymin__[i-50];
+        }
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     using namespace std;
     //=========Macro generated from canvas: can2/can2
     //=========  (Wed Oct 14 14:57:25 2015) by ROOT version5.32/04
@@ -153,50 +240,50 @@ void DMLimit_2D(){
     
     
     TH2D *hlimitxsec2 = new TH2D("hlimitxsec2","hlimitxsec2",8,750,1550,9,275,725);
-    hlimitxsec2->SetBinContent(3,1,1.128906); // Bin_1_LQ_1000_DM_300_X_330
-    hlimitxsec2->SetBinContent(3,2,1.167969); // Bin_2_LQ_1000_DM_350_X_385
-    hlimitxsec2->SetBinContent(3,3,1.222656); // Bin_3_LQ_1000_DM_400_X_440
-    hlimitxsec2->SetBinContent(3,4,1.152344); // Bin_4_LQ_1000_DM_450_X_495
-    hlimitxsec2->SetBinContent(4,1,0.878906); // Bin_5_LQ_1100_DM_300_X_330
-    hlimitxsec2->SetBinContent(4,2,0.925781); // Bin_6_LQ_1100_DM_350_X_385
-    hlimitxsec2->SetBinContent(4,3,0.925781); // Bin_7_LQ_1100_DM_400_X_440
-    hlimitxsec2->SetBinContent(4,4,0.980469); // Bin_8_LQ_1100_DM_450_X_495
-    hlimitxsec2->SetBinContent(4,5,0.902344); // Bin_9_LQ_1100_DM_500_X_550
-    hlimitxsec2->SetBinContent(5,1,0.740234); // Bin_10_LQ_1200_DM_300_X_330
-    hlimitxsec2->SetBinContent(5,2,0.728516); // Bin_11_LQ_1200_DM_350_X_385
-    hlimitxsec2->SetBinContent(5,3,0.732422); // Bin_12_LQ_1200_DM_400_X_440
-    hlimitxsec2->SetBinContent(5,4,0.759766); // Bin_13_LQ_1200_DM_450_X_495
-    hlimitxsec2->SetBinContent(5,5,0.800781); // Bin_14_LQ_1200_DM_500_X_550
-    hlimitxsec2->SetBinContent(5,6,0.800781); // Bin_15_LQ_1200_DM_550_X_595
-    hlimitxsec2->SetBinContent(6,1,0.638672); // Bin_16_LQ_1300_DM_300_X_330
-    hlimitxsec2->SetBinContent(6,2,0.646484); // Bin_17_LQ_1300_DM_350_X_385
-    hlimitxsec2->SetBinContent(6,3,0.648438); // Bin_18_LQ_1300_DM_400_X_440
-    hlimitxsec2->SetBinContent(6,4,0.664062); // Bin_19_LQ_1300_DM_450_X_495
-    hlimitxsec2->SetBinContent(6,5,0.632812); // Bin_20_LQ_1300_DM_500_X_550
-    hlimitxsec2->SetBinContent(6,6,0.697266); // Bin_21_LQ_1300_DM_550_X_605
-    hlimitxsec2->SetBinContent(6,7,0.669922); // Bin_22_LQ_1300_DM_600_X_660
-    hlimitxsec2->SetBinContent(7,1,0.564453); // Bin_23_LQ_1400_DM_300_X_330
-    hlimitxsec2->SetBinContent(7,2,0.595703); // Bin_24_LQ_1400_DM_350_X_385
-    hlimitxsec2->SetBinContent(7,3,0.544922); // Bin_25_LQ_1400_DM_400_X_440
-    hlimitxsec2->SetBinContent(7,4,0.587891); // Bin_26_LQ_1400_DM_450_X_495
-    hlimitxsec2->SetBinContent(7,5,0.546875); // Bin_27_LQ_1400_DM_500_X_550
-    hlimitxsec2->SetBinContent(7,6,0.564453); // Bin_28_LQ_1400_DM_550_X_605
-    hlimitxsec2->SetBinContent(7,7,0.609375); // Bin_29_LQ_1400_DM_600_X_660
-    hlimitxsec2->SetBinContent(7,8,0.564453); // Bin_30_LQ_1400_DM_650_X_715
-    hlimitxsec2->SetBinContent(8,1,0.517578); // Bin_31_LQ_1500_DM_300_X_330
-    hlimitxsec2->SetBinContent(8,2,0.509766); // Bin_32_LQ_1500_DM_350_X_385
-    hlimitxsec2->SetBinContent(8,3,0.494141); // Bin_33_LQ_1500_DM_400_X_440
-    hlimitxsec2->SetBinContent(8,4,0.505859); // Bin_34_LQ_1500_DM_450_X_495
-    hlimitxsec2->SetBinContent(8,5,0.498047); // Bin_35_LQ_1500_DM_500_X_550
-    hlimitxsec2->SetBinContent(8,6,0.486328); // Bin_36_LQ_1500_DM_550_X_605
-    hlimitxsec2->SetBinContent(8,7,0.478516); // Bin_37_LQ_1500_DM_600_X_660
-    hlimitxsec2->SetBinContent(8,8,0.537109); // Bin_38_LQ_1500_DM_650_X_715
-    hlimitxsec2->SetBinContent(8,9,0.501953); // Bin_39_LQ_1500_DM_700_X_770
-    hlimitxsec2->SetBinContent(1,1,1.960938); // Bin_40_LQ_800_DM_300_X_330
-    hlimitxsec2->SetBinContent(1,2,1.757812); // Bin_41_LQ_800_DM_350_X_385
-    hlimitxsec2->SetBinContent(2,1,1.425781); // Bin_42_LQ_900_DM_300_X_330
-    hlimitxsec2->SetBinContent(2,2,1.570312); // Bin_43_LQ_900_DM_350_X_385
-    hlimitxsec2->SetBinContent(2,3,1.441406); // Bin_44_LQ_900_DM_400_X_440
+    hlimitxsec2->SetBinContent(3,1,0.385292); // Bin_1_LQ_1000_DM_300_X_330
+    hlimitxsec2->SetBinContent(3,2,0.398624); // Bin_2_LQ_1000_DM_350_X_385
+    hlimitxsec2->SetBinContent(3,3,0.417289); // Bin_3_LQ_1000_DM_400_X_440
+    hlimitxsec2->SetBinContent(3,4,0.393291); // Bin_4_LQ_1000_DM_450_X_495
+    hlimitxsec2->SetBinContent(4,1,0.604059); // Bin_5_LQ_1100_DM_300_X_330
+    hlimitxsec2->SetBinContent(4,2,0.636276); // Bin_6_LQ_1100_DM_350_X_385
+    hlimitxsec2->SetBinContent(4,3,0.636276); // Bin_7_LQ_1100_DM_400_X_440
+    hlimitxsec2->SetBinContent(4,4,0.673862); // Bin_8_LQ_1100_DM_450_X_495
+    hlimitxsec2->SetBinContent(4,5,0.620168); // Bin_9_LQ_1100_DM_500_X_550
+    hlimitxsec2->SetBinContent(5,1,0.986979); // Bin_10_LQ_1200_DM_300_X_330
+    hlimitxsec2->SetBinContent(5,2,0.971354); // Bin_11_LQ_1200_DM_350_X_385
+    hlimitxsec2->SetBinContent(5,3,0.976562); // Bin_12_LQ_1200_DM_400_X_440
+    hlimitxsec2->SetBinContent(5,4,1.013021); // Bin_13_LQ_1200_DM_450_X_495
+    hlimitxsec2->SetBinContent(5,5,1.067708); // Bin_14_LQ_1200_DM_500_X_550
+    hlimitxsec2->SetBinContent(5,6,1.067708); // Bin_15_LQ_1200_DM_550_X_595
+    hlimitxsec2->SetBinContent(6,1,1.606722); // Bin_16_LQ_1300_DM_300_X_330
+    hlimitxsec2->SetBinContent(6,2,1.626376); // Bin_17_LQ_1300_DM_350_X_385
+    hlimitxsec2->SetBinContent(6,3,1.631289); // Bin_18_LQ_1300_DM_400_X_440
+    hlimitxsec2->SetBinContent(6,4,1.670597); // Bin_19_LQ_1300_DM_450_X_495
+    hlimitxsec2->SetBinContent(6,5,1.591981); // Bin_20_LQ_1300_DM_500_X_550
+    hlimitxsec2->SetBinContent(6,6,1.754127); // Bin_21_LQ_1300_DM_550_X_605
+    hlimitxsec2->SetBinContent(6,7,1.685338); // Bin_22_LQ_1300_DM_600_X_660
+    hlimitxsec2->SetBinContent(7,1,2.607174); // Bin_23_LQ_1400_DM_300_X_330
+    hlimitxsec2->SetBinContent(7,2,2.751516); // Bin_24_LQ_1400_DM_350_X_385
+    hlimitxsec2->SetBinContent(7,3,2.516960); // Bin_25_LQ_1400_DM_400_X_440
+    hlimitxsec2->SetBinContent(7,4,2.715430); // Bin_26_LQ_1400_DM_450_X_495
+    hlimitxsec2->SetBinContent(7,5,2.525982); // Bin_27_LQ_1400_DM_500_X_550
+    hlimitxsec2->SetBinContent(7,6,2.607174); // Bin_28_LQ_1400_DM_550_X_605
+    hlimitxsec2->SetBinContent(7,7,2.814665); // Bin_29_LQ_1400_DM_600_X_660
+    hlimitxsec2->SetBinContent(7,8,2.607174); // Bin_30_LQ_1400_DM_650_X_715
+    hlimitxsec2->SetBinContent(8,1,4.313151); // Bin_31_LQ_1500_DM_300_X_330
+    hlimitxsec2->SetBinContent(8,2,4.248047); // Bin_32_LQ_1500_DM_350_X_385
+    hlimitxsec2->SetBinContent(8,3,4.117839); // Bin_33_LQ_1500_DM_400_X_440
+    hlimitxsec2->SetBinContent(8,4,4.215495); // Bin_34_LQ_1500_DM_450_X_495
+    hlimitxsec2->SetBinContent(8,5,4.150391); // Bin_35_LQ_1500_DM_500_X_550
+    hlimitxsec2->SetBinContent(8,6,4.052734); // Bin_36_LQ_1500_DM_550_X_605
+    hlimitxsec2->SetBinContent(8,7,3.987630); // Bin_37_LQ_1500_DM_600_X_660
+    hlimitxsec2->SetBinContent(8,8,4.475911); // Bin_38_LQ_1500_DM_650_X_715
+    hlimitxsec2->SetBinContent(8,9,4.182943); // Bin_39_LQ_1500_DM_700_X_770
+    hlimitxsec2->SetBinContent(1,1,0.143658); // Bin_40_LQ_800_DM_300_X_330
+    hlimitxsec2->SetBinContent(1,2,0.128777); // Bin_41_LQ_800_DM_350_X_385
+    hlimitxsec2->SetBinContent(2,1,0.231834); // Bin_42_LQ_900_DM_300_X_330
+    hlimitxsec2->SetBinContent(2,2,0.255335); // Bin_43_LQ_900_DM_350_X_385
+    hlimitxsec2->SetBinContent(2,3,0.234375); // Bin_44_LQ_900_DM_400_X_440
     hlimitxsec2->SetStats(0);
     
     
@@ -399,6 +486,7 @@ void DMLimit_2D(){
     hlimitxsec2->GetZaxis()->SetLabelSize(0.035);
     hlimitxsec2->GetZaxis()->SetTitleSize(0.045);
     hlimitxsec2->GetZaxis()->SetTitleFont(42);
+    gStyle->SetPalette(74);
     hlimitxsec2->Draw("COLZ ");
     
     
@@ -551,6 +639,38 @@ void DMLimit_2D(){
     TText *textL2 = pt->AddText("                                                                                           35.9 fb^{-1} (13 TeV)");
     pt->SetTextSize(0.04);
     pt->Draw("samep");
+    
+    
+    
+    
+    
+    TGraph *grmin = new TGraph(n,x,ymin);
+    TGraph *grmax = new TGraph(n,x,ymax);
+    TGraph *gr    = new TGraph(n,x,y);
+    TGraph *grshade = new TGraph(2*n);
+    for (i=0;i<n;i++) {
+        grshade->SetPoint(i,x[i],ymax[i]);
+        grshade->SetPoint(n+i,x[n-i-1],ymin[n-i-1]);
+    }
+    grshade->SetFillStyle(3013);
+    grshade->SetFillColor(16);
+    grshade->Draw("f");
+    grmin->Draw("l");
+    grmax->Draw("l");
+    gr->SetLineWidth(4);
+    gr->SetMarkerColor(4);
+    gr->SetMarkerStyle(21);
+//    gr->Draw("CP");
+    
+    
+
+    
+    
+    
+    
+ 
+    
+    
     
     
     

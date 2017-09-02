@@ -19,7 +19,7 @@ void testCSV()
     char buffer[1024] ;
     char *record,*line,*rec1,*rec2,*subtoken, *savedEndd1;
     
-    FILE *fstream = fopen("Felix_Uppercontour_Delta01.csv","r");
+    FILE *fstream = fopen("Felix_Lowercontour_Delta01.csv","r");
     if(fstream == NULL)
     {
         printf("\n file opening failed ");

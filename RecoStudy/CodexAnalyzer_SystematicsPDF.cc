@@ -101,8 +101,8 @@ int main(int argc, char** argv) {
         TFile * myFile = TFile::Open(f_Double->GetName());
         TH1F * HistoTot = (TH1F*) myFile->Get("hcount");
         
-                        TTree *Run_Tree = (TTree*) f_Double->Get("ggNtuplizer/EventTree");
-//        TTree *Run_Tree = (TTree*) f_Double->Get("EventTree");
+//                        TTree *Run_Tree = (TTree*) f_Double->Get("ggNtuplizer/EventTree");
+        TTree *Run_Tree = (TTree*) f_Double->Get("EventTree");
         
         cout.setf(ios::fixed, ios::floatfield);
         cout.precision(6);
@@ -286,8 +286,10 @@ int main(int argc, char** argv) {
             //###############################################################################################
             int counterSys=0;
             for (int isys=0; isys < pdfSystWeight->size(); isys++){
-                cout<<isys<<" id="<<pdfSystWeightId->at(isys)<<"  weight="<<pdfSystWeight->at(isys)/pdfWeight<<"\n";
-                if (atoi(pdfSystWeightId->at(isys).c_str()) > 109 && atoi(pdfSystWeightId->at(isys).c_str()) < 210){
+//                cout<<isys<<" id="<<pdfSystWeightId->at(isys)<<"  weight="<<pdfSystWeight->at(isys)/pdfWeight<<"\n";
+//                if (atoi(pdfSystWeightId->at(isys).c_str()) > 109 && atoi(pdfSystWeightId->at(isys).c_str()) < 210){  // This is for LQ
+//                    if (atoi(pdfSystWeightId->at(isys).c_str()) > 1000 && atoi(pdfSystWeightId->at(isys).c_str()) < 1010){ // This is for ttbar powheg qcdScale
+                        if (atoi(pdfSystWeightId->at(isys).c_str()) > 0 && atoi(pdfSystWeightId->at(isys).c_str()) < 10){ // This is for W Madgr qcdScale
                     
                     plotFill("___Sys_"+std::to_string(counterSys),pdfSystWeight->at(isys)/pdfWeight, 500,0,5);
                     counterSys++;
@@ -610,10 +612,11 @@ int main(int argc, char** argv) {
                                 //  MT Categorization
                                 //###############################################################################################
                                 float tmass_MuMet= TMass_F(muPt->at(imu), muPt->at(imu)*cos(muPhi->at(imu)),muPt->at(imu)*sin(muPhi->at(imu)) , jetMET, jetMETPhi);
-                                const int size_mTCat = 1;
+                                const int size_mTCat = 2;
+                                bool MT100 = tmass_MuMet > 100;
                                 bool MT500 = tmass_MuMet > 500;
-                                bool MT_category[size_mTCat] = {MT500};
-                                std::string MT_Cat[size_mTCat] = {"_MT500"};
+                                bool MT_category[size_mTCat] = {MT100,MT500};
+                                std::string MT_Cat[size_mTCat] = {"_MT100","_MT500"};
                                 
                                 
                                 //###############################################################################################
@@ -679,7 +682,11 @@ int main(int argc, char** argv) {
                                                                 for (int isys=0; isys < pdfSystWeight->size(); isys++){
                                                                     
                                                                     // QCD Scale Uncertainty
-                                                                    if (atoi(pdfSystWeightId->at(isys).c_str()) > 0 && atoi(pdfSystWeightId->at(isys).c_str()) < 10){
+                                                                    if (atoi(pdfSystWeightId->at(isys).c_str()) > 0 && atoi(pdfSystWeightId->at(isys).c_str()) < 10){ // This for signal and Madgraph W
+                                                                        
+                                                                        
+//                                                                if (atoi(pdfSystWeightId->at(isys).c_str()) > 1000 && atoi(pdfSystWeightId->at(isys).c_str()) < 1010  // This is for ttbar Powheg
+//                                                                        ){
                                                                         
                                                                         plotFill(CHL+"_LQMass_Scale"+std::to_string(counterscale)+FullStringName,LQ.M(),20,0,2000,FullWeight*pdfSystWeight->at(isys)/pdfWeight);
                                                                         counterscale++;
