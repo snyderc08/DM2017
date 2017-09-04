@@ -239,147 +239,159 @@ void DMLimit_2D(){
     
     
     
+    
+    
     TH2D *hlimitxsec2 = new TH2D("hlimitxsec2","hlimitxsec2",8,750,1550,9,275,725);
-    hlimitxsec2->SetBinContent(3,1,0.385292); // Bin_1_LQ_1000_DM_300_X_330
-    hlimitxsec2->SetBinContent(3,2,0.398624); // Bin_2_LQ_1000_DM_350_X_385
-    hlimitxsec2->SetBinContent(3,3,0.417289); // Bin_3_LQ_1000_DM_400_X_440
-    hlimitxsec2->SetBinContent(3,4,0.393291); // Bin_4_LQ_1000_DM_450_X_495
-    hlimitxsec2->SetBinContent(4,1,0.604059); // Bin_5_LQ_1100_DM_300_X_330
-    hlimitxsec2->SetBinContent(4,2,0.636276); // Bin_6_LQ_1100_DM_350_X_385
-    hlimitxsec2->SetBinContent(4,3,0.636276); // Bin_7_LQ_1100_DM_400_X_440
-    hlimitxsec2->SetBinContent(4,4,0.673862); // Bin_8_LQ_1100_DM_450_X_495
-    hlimitxsec2->SetBinContent(4,5,0.620168); // Bin_9_LQ_1100_DM_500_X_550
-    hlimitxsec2->SetBinContent(5,1,0.986979); // Bin_10_LQ_1200_DM_300_X_330
-    hlimitxsec2->SetBinContent(5,2,0.971354); // Bin_11_LQ_1200_DM_350_X_385
-    hlimitxsec2->SetBinContent(5,3,0.976562); // Bin_12_LQ_1200_DM_400_X_440
-    hlimitxsec2->SetBinContent(5,4,1.013021); // Bin_13_LQ_1200_DM_450_X_495
-    hlimitxsec2->SetBinContent(5,5,1.067708); // Bin_14_LQ_1200_DM_500_X_550
-    hlimitxsec2->SetBinContent(5,6,1.067708); // Bin_15_LQ_1200_DM_550_X_595
-    hlimitxsec2->SetBinContent(6,1,1.606722); // Bin_16_LQ_1300_DM_300_X_330
-    hlimitxsec2->SetBinContent(6,2,1.626376); // Bin_17_LQ_1300_DM_350_X_385
-    hlimitxsec2->SetBinContent(6,3,1.631289); // Bin_18_LQ_1300_DM_400_X_440
-    hlimitxsec2->SetBinContent(6,4,1.670597); // Bin_19_LQ_1300_DM_450_X_495
-    hlimitxsec2->SetBinContent(6,5,1.591981); // Bin_20_LQ_1300_DM_500_X_550
-    hlimitxsec2->SetBinContent(6,6,1.754127); // Bin_21_LQ_1300_DM_550_X_605
-    hlimitxsec2->SetBinContent(6,7,1.685338); // Bin_22_LQ_1300_DM_600_X_660
-    hlimitxsec2->SetBinContent(7,1,2.607174); // Bin_23_LQ_1400_DM_300_X_330
-    hlimitxsec2->SetBinContent(7,2,2.751516); // Bin_24_LQ_1400_DM_350_X_385
-    hlimitxsec2->SetBinContent(7,3,2.516960); // Bin_25_LQ_1400_DM_400_X_440
-    hlimitxsec2->SetBinContent(7,4,2.715430); // Bin_26_LQ_1400_DM_450_X_495
-    hlimitxsec2->SetBinContent(7,5,2.525982); // Bin_27_LQ_1400_DM_500_X_550
-    hlimitxsec2->SetBinContent(7,6,2.607174); // Bin_28_LQ_1400_DM_550_X_605
-    hlimitxsec2->SetBinContent(7,7,2.814665); // Bin_29_LQ_1400_DM_600_X_660
-    hlimitxsec2->SetBinContent(7,8,2.607174); // Bin_30_LQ_1400_DM_650_X_715
-    hlimitxsec2->SetBinContent(8,1,4.313151); // Bin_31_LQ_1500_DM_300_X_330
-    hlimitxsec2->SetBinContent(8,2,4.248047); // Bin_32_LQ_1500_DM_350_X_385
-    hlimitxsec2->SetBinContent(8,3,4.117839); // Bin_33_LQ_1500_DM_400_X_440
-    hlimitxsec2->SetBinContent(8,4,4.215495); // Bin_34_LQ_1500_DM_450_X_495
-    hlimitxsec2->SetBinContent(8,5,4.150391); // Bin_35_LQ_1500_DM_500_X_550
-    hlimitxsec2->SetBinContent(8,6,4.052734); // Bin_36_LQ_1500_DM_550_X_605
-    hlimitxsec2->SetBinContent(8,7,3.987630); // Bin_37_LQ_1500_DM_600_X_660
-    hlimitxsec2->SetBinContent(8,8,4.475911); // Bin_38_LQ_1500_DM_650_X_715
-    hlimitxsec2->SetBinContent(8,9,4.182943); // Bin_39_LQ_1500_DM_700_X_770
-    hlimitxsec2->SetBinContent(1,1,0.143658); // Bin_40_LQ_800_DM_300_X_330
-    hlimitxsec2->SetBinContent(1,2,0.128777); // Bin_41_LQ_800_DM_350_X_385
-    hlimitxsec2->SetBinContent(2,1,0.231834); // Bin_42_LQ_900_DM_300_X_330
-    hlimitxsec2->SetBinContent(2,2,0.255335); // Bin_43_LQ_900_DM_350_X_385
-    hlimitxsec2->SetBinContent(2,3,0.234375); // Bin_44_LQ_900_DM_400_X_440
-    hlimitxsec2->SetStats(0);
+    hlimitxsec2->SetBinContent(3,1,0.394625); // Bin_1_LQ_1000_DM_300_X_330
+    hlimitxsec2->SetBinContent(3,2,0.406623); // Bin_2_LQ_1000_DM_350_X_385
+    hlimitxsec2->SetBinContent(3,3,0.427954); // Bin_3_LQ_1000_DM_400_X_440
+    hlimitxsec2->SetBinContent(3,4,0.401291); // Bin_4_LQ_1000_DM_450_X_495
+    hlimitxsec2->SetBinContent(4,1,0.636276); // Bin_5_LQ_1100_DM_300_X_330
+    hlimitxsec2->SetBinContent(4,2,0.668492); // Bin_6_LQ_1100_DM_350_X_385
+    hlimitxsec2->SetBinContent(4,3,0.668492); // Bin_7_LQ_1100_DM_400_X_440
+    hlimitxsec2->SetBinContent(4,4,0.711448); // Bin_8_LQ_1100_DM_450_X_495
+    hlimitxsec2->SetBinContent(4,5,0.652384); // Bin_9_LQ_1100_DM_500_X_550
+    hlimitxsec2->SetBinContent(5,1,1.026042); // Bin_10_LQ_1200_DM_300_X_330
+    hlimitxsec2->SetBinContent(5,2,1.007812); // Bin_11_LQ_1200_DM_350_X_385
+    hlimitxsec2->SetBinContent(5,3,1.013021); // Bin_12_LQ_1200_DM_400_X_440
+    hlimitxsec2->SetBinContent(5,4,1.052083); // Bin_13_LQ_1200_DM_450_X_495
+    hlimitxsec2->SetBinContent(5,5,1.109375); // Bin_14_LQ_1200_DM_500_X_550
+    hlimitxsec2->SetBinContent(5,6,1.109375); // Bin_15_LQ_1200_DM_550_X_595
+    hlimitxsec2->SetBinContent(6,1,1.616549); // Bin_16_LQ_1300_DM_300_X_330
+    hlimitxsec2->SetBinContent(6,2,1.646030); // Bin_17_LQ_1300_DM_350_X_385
+    hlimitxsec2->SetBinContent(6,3,1.646030); // Bin_18_LQ_1300_DM_400_X_440
+    hlimitxsec2->SetBinContent(6,4,1.685338); // Bin_19_LQ_1300_DM_450_X_495
+    hlimitxsec2->SetBinContent(6,5,1.606722); // Bin_20_LQ_1300_DM_500_X_550
+    hlimitxsec2->SetBinContent(6,6,1.773781); // Bin_21_LQ_1300_DM_550_X_605
+    hlimitxsec2->SetBinContent(6,7,1.704992); // Bin_22_LQ_1300_DM_600_X_660
+    hlimitxsec2->SetBinContent(7,1,2.643259); // Bin_23_LQ_1400_DM_300_X_330
+    hlimitxsec2->SetBinContent(7,2,2.805644); // Bin_24_LQ_1400_DM_350_X_385
+    hlimitxsec2->SetBinContent(7,3,2.553046); // Bin_25_LQ_1400_DM_400_X_440
+    hlimitxsec2->SetBinContent(7,4,2.769558); // Bin_26_LQ_1400_DM_450_X_495
+    hlimitxsec2->SetBinContent(7,5,2.553046); // Bin_27_LQ_1400_DM_500_X_550
+    hlimitxsec2->SetBinContent(7,6,2.661302); // Bin_28_LQ_1400_DM_550_X_605
+    hlimitxsec2->SetBinContent(7,7,2.859772); // Bin_29_LQ_1400_DM_600_X_660
+    hlimitxsec2->SetBinContent(7,8,2.661302); // Bin_30_LQ_1400_DM_650_X_715
+    hlimitxsec2->SetBinContent(8,1,4.475911); // Bin_31_LQ_1500_DM_300_X_330
+    hlimitxsec2->SetBinContent(8,2,4.443359); // Bin_32_LQ_1500_DM_350_X_385
+    hlimitxsec2->SetBinContent(8,3,4.280599); // Bin_33_LQ_1500_DM_400_X_440
+    hlimitxsec2->SetBinContent(8,4,4.378255); // Bin_34_LQ_1500_DM_450_X_495
+    hlimitxsec2->SetBinContent(8,5,4.345703); // Bin_35_LQ_1500_DM_500_X_550
+    hlimitxsec2->SetBinContent(8,6,4.231771); // Bin_36_LQ_1500_DM_550_X_605
+    hlimitxsec2->SetBinContent(8,7,4.182943); // Bin_37_LQ_1500_DM_600_X_660
+    hlimitxsec2->SetBinContent(8,8,4.671224); // Bin_38_LQ_1500_DM_650_X_715
+    hlimitxsec2->SetBinContent(8,9,4.345703); // Bin_39_LQ_1500_DM_700_X_770
+    hlimitxsec2->SetBinContent(1,1,0.148237); // Bin_40_LQ_800_DM_300_X_330
+    hlimitxsec2->SetBinContent(1,2,0.132212); // Bin_41_LQ_800_DM_350_X_385
+    hlimitxsec2->SetBinContent(2,1,0.236916); // Bin_42_LQ_900_DM_300_X_330
+    hlimitxsec2->SetBinContent(2,2,0.262957); // Bin_43_LQ_900_DM_350_X_385
+    hlimitxsec2->SetBinContent(2,3,0.240727); // Bin_44_LQ_900_DM_400_X_440
+    
+    
+    
+    
+    
+    
     
     
     TH2D *ExpctedExclusionLimit = new TH2D("ExpctedExclusionLimit","ExpctedExclusionLimit",6,1250,4250,12,875,3875);
-    ExpctedExclusionLimit->SetBinContent(3,1,0.385292); // Bin_1_LQ_1000_DM_300_X_330
-    ExpctedExclusionLimit->SetBinContent(3,2,0.398624); // Bin_2_LQ_1000_DM_350_X_385
-    ExpctedExclusionLimit->SetBinContent(3,3,0.417289); // Bin_3_LQ_1000_DM_400_X_440
-    ExpctedExclusionLimit->SetBinContent(3,4,0.393291); // Bin_4_LQ_1000_DM_450_X_495
-    ExpctedExclusionLimit->SetBinContent(4,1,0.604059); // Bin_5_LQ_1100_DM_300_X_330
-    ExpctedExclusionLimit->SetBinContent(4,2,0.636276); // Bin_6_LQ_1100_DM_350_X_385
-    ExpctedExclusionLimit->SetBinContent(4,3,0.636276); // Bin_7_LQ_1100_DM_400_X_440
-    ExpctedExclusionLimit->SetBinContent(4,4,0.673862); // Bin_8_LQ_1100_DM_450_X_495
-    ExpctedExclusionLimit->SetBinContent(4,5,0.620168); // Bin_9_LQ_1100_DM_500_X_550
-    ExpctedExclusionLimit->SetBinContent(5,1,0.986979); // Bin_10_LQ_1200_DM_300_X_330
-    ExpctedExclusionLimit->SetBinContent(5,2,0.971354); // Bin_11_LQ_1200_DM_350_X_385
-    ExpctedExclusionLimit->SetBinContent(5,3,0.976562); // Bin_12_LQ_1200_DM_400_X_440
-    ExpctedExclusionLimit->SetBinContent(5,4,1.013021); // Bin_13_LQ_1200_DM_450_X_495
-    ExpctedExclusionLimit->SetBinContent(5,5,1.067708); // Bin_14_LQ_1200_DM_500_X_550
-    ExpctedExclusionLimit->SetBinContent(5,6,1.067708); // Bin_15_LQ_1200_DM_550_X_595
-    ExpctedExclusionLimit->SetBinContent(6,1,1.606722); // Bin_16_LQ_1300_DM_300_X_330
-    ExpctedExclusionLimit->SetBinContent(6,2,1.626376); // Bin_17_LQ_1300_DM_350_X_385
-    ExpctedExclusionLimit->SetBinContent(6,3,1.631289); // Bin_18_LQ_1300_DM_400_X_440
-    ExpctedExclusionLimit->SetBinContent(6,4,1.670597); // Bin_19_LQ_1300_DM_450_X_495
-    ExpctedExclusionLimit->SetBinContent(6,5,1.591981); // Bin_20_LQ_1300_DM_500_X_550
-    ExpctedExclusionLimit->SetBinContent(6,6,1.754127); // Bin_21_LQ_1300_DM_550_X_605
-    ExpctedExclusionLimit->SetBinContent(6,7,1.685338); // Bin_22_LQ_1300_DM_600_X_660
-    ExpctedExclusionLimit->SetBinContent(7,1,2.607174); // Bin_23_LQ_1400_DM_300_X_330
-    ExpctedExclusionLimit->SetBinContent(7,2,2.751516); // Bin_24_LQ_1400_DM_350_X_385
-    ExpctedExclusionLimit->SetBinContent(7,3,2.516960); // Bin_25_LQ_1400_DM_400_X_440
-    ExpctedExclusionLimit->SetBinContent(7,4,2.715430); // Bin_26_LQ_1400_DM_450_X_495
-    ExpctedExclusionLimit->SetBinContent(7,5,2.525982); // Bin_27_LQ_1400_DM_500_X_550
-    ExpctedExclusionLimit->SetBinContent(7,6,2.607174); // Bin_28_LQ_1400_DM_550_X_605
-    ExpctedExclusionLimit->SetBinContent(7,7,2.814665); // Bin_29_LQ_1400_DM_600_X_660
-    ExpctedExclusionLimit->SetBinContent(7,8,2.607174); // Bin_30_LQ_1400_DM_650_X_715
-    ExpctedExclusionLimit->SetBinContent(8,1,4.313151); // Bin_31_LQ_1500_DM_300_X_330
-    ExpctedExclusionLimit->SetBinContent(8,2,4.248047); // Bin_32_LQ_1500_DM_350_X_385
-    ExpctedExclusionLimit->SetBinContent(8,3,4.117839); // Bin_33_LQ_1500_DM_400_X_440
-    ExpctedExclusionLimit->SetBinContent(8,4,4.215495); // Bin_34_LQ_1500_DM_450_X_495
-    ExpctedExclusionLimit->SetBinContent(8,5,4.150391); // Bin_35_LQ_1500_DM_500_X_550
-    ExpctedExclusionLimit->SetBinContent(8,6,4.052734); // Bin_36_LQ_1500_DM_550_X_605
-    ExpctedExclusionLimit->SetBinContent(8,7,3.987630); // Bin_37_LQ_1500_DM_600_X_660
-    ExpctedExclusionLimit->SetBinContent(8,8,4.475911); // Bin_38_LQ_1500_DM_650_X_715
-    ExpctedExclusionLimit->SetBinContent(8,9,4.182943); // Bin_39_LQ_1500_DM_700_X_770
-    ExpctedExclusionLimit->SetBinContent(1,1,0.143658); // Bin_40_LQ_800_DM_300_X_330
-    ExpctedExclusionLimit->SetBinContent(1,2,0.128777); // Bin_41_LQ_800_DM_350_X_385
-    ExpctedExclusionLimit->SetBinContent(2,1,0.231834); // Bin_42_LQ_900_DM_300_X_330
-    ExpctedExclusionLimit->SetBinContent(2,2,0.255335); // Bin_43_LQ_900_DM_350_X_385
-    ExpctedExclusionLimit->SetBinContent(2,3,0.234375); // Bin_44_LQ_900_DM_400_X_440
-
-  
+    ExpctedExclusionLimit->SetBinContent(3,1,0.394625); // Bin_1_LQ_1000_DM_300_X_330
+    ExpctedExclusionLimit->SetBinContent(3,2,0.406623); // Bin_2_LQ_1000_DM_350_X_385
+    ExpctedExclusionLimit->SetBinContent(3,3,0.427954); // Bin_3_LQ_1000_DM_400_X_440
+    ExpctedExclusionLimit->SetBinContent(3,4,0.401291); // Bin_4_LQ_1000_DM_450_X_495
+    ExpctedExclusionLimit->SetBinContent(4,1,0.636276); // Bin_5_LQ_1100_DM_300_X_330
+    ExpctedExclusionLimit->SetBinContent(4,2,0.668492); // Bin_6_LQ_1100_DM_350_X_385
+    ExpctedExclusionLimit->SetBinContent(4,3,0.668492); // Bin_7_LQ_1100_DM_400_X_440
+    ExpctedExclusionLimit->SetBinContent(4,4,0.711448); // Bin_8_LQ_1100_DM_450_X_495
+    ExpctedExclusionLimit->SetBinContent(4,5,0.652384); // Bin_9_LQ_1100_DM_500_X_550
+    ExpctedExclusionLimit->SetBinContent(5,1,1.026042); // Bin_10_LQ_1200_DM_300_X_330
+    ExpctedExclusionLimit->SetBinContent(5,2,1.007812); // Bin_11_LQ_1200_DM_350_X_385
+    ExpctedExclusionLimit->SetBinContent(5,3,1.013021); // Bin_12_LQ_1200_DM_400_X_440
+    ExpctedExclusionLimit->SetBinContent(5,4,1.052083); // Bin_13_LQ_1200_DM_450_X_495
+    ExpctedExclusionLimit->SetBinContent(5,5,1.109375); // Bin_14_LQ_1200_DM_500_X_550
+    ExpctedExclusionLimit->SetBinContent(5,6,1.109375); // Bin_15_LQ_1200_DM_550_X_595
+    ExpctedExclusionLimit->SetBinContent(6,1,1.616549); // Bin_16_LQ_1300_DM_300_X_330
+    ExpctedExclusionLimit->SetBinContent(6,2,1.646030); // Bin_17_LQ_1300_DM_350_X_385
+    ExpctedExclusionLimit->SetBinContent(6,3,1.646030); // Bin_18_LQ_1300_DM_400_X_440
+    ExpctedExclusionLimit->SetBinContent(6,4,1.685338); // Bin_19_LQ_1300_DM_450_X_495
+    ExpctedExclusionLimit->SetBinContent(6,5,1.606722); // Bin_20_LQ_1300_DM_500_X_550
+    ExpctedExclusionLimit->SetBinContent(6,6,1.773781); // Bin_21_LQ_1300_DM_550_X_605
+    ExpctedExclusionLimit->SetBinContent(6,7,1.704992); // Bin_22_LQ_1300_DM_600_X_660
+    ExpctedExclusionLimit->SetBinContent(7,1,2.643259); // Bin_23_LQ_1400_DM_300_X_330
+    ExpctedExclusionLimit->SetBinContent(7,2,2.805644); // Bin_24_LQ_1400_DM_350_X_385
+    ExpctedExclusionLimit->SetBinContent(7,3,2.553046); // Bin_25_LQ_1400_DM_400_X_440
+    ExpctedExclusionLimit->SetBinContent(7,4,2.769558); // Bin_26_LQ_1400_DM_450_X_495
+    ExpctedExclusionLimit->SetBinContent(7,5,2.553046); // Bin_27_LQ_1400_DM_500_X_550
+    ExpctedExclusionLimit->SetBinContent(7,6,2.661302); // Bin_28_LQ_1400_DM_550_X_605
+    ExpctedExclusionLimit->SetBinContent(7,7,2.859772); // Bin_29_LQ_1400_DM_600_X_660
+    ExpctedExclusionLimit->SetBinContent(7,8,2.661302); // Bin_30_LQ_1400_DM_650_X_715
+    ExpctedExclusionLimit->SetBinContent(8,1,4.475911); // Bin_31_LQ_1500_DM_300_X_330
+    ExpctedExclusionLimit->SetBinContent(8,2,4.443359); // Bin_32_LQ_1500_DM_350_X_385
+    ExpctedExclusionLimit->SetBinContent(8,3,4.280599); // Bin_33_LQ_1500_DM_400_X_440
+    ExpctedExclusionLimit->SetBinContent(8,4,4.378255); // Bin_34_LQ_1500_DM_450_X_495
+    ExpctedExclusionLimit->SetBinContent(8,5,4.345703); // Bin_35_LQ_1500_DM_500_X_550
+    ExpctedExclusionLimit->SetBinContent(8,6,4.231771); // Bin_36_LQ_1500_DM_550_X_605
+    ExpctedExclusionLimit->SetBinContent(8,7,4.182943); // Bin_37_LQ_1500_DM_600_X_660
+    ExpctedExclusionLimit->SetBinContent(8,8,4.671224); // Bin_38_LQ_1500_DM_650_X_715
+    ExpctedExclusionLimit->SetBinContent(8,9,4.345703); // Bin_39_LQ_1500_DM_700_X_770
+    ExpctedExclusionLimit->SetBinContent(1,1,0.148237); // Bin_40_LQ_800_DM_300_X_330
+    ExpctedExclusionLimit->SetBinContent(1,2,0.132212); // Bin_41_LQ_800_DM_350_X_385
+    ExpctedExclusionLimit->SetBinContent(2,1,0.236916); // Bin_42_LQ_900_DM_300_X_330
+    ExpctedExclusionLimit->SetBinContent(2,2,0.262957); // Bin_43_LQ_900_DM_350_X_385
+    ExpctedExclusionLimit->SetBinContent(2,3,0.240727); // Bin_44_LQ_900_DM_400_X_440
+    
+    
+    
+    
+    
+    
+    
     
     TH2D *ObservedExclusionLimit = new TH2D("ObservedExclusionLimit","ObservedExclusionLimit",6,1250,4250,12,875,3875);
-    ObservedExclusionLimit->SetBinContent(3,1,0.386274); // Bin_1_LQ_1000_DM_300_X_330
-    ObservedExclusionLimit->SetBinContent(3,2,0.398505); // Bin_2_LQ_1000_DM_350_X_385
-    ObservedExclusionLimit->SetBinContent(3,3,0.417866); // Bin_3_LQ_1000_DM_400_X_440
-    ObservedExclusionLimit->SetBinContent(3,4,0.392601); // Bin_4_LQ_1000_DM_450_X_495
-    ObservedExclusionLimit->SetBinContent(4,1,0.603250); // Bin_5_LQ_1100_DM_300_X_330
-    ObservedExclusionLimit->SetBinContent(4,2,0.633537); // Bin_6_LQ_1100_DM_350_X_385
-    ObservedExclusionLimit->SetBinContent(4,3,0.637537); // Bin_7_LQ_1100_DM_400_X_440
-    ObservedExclusionLimit->SetBinContent(4,4,0.676276); // Bin_8_LQ_1100_DM_450_X_495
-    ObservedExclusionLimit->SetBinContent(4,5,0.618270); // Bin_9_LQ_1100_DM_500_X_550
-    ObservedExclusionLimit->SetBinContent(5,1,0.988830); // Bin_10_LQ_1200_DM_300_X_330
-    ObservedExclusionLimit->SetBinContent(5,2,0.970691); // Bin_11_LQ_1200_DM_350_X_385
-    ObservedExclusionLimit->SetBinContent(5,3,0.975384); // Bin_12_LQ_1200_DM_400_X_440
-    ObservedExclusionLimit->SetBinContent(5,4,1.011646); // Bin_13_LQ_1200_DM_450_X_495
-    ObservedExclusionLimit->SetBinContent(5,5,1.064251); // Bin_14_LQ_1200_DM_500_X_550
-    ObservedExclusionLimit->SetBinContent(5,6,1.064251); // Bin_15_LQ_1200_DM_550_X_595
-    ObservedExclusionLimit->SetBinContent(6,1,1.604753); // Bin_16_LQ_1300_DM_300_X_330
-    ObservedExclusionLimit->SetBinContent(6,2,1.629778); // Bin_17_LQ_1300_DM_350_X_385
-    ObservedExclusionLimit->SetBinContent(6,3,1.630510); // Bin_18_LQ_1300_DM_400_X_440
-    ObservedExclusionLimit->SetBinContent(6,4,1.668278); // Bin_19_LQ_1300_DM_450_X_495
-    ObservedExclusionLimit->SetBinContent(6,5,1.594519); // Bin_20_LQ_1300_DM_500_X_550
-    ObservedExclusionLimit->SetBinContent(6,6,1.760214); // Bin_21_LQ_1300_DM_550_X_605
-    ObservedExclusionLimit->SetBinContent(6,7,1.691553); // Bin_22_LQ_1300_DM_600_X_660
-    ObservedExclusionLimit->SetBinContent(7,1,2.616200); // Bin_23_LQ_1400_DM_300_X_330
-    ObservedExclusionLimit->SetBinContent(7,2,2.758427); // Bin_24_LQ_1400_DM_350_X_385
-    ObservedExclusionLimit->SetBinContent(7,3,2.518132); // Bin_25_LQ_1400_DM_400_X_440
-    ObservedExclusionLimit->SetBinContent(7,4,2.725046); // Bin_26_LQ_1400_DM_450_X_495
-    ObservedExclusionLimit->SetBinContent(7,5,2.529306); // Bin_27_LQ_1400_DM_500_X_550
-    ObservedExclusionLimit->SetBinContent(7,6,2.610252); // Bin_28_LQ_1400_DM_550_X_605
-    ObservedExclusionLimit->SetBinContent(7,7,2.817858); // Bin_29_LQ_1400_DM_600_X_660
-    ObservedExclusionLimit->SetBinContent(7,8,2.613974); // Bin_30_LQ_1400_DM_650_X_715
-    ObservedExclusionLimit->SetBinContent(8,1,4.297786); // Bin_31_LQ_1500_DM_300_X_330
-    ObservedExclusionLimit->SetBinContent(8,2,4.246777); // Bin_32_LQ_1500_DM_350_X_385
-    ObservedExclusionLimit->SetBinContent(8,3,4.101127); // Bin_33_LQ_1500_DM_400_X_440
-    ObservedExclusionLimit->SetBinContent(8,4,4.207039); // Bin_34_LQ_1500_DM_450_X_495
-    ObservedExclusionLimit->SetBinContent(8,5,4.152112); // Bin_35_LQ_1500_DM_500_X_550
-    ObservedExclusionLimit->SetBinContent(8,6,4.053450); // Bin_36_LQ_1500_DM_550_X_605
-    ObservedExclusionLimit->SetBinContent(8,7,3.997823); // Bin_37_LQ_1500_DM_600_X_660
-    ObservedExclusionLimit->SetBinContent(8,8,4.476638); // Bin_38_LQ_1500_DM_650_X_715
-    ObservedExclusionLimit->SetBinContent(8,9,4.169279); // Bin_39_LQ_1500_DM_700_X_770
-    ObservedExclusionLimit->SetBinContent(1,1,0.144124); // Bin_40_LQ_800_DM_300_X_330
-    ObservedExclusionLimit->SetBinContent(1,2,0.129052); // Bin_41_LQ_800_DM_350_X_385
-    ObservedExclusionLimit->SetBinContent(2,1,0.231627); // Bin_42_LQ_900_DM_300_X_330
-    ObservedExclusionLimit->SetBinContent(2,2,0.256334); // Bin_43_LQ_900_DM_350_X_385
-    ObservedExclusionLimit->SetBinContent(2,3,0.234216); // Bin_44_LQ_900_DM_400_X_440
+    ObservedExclusionLimit->SetBinContent(3,1,0.395004); // Bin_1_LQ_1000_DM_300_X_330
+    ObservedExclusionLimit->SetBinContent(3,2,0.408210); // Bin_2_LQ_1000_DM_350_X_385
+    ObservedExclusionLimit->SetBinContent(3,3,0.426735); // Bin_3_LQ_1000_DM_400_X_440
+    ObservedExclusionLimit->SetBinContent(3,4,0.400673); // Bin_4_LQ_1000_DM_450_X_495
+    ObservedExclusionLimit->SetBinContent(4,1,0.634359); // Bin_5_LQ_1100_DM_300_X_330
+    ObservedExclusionLimit->SetBinContent(4,2,0.667117); // Bin_6_LQ_1100_DM_350_X_385
+    ObservedExclusionLimit->SetBinContent(4,3,0.671038); // Bin_7_LQ_1100_DM_400_X_440
+    ObservedExclusionLimit->SetBinContent(4,4,0.709862); // Bin_8_LQ_1100_DM_450_X_495
+    ObservedExclusionLimit->SetBinContent(4,5,0.650679); // Bin_9_LQ_1100_DM_500_X_550
+    ObservedExclusionLimit->SetBinContent(5,1,1.026901); // Bin_10_LQ_1200_DM_300_X_330
+    ObservedExclusionLimit->SetBinContent(5,2,1.007797); // Bin_11_LQ_1200_DM_350_X_385
+    ObservedExclusionLimit->SetBinContent(5,3,1.014164); // Bin_12_LQ_1200_DM_400_X_440
+    ObservedExclusionLimit->SetBinContent(5,4,1.051539); // Bin_13_LQ_1200_DM_450_X_495
+    ObservedExclusionLimit->SetBinContent(5,5,1.106954); // Bin_14_LQ_1200_DM_500_X_550
+    ObservedExclusionLimit->SetBinContent(5,6,1.106954); // Bin_15_LQ_1200_DM_550_X_595
+    ObservedExclusionLimit->SetBinContent(6,1,1.617690); // Bin_16_LQ_1300_DM_300_X_330
+    ObservedExclusionLimit->SetBinContent(6,2,1.642413); // Bin_17_LQ_1300_DM_350_X_385
+    ObservedExclusionLimit->SetBinContent(6,3,1.649934); // Bin_18_LQ_1300_DM_400_X_440
+    ObservedExclusionLimit->SetBinContent(6,4,1.689471); // Bin_19_LQ_1300_DM_450_X_495
+    ObservedExclusionLimit->SetBinContent(6,5,1.609327); // Bin_20_LQ_1300_DM_500_X_550
+    ObservedExclusionLimit->SetBinContent(6,6,1.775660); // Bin_21_LQ_1300_DM_550_X_605
+    ObservedExclusionLimit->SetBinContent(6,7,1.705535); // Bin_22_LQ_1300_DM_600_X_660
+    ObservedExclusionLimit->SetBinContent(7,1,2.655776); // Bin_23_LQ_1400_DM_300_X_330
+    ObservedExclusionLimit->SetBinContent(7,2,2.798241); // Bin_24_LQ_1400_DM_350_X_385
+    ObservedExclusionLimit->SetBinContent(7,3,2.561644); // Bin_25_LQ_1400_DM_400_X_440
+    ObservedExclusionLimit->SetBinContent(7,4,2.757800); // Bin_26_LQ_1400_DM_450_X_495
+    ObservedExclusionLimit->SetBinContent(7,5,2.563043); // Bin_27_LQ_1400_DM_500_X_550
+    ObservedExclusionLimit->SetBinContent(7,6,2.656134); // Bin_28_LQ_1400_DM_550_X_605
+    ObservedExclusionLimit->SetBinContent(7,7,2.851215); // Bin_29_LQ_1400_DM_600_X_660
+    ObservedExclusionLimit->SetBinContent(7,8,2.658555); // Bin_30_LQ_1400_DM_650_X_715
+    ObservedExclusionLimit->SetBinContent(8,1,4.489539); // Bin_31_LQ_1500_DM_300_X_330
+    ObservedExclusionLimit->SetBinContent(8,2,4.436716); // Bin_32_LQ_1500_DM_350_X_385
+    ObservedExclusionLimit->SetBinContent(8,3,4.283922); // Bin_33_LQ_1500_DM_400_X_440
+    ObservedExclusionLimit->SetBinContent(8,4,4.393969); // Bin_34_LQ_1500_DM_450_X_495
+    ObservedExclusionLimit->SetBinContent(8,5,4.336602); // Bin_35_LQ_1500_DM_500_X_550
+    ObservedExclusionLimit->SetBinContent(8,6,4.236432); // Bin_36_LQ_1500_DM_550_X_605
+    ObservedExclusionLimit->SetBinContent(8,7,4.177749); // Bin_37_LQ_1500_DM_600_X_660
+    ObservedExclusionLimit->SetBinContent(8,8,4.653804); // Bin_38_LQ_1500_DM_650_X_715
+    ObservedExclusionLimit->SetBinContent(8,9,4.356265); // Bin_39_LQ_1500_DM_700_X_770
+    ObservedExclusionLimit->SetBinContent(1,1,0.147842); // Bin_40_LQ_800_DM_300_X_330
+    ObservedExclusionLimit->SetBinContent(1,2,0.132809); // Bin_41_LQ_800_DM_350_X_385
+    ObservedExclusionLimit->SetBinContent(2,1,0.237573); // Bin_42_LQ_900_DM_300_X_330
+    ObservedExclusionLimit->SetBinContent(2,2,0.263347); // Bin_43_LQ_900_DM_350_X_385
+    ObservedExclusionLimit->SetBinContent(2,3,0.240027); // Bin_44_LQ_900_DM_400_X_440
 
     
     
@@ -488,9 +500,13 @@ void DMLimit_2D(){
     hlimitxsec2->GetZaxis()->SetTitleFont(42);
     gStyle->SetPalette(74);
     hlimitxsec2->Draw("COLZ ");
+    hlimitxsec2->GetZaxis()->SetTitle("Measured #sigma_{95% CL} / #sigma_{th}");
     
     
-    
+    TF1 *fa1 = new TF1("fa1","x/2.1",750,1550);
+    fa1->SetLineColor(9);
+    fa1->SetLineWidth(5);
+    fa1->Draw("same");
     
     
     TGraphErrors *gre = new TGraphErrors(exclusion_observed.size()-2);
@@ -591,23 +607,7 @@ void DMLimit_2D(){
     greExp->SetMarkerStyle(21);
     greExp->Draw("cp");
     
-    TLegend *legendr = new TLegend(0.15,0.75,0.47,0.90,NULL,"brNDC");
     
-    legendr->SetShadowColor(0);
-    legendr->SetBorderSize(0);
-    legendr->SetFillColor(0);
-    legendr->AddEntry(gre,"Observed","L");
-    legendr->AddEntry(greExp, "Expected", "L");
-    legendr->SetFillStyle(0);
-    legendr->SetTextSize(.04);
-    
-    legendr->SetTextFont(42);
-    
-    legendr->SetFillColor(0);
-    
-    legendr->SetBorderSize(0);
-    
-    legendr->Draw();
     
     
     
@@ -653,29 +653,48 @@ void DMLimit_2D(){
         grshade->SetPoint(n+i,x[n-i-1],ymin[n-i-1]);
     }
     grshade->SetFillStyle(3013);
-    grshade->SetFillColor(16);
+    grshade->SetFillColor(4);
+//    grshade->SetLineColor(9);
+    grshade->SetLineWidth(0);
     grshade->Draw("f");
-    grmin->Draw("l");
-    grmax->Draw("l");
-    gr->SetLineWidth(4);
-    gr->SetMarkerColor(4);
-    gr->SetMarkerStyle(21);
+//    grmin->Draw("l");
+//    grmax->Draw("l");
+//    gr->SetLineWidth(0);
+//    gr->SetLineColor(9);
+//    gr->SetMarkerColor(9);
+//    gr->SetMarkerStyle(21);
 //    gr->Draw("CP");
     
     
 
     
     
+    TLegend *legendr = new TLegend(0.15,0.83,0.47,0.93,NULL,"brNDC");
+    legendr->SetShadowColor(0);
+    legendr->SetBorderSize(0);
+    legendr->SetFillColor(0);
+    legendr->AddEntry(gre,"Observed","L");
+    legendr->AddEntry(greExp, "Expected", "L");
+    legendr->AddEntry(grshade, "Relic Density + APV (3#sigma)", "lf");
+    legendr->SetFillStyle(0);
+    legendr->SetTextSize(.034);
+    
+    legendr->SetTextFont(42);
+    
+    legendr->SetFillColor(0);
+    
+    legendr->SetBorderSize(0);
+    
+    legendr->Draw();
     
     
- 
     
     
     
     
     
     
-    TText *text = new TText(4900,1404.522,"Cross section UL at 95% CL [fb]");
+    TText *text = new TText(4900,1404.522,"Measured Cross section UL at 95% CL [fb]");
     text->SetTextFont(42);
     text->SetTextSize(0.04748603);
     text->SetTextAngle(90);

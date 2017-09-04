@@ -314,36 +314,32 @@ def MakeTheHistogram(channel,NormMC,NormQCD,ShapeQCD,NormTTbar):
 if __name__ == "__main__":
     
     PlotName=["_tmass_MuMet","_LepEta","_LepPt","_JetPt","_JetEta","_MET","_LQMass","_dPhi_Jet_Met","_dPhi_Mu_Jet","_dPhi_Mu_Met","_NumJet","_NumBJet"]
-#    PlotName=["_NumJet","_NumBJet"]
 #    PlotName=["_LQMass"]
 
-#    "_NoMT", "_LowMT","_HighMT","_MT50To150","_MT100","_MT150","_MT200","_MT300","_MT400","_MT500","_MT600"
+
 
 #    Isolation=["_Iso", "_AntiIso","_Total"]
     Isolation=["_Iso"]
-#    MT=["_MT400"]
-    MT= ["_NoMT","_HighMT","_MT50To150","_MT100","_MT150","_MT200","_MT300","_MT400","_MT500"]
-#    MT= ["_NoMT","_HighMT","_MT100","_MT150","_MT200","_MT300","_MT400"]
-#    MT=["_MT50To150"]
+    
+    
+    MT= ["_NoMT","_HighMT","_MT50To150","_MT100to200","_MT200to300","_MT200","_MT300","_MT400"]
+
     JPT=[ "_HighDPhi"]
-#    lqEta= ["_Barrel", "_Endcap","_TotEta"]
-    lqEta= [""]
+
     region= ["", "_ttbarCRDiLep","_ttbarCRSingleLep"]
-#    region= [""]
 
     for Norm in PlotName:
         for iso in Isolation:
             for mt in MT:
                 for jpt in JPT:
-                    for etalq in lqEta:
-                        for reg in region:
+                    for reg in region:
+                    
+                        channel='MuJet'
                         
-                            channel='MuJet'
-                            
-                            NormMC=Norm+mt+jpt+etalq+reg+iso
-                            NormQCD="_CloseJetLepPt"+mt+jpt+etalq+reg+"_AntiIso"
-#                            NormQCD="_LepPt"+mt+jpt+etalq+reg+"_AntiIso"
-                            ShapeQCD=Norm+mt+jpt+etalq+reg+"_AntiIso"
-                            NormTTbar=Norm+"_NoTopRW"+mt+jpt+etalq+reg+iso
-                            
-                            MakeTheHistogram(channel,NormMC,NormQCD,ShapeQCD,NormTTbar)
+                        NormMC=Norm+mt+jpt+reg+iso
+#                            NormQCD="_CloseJetLepPt"+mt+jpt+reg+"_AntiIso"
+                        NormQCD="_LepPt"+mt+jpt+reg+"_AntiIso"
+                        ShapeQCD=Norm+mt+jpt+reg+"_AntiIso"
+                        NormTTbar=Norm+"_NoTopRW"+mt+jpt+reg+iso
+                        
+                        MakeTheHistogram(channel,NormMC,NormQCD,ShapeQCD,NormTTbar)

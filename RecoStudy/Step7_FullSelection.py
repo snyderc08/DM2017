@@ -191,7 +191,7 @@ def MakeTheHistogram(channel,NormMC,NormQCD,ShapeQCD,chl,Binning,NormMCTT):
                     
                     ###############  Systematics on Shape and Norm for  qcd Scale ####
                     if jscale==1 and mscale==1 and jres==0:
-                        qcdScaleTT=TFile('QCDScale_TT.root','R')
+                        qcdScaleTT=TFile('QCDScale_TTbar.root','R')
                         ttScaleUp=qcdScaleTT.Get('qcdScaleUp')
                         ttScaleDown=qcdScaleTT.Get('qcdScaleDown')
                 
@@ -201,8 +201,8 @@ def MakeTheHistogram(channel,NormMC,NormQCD,ShapeQCD,chl,Binning,NormMCTT):
                             ScaleUpTT.SetBinContent(ibin+1,RebinedHist.GetBinContent(ibin+1)*ttScaleUp.GetBinContent(ibin+1))
                             ScaleDownTT.SetBinContent(ibin+1,RebinedHist.GetBinContent(ibin+1)*ttScaleDown.GetBinContent(ibin+1))
                     
-                        tDirectory.WriteObject(ScaleUpTT,'TT_qcdScaleUp')
-                        tDirectory.WriteObject(ScaleDownTT,'TT_qcdScaleDown')
+                        tDirectory.WriteObject(ScaleUpTT,'TT_qcdScale_TTUp')
+                        tDirectory.WriteObject(ScaleDownTT,'TT_qcdScale_TTDown')
                     
     
                     ###############  Systematics on Shape and Norm for  To PT Reweighting ####
@@ -277,8 +277,8 @@ def MakeTheHistogram(channel,NormMC,NormQCD,ShapeQCD,chl,Binning,NormMCTT):
                             ScaleUpW.SetBinContent(ibin+1,RebinedHist.GetBinContent(ibin+1)*wScaleUp.GetBinContent(ibin+1))
                             ScaleDownW.SetBinContent(ibin+1,RebinedHist.GetBinContent(ibin+1)*wScaleDown.GetBinContent(ibin+1))
                         
-                        tDirectory.WriteObject(ScaleUpW,'W_qcdScaleUp')
-                        tDirectory.WriteObject(ScaleDownW,'W_qcdScaleDown')
+                        tDirectory.WriteObject(ScaleUpW,'W_qcdScale_WUp')
+                        tDirectory.WriteObject(ScaleDownW,'W_qcdScale_WDown')
 
 
 
@@ -415,4 +415,4 @@ if __name__ == "__main__":
 
             NormMC="_LQMass"+mt+met
             NormMCTT="_LQMass_NoTopRW"+mt+met
-            MakeTheHistogram("MuJet",NormMC+"_Iso","_CloseJetLepPt"+mt+met+"_AntiIso",NormMC+"_AntiIso",0,Binning,NormMCTT+"_Iso")
+            MakeTheHistogram("MuJet",NormMC+"_Iso","_LepPt"+mt+met+"_AntiIso",NormMC+"_AntiIso",0,Binning,NormMCTT+"_Iso")

@@ -3,6 +3,7 @@
 // This will be run on both LO W/Z sammples (in this laptop) and FXFX samples (in cmslpc)
 // The output of this code will be stored in OutFiles_LO/ directory
 // After that the PlotCompare_KFactor.py script is run to make the boson=pt k-factor
+//  This file is needed to run and make the kfactor before pre-selection and final selection is run
 //############################################################
 
 

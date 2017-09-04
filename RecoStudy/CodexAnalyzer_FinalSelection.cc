@@ -25,7 +25,6 @@ int main(int argc, char** argv) {
         cout << "\n INPUT NAME IS:   " << input[f - 2] << "\n";
     }
     
-    
     //########################################
     // Pileup files
     //########################################
@@ -36,7 +35,6 @@ int main(int argc, char** argv) {
     TFile * PUMC= TFile::Open("../interface/pileup-hists/mcMoriondPU.root");
     TH1F * HistoPUMC= (TH1F *) PUMC->Get("pileup");
     HistoPUMC->Scale(1.0/HistoPUMC->Integral());
-    
     
     //########################################
     // Muon Id, Iso, Trigger and Tracker Eff files
@@ -66,28 +64,105 @@ int main(int argc, char** argv) {
     TH2F* HistoMuIso[2]={HistoMuIso_BCDEF,HistoMuIso_GH};
     TH2F* HistoMuTrg[2]={HistoMuTrg_BCDEF, HistoMuTrg_GH};
     
-    
     //########################################
     // Electron MVA IdIso files
     //########################################
     TFile * EleCorrMVAIdIso90= TFile::Open(("../interface/pileup-hists/egammaEffi.txt_EGM2D.root"));
     TH2F * HistoEleMVAIdIso90= (TH2F *) EleCorrMVAIdIso90->Get("EGamma_SF2D");
     
+    //########################################
+    // W and DY K-factor files  (Bin-based K-factor)
+    //########################################
+    //    TFile * KFactor= TFile::Open("../interface/pileup-hists/kfactors.root");
+    //    TH1F * WLO= (TH1F *) KFactor->Get("WJets_LO/inv_pt");
+    //    TH1F * WNLO_ewk= (TH1F *) KFactor->Get("EWKcorr/W");
+    //    TH1F * ZLO= (TH1F *) KFactor->Get("ZJets_LO/inv_pt");
+    //    TH1F * ZNLO_ewk= (TH1F *) KFactor->Get("EWKcorr/Z");
+    //  The above root is the old one from MonoJet   (it is similar to the following ones)
     
-    //########################################
-    // W and DY K-factor files
-    //########################################
-    TFile * KFactor= TFile::Open("../interface/pileup-hists/kfactors.root");
+    
+    TFile * KFactor= TFile::Open("../interface/NewKFactor/kfactor_vjet_qcd/kfactor_24bins.root");
+    
     TH1F * WLO= (TH1F *) KFactor->Get("WJets_LO/inv_pt");
-    TH1F * WNLO= (TH1F *) KFactor->Get("EWKcorr/W");
-    TH1F * ZLO= (TH1F *) KFactor->Get("ZJets_LO/inv_pt");
-    TH1F * ZNLO= (TH1F *) KFactor->Get("EWKcorr/Z");
+    TH1F * WNLO_ewk= (TH1F *) KFactor->Get("EWKcorr/W");
+    TH1F * WNLO_qcd= (TH1F *) KFactor->Get("WJets_012j_NLO/nominal");
+    
+    TH1F * ZLO= (TH1F *) KFactor->Get("DYJets_LO/inv_pt");
+    TH1F * ZNLO_ewk= (TH1F *) KFactor->Get("EWKcorr/DY");
+    TH1F * ZNLO_qcd= (TH1F *) KFactor->Get("DYJets_012j_NLO/nominal");
+    
+    
+    //        std::string ROOTLoc= "/Users/abdollah1/GIT_abdollah110/DM2016/ROOT80X/";
+    //        vector<float> DY_Events = DY_HTBin(ROOTLoc);
+    //        vector<float> W_Events = W_HTBin(ROOTLoc);
+    //        vector<float> W_EventsNLO = W_PTBinNLO(ROOTLoc); //This is for the NLO samples (as the stat is too low we do not use them)
+    //        vector<float> W_EventsNLO = W_HTBin(ROOTLoc);
+    
+    
+    //########################################
+    // W and DY K-factor files  (FIT-based K-factor)
+    //########################################
+    
+    TFile * kfactorW=TFile::Open("../interface/kfactor_W.root");
+    TH1F* HistkfactorW= (TH1F*) kfactorW->Get("KFcator");
+    float kf_W_1=HistkfactorW->GetBinContent(1);
+    float kf_W_2=HistkfactorW->GetBinContent(2);
+    
+    TFile * kfactorZ=TFile::Open("../interface/kfactor_Z.root");
+    TH1F* HistkfactorZ= (TH1F*) kfactorZ->Get("KFcator");
+    float kf_Z_1=HistkfactorZ->GetBinContent(1);
+    float kf_Z_2=HistkfactorZ->GetBinContent(2);
+    
+    
+    //########################################
+    // Btagging scale factor and uncertainties
+    //########################################
+    
+    TFile * TTEff= TFile::Open(("OutFiles_BTagSF/TTJets.root"));
+    TH2F * TTSF0_btagged= (TH2F *) TTEff->Get("BSF_FLV0_Btagged");
+    TH2F * TTSF0_total= (TH2F *) TTEff->Get("BSF_FLV0_Total");
+    TH2F * TTSF5_btagged= (TH2F *) TTEff->Get("BSF_FLV5_Btagged");
+    TH2F * TTSF5_total= (TH2F*) TTEff->Get("BSF_FLV5_Total");
+    
+    TH2F * Btagg_TT[4]={TTSF0_btagged,TTSF0_total,TTSF5_btagged,TTSF5_total};
+    
+    //        TFile * DataEff= TFile::Open(("OutFiles_BTagSF/Data.root"));
+    //        TH2F * DataSF0_btagged= (TH2F *) DataEff->Get("BSF_FLV0_Btagged");
+    //        TH2F * DataSF0_total= (TH2F *) DataEff->Get("BSF_FLV0_Total");
+    //        TH2F * DataSF5_btagged= (TH2F *) DataEff->Get("BSF_FLV5_Btagged");
+    //        TH2F * DataSF5_total= (TH2F *) DataEff->Get("BSF_FLV5_Total");
     
     
     
+    //###############################################################################################
+    //  Fix Parameters
+    //###############################################################################################
+    float MuMass= 0.10565837;
+    float eleMass= 0.000511;
+    float LeptonPtCut_=60;
+    float TauPtCut_=20;
+    float JetPtCut=100;
+    float BJetPtCut=30;
+    float SimpleJetPtCut=30;
+    float ElectronPtCut_=15;
+    float CSVCut=   0.9535   ;                  //  https://twiki.cern.ch/twiki/bin/viewauth/CMS/BtagRecommendation80XReReco
+    float LeptonIsoCut=0.15;
+    Int_t nBin=500;
+    Int_t binMin=0;
+    Int_t binMax= 5000;
+    //########################################################################################################################################################
+    //########################################################################################################################################################
+    //########################################################################################################################################################
+    //########################################################################################################################################################
+    //########################################################################################################################################################
+    //                                                  Loop over inout ROOT files
+    //########################################################################################################################################################
+    //########################################################################################################################################################
+    //########################################################################################################################################################
+    //########################################################################################################################################################
+    //########################################################################################################################################################
     for (int k = 0; k < input.size(); k++) {
         
-        //std::string input = *(argv + 2);
         TFile *f_Double = TFile::Open(input[k].c_str());
         cout << "\n  Now is running on ------->   " << std::string(f_Double->GetName()) << "\n";
         
@@ -101,24 +176,6 @@ int main(int argc, char** argv) {
         cout.setf(ios::fixed, ios::floatfield);
         cout.precision(6);
         
-        
-        //########################################
-        // BTag efficiency  files  (one need first to run CodexAnalyzer_BtagEff.cc)
-        //########################################
-        TFile * TTEff= TFile::Open(("OutFiles_BTagSF/TTJets.root"));
-        TH2F * TTSF0_btagged= (TH2F *) TTEff->Get("BSF_FLV0_Btagged");
-        TH2F * TTSF0_total= (TH2F *) TTEff->Get("BSF_FLV0_Total");
-        TH2F * TTSF5_btagged= (TH2F *) TTEff->Get("BSF_FLV5_Btagged");
-        TH2F * TTSF5_total= (TH2F*) TTEff->Get("BSF_FLV5_Total");
-        
-        TH2F * Btagg_TT[4]={TTSF0_btagged,TTSF0_total,TTSF5_btagged,TTSF5_total};
-        
-        
-        //        std::string ROOTLoc= "/Users/abdollah1/GIT_abdollah110/DM2016/ROOT80X/";
-        //        vector<float> DY_Events = DY_HTBin(ROOTLoc);
-        //        vector<float> W_Events = W_HTBin(ROOTLoc);
-        //        vector<float> W_EventsNLO = W_PTBinNLO(ROOTLoc); //This is for the NLO samples (as the stat is too low we do not use them)
-        //        vector<float> W_EventsNLO = W_HTBin(ROOTLoc);
         
         //########################################   General Info
         Run_Tree->SetBranchAddress("isData", &isData);
@@ -230,31 +287,25 @@ int main(int argc, char** argv) {
         Run_Tree->SetBranchAddress("metFilters",&metFilters);
         Run_Tree->SetBranchAddress("genHT",&genHT);
         
-        
-        //###############################################################################################
-        //  Weight Calculation
-        //###############################################################################################
-        Int_t nBin=500;
-        Int_t binMin=0;
-        Int_t binMax= 5000;
+        Run_Tree->SetBranchAddress("pdfSystWeight",&pdfSystWeight);
+        Run_Tree->SetBranchAddress("pdfSystWeightId",&pdfSystWeightId);
+        Run_Tree->SetBranchAddress("pdfWeight",&pdfWeight);
         
         
-        float MuMass= 0.10565837;
-        float eleMass= 0.000511;
-        float LeptonPtCut_=60;
-        float TauPtCut_=20;
-        float JetPtCut=100;
-        float BJetPtCut=30;
-        float ElectronPtCut_=15;
-        float CSVCut= 0.9535 ;
-        float LeptonIsoCut=0.15;
+        //########################################################################################################################################################
+        //########################################################################################################################################################
+        //########################################################################################################################################################
+        //                                                  Loop over Events in each ROOT files
+        //########################################################################################################################################################
+        //########################################################################################################################################################
+        //########################################################################################################################################################
+        
+        
         
         float jetES[3]={-1,0,1};
         std::string ResolJet_Cat[1] = {""};
         std::string ScaleJet_Cat[3] = {"JetESDown", "", "JetESUp"};
         std::string ScaleMETUE_Cat[5] = {"METUESDown", "", "METUESUp","METJESDown","METJESUp"};
-        
-        
         
         
         Int_t nentries_wtn = (Int_t) Run_Tree->GetEntries();
@@ -264,14 +315,24 @@ int main(int argc, char** argv) {
             if (i % 10000 == 0) fprintf(stdout, "\r  Processed events: %8d of %8d ", i, nentries_wtn);
             fflush(stdout);
             
+            
+            
+            
+            
+            //###############################################################################################
+            //  MET Filters (only on Data)
+            //###############################################################################################
             if (isData && (metFilters!=1536)) continue;
+            
+            //###############################################################################################
+            //  This part is to avoid of the duplicate of mu-j pai from one events
+            //###############################################################################################
             std::vector<string> HistNamesFilled;
             HistNamesFilled.clear();
+            
             //###############################################################################################
-            //  Weight Calculation
+            //  TOP pT Reweighting & W-Kfactor  & Z-Kfactor
             //###############################################################################################
-            //###############################################################################################
-            //############ Top Reweighting & W boson SCale Factor
             
             float GenTopPt=0;
             float GenAntiTopPt=0;
@@ -280,6 +341,8 @@ int main(int argc, char** argv) {
             float WBosonKFactor=1;
             float ZBosonPt=0;
             float ZBosonKFactor=1;
+            int modPDGId=-10;
+            int AntimodPDGId=-10;
             
             TLorentzVector GenMu4Momentum,GenAntiMu4Momentum;
             
@@ -288,30 +351,45 @@ int main(int argc, char** argv) {
                 if (mcPID->at(igen) == -6 && mcStatus->at(igen) ==62) GenAntiTopPt=mcPt->at(igen);
                 if (fabs(mcPID->at(igen)) ==24   && mcStatus->at(igen) ==22)  WBosonPt= mcPt->at(igen); // In inclusive we have status 62||22||44 while in HTbins we have just 22
                 if (fabs(mcPID->at(igen)) ==23)  ZBosonPt= mcPt->at(igen); //FIXME somethime we do not have Z in the DY events
-                if ( mcPID->at(igen) ==13  )  GenMu4Momentum.SetPtEtaPhiE(mcPt->at(igen),mcEta->at(igen),mcPhi->at(igen),mcMass->at(igen));
-                if ( mcPID->at(igen) ==-13  )  GenAntiMu4Momentum.SetPtEtaPhiE(mcPt->at(igen),mcEta->at(igen),mcPhi->at(igen),mcMass->at(igen));
+                if ( mcPID->at(igen) ==13  )  {GenMu4Momentum.SetPtEtaPhiM(mcPt->at(igen),mcEta->at(igen),mcPhi->at(igen),mcMass->at(igen)); modPDGId=mcMomPID->at(igen);}
+                if ( mcPID->at(igen) ==-13  )  {GenAntiMu4Momentum.SetPtEtaPhiM(mcPt->at(igen),mcEta->at(igen),mcPhi->at(igen),mcMass->at(igen)); AntimodPDGId=mcMomPID->at(igen);}
                 
             }
             if (ZBosonPt ==0)
                 ZBosonPt=(GenMu4Momentum+GenAntiMu4Momentum).Pt();  //This is a temp solution to the above problem
             
-            
+            //######################## Top Pt Reweighting
             size_t isTTJets = InputROOT.find("TTJets");
             if (isTTJets!= string::npos) TopPtReweighting = compTopPtWeight(GenTopPt, GenAntiTopPt);
+            
+            //######################## W K-factor
             size_t isWJets = InputROOT.find("WJets");
-            if (isWJets!= string::npos) WBosonKFactor=Get_W_Z_BosonKFactor(WBosonPt,WLO,WNLO);  //Swtch ON only for LO Madgraph sample
+            //            if (isWJets!= string::npos) WBosonKFactor=Get_W_Z_BosonKFactor(WBosonPt,WLO,WNLO_ewk);  //Swtch ON only for LO Madgraph sample
+            if (isWJets!= string::npos) WBosonKFactor= kf_W_1 + kf_W_2 * WBosonPt;
+            
+            //######################## Z K-factor
             size_t isDYJets = InputROOT.find("DYJets");
-            if (isDYJets!= string::npos) ZBosonKFactor=Get_W_Z_BosonKFactor(ZBosonPt,ZLO,ZNLO);  //Swtch ON only for LO Madgraph sample
+            //            if (isDYJets!= string::npos) ZBosonKFactor=Get_W_Z_BosonKFactor(ZBosonPt,ZLO,ZNLO_ewk);  //Swtch ON only for LO Madgraph sample
+            if (isDYJets!= string::npos) ZBosonKFactor= kf_Z_1 + kf_Z_2 * ZBosonPt;
+            
             //###############################################################################################
+            //  Lumi, GEN & PileUp Weight
+            //###############################################################################################
+            
             float LumiWeight = 1;
             float GetGenWeight=1;
             float PUWeight = 1;
             
             if (!isData){
                 
+                //######################## Lumi Weight
+                //                if (HistoTot) LumiWeight = weightCalc(HistoTot, InputROOT, genHT,WBosonPt, W_Events, DY_Events,W_EventsNLO);
                 if (HistoTot) LumiWeight = weightCalc(HistoTot, InputROOT);
+                
+                //######################## Gen Weight
                 GetGenWeight=genWeight;
                 
+                //######################## PileUp Weight
                 int puNUmmc=int(puTrue->at(0)*10);
                 int puNUmdata=int(puTrue->at(0)*10);
                 float PUMC_=HistoPUMC->GetBinContent(puNUmmc+1);
@@ -320,14 +398,31 @@ int main(int argc, char** argv) {
                     cout<<"PUMC_ is zero!!! & num pileup= "<< puTrue->at(0)<<"\n";
                 else
                     PUWeight= PUData_/PUMC_;
+                
             }
             
             
+            //############################################################################################
+            //   Final Total Weight
+            //############################################################################################
+            float TotalWeight_withTopPtRW = LumiWeight * GetGenWeight * PUWeight * TopPtReweighting * WBosonKFactor * ZBosonKFactor ;
+            float TotalWeight_NoTopPtRW = LumiWeight * GetGenWeight * PUWeight * WBosonKFactor * ZBosonKFactor ;
+            
+            
             //###############################################################################################
-            //  Trigger Cut
             //###############################################################################################
+            //###############################################################################################
+            //                                      Doing  Analysis
+            //###############################################################################################
+            //###############################################################################################
+            //###############################################################################################
+            
+            
+            //###########       Trigger Requirement ###########################################################
             bool PassTrigger = (HLTEleMuX >> 21 & 1) == 1; //   else if (name.find("HLT_Mu50_v") != string::npos) bitEleMuX = 21;
             if (! PassTrigger) continue;
+            
+            
             
             //###########       tau Veto   ###########################################################
             int numTau=0;
@@ -435,11 +530,6 @@ int main(int argc, char** argv) {
             
             
             
-            //############################################################################################
-            //   Final Total Weight
-            //############################################################################################
-            float TotalWeight_withTopPtRW = LumiWeight * GetGenWeight * PUWeight * TopPtReweighting * WBosonKFactor * ZBosonKFactor * FinalBTagSF;
-            float TotalWeight_NoTopPtRW = LumiWeight * GetGenWeight * PUWeight * WBosonKFactor * ZBosonKFactor * FinalBTagSF;
             
             //###############################################################################################
             //  Some Histogram Filling
@@ -642,7 +732,7 @@ int main(int argc, char** argv) {
                                                             
                                                             
                                                             
-                                                            float FullWeight = TotalWeight[itopRW] * LepCor  ;
+                                                            float FullWeight = TotalWeight[itopRW] * LepCor *FinalBTagSF ;
                                                             std::string FullStringName = topPtRW[itopRW] + MT_Cat[imt] + MetCut_Cat[jpt]+  iso_Cat[iso]+ ScaleJet_Cat[jetScl]+ResolJet_Cat[jetRes]+ ScaleMETUE_Cat[metUE];
                                                             
                                                             //This check is used to make sure that each event is just filled once for any of the categories ==> No doube-counting of events  (this is specially important for ttbar events where we have many jets and leptons)
@@ -658,15 +748,36 @@ int main(int argc, char** argv) {
                                                                 plotFill(CHL+"_tmass_MuMet"+FullStringName,tmass_MuMet,200,0,2000,FullWeight);
                                                                 plotFill(CHL+"_MET"+FullStringName,UESMET[metUE],200,0,2000,FullWeight);
                                                                 
-                                                                plotFill(CHL+"_CloseJetLepPt"+FullStringName,CLoseJetMuPt,1000,0,1000,FullWeight);
+                                                                //                                                                plotFill(CHL+"_CloseJetLepPt"+FullStringName,CLoseJetMuPt,1000,0,1000,FullWeight);
                                                                 plotFill(CHL+"_LQMass"+FullStringName,LQ.M(),300,0,3000,FullWeight);
                                                                 plotFill(CHL+"_LQMass_BtagUp"+FullStringName,LQ.M(),300,0,3000,FullWeight*FinalBTagSFUp/FinalBTagSF);
                                                                 plotFill(CHL+"_LQMass_BtagDown"+FullStringName,LQ.M(),300,0,3000,FullWeight*FinalBTagSFDown/FinalBTagSF);
-                                                                //                                                                plotFill(CHL+"_LQEta"+FullStringName,LQ.Eta(),100,-5,5,FullWeight);
                                                                 
                                                                 if (isTTJets!= string::npos) plotFill(CHL+"_LQMassTopPtRWUp"+FullStringName,LQ.M(),nBin,binMin,binMax,FullWeight * TopPtReweighting);
                                                                 if (isTTJets!= string::npos) plotFill(CHL+"_LQMassTopPtRWDown"+FullStringName,LQ.M(),nBin,binMin,binMax,FullWeight / TopPtReweighting);
                                                                 
+                                                                
+                                                                
+                                                                //##############################################################################
+                                                                //  QCD Scale Uncertainty for TTbar and W+Jets
+                                                                //##############################################################################
+                                                                if (isTTJets== string::npos &&  isWJets== string::npos) continue; //scale factor only for W and TT
+                                                                
+                                                                int counterscale=0;
+                                                                int counterpdf=0;
+                                                                int StartNumber=0;  // qcd scale uncertainty for W Madgraph starts from 1000
+                                                                if (isTTJets!= string::npos) StartNumber=1000; // qcd scale uncertainty for ttbar powheg starts from 1000
+                                                                for (int isys=0; isys < pdfSystWeight->size(); isys++){
+                                                                    
+                                                                    if (atoi(pdfSystWeightId->at(isys).c_str()) > StartNumber && atoi(pdfSystWeightId->at(isys).c_str()) < StartNumber+10){
+                                                                        
+                                                                        
+                                                                        plotFill(CHL+"_LQMass_Scale"+std::to_string(counterscale)+FullStringName,LQ.M(),20,0,2000,FullWeight*pdfSystWeight->at(isys)/pdfWeight);
+                                                                        counterscale++;
+                                                                        
+                                                                    }
+                                                                }
+                                                                //##############################################################################
                                                             }
                                                         }
                                                     }

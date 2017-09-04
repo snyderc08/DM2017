@@ -40,8 +40,8 @@ float XSection(std::string OutName) {
     
     
     //    if (OutName.find("WJetsToLNu_Inc") != string::npos) return 50690;   // As we have large cut at Skim, this one is not needed
-    //    else if (OutName.find("WJetsToLNu_HT-70to100") != string::npos) return 1372;
-    if (OutName.find("WJetsToLNu_HT-100to200") != string::npos) return 1343;
+    if (OutName.find("WJetsToLNu_HT-70to100") != string::npos) return 1372;
+    else if (OutName.find("WJetsToLNu_HT-100to200") != string::npos) return 1343;
     else if (OutName.find("WJetsToLNu_HT-200to400") != string::npos) return 359.6;
     else if (OutName.find("WJetsToLNu_HT-400to600") != string::npos) return 48.85;
     else if (OutName.find("WJetsToLNu_HT-600to800") != string::npos) return 12.05;

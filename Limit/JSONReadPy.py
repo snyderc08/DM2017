@@ -92,6 +92,7 @@ def GetDMBin(DM):
 with open(FinalSampleDirectory) as data_file:
     data = json.load(data_file)
 
+    print 'TH2D *hlimitxsec2 = new TH2D("hlimitxsec2","hlimitxsec2",8,750,1550,9,275,725);'
     for bin, M in enumerate(MassXS,1):
         XbinLQ=GetLQBin(M[1])
         YbinDM=GetDMBin(M[2])
@@ -102,7 +103,7 @@ with open(FinalSampleDirectory) as data_file:
 
 
     print "\n\n\n\n\n\n\n"
-
+    print 'TH2D *ExpctedExclusionLimit = new TH2D("ExpctedExclusionLimit","ExpctedExclusionLimit",6,1250,4250,12,875,3875);'
     for bin, M in enumerate(MassXS,1):
         XbinLQ=GetLQBin(M[1])
         YbinDM=GetDMBin(M[2])
@@ -111,7 +112,7 @@ with open(FinalSampleDirectory) as data_file:
 
 
     print "\n\n\n\n\n\n\n"
-    
+    print 'TH2D *ObservedExclusionLimit = new TH2D("ObservedExclusionLimit","ObservedExclusionLimit",6,1250,4250,12,875,3875);'
     for bin, M in enumerate(MassXS,1):
         XbinLQ=GetLQBin(M[1])
         YbinDM=GetDMBin(M[2])

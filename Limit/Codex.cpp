@@ -60,10 +60,9 @@ int main() {
     
     
     //! [part2]
-    vector<string> masses = ch::MassesFromRange("800-1500:100");
-//    vector<string> masses = ch::MassesFromRange("1-44:1");
+//    vector<string> masses = ch::MassesFromRange("800-1500:100");
+    vector<string> masses = ch::MassesFromRange("1-44:1");
     // Or equivalently, specify the mass points explicitly:
-    //    vector<string> masses = {"120", "125", "130", "135"};
     //! [part2]
     
     
@@ -85,7 +84,7 @@ int main() {
     for (string era : {"13TeV"}) {
         for (string chn : chns) {
             
-            string file = aux_shapes + input_folders[chn] + "/_mj_LQMass_MT100_MET100_Iso.root";
+            string file = aux_shapes + input_folders[chn] + "/_mj_LQMass_Final.root";
             cb.cp().channel({chn}).era({era}).backgrounds().ExtractShapes(
                                                                           file, "$BIN/$PROCESS", "$BIN/$PROCESS_$SYSTEMATIC");
             cb.cp().channel({chn}).era({era}).signals().ExtractShapes(
@@ -120,9 +119,12 @@ int main() {
     cb.cp().process(ch::JoinStr({sig_procs, {"ZTT", "W", "TT","VV","SingleTop"}}))
     .AddSyst(cb, "CMS_trg_m", "lnN", SystMap<>::init(1.05));
     
+    cb.cp().process(ch::JoinStr({sig_procs, {"ZTT", "W", "TT","VV","SingleTop"}}))
+    .AddSyst(cb, "CMS_trg_m", "lnN", SystMap<>::init(1.05));
+    
     
     cb.cp().process(ch::JoinStr({sig_procs, {"ZTT", "W", "TT","VV","SingleTop"}}))
-    .AddSyst(cb, "CMS_eff_m", "lnN", SystMap<>::init(1.02));
+    .AddSyst(cb, "CMS_b_mistag_rate", "lnN", SystMap<>::init(1.01));
     
     
     
@@ -143,6 +145,11 @@ int main() {
     cb.cp().process(JoinStr({ { "TT"}}))
     .AddSyst(cb, "CMS_top_pt_Reweighting", "shape", SystMap<>::init(1.00));
     
+    cb.cp().process(JoinStr({ { "TT"}}))
+    .AddSyst(cb, "qcdScale_TT", "shape", SystMap<>::init(1.00));
+    
+    cb.cp().process(JoinStr({ { "W"}}))
+    .AddSyst(cb, "qcdScale_W", "shape", SystMap<>::init(1.00));
     
     
     
@@ -165,7 +172,10 @@ int main() {
     .AddSyst(cb, "CMS_htt_QCDNorm", "lnN", SystMap<>::init(1.50));
     
     cb.cp().process(sig_procs)
-    .AddSyst(cb, "CMS_signal_PDF", "lnN", SystMap<>::init(1.05));
+    .AddSyst(cb, "CMS_signal_PDF", "lnN", SystMap<>::init(1.20));
+    
+    cb.cp().process(sig_procs)
+    .AddSyst(cb, "CMS_signal_QCDScale", "lnN", SystMap<>::init(1.30));
     
     
     
@@ -192,11 +202,11 @@ int main() {
     
     //! [part7]
     cb.cp().backgrounds().ExtractShapes(
-                                        aux_shapes + "/_mj_LQMass_MT100_MET100_Iso.root",
+                                        aux_shapes + "/_mj_LQMass_Final.root",
                                         "$BIN/$PROCESS",
                                         "$BIN/$PROCESS_$SYSTEMATIC");
     cb.cp().signals().ExtractShapes(
-                                    aux_shapes + "/_mj_LQMass_MT100_MET100_Iso.root",
+                                    aux_shapes + "/_mj_LQMass_Final.root",
                                     "$BIN/$PROCESS$MASS",
                                     "$BIN/$PROCESS$MASS_$SYSTEMATIC");
     
@@ -238,7 +248,7 @@ int main() {
     << "\n";
     
     
-    string folder = "outputCodex_May11/Codex_MT100_MET100/LIMITS";
+    string folder = "outputCodex_Sep3/LIMITS";
     boost::filesystem::create_directories(folder);
     boost::filesystem::create_directories(folder + "/common");
     for (auto m : masses) {
