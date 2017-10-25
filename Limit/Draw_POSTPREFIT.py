@@ -234,7 +234,7 @@ def MakePlot(FileName,categoriy,HistName,Xaxis,MaxRange,sig,sigLeg,XSection, Sta
     if Status=="Normal": Data.SetMaximum(Data.GetMaximum()*2) ;  Data.SetMinimum(0)
 
 
-    Data.GetXaxis().SetRangeUser(200,MaxRange)
+    Data.GetXaxis().SetRangeUser(0,MaxRange)
     
     Data.SetBinErrorOption(rt.TH1.kPoisson)
     Data.Draw("e0")
@@ -325,7 +325,7 @@ def MakePlot(FileName,categoriy,HistName,Xaxis,MaxRange,sig,sigLeg,XSection, Sta
         print h3.GetBinContent(jbin+1), " +/- " ,h3.GetBinError(jbin+1)
 
 
-    h1.GetXaxis().SetRangeUser(200,5000)
+    h1.GetXaxis().SetRangeUser(0,5000)
     h1.GetXaxis().SetTitle(Xaxis)
     h1.GetXaxis().SetLabelSize(0.08)
     h1.GetYaxis().SetLabelSize(0.08)
@@ -340,7 +340,7 @@ def MakePlot(FileName,categoriy,HistName,Xaxis,MaxRange,sig,sigLeg,XSection, Sta
     h1.GetYaxis().SetLabelSize(0.11)
     h1.GetXaxis().SetTitleFont(42)
     h1.GetYaxis().SetTitleFont(42)
-    h1.GetXaxis().SetRangeUser(200,MaxRange)
+    h1.GetXaxis().SetRangeUser(0,MaxRange)
 
     h1.SetMaximum(3)
 #    for i in range(h3.GetNbinsX()):
@@ -372,7 +372,8 @@ def MakePlot(FileName,categoriy,HistName,Xaxis,MaxRange,sig,sigLeg,XSection, Sta
 
 
 FileNamesInfo=[
-               ["postfit_shapes.root","Codex__mj_1_13TeV_prefit","#it{M}_{LQ} [GeV]","#mu j ",2000,"Codex_","LQ 1200GeV (DM 400 GeV)",10],
+               ["postfit_shapes.root","Codex__mj_1_13TeV_prefit","M_{#muj} [GeV]","#mu j ",2000,"Codex_","LQ 1200GeV (DM 500 GeV)",10],
+               ["postfit_shapes.root","Codex__mj_1_13TeV_postfit","M_{#muj} [GeV]","#mu j ",2000,"Codex_","LQ 1200GeV (DM 500 GeV)",10],
                ]
 
 

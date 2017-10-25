@@ -230,7 +230,8 @@ def MakePlot(FileName,categoriy,HistName,Xaxis,Info,RB_,channel,yMin,isLOG,ttbar
 #    categ.SetTextFont (   41 )
     #       if i==1 or i==3:
     categ.AddText("W Control Region")
-    categ.AddText(" 50 <m_{T} (#mu,MET) <150 GeV ")
+#    categ.AddText(" 50 <m_{T} (#mu,MET) <150 GeV ")
+    categ.AddText(" 100 <jet pT <150 GeV ")
     #       else :
     #        categ.AddText("SS")
     categ.Draw()
@@ -319,7 +320,8 @@ FileNamesInfo=[
 
 
 Isolation=["_Iso"]
-MT=["_MT50To150"]
+#MT=["_MT50To150"]
+MT= ["_NoMT","_HighMT","_MT50To150","_MT100to200","_MT200to300","_MT200","_MT300","_MT400"]
 JPT=[ "_HighDPhi"]
 lqEta= [""]
 region= [""]

@@ -599,19 +599,21 @@ int main(int argc, char** argv) {
                     float tmass_LQMet= TMass_F(LQ4Momentum.Pt(), LQ4Momentum.Px(),LQ4Momentum.Py(), pfMET, pfMETPhi);
                     
                     
-                    const int size_mTCat = 8;
+                    const int size_mTCat = 10;
                     
                     bool NoMT = 1;
                     bool HighMT = (tmass_MuMet > 100);
                     bool MT50To150=(tmass_MuMet > 50 && tmass_MuMet <= 150);
-                    bool MT100To200=(tmass_MuMet > 100 && tmass_MuMet <= 200);
-                    bool MT200To300=(tmass_MuMet > 200 && tmass_MuMet <= 300);
+                    bool MT150To200=(tmass_MuMet > 150 && tmass_MuMet <= 200);
+                    bool MT200To250=(tmass_MuMet > 200 && tmass_MuMet <= 250);
+                    bool MT250To300=(tmass_MuMet > 250 && tmass_MuMet <= 300);
+                    bool MT300To350=(tmass_MuMet > 300 && tmass_MuMet <= 350);
                     bool MTMore200=tmass_MuMet > 200 ;
                     bool MTMore300=tmass_MuMet > 300 ;
                     bool MTMore400=tmass_MuMet > 400 ;
                     
-                    bool MT_category[size_mTCat] = {NoMT,HighMT,MT50To150,MT100To200,MT200To300,MTMore200,MTMore300,MTMore400};
-                    std::string MT_Cat[size_mTCat] = {"_NoMT","_HighMT","_MT50To150","_MT100to200","_MT200to300","_MT200","_MT300","_MT400"};
+                    bool MT_category[size_mTCat] = {NoMT,HighMT,MT50To150,MT150To200,MT200To250,MT250To300,MT300To350,MTMore200,MTMore300,MTMore400};
+                    std::string MT_Cat[size_mTCat] = {"_NoMT","_HighMT","_MT50To150","_MT150to200","_MT200to250","_MT250to300","_MT300to350","_MT200","_MT300","_MT400"};
                     
                     //###############################################################################################
                     //  dPhi Jet_MET Categorization
@@ -687,7 +689,7 @@ int main(int argc, char** argv) {
                                                             plotFill(CHL+"_JetEta"+FullStringName,jetEta->at(ijet),120,-3,3,FullWeight);
                                                             plotFill(CHL+"_LepPt"+FullStringName,muPt->at(imu),2000,0,2000,FullWeight);
                                                             plotFill(CHL+"_LepEta"+FullStringName,muEta->at(imu),100,-2.5,2.5,FullWeight);
-                                                            plotFill(CHL+"_CloseJetLepPt"+FullStringName,CLoseJetMuPt,1000,0,1000,FullWeight);
+                                                            plotFill(CHL+"_CloseJetLepPt"+FullStringName,CLoseJetMuPt,2000,0,2000,FullWeight);
                                                             
                                                             //                                                                    plotFill(CHL+"_nVtx"+FullStringName,nVtx,50,0,50,FullWeight);
                                                             //                                                                    plotFill(CHL+"_nVtx_NoPU"+FullStringName,nVtx,50,0,50,FullWeight/ PUWeight);

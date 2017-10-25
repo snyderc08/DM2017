@@ -232,18 +232,18 @@ def MakeCompare(root1,hist1,name1, root2,hist2, name2,root3, hist3,name3,Name,Sa
     
     
     c.SaveAs('kfactor%s.pdf'%Name)
-    outF=TFile('../interface/kfactor%s.root'%Name,'RECREATE')
+    outF=TFile('../interface/kfactor_lq%s.root'%Name,'RECREATE')
     outHist=TH1F('KFcator','',2,0,2)
-    outHist.SetBinContent(1,FitParameter_monoLQ[0])
-    outHist.SetBinContent(2,FitParameter_monoLQ[1])
-#    outHist.SetBinContent(1,FitParameter_monoJet[0])
-#    outHist.SetBinContent(2,FitParameter_monoJet[1])
+#    outHist.SetBinContent(1,FitParameter_monoLQ[0])
+#    outHist.SetBinContent(2,FitParameter_monoLQ[1])
+    outHist.SetBinContent(1,FitParameter_monoJet[0])
+    outHist.SetBinContent(2,FitParameter_monoJet[1])
     outHist.Write()
     outF.Write()
     outF.Close()
 
-    return FitParameter_monoLQ
-#    return FitParameter_monoJet
+#    return FitParameter_monoLQ
+    return FitParameter_monoJet
 
 
 location='OutFiles_LO/'

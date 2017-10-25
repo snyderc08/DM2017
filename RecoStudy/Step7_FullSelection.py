@@ -37,7 +37,7 @@ import os
 
 ROOT.gROOT.SetBatch(True)
 SubRootDir = 'OutFiles_FullSelection/'
-verbos_ = False
+verbos_ = True
 JetScale = ["JetESDown", "", "JetESUp"]
 #JetResol = ["JetERDown", "", "JetERUp"]
 JetResol = [""]
@@ -64,7 +64,7 @@ def _FileReturn(Name, channel,cat,HistoName,PostFixJet,PostFixJetRes,PostFixMET)
 ####################################################
 ##   Start Making the Datacard Histograms
 ####################################################
-def MakeTheHistogram(channel,NormMC,NormQCD,ShapeQCD,chl,Binning,NormMCTT):
+def MakeTheHistogram(channel,NormMC,NormQCD,ShapeQCD,NormMCTT,chl,Binning):
     
     
     signal = ['Codex_']
@@ -354,7 +354,7 @@ def MakeTheHistogram(channel,NormMC,NormQCD,ShapeQCD,chl,Binning,NormMCTT):
                         QCDEstimation=0
                         for bin in xrange(50,1000):
                             value=DataSampleQCDNormHist.GetBinContent(bin)
-                            if value < 0 : value=0
+#                            if value < 0 : value=0
                             FR= ApplyTheFakeRate(bin+1.5,FR_FitMaram,'Lepton')
                             if FR> 0.9: FR=0.9
                             QCDEstimation += value * FR/(1-FR)
@@ -413,6 +413,11 @@ if __name__ == "__main__":
         for mt in MT_Cat:
 
 
-            NormMC="_LQMass"+mt+met
-            NormMCTT="_LQMass_NoTopRW"+mt+met
-            MakeTheHistogram("MuJet",NormMC+"_Iso","_LepPt"+mt+met+"_AntiIso",NormMC+"_AntiIso",0,Binning,NormMCTT+"_Iso")
+            NormMC="_LQMass"+mt+met+"_Iso"
+            NormQCD="_LepPt"+mt+met+"_AntiIso"
+#            NormQCD="_CloseJetLepPt"+mt+met+"_AntiIso"
+            ShapeQCD="_LQMass"+"_MT100"+met+"_AntiIso"
+            NormMCTT="_LQMass_NoTopRW"+mt+met+"_Iso"
+            
+            MakeTheHistogram("MuJet",NormMC,NormQCD,ShapeQCD,NormMCTT,0,Binning)
+

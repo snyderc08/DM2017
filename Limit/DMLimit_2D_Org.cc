@@ -96,27 +96,30 @@ void  SayHi(){
 //}
 
 
-double intersection(double m1, double m2,
-                    double y11, double y12, double y21, double y22) {
-    // y = ax + b
-    // y11 = am1 + b
-    // y12 = am2 + b
-    double a1 = (y11 - y12)/(m1 - m2);
-    double b1 = y11 - a1*m1;
+double intersection(
+                    double y2, double y1, double x2, double x1) {
+//    // y = ax + b
+//    // y11 = am1 + b
+//    // y12 = am2 + b
+//    double a1 = (y11 - y12)/(m1 - m2);
+//    double b1 = y11 - a1*m1;
+//    
+//    double a2 = (y21 - y22)/(m1 - m2);
+//    double b2 = y21 - a2*m1;
+//    
+//    // overlap: a1*m + b1 = a2*m + b2 => (a1 - a2)*m = (b2 - b1)
+//    double m = (b2 - b1)/(a1 - a2);
+//    if ( m > m2 || m < m1 ) return 0;
     
-    double a2 = (y21 - y22)/(m1 - m2);
-    double b2 = y21 - a2*m1;
-    
-    // overlap: a1*m + b1 = a2*m + b2 => (a1 - a2)*m = (b2 - b1)
-    double m = (b2 - b1)/(a1 - a2);
-    if ( m > m2 || m < m1 ) return 0;
+   float  m = (y1-y2 + y2*x1-y1*x2 )/(x1-x2);
+    cout << y2<<  "  "   <<y1<<  "  "   <<x2<<  "  "   <<x1<<  "  "   <<m<<"\n";
     return m;
 }
 
 
 
 
-void DMLimit_2D(){
+void DMLimit_2D_Org(){
     
     
     //  This part is for calculating the DM relic density band
@@ -237,6 +240,7 @@ void DMLimit_2D(){
     can2->SetFrameLineStyle(0);
     can2->SetFrameBorderMode(0);
     can2->SetLogz();
+    
     
     
     TH2D *hlimitxsec2 = new TH2D("hlimitxsec2","hlimitxsec2",8,750,1550,9,275,725);
@@ -390,9 +394,11 @@ void DMLimit_2D(){
     ObservedExclusionLimit->SetBinContent(2,1,0.304091); // Bin_42_LQ_900_DM_300_X_330
     ObservedExclusionLimit->SetBinContent(2,2,0.487558); // Bin_43_LQ_900_DM_350_X_385
     ObservedExclusionLimit->SetBinContent(2,3,1.426267); // Bin_44_LQ_900_DM_400_X_440
+
     
-//    Double_t XS[6] = {2.9E-1,6.563E-02,1.92E-02,6.030E-03,0.00209,0.000801};
     
+    
+    cout<<"************** "<<hlimitxsec2->GetBinContent(5,1)<<"\n\n\n\n\n";
     
     Double_t WMass[8] = {
         800,
@@ -437,36 +443,53 @@ void DMLimit_2D(){
     
     
     
-    for (int jj =1 ; jj < ExpctedExclusionLimit->GetYaxis()->GetNbins()+1; jj++){
-        float ExpLim =0;
-        float ObsLim =0;
+    for (int jj =1 ; jj < 9; jj++){
+        float ExpLim =(NuMass[jj]+NuMass[jj+1])/2. ;
+        float ObsLim =WMass[jj]/2 ;
+        float ExpLim_low=0;
+//        float ObsLim =0;
         
-        for (int ii =1 ; ii < ExpctedExclusionLimit->GetXaxis()->GetNbins()+1; ii++){
+        for (int ii =1; ii < 9; ii++){
+            
+            if (ExpctedExclusionLimit->GetBinContent(jj,ii)< 1) continue;
+            
+//            cout<<"ExpctedExclusionLimit->GetBinContent("<<jj<<","<<ii<<")= "<<ExpctedExclusionLimit->GetBinContent(jj,ii)<<"\n";
+//            ExpLim= hlimitxsec2->GetBinContent(jj+1,ii+1);
+//            ExpLim_low= hlimitxsec2->GetBinContent(jj+1,ii);
             
             
             
-             ExpLim = intersection(WMass[ii-1], WMass[ii], 1, 1, ExpctedExclusionLimit->GetBinContent(ii,jj), ExpctedExclusionLimit->GetBinContent(ii+1,jj));
-             ObsLim = intersection(WMass[ii-1], WMass[ii], 1, 1, ObservedExclusionLimit->GetBinContent(ii,jj), ObservedExclusionLimit->GetBinContent(ii+1,jj));
+//            cout << "ExpctedExclusionLimit->GetBinContent(<<"<<ii<<"  "<<jj<<")= "<<ExpctedExclusionLimit->GetBinContent(ii,jj)<<"\n";
+//            
+//            
+             ExpLim = intersection(NuMass[ii-1], NuMass[ii-2], ExpctedExclusionLimit->GetBinContent(jj,ii), ExpctedExclusionLimit->GetBinContent(jj,ii-1));
+            cout<< WMass[jj-1] << "   "<<ii<<"  ExpLim="<<ExpLim<<"\n";
+            break;
+//             ObsLim = intersection(NuMass[ii-1], NuMass[ii], 1, 1, ObservedExclusionLimit->GetBinContent(ii,jj), ObservedExclusionLimit->GetBinContent(ii+1,jj));
             
             
-            if (ExpLim) break;
+//            if (ExpLim) break;
         }
-            if (ExpLim && ExpLim < 1500) {
-                
-            cout <<NuMass[jj-1] <<" Exp="<<ExpLim<< "    &&&&&&&  Obs="<<ObsLim<<"\n";
-                
+//            if (ExpLim && ExpLim < 1500) {
+        
+//            cout <<WMass[jj] <<" Exp="<<ExpLim<< "    &&&&&&&  ExpLim_low="<<ExpLim_low<<"\n";
+        
                 
 //                if (ExpLim > NuMass[jj-1] &&  ObsLim > NuMass[jj-1]){
                 exclusion_expected.push_back(ExpLim);
                 exclusion_observed.push_back(ObsLim);
 //                }
             
-        }
+//        }
+    }
+    
+    for (int x=0; x<8;x++){
+        cout<<"x==== "<<x << "   "<<exclusion_expected[x]<<"\n";
     }
     
     
-    cout<<exclusion_expected.size()<<"    "<<exclusion_observed.size()<<"\n";
-    
+//    cout<<exclusion_expected.size()<<"    "<<exclusion_observed.size()<<"\n";
+
     
  
     
@@ -495,8 +518,8 @@ void DMLimit_2D(){
     hlimitxsec2->GetZaxis()->SetTitleSize(0.045);
     hlimitxsec2->GetZaxis()->SetTitleFont(42);
     gStyle->SetPalette(74);
-//    hlimitxsec2->Draw("COLZ ");
-    hlimitxsec2->Draw("textCOLZ");
+    hlimitxsec2->Draw("COLZ ");
+//    hlimitxsec2->Draw("textCOLZ");
     hlimitxsec2->GetZaxis()->SetTitle("Measured #sigma_{95% CL} / #sigma_{th}");
     
     
@@ -549,7 +572,7 @@ void DMLimit_2D(){
     Graph_Graph_Graph11->GetZaxis()->SetTitleFont(42);
 //    Graph_Graph_Graph11->SetLogz();
     gre->SetHistogram(Graph_Graph_Graph11);
-    gre->SetMarkerSize(2);
+    gre->SetMarkerSize(1);
     gre->SetMarkerStyle(21);
 //    gre->Draw("cp");
     
@@ -565,11 +588,14 @@ void DMLimit_2D(){
     greExp->SetLineStyle(2);
     greExp->SetLineWidth(3);
 
-    for (int kk=0;kk<exclusion_expected.size()-2;kk++){
+    for (int kk=0;kk<8;kk++){
         
-        greExp->SetPoint(kk, exclusion_expected[kk], NuMass[kk]);
+        
+        cout <<"====>"<<kk << "  "<< exclusion_expected[kk] << "  "<< WMass[kk]<<"\n";
+        
+        greExp->SetPoint(kk, WMass[kk],exclusion_expected[kk] );
         greExp->SetPointError(kk,0,0);
-        cout <<"Exp----->"<<kk<< " " <<exclusion_expected[kk]<< " "  <<NuMass[kk]<<"\n";
+        cout <<"Exp----->"<<kk<< " " <<exclusion_expected[kk]<< " "  <<WMass[kk]<<"\n";
         
     }
     
@@ -601,9 +627,9 @@ void DMLimit_2D(){
     Graph_Graph_Graph11Exp->GetZaxis()->SetTitleFont(42);
     greExp->SetHistogram(Graph_Graph_Graph11Exp);
     
-    greExp->SetMarkerSize(2);
+    greExp->SetMarkerSize(1);
     greExp->SetMarkerStyle(21);
-//    greExp->Draw("cp");
+    greExp->Draw("cp");
     
     
     
@@ -700,8 +726,8 @@ void DMLimit_2D(){
     can2->Modified();
     can2->cd();
     can2->SetSelected(can2);
-    can2->SaveAs("lim2D.pdf");
-    can2->SaveAs("lim2D.C");
+    can2->SaveAs("lim2D_Final.pdf");
+    can2->SaveAs("lim2D_Final.C");
     //     dofile("rhw.json");
     
 }

@@ -279,11 +279,19 @@ int main(int argc, char** argv) {
             
             plotFill("_WBosonPt",WBosonPt,150,0,1500,TotalWeight);
             plotFill("_WBosonPt_KFactor",WBosonPt,150,0,1500,TotalWeight*WBosonKFactor_NLOewk);
+            plotFill("_WBosonPt_KFactor_ewkUp",WBosonPt,150,0,1500,TotalWeight*WBosonKFactor_NLOewk*WBosonKFactor_NLOonlyewk);
+            plotFill("_WBosonPt_KFactor_ewkDown",WBosonPt,150,0,1500,TotalWeight*WBosonKFactor_NLOewk/WBosonKFactor_NLOonlyewk);
             plotFill("_WBosonPt_KFactor_OnlyEWK",WBosonPt,150,0,1500,TotalWeight*WBosonKFactor_NLOonlyewk);
+//            plotFill("_WBosonPt_KFactor_OnlyEWK_Up",WBosonPt,150,0,1500,TotalWeight*WBosonKFactor_NLOonlyewk*WBosonKFactor_NLOonlyewk);
+//            plotFill("_WBosonPt_KFactor_OnlyEWK_Down",WBosonPt,150,0,1500,TotalWeight);
             
             plotFill("_ZBosonPt",ZBosonPt,150,0,1500,TotalWeight);
             plotFill("_ZBosonPt_KFactor",ZBosonPt,150,0,1500,TotalWeight*ZBosonKFactor_NLOewk);
+            plotFill("_ZBosonPt_KFactor_ewkUp",ZBosonPt,150,0,1500,TotalWeight*ZBosonKFactor_NLOewk*ZBosonKFactor_NLOonlyewk);
+            plotFill("_ZBosonPt_KFactor_ewkDown",ZBosonPt,150,0,1500,TotalWeight*ZBosonKFactor_NLOewk/ZBosonKFactor_NLOonlyewk);
             plotFill("_ZBosonPt_KFactor_OnlyEWK",ZBosonPt,150,0,1500,TotalWeight*ZBosonKFactor_NLOonlyewk);
+//            plotFill("_ZBosonPt_KFactor_OnlyEWK_Up",ZBosonPt,150,0,1500,TotalWeight*ZBosonKFactor_NLOonlyewk*ZBosonKFactor_NLOonlyewk);
+//            plotFill("_ZBosonPt_KFactor_OnlyEWK_Down",ZBosonPt,150,0,1500,TotalWeight);
             
             
         } //End of Tree

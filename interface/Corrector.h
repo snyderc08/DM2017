@@ -427,10 +427,11 @@ float Get_W_Z_BosonKFactor(float WBosonPt, TH1F* WLO, TH1F* WNLO){
     float kfactor=1;
     for (int ibin =1; ibin < WLO->GetNbinsX()+1;ibin++){
     
-        if ( WBosonPt > WLO->GetBinCenter(ibin) - WLO->GetBinWidth(ibin)/2   && WBosonPt < WLO->GetBinCenter(ibin) + WLO->GetBinWidth(ibin)/2 ){
+        if ( WBosonPt > (WLO->GetBinCenter(ibin) - WLO->GetBinWidth(ibin)/2)   && WBosonPt < (WLO->GetBinCenter(ibin) + WLO->GetBinWidth(ibin)/2) ){
             LO=WLO->GetBinContent(ibin);
             NLO=WNLO->GetBinContent(ibin);
             kfactor=NLO/LO;
+            cout << "    k-factor is "<<kfactor<<"\n";
             break;
         }
     }

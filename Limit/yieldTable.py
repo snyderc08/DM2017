@@ -23,7 +23,7 @@ ROOT.gSystem.Load('libHiggsAnalysisCombinedLimit')
 
 ### ======= UNCONSTRAINED =========
 # fin = ROOT.TFile('output/LIMITS-svfit/cmb/wsp.root')
-fin = ROOT.TFile('ws.root')
+fin = ROOT.TFile('workspace.root')
 
 wsp = fin.Get('w')
 

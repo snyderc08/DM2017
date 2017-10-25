@@ -35,6 +35,7 @@ import os
 ROOT.gROOT.SetBatch(True)
 #ROOT.gROOT.ProcessLine('.x rootlogon.C')
 SubRootDir = 'OutFiles_PreSelection/'
+#SubRootDir = 'OutFiles_PreSelection_100to150/'  # changed October 23rd
 #SubRootDir = 'OutFiles_PreSelection_OldKFactor/'
 #SubRootDir = 'OutFiles_PreSelection_dPhiOverLapWithJetOnly/'
 #SubRootDir = 'OutFiles_PreSelection_OnlydPhiLeadJet/'
@@ -272,7 +273,7 @@ def MakeTheHistogram(channel,NormMC,NormQCD,ShapeQCD,NormTTbar):
         QCDEstimation=0
         for bin in xrange(50,1000):
             value=DataSampleQCDNormHist.GetBinContent(bin)
-            if value < 0 : value=0
+#            if value < 0 : value=0  Not needed otherwise the estimate will be larger
             FR= ApplyTheFakeRate(bin+1.5,FR_FitMaram,'Lepton')
             if FR> 0.9: FR=0.9
             QCDEstimation += value * FR/(1-FR)
@@ -322,7 +323,7 @@ if __name__ == "__main__":
     Isolation=["_Iso"]
     
     
-    MT= ["_NoMT","_HighMT","_MT50To150","_MT100to200","_MT200to300","_MT200","_MT300","_MT400"]
+    MT= ["_NoMT","_HighMT","_MT50To150","_MT150to200","_MT200to250","_MT250to300","_MT300to350","_MT200","_MT300","_MT400"]
 
     JPT=[ "_HighDPhi"]
 
