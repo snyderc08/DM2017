@@ -211,9 +211,9 @@ location='OutFiles_LO/'
 
 
 
-#process=['TT','W','SingleTop','VV','ZTT','Codex_1200']
-process=['TT','W','SingleTop','VV','ZTT','Codex_14']
-Unc=['jes','jer','met_UES','met_JES']
+
+process=['W','ZTT']
+Unc=['_ewkKfactor_W','_ewkKfactor_Z']
 
 
 #Input='../Limit/outputCodex_May11_NewSignificance_WithBtagVeto/Codex_MT500_MET100/limits/common/Codex_mj.input.root'
@@ -221,13 +221,13 @@ Input='_mj_LQMass_MT500_MET100_Iso.root'
 #dir='Codex__mj_1_13TeV'
 dir='MuJet'
 
-for pro in process:
-    for unc in Unc:
-
+for i,pro in enumerate(process):
+    for j,unc in enumerate(Unc):
+        if i!=j: continue 
         plotInput=[
-        [Input,'%s/%s_CMS_scale_%sUp'%(dir,pro,unc),'%sUp'%unc],
+        [Input,'%s/%s%sUp'%(dir,pro,unc),'%sUp'%unc],
         [Input,'%s/%s'%(dir,pro),'Nominal'],
-        [Input,'%s/%s_CMS_scale_%sDown'%(dir,pro,unc),'%sDown'%unc],
+        [Input,'%s/%s%sDown'%(dir,pro,unc),'%sDown'%unc],
         ]
 
         list=[]

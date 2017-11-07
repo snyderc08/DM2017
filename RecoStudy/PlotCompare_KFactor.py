@@ -232,7 +232,7 @@ def MakeCompare(root1,hist1,name1, root2,hist2, name2,root3, hist3,name3,Name,Sa
     
     
     c.SaveAs('kfactor%s.pdf'%Name)
-    outF=TFile('../interface/kfactor_lq%s.root'%Name,'RECREATE')
+    outF=TFile('../interface/kfactor_monoJet%s.root'%Name,'RECREATE')
     outHist=TH1F('KFcator','',2,0,2)
 #    outHist.SetBinContent(1,FitParameter_monoLQ[0])
 #    outHist.SetBinContent(2,FitParameter_monoLQ[1])
@@ -249,37 +249,47 @@ def MakeCompare(root1,hist1,name1, root2,hist2, name2,root3, hist3,name3,Name,Sa
 location='OutFiles_LO/'
 
 
-plotInput=[
+###################   K-factor for W
+plotInput_W=[
 [location+'WJetsToLNu_FXFX.root','_WBosonPt_KFactor_OnlyEWK','NLO(amc@NLO)+ NLO-EWK'],
 [location+'WJetsToLNu_LO.root','_WBosonPt','LO(Madgraph)'],
 [location+'WJetsToLNu_LO.root','_WBosonPt_KFactor','LO(Madgraph)+ NLO-QCD(from MonoJet)+ NLO-EWK'],
+[location+'WJetsToLNu_LO.root','_WBosonPt_KFactor_ewkUp','LO(Madgraph)+ NLO-QCD(from MonoJet)+ NLO-EWK_Up'],
+[location+'WJetsToLNu_LO.root','_WBosonPt_KFactor_ewkDown','LO(Madgraph)+ NLO-QCD(from MonoJet)+ NLO-EWK_Down'],
 ]
 
-list=[]
-for i in range(0,3):
-    for j in range(0,3):
-        list.append(plotInput[i][j])
+#list=[]
+#for i in range(0,5):
+#    for j in range(0,3):
+#        list.append(plotInput_W[i][j])
 
 def get_Factor_W():
-    MakeCompare(list[0],list[1],list[2],list[3],list[4],list[5],list[6],list[7],list[8],'_W','W+Jet')
+    MakeCompare(plotInput_W[0][0],plotInput_W[0][1],plotInput_W[0][2],plotInput_W[1][0],plotInput_W[1][1],plotInput_W[1][2],plotInput_W[2][0],plotInput_W[2][1],plotInput_W[2][2],'_W','W+Jet')
+
+    MakeCompare(plotInput_W[0][0],plotInput_W[0][1],plotInput_W[0][2],plotInput_W[1][0],plotInput_W[1][1],plotInput_W[1][2],plotInput_W[3][0],plotInput_W[3][1],plotInput_W[3][2],'_WUp','W+Jet')
+
+    MakeCompare(plotInput_W[0][0],plotInput_W[0][1],plotInput_W[0][2],plotInput_W[1][0],plotInput_W[1][1],plotInput_W[1][2],plotInput_W[4][0],plotInput_W[4][1],plotInput_W[4][2],'_WDown','W+Jet')
 
 
-
-
-plotInput2=[
+###################   K-factor for Z
+plotInput_Z=[
            [location+'DYJetsToLL_FXFX.root','_ZBosonPt_KFactor_OnlyEWK','NLO(amc@NLO)+ NLO-EWK'],
            [location+'DYJetsToLL_LO.root','_ZBosonPt','LO(Madgraph)'],
            [location+'DYJetsToLL_LO.root','_ZBosonPt_KFactor','LO(Madgraph)+ NLO-QCD(from MonoJet)+ NLO-EWK'],
+           [location+'DYJetsToLL_LO.root','_ZBosonPt_KFactor_ewkUp','LO(Madgraph)+ NLO-QCD(from MonoJet)+ NLO-EWK_Up'],
+           [location+'DYJetsToLL_LO.root','_ZBosonPt_KFactor_ewkDown','LO(Madgraph)+ NLO-QCD(from MonoJet)+ NLO-EWK_Down'],
            ]
 
-list2=[]
-for i in range(0,3):
-    for j in range(0,3):
-        list2.append(plotInput2[i][j])
+#list2=[]
+#for i in range(0,3):
+#    for j in range(0,3):
+#        list2.append(plotInput_Z[i][j])
 
 
 def get_Factor_Z():
-    MakeCompare(list2[0],list2[1],list2[2],list2[3],list2[4],list2[5],list2[6],list2[7],list2[8],'_Z','Z+Jet')
+    MakeCompare(plotInput_Z[0][0],plotInput_Z[0][1],plotInput_Z[0][2],plotInput_Z[1][0],plotInput_Z[1][1],plotInput_Z[1][2],plotInput_Z[2][0],plotInput_Z[2][1],plotInput_Z[2][2],'_Z','Z+Jet')
+    MakeCompare(plotInput_Z[0][0],plotInput_Z[0][1],plotInput_Z[0][2],plotInput_Z[1][0],plotInput_Z[1][1],plotInput_Z[1][2],plotInput_Z[3][0],plotInput_Z[3][1],plotInput_Z[3][2],'_ZUp','Z+Jet')
+    MakeCompare(plotInput_Z[0][0],plotInput_Z[0][1],plotInput_Z[0][2],plotInput_Z[1][0],plotInput_Z[1][1],plotInput_Z[1][2],plotInput_Z[4][0],plotInput_Z[4][1],plotInput_Z[4][2],'_ZDown','Z+Jet')
 
 
 

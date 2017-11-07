@@ -48,16 +48,26 @@ int main(int argc, char** argv) {
     // Muon Id, Iso, Trigger and Tracker Eff files
     //########################################
     TFile * MuCorrId_BCDEF= TFile::Open(("../interface/pileup-hists/ID_EfficienciesAndSF_BCDEF.root"));
-    TH2F * HistoMuId_BCDEF= (TH2F *) MuCorrId_BCDEF->Get("MC_NUM_TightID_DEN_genTracks_PAR_pt_eta/pt_abseta_ratio");
+//    TH2F * HistoMuId_BCDEF= (TH2F *) MuCorrId_BCDEF->Get("MC_NUM_TightID_DEN_genTracks_PAR_pt_eta/pt_abseta_ratio");
+    TH2F * HistoMuId_BCDEF= (TH2F *) MuCorrId_BCDEF->Get("MC_NUM_HighPtID_DEN_genTracks_PAR_newpt_eta/pair_ne_ratio");
+    
     
     TFile * MuCorrId_GH= TFile::Open(("../interface/pileup-hists/ID_EfficienciesAndSF_GH.root"));
-    TH2F * HistoMuId_GH= (TH2F *) MuCorrId_GH->Get("MC_NUM_TightID_DEN_genTracks_PAR_pt_eta/pt_abseta_ratio");
+//    TH2F * HistoMuId_GH= (TH2F *) MuCorrId_GH->Get("MC_NUM_TightID_DEN_genTracks_PAR_pt_eta/pt_abseta_ratio");
+    TH2F * HistoMuId_GH= (TH2F *) MuCorrId_GH->Get("MC_NUM_HighPtID_DEN_genTracks_PAR_newpt_eta/pair_ne_ratio");
+    
     
     TFile * MuCorrIso_BCDEF= TFile::Open(("../interface/pileup-hists/Iso_EfficienciesAndSF_BCDEF.root"));
-    TH2F * HistoMuIso_BCDEF= (TH2F *) MuCorrIso_BCDEF->Get("TightISO_TightID_pt_eta/pt_abseta_ratio");
+//    TH2F * HistoMuIso_BCDEF= (TH2F *) MuCorrIso_BCDEF->Get("TightISO_TightID_pt_eta/pt_abseta_ratio");
+    TH2F * HistoMuIso_BCDEF= (TH2F *) MuCorrIso_BCDEF->Get("tkLooseISO_highptID_newpt_eta/pair_ne_ratio");
     
     TFile * MuCorrIso_GH= TFile::Open(("../interface/pileup-hists/Iso_EfficienciesAndSF_GH.root"));
-    TH2F * HistoMuIso_GH= (TH2F *) MuCorrIso_GH->Get("TightISO_TightID_pt_eta/pt_abseta_ratio");
+//    TH2F * HistoMuIso_GH= (TH2F *) MuCorrIso_GH->Get("TightISO_TightID_pt_eta/pt_abseta_ratio");
+    TH2F * HistoMuIso_GH= (TH2F *) MuCorrIso_GH->Get("tkLooseISO_highptID_newpt_eta/pair_ne_ratio");
+    
+    
+    
+    
     
     TFile * MuCorrTrg_BCDEF= TFile::Open(("../interface/pileup-hists/Trigger_EfficienciesAndSF_RunBtoF.root"));
     TH2F * HistoMuTrg_BCDEF= (TH2F *) MuCorrTrg_BCDEF->Get("Mu50_OR_TkMu50_PtEtaBins/pt_abseta_ratio");
@@ -155,6 +165,7 @@ int main(int argc, char** argv) {
     float ElectronPtCut_=15;
     float CSVCut=   0.9535   ;                  //  https://twiki.cern.ch/twiki/bin/viewauth/CMS/BtagRecommendation80XReReco
     float LeptonIsoCut=0.15;
+    float LeptonTrkIsoCut=0.10;  // use the looseTrk Iso   https://twiki.cern.ch/twiki/bin/view/CMS/SWGuideMuonIdRun2#HighPt_Muon
     
     //########################################################################################################################################################
     //########################################################################################################################################################
@@ -524,13 +535,17 @@ int main(int argc, char** argv) {
             
             for  (int imu=0 ; imu < nMu; imu++){
                 
-                float IsoMu=muPFChIso->at(imu)/muPt->at(imu);
-                if ( (muPFNeuIso->at(imu) + muPFPhoIso->at(imu) - 0.5* muPFPUIso->at(imu) )  > 0.0)
-                    IsoMu= ( muPFChIso->at(imu)/muPt->at(imu) + muPFNeuIso->at(imu) + muPFPhoIso->at(imu) - 0.5* muPFPUIso->at(imu))/muPt->at(imu);
+                
+                
+                float IsoMu=muIsoTrk->at(imu)/muPt->at(imu);
+                
+//                float IsoMu=muPFChIso->at(imu)/muPt->at(imu);
+//                if ( (muPFNeuIso->at(imu) + muPFPhoIso->at(imu) - 0.5* muPFPUIso->at(imu) )  > 0.0)
+//                    IsoMu= ( muPFChIso->at(imu)/muPt->at(imu) + muPFNeuIso->at(imu) + muPFPhoIso->at(imu) - 0.5* muPFPUIso->at(imu))/muPt->at(imu);
                 
                 bool MuPtCut = muPt->at(imu) > LeptonPtCut_ && fabs(muEta->at(imu)) < 2.4 ;
 //                bool MuIdIso=( (muIDbit->at(imu) >> 2 & 1)  && fabs(muD0->at(imu)) < 0.045 && fabs(muDz->at(imu)) < 0.2); //Tight Muon Id
-                bool MuIdIso=( (muIDbit->at(imu) >> 2 & 1)); //Tight Muon Id
+                bool MuIdIso=( (muIDbit->at(imu) >> 4 & 1)  && fabs(muD0->at(imu)) < 0.045 && fabs(muDz->at(imu)) < 0.2); //Hig Pt muons
                 
                 
                 if (! MuPtCut || !MuIdIso ) continue;
@@ -583,7 +598,8 @@ int main(int argc, char** argv) {
                     //###############################################################################################
                     //  Isolation Categorization
                     //###############################################################################################
-                    bool LepPassIsolation= IsoMu < LeptonIsoCut;
+//                    bool LepPassIsolation= IsoMu < LeptonIsoCut;
+                    bool LepPassIsolation= IsoMu < LeptonTrkIsoCut;
                     
                     const int size_isoCat = 3;
                     bool Isolation = LepPassIsolation;

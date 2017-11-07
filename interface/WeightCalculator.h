@@ -62,9 +62,33 @@ float XSection(std::string OutName) {
     
     
     //Di-boson
-    else if (OutName.find("WW") != string::npos) return 115.0;
-    else if (OutName.find("WZ") != string::npos) return 47.13;
-    else if (OutName.find("ZZ") != string::npos) return 16.523;
+    else if (OutName.find("WW_pythia") != string::npos) return 115.0;
+    else if (OutName.find("WZ_pythia") != string::npos) return 47.13;
+    else if (OutName.find("ZZ_pythia") != string::npos) return 16.523;
+    
+    
+    
+    
+    else if (OutName.find("WWTo2L2Nu_powheg") != string::npos) return  12.178 ;
+    else if (OutName.find("WWTo4Q_powheg") != string::npos) return  51.723 ;
+    else if (OutName.find("WWToLNuQQ_powheg") != string::npos) return  49.997 ;
+    
+    else if (OutName.find("WZTo1L3Nu_amcatnloFXFX") != string::npos) return 3.033e+00;
+    else if (OutName.find("WZTo2L2Q_amcatnloFXFX") != string::npos) return  5.595 ;
+    else if (OutName.find("WZTo2Q2Nu_amcatnloFXFX") != string::npos) return 10.000; // NOTE THIS IS JUST MY ESTIMATION small effect
+    else if (OutName.find("WZTo3LNu_powheg") != string::npos) return  4.42965 ;
+    else if (OutName.find("WZToLNu2Q_powheg") != string::npos) return  10.71 ;
+    // The missing one is WZto4Q
+    
+    else if (OutName.find("ZZTo2L2Nu_powheg") != string::npos) return  0.564 ;
+    else if (OutName.find("ZZTo2L2Q_powheg") != string::npos) return  3.22 ;
+    else if (OutName.find("ZZTo2Q2Nu_powheg") != string::npos) return  4.04 ;
+    else if (OutName.find("ZZTo4L_powheg") != string::npos) return  1.212 ;
+    else if (OutName.find("ZZTo4Q_amcatnloFXFX") != string::npos) return 6.000;   // NOTE THIS IS JUST MY ESTIMATION
+    // The missing one is WZto4Nu
+    
+    
+    
     
     
     

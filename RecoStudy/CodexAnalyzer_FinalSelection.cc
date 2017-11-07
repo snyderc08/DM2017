@@ -103,16 +103,38 @@ int main(int argc, char** argv) {
     // W and DY K-factor files  (FIT-based K-factor)
     //########################################
     
-    TFile * kfactorW=TFile::Open("../interface/kfactor_W.root");
+    
+    
+    
+    TFile * kfactorW=TFile::Open("../interface/kfactor_monoJet_W.root");
     TH1F* HistkfactorW= (TH1F*) kfactorW->Get("KFcator");
     float kf_W_1=HistkfactorW->GetBinContent(1);
     float kf_W_2=HistkfactorW->GetBinContent(2);
     
-    TFile * kfactorZ=TFile::Open("../interface/kfactor_Z.root");
+    TFile * kfactorWUp=TFile::Open("../interface/kfactor_monoJet_WUp.root");
+    TH1F* HistkfactorWUp= (TH1F*) kfactorWUp->Get("KFcator");
+    float kf_W_1Up=HistkfactorWUp->GetBinContent(1);
+    float kf_W_2Up=HistkfactorWUp->GetBinContent(2);
+    
+    TFile * kfactorWDown=TFile::Open("../interface/kfactor_monoJet_WDown.root");
+    TH1F* HistkfactorWDown= (TH1F*) kfactorWDown->Get("KFcator");
+    float kf_W_1Down=HistkfactorWDown->GetBinContent(1);
+    float kf_W_2Down=HistkfactorWDown->GetBinContent(2);
+    
+    TFile * kfactorZ=TFile::Open("../interface/kfactor_monoJet_Z.root");
     TH1F* HistkfactorZ= (TH1F*) kfactorZ->Get("KFcator");
     float kf_Z_1=HistkfactorZ->GetBinContent(1);
     float kf_Z_2=HistkfactorZ->GetBinContent(2);
     
+    TFile * kfactorZUp=TFile::Open("../interface/kfactor_monoJet_ZUp.root");
+    TH1F* HistkfactorZUp= (TH1F*) kfactorZUp->Get("KFcator");
+    float kf_Z_1Up=HistkfactorZUp->GetBinContent(1);
+    float kf_Z_2Up=HistkfactorZUp->GetBinContent(2);
+    
+    TFile * kfactorZDown=TFile::Open("../interface/kfactor_monoJet_ZDown.root");
+    TH1F* HistkfactorZDown= (TH1F*) kfactorZDown->Get("KFcator");
+    float kf_Z_1Down=HistkfactorZDown->GetBinContent(1);
+    float kf_Z_2Down=HistkfactorZDown->GetBinContent(2);
     
     //########################################
     // Btagging scale factor and uncertainties
@@ -303,7 +325,7 @@ int main(int argc, char** argv) {
         
         
         float jetES[3]={-1,0,1};
-        std::string ResolJet_Cat[1] = {""};
+        std::string ResolJet_Cat[3] = {"JetERDown", "", "JetERUp"};
         std::string ScaleJet_Cat[3] = {"JetESDown", "", "JetESUp"};
         std::string ScaleMETUE_Cat[5] = {"METUESDown", "", "METUESUp","METJESDown","METJESUp"};
         
@@ -339,8 +361,12 @@ int main(int argc, char** argv) {
             float TopPtReweighting = 1;
             float WBosonPt=0;
             float WBosonKFactor=1;
+            float WBosonKFactor_ewkUp=1;
+            float WBosonKFactor_ewkDown=1;
             float ZBosonPt=0;
             float ZBosonKFactor=1;
+            float ZBosonKFactor_ewkUp=1;
+            float ZBosonKFactor_ewkDown=1;
             int modPDGId=-10;
             int AntimodPDGId=-10;
             
@@ -366,11 +392,15 @@ int main(int argc, char** argv) {
             size_t isWJets = InputROOT.find("WJets");
             //            if (isWJets!= string::npos) WBosonKFactor=Get_W_Z_BosonKFactor(WBosonPt,WLO,WNLO_ewk);  //Swtch ON only for LO Madgraph sample
             if (isWJets!= string::npos) WBosonKFactor= kf_W_1 + kf_W_2 * WBosonPt;
+            if (isWJets!= string::npos) WBosonKFactor_ewkUp= (kf_W_1Up + kf_W_2Up * WBosonPt)/WBosonKFactor;
+            if (isWJets!= string::npos) WBosonKFactor_ewkDown= (kf_W_1Down + kf_W_2Down * WBosonPt)/WBosonKFactor;
             
             //######################## Z K-factor
             size_t isDYJets = InputROOT.find("DYJets");
             //            if (isDYJets!= string::npos) ZBosonKFactor=Get_W_Z_BosonKFactor(ZBosonPt,ZLO,ZNLO_ewk);  //Swtch ON only for LO Madgraph sample
             if (isDYJets!= string::npos) ZBosonKFactor= kf_Z_1 + kf_Z_2 * ZBosonPt;
+            if (isDYJets!= string::npos) ZBosonKFactor_ewkUp= (kf_Z_1Up + kf_Z_2Up * ZBosonPt)/ZBosonKFactor;
+            if (isDYJets!= string::npos) ZBosonKFactor_ewkDown= (kf_Z_1Down + kf_Z_2Down * ZBosonPt)/ZBosonKFactor;
             
             //###############################################################################################
             //  Lumi, GEN & PileUp Weight
@@ -608,177 +638,189 @@ int main(int argc, char** argv) {
                 for (int ijet= 0 ; ijet < nJet ; ijet++){
                     
                     
-                    //                    float JetSmearResolution[3]={1,1,1};
-                    ////                    if (!isData){
-                    ////                        JetSmearResolution[0]=jetP4SmearDo->at(ijet);
-                    ////                        JetSmearResolution[1]=jetP4Smear->at(ijet);
-                    ////                        JetSmearResolution[2]=jetP4SmearUp->at(ijet);
-                    ////                    }
-                    float JetSmearResolution=1;
+                    float JetSmearResolution[3]={1,1,1};
+                    if (!isData){
+                        JetSmearResolution[0]=jetP4SmearDo->at(ijet);
+                        JetSmearResolution[1]=jetP4Smear->at(ijet);
+                        JetSmearResolution[2]=jetP4SmearUp->at(ijet);
+                    }
+                    //                    float JetSmearResolution=1;
                     
                     float UESMET[5]={pfMET_T1UESDo,pfMET,pfMET_T1UESUp,pfMET_T1JESDo,pfMET_T1JESUp};
                     float UESMETPhi[5]={pfMETPhi_T1UESDo,pfMETPhi,pfMETPhi_T1UESUp,pfMETPhi_T1JESDo,pfMETPhi_T1JESUp};
                     
                     
-                    //                    for (int jetRes=0;jetRes<3;jetRes++){  // No need for JER  it has very small effect
-                    for (int jetRes=0;jetRes<1;jetRes++){
-                        for (int metUE=0; metUE < 5; metUE++){
-                            for (int jetScl=0;jetScl<3;jetScl++){
-                                
-                                
-                                // This is to check that we only make the plots only either JES or MET is applied (not both of them simultaneously)!
-                                if (jetRes!=0 && metUE != 1  ) continue;
-                                if (jetRes!=0 && jetScl != 1 ) continue;
-                                if (metUE != 1 && jetScl != 1 ) continue;
-                                
-                                
-                                Jet4MomentumNonSmear.SetPtEtaPhiE(jetPt->at(ijet),jetEta->at(ijet),jetPhi->at(ijet),jetEn->at(ijet));
-                                //                                cout << "Jet pt before Smear="<<Jet4MomentumNonSmear.Pt()<<"\t";
-                                //                                Jet4Momentum=Jet4MomentumNonSmear*JetSmearResolution[jetRes];
-                                Jet4Momentum=Jet4MomentumNonSmear*JetSmearResolution;
-                                //                                cout << "Jet pt after Smear="<<Jet4Momentum.Pt()<<"\n";
-                                
-                                
-                                NewJet4Collection.SetPtEtaPhiE(Jet4Momentum.Pt()*(1+ jetES[jetScl]*jetJECUnc->at(ijet)) ,jetEta->at(ijet),jetPhi->at(ijet),Jet4Momentum.E()*(1+ jetES[jetScl]*jetJECUnc->at(ijet)));
-                                
-                                
-                                
-                                bool goodJet = (jetPFLooseId->at(ijet) > 0.5 && NewJet4Collection.Pt() > JetPtCut && fabs(NewJet4Collection.Eta() ) < 2.4 && NewJet4Collection.DeltaR(Mu4Momentum) > 0.5);
-                                if (! goodJet) continue;
-                                
-                                
-                                
-                                float jetMET=UESMET[metUE];
-                                float jetMETPhi=UESMETPhi[metUE];
-                                
-                                float jetMET_x = UESMET[metUE] * TMath::Cos(UESMETPhi[metUE]) - (Jet4Momentum.Px()- NewJet4Collection.Px()) ;
-                                float jetMET_y = UESMET[metUE] * TMath::Sin(UESMETPhi[metUE]) - (Jet4Momentum.Py()- NewJet4Collection.Py()) ;
-                                jetMET = sqrt (pow(jetMET_x,2)+ pow(jetMET_y,2));
-                                jetMETPhi = atan(jetMET_y / jetMET_x);
-                                if (UESMETPhi[metUE] > (TMath::Pi() / 2)) jetMETPhi += TMath::Pi();
-                                if (UESMETPhi[metUE] < (-TMath::Pi() / 2)) jetMETPhi -= TMath::Pi();
-                                
-                                
-                                
-                                LQ=NewJet4Collection + Mu4Momentum;
-                                if ((numTau+numElectron +numZboson + numBJet) > 0) continue;
-                                //                                if ((numTau+numElectron +numZboson) > 0 || fabs(LQ.Eta()) > 1.5) continue;// FIXME
-                                bool HighDPhi = deltaPhi(NewJet4Collection.Phi(),jetMETPhi) > 0.5 && deltaPhi(Mu4Momentum.Phi(),jetMETPhi) > 0.5;
-                                if (!HighDPhi) continue;
-                                
-                                //###############################################################################################
-                                //  Isolation Categorization
-                                //###############################################################################################
-                                //###############################################################################################
-                                
-                                
-                                bool LepPassIsolation= IsoMu < LeptonIsoCut;
-                                
-                                const int size_isoCat = 2;
-                                bool Isolation = LepPassIsolation;
-                                bool AntiIsolation =  !LepPassIsolation;
-                                
-                                
-                                bool Iso_category[size_isoCat] = {Isolation, AntiIsolation};
-                                std::string iso_Cat[size_isoCat] = {"_Iso", "_AntiIso"};
-                                //###############################################################################################
-                                //  MT Categorization
-                                //###############################################################################################
-                                float tmass_MuMet= TMass_F(muPt->at(imu), muPt->at(imu)*cos(muPhi->at(imu)),muPt->at(imu)*sin(muPhi->at(imu)) , jetMET, jetMETPhi);
-                                const int size_mTCat = 2;
-                                bool MT100 = tmass_MuMet > 100;
-                                bool MT500 = tmass_MuMet > 500;
-                                bool MT_category[size_mTCat] = {MT100,MT500};
-                                std::string MT_Cat[size_mTCat] = {"_MT100","_MT500"};
-                                
-                                
-                                //###############################################################################################
-                                //  MET Categorization
-                                //###############################################################################################
-                                
-                                const int size_METcut = 1;
-                                bool MET100 = jetMET > 100;
-                                bool MetCut_category[size_METcut] = {MET100};
-                                std::string MetCut_Cat[size_METcut] = {"_MET100"};
-                                
-                                //###############################################################################################
-                                //  Top Pt Reweighting Cat: The SF is meant to correct only the shape of the pt(top) distribution- not the amount of generated events ( you have to consider that the average weight is not 1 ! ) So we define two category for ttbar events
-                                
-                                //###############################################################################################
-                                int size_topPtRW =2;
-                                
-                                float TotalWeight[2] = {TotalWeight_withTopPtRW,TotalWeight_NoTopPtRW};
-                                std::string topPtRW[2] = {"", "_NoTopRW"};
-                                
-                                if (isTTJets == string::npos) size_topPtRW = 1; // If the sample in not ttbar, don't care about new category
-                                
-                                //###############################################################################################
-                                
-                                
-                                
-                                std::string CHL="MuJet";
-                                
-                                plotFill("Weight_Mu", LepCor,200,0,2);
-                                plotFill("TotalWeight_Mu",TotalWeight_NoTopPtRW*LepCor,1000,0,10);
-                                plotFill("TotalNonLumiWeight_Mu",TotalWeight_NoTopPtRW*LepCor/LumiWeight,1000,0,10);
-                                
-                                
-                                for (int iso = 0; iso < size_isoCat; iso++) {
-                                    if (Iso_category[iso]) {
-                                        for (int imt = 0; imt < size_mTCat; imt++) {
-                                            if (MT_category[imt]) {
-                                                for (int jpt = 0; jpt < size_METcut; jpt++) {
-                                                    if (MetCut_category[jpt]) {
-                                                        for (int itopRW = 0; itopRW < size_topPtRW; itopRW++) {
-                                                            
-                                                            
-                                                            
-                                                            float FullWeight = TotalWeight[itopRW] * LepCor *FinalBTagSF ;
-                                                            std::string FullStringName = topPtRW[itopRW] + MT_Cat[imt] + MetCut_Cat[jpt]+  iso_Cat[iso]+ ScaleJet_Cat[jetScl]+ResolJet_Cat[jetRes]+ ScaleMETUE_Cat[metUE];
-                                                            
-                                                            //This check is used to make sure that each event is just filled once for any of the categories ==> No doube-counting of events  (this is specially important for ttbar events where we have many jets and leptons)
-                                                            if (!( std::find(HistNamesFilled.begin(), HistNamesFilled.end(), FullStringName) != HistNamesFilled.end())){
-                                                                HistNamesFilled.push_back(FullStringName);
+                    for (int jetRes=0;jetRes<3;jetRes++){  // No need for JER  it has very small effect  but added for signal
+                        for (int jetRes=0;jetRes<3;jetRes++){
+                            for (int metUE=0; metUE < 5; metUE++){
+                                for (int jetScl=0;jetScl<3;jetScl++){
+                                    
+                                    
+                                    // This is to check that we only make the plots only either JES or MET is applied (not both of them simultaneously)!
+                                    if (jetRes!=1 && metUE != 1  ) continue;
+                                    if (jetRes!=1 && jetScl != 1 ) continue;
+                                    if (metUE != 1 && jetScl != 1 ) continue;
+                                    
+                                    
+                                    Jet4MomentumNonSmear.SetPtEtaPhiE(jetPt->at(ijet),jetEta->at(ijet),jetPhi->at(ijet),jetEn->at(ijet));
+                                    //                                cout << "Jet pt before Smear="<<Jet4MomentumNonSmear.Pt()<<"\t";
+                                    Jet4Momentum=Jet4MomentumNonSmear*JetSmearResolution[jetRes];
+                                    //                                Jet4Momentum=Jet4MomentumNonSmear*JetSmearResolution;
+                                    //                                cout << "Jet pt after Smear="<<Jet4Momentum.Pt()<<"\n";
+                                    
+                                    
+                                    NewJet4Collection.SetPtEtaPhiE(Jet4Momentum.Pt()*(1+ jetES[jetScl]*jetJECUnc->at(ijet)) ,jetEta->at(ijet),jetPhi->at(ijet),Jet4Momentum.E()*(1+ jetES[jetScl]*jetJECUnc->at(ijet)));
+                                    
+                                    
+                                    
+                                    bool goodJet = (jetPFLooseId->at(ijet) > 0.5 && NewJet4Collection.Pt() > JetPtCut && fabs(NewJet4Collection.Eta() ) < 2.4 && NewJet4Collection.DeltaR(Mu4Momentum) > 0.5);
+                                    if (! goodJet) continue;
+                                    
+                                    
+                                    
+                                    float jetMET=UESMET[metUE];
+                                    float jetMETPhi=UESMETPhi[metUE];
+                                    
+                                    float jetMET_x = UESMET[metUE] * TMath::Cos(UESMETPhi[metUE]) - (Jet4Momentum.Px()- NewJet4Collection.Px()) ;
+                                    float jetMET_y = UESMET[metUE] * TMath::Sin(UESMETPhi[metUE]) - (Jet4Momentum.Py()- NewJet4Collection.Py()) ;
+                                    jetMET = sqrt (pow(jetMET_x,2)+ pow(jetMET_y,2));
+                                    jetMETPhi = atan(jetMET_y / jetMET_x);
+                                    if (UESMETPhi[metUE] > (TMath::Pi() / 2)) jetMETPhi += TMath::Pi();
+                                    if (UESMETPhi[metUE] < (-TMath::Pi() / 2)) jetMETPhi -= TMath::Pi();
+                                    
+                                    
+                                    
+                                    LQ=NewJet4Collection + Mu4Momentum;
+                                    if ((numTau+numElectron +numZboson + numBJet) > 0) continue;
+                                    //                                if ((numTau+numElectron +numZboson) > 0 || fabs(LQ.Eta()) > 1.5) continue;// FIXME
+                                    bool HighDPhi = deltaPhi(NewJet4Collection.Phi(),jetMETPhi) > 0.5 && deltaPhi(Mu4Momentum.Phi(),jetMETPhi) > 0.5;
+                                    if (!HighDPhi) continue;
+                                    
+                                    //###############################################################################################
+                                    //  Isolation Categorization
+                                    //###############################################################################################
+                                    //###############################################################################################
+                                    
+                                    
+                                    bool LepPassIsolation= IsoMu < LeptonIsoCut;
+                                    
+                                    const int size_isoCat = 2;
+                                    bool Isolation = LepPassIsolation;
+                                    bool AntiIsolation =  !LepPassIsolation;
+                                    
+                                    
+                                    bool Iso_category[size_isoCat] = {Isolation, AntiIsolation};
+                                    std::string iso_Cat[size_isoCat] = {"_Iso", "_AntiIso"};
+                                    //###############################################################################################
+                                    //  MT Categorization
+                                    //###############################################################################################
+                                    float tmass_MuMet= TMass_F(muPt->at(imu), muPt->at(imu)*cos(muPhi->at(imu)),muPt->at(imu)*sin(muPhi->at(imu)) , jetMET, jetMETPhi);
+                                    const int size_mTCat = 2;
+                                    bool MT100 = tmass_MuMet > 100;
+                                    bool MT500 = tmass_MuMet > 500;
+                                    bool MT_category[size_mTCat] = {MT100,MT500};
+                                    std::string MT_Cat[size_mTCat] = {"_MT100","_MT500"};
+                                    
+                                    
+                                    //###############################################################################################
+                                    //  MET Categorization
+                                    //###############################################################################################
+                                    
+                                    const int size_METcut = 1;
+                                    bool MET100 = jetMET > 100;
+                                    bool MetCut_category[size_METcut] = {MET100};
+                                    std::string MetCut_Cat[size_METcut] = {"_MET100"};
+                                    
+                                    //###############################################################################################
+                                    //  Top Pt Reweighting Cat: The SF is meant to correct only the shape of the pt(top) distribution- not the amount of generated events ( you have to consider that the average weight is not 1 ! ) So we define two category for ttbar events
+                                    
+                                    //###############################################################################################
+                                    int size_topPtRW =2;
+                                    
+                                    float TotalWeight[2] = {TotalWeight_withTopPtRW,TotalWeight_NoTopPtRW};
+                                    std::string topPtRW[2] = {"", "_NoTopRW"};
+                                    
+                                    if (isTTJets == string::npos) size_topPtRW = 1; // If the sample in not ttbar, don't care about new category
+                                    
+                                    //###############################################################################################
+                                    
+                                    
+                                    
+                                    std::string CHL="MuJet";
+                                    
+                                    plotFill("Weight_Mu", LepCor,200,0,2);
+                                    plotFill("TotalWeight_Mu",TotalWeight_NoTopPtRW*LepCor,1000,0,10);
+                                    plotFill("TotalNonLumiWeight_Mu",TotalWeight_NoTopPtRW*LepCor/LumiWeight,1000,0,10);
+                                    
+                                    
+                                    for (int iso = 0; iso < size_isoCat; iso++) {
+                                        if (Iso_category[iso]) {
+                                            for (int imt = 0; imt < size_mTCat; imt++) {
+                                                if (MT_category[imt]) {
+                                                    for (int jpt = 0; jpt < size_METcut; jpt++) {
+                                                        if (MetCut_category[jpt]) {
+                                                            for (int itopRW = 0; itopRW < size_topPtRW; itopRW++) {
                                                                 
                                                                 
                                                                 
-                                                                plotFill(CHL+"_JetPt"+FullStringName,NewJet4Collection.Pt() ,200,0,2000,FullWeight);
-                                                                plotFill(CHL+"_LepPt"+FullStringName,Mu4Momentum.Pt(),2000,0,2000,FullWeight);
+                                                                float FullWeight = TotalWeight[itopRW] * LepCor *FinalBTagSF ;
+                                                                std::string FullStringName = topPtRW[itopRW] + MT_Cat[imt] + MetCut_Cat[jpt]+  iso_Cat[iso]+ ScaleJet_Cat[jetScl]+ResolJet_Cat[jetRes]+ ScaleMETUE_Cat[metUE];
                                                                 
-                                                                
-                                                                plotFill(CHL+"_tmass_MuMet"+FullStringName,tmass_MuMet,200,0,2000,FullWeight);
-                                                                plotFill(CHL+"_MET"+FullStringName,UESMET[metUE],200,0,2000,FullWeight);
-                                                                
-                                                                plotFill(CHL+"_CloseJetLepPt"+FullStringName,CLoseJetMuPt,2000,0,2000,FullWeight);
-                                                                plotFill(CHL+"_LQMass"+FullStringName,LQ.M(),300,0,3000,FullWeight);
-                                                                plotFill(CHL+"_LQMass_BtagUp"+FullStringName,LQ.M(),300,0,3000,FullWeight*FinalBTagSFUp/FinalBTagSF);
-                                                                plotFill(CHL+"_LQMass_BtagDown"+FullStringName,LQ.M(),300,0,3000,FullWeight*FinalBTagSFDown/FinalBTagSF);
-                                                                
-                                                                if (isTTJets!= string::npos) plotFill(CHL+"_LQMassTopPtRWUp"+FullStringName,LQ.M(),nBin,binMin,binMax,FullWeight * TopPtReweighting);
-                                                                if (isTTJets!= string::npos) plotFill(CHL+"_LQMassTopPtRWDown"+FullStringName,LQ.M(),nBin,binMin,binMax,FullWeight / TopPtReweighting);
-                                                                
-                                                                
-                                                                
-                                                                //##############################################################################
-                                                                //  QCD Scale Uncertainty for TTbar and W+Jets
-                                                                //##############################################################################
-                                                                if (isTTJets== string::npos &&  isWJets== string::npos) continue; //scale factor only for W and TT
-                                                                
-                                                                int counterscale=0;
-                                                                int counterpdf=0;
-                                                                int StartNumber=0;  // qcd scale uncertainty for W Madgraph starts from 1000
-                                                                if (isTTJets!= string::npos) StartNumber=1000; // qcd scale uncertainty for ttbar powheg starts from 1000
-                                                                for (int isys=0; isys < pdfSystWeight->size(); isys++){
+                                                                //This check is used to make sure that each event is just filled once for any of the categories ==> No doube-counting of events  (this is specially important for ttbar events where we have many jets and leptons)
+                                                                if (!( std::find(HistNamesFilled.begin(), HistNamesFilled.end(), FullStringName) != HistNamesFilled.end())){
+                                                                    HistNamesFilled.push_back(FullStringName);
                                                                     
-                                                                    if (atoi(pdfSystWeightId->at(isys).c_str()) > StartNumber && atoi(pdfSystWeightId->at(isys).c_str()) < StartNumber+10){
+                                                                    
+                                                                    
+                                                                    plotFill(CHL+"_JetPt"+FullStringName,NewJet4Collection.Pt() ,200,0,2000,FullWeight);
+                                                                    plotFill(CHL+"_LepPt"+FullStringName,Mu4Momentum.Pt(),2000,0,2000,FullWeight);
+                                                                    
+                                                                    
+                                                                    plotFill(CHL+"_tmass_MuMet"+FullStringName,tmass_MuMet,200,0,2000,FullWeight);
+                                                                    plotFill(CHL+"_MET"+FullStringName,UESMET[metUE],200,0,2000,FullWeight);
+                                                                    
+                                                                    plotFill(CHL+"_CloseJetLepPt"+FullStringName,CLoseJetMuPt,2000,0,2000,FullWeight);
+                                                                    plotFill(CHL+"_LQMass"+FullStringName,LQ.M(),300,0,3000,FullWeight);
+                                                                    
+                                                                    
+                                                                    
+                                                                    ////////   Systematic on K-factor for W and Z for  ewk correction
+                                                                    if (isWJets!= string::npos) plotFill(CHL+"_LQMass"+FullStringName+"_ewkKfactor_WUp",LQ.M(),300,0,3000,FullWeight*WBosonKFactor_ewkUp);
+                                                                    if (isWJets!= string::npos) plotFill(CHL+"_LQMass"+FullStringName+"_ewkKfactor_WDown",LQ.M(),300,0,3000,FullWeight*WBosonKFactor_ewkDown);
+                                                                    if (isDYJets!= string::npos) plotFill(CHL+"_LQMass"+FullStringName+"_ewkKfactor_ZUp",LQ.M(),300,0,3000,FullWeight*ZBosonKFactor_ewkUp);
+                                                                    if (isDYJets!= string::npos) plotFill(CHL+"_LQMass"+FullStringName+"_ewkKfactor_ZDown",LQ.M(),300,0,3000,FullWeight*ZBosonKFactor_ewkDown);
+                                                                    
+                                                                    
+                                                                    
+                                                                    plotFill(CHL+"_LQMass_BtagUp"+FullStringName,LQ.M(),300,0,3000,FullWeight*FinalBTagSFUp/FinalBTagSF);
+                                                                    plotFill(CHL+"_LQMass_BtagDown"+FullStringName,LQ.M(),300,0,3000,FullWeight*FinalBTagSFDown/FinalBTagSF);
+                                                                    
+                                                                    if (isTTJets!= string::npos) plotFill(CHL+"_LQMassTopPtRWUp"+FullStringName,LQ.M(),nBin,binMin,binMax,FullWeight * TopPtReweighting);
+                                                                    if (isTTJets!= string::npos) plotFill(CHL+"_LQMassTopPtRWDown"+FullStringName,LQ.M(),nBin,binMin,binMax,FullWeight / TopPtReweighting);
+                                                                    
+                                                                    
+                                                                    
+                                                                    //##############################################################################
+                                                                    //  QCD Scale Uncertainty for TTbar and W+Jets
+                                                                    //##############################################################################
+                                                                    if (isTTJets== string::npos &&  isWJets== string::npos &&  isDYJets== string::npos) continue; //scale factor only for W and TT
+                                                                    
+                                                                    int counterscale=0;
+                                                                    int counterpdf=0;
+                                                                    int StartNumber=0;  // qcd scale uncertainty for W Madgraph starts from 1000
+                                                                    if (isTTJets!= string::npos) StartNumber=1000; // qcd scale uncertainty for ttbar powheg starts from 1000
+                                                                    for (int isys=0; isys < pdfSystWeight->size(); isys++){
                                                                         
-                                                                        
-                                                                        plotFill(CHL+"_LQMass_Scale"+std::to_string(counterscale)+FullStringName,LQ.M(),20,0,2000,FullWeight*pdfSystWeight->at(isys)/pdfWeight);
-                                                                        counterscale++;
-                                                                        
+                                                                        if (atoi(pdfSystWeightId->at(isys).c_str()) > StartNumber && atoi(pdfSystWeightId->at(isys).c_str()) < StartNumber+10){
+                                                                            
+                                                                            
+                                                                            plotFill(CHL+"_LQMass_Scale"+std::to_string(counterscale)+FullStringName,LQ.M(),20,0,2000,FullWeight*pdfSystWeight->at(isys)/pdfWeight);
+                                                                            counterscale++;
+                                                                            
+                                                                        }
                                                                     }
+                                                                    //##############################################################################
                                                                 }
-                                                                //##############################################################################
                                                             }
                                                         }
                                                     }

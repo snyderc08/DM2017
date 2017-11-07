@@ -39,8 +39,8 @@ ROOT.gROOT.SetBatch(True)
 SubRootDir = 'OutFiles_FullSelection/'
 verbos_ = True
 JetScale = ["JetESDown", "", "JetESUp"]
-#JetResol = ["JetERDown", "", "JetERUp"]
-JetResol = [""]
+JetResol = ["JetERDown", "", "JetERUp"]
+#JetResol = [""]
 METScale = ["METUESDown", "", "METUESUp","METJESDown","METJESUp"]
 SystematicTopPtReWeight = ["TopPtRWUp","TopPtRWDown"]
 FinalName = ["_mj"]
@@ -84,11 +84,12 @@ def MakeTheHistogram(channel,NormMC,NormQCD,ShapeQCD,NormMCTT,chl,Binning):
 #    TOTMASS = ['800','900','1000','1100','1200','1300','1400','1500']
     category = [""]
 
-    
+    SystematicsystWk_factor= ["_ewkKfactor_WDown","_ewkKfactor_WUp"]
+    SystematicsystZk_factor= ["_ewkKfactor_ZDown","_ewkKfactor_ZUp"]
 
     JetScaleOut = ["_CMS_scale_jes"+"Down", "", "_CMS_scale_jes"+"Up"]
-#    JetResolOut = ["_CMS_scale_jer"+"Down", "", "_CMS_scale_jer"+"Up"]
-    JetResolOut = [""]
+    JetResolOut = ["_CMS_scale_jer"+"Down", "", "_CMS_scale_jer"+"Up"]
+#    JetResolOut = [""]
     METScaleOut = ["_CMS_scale_met_UES"+"Down", "", "_CMS_scale_met_UES"+"Up","_CMS_scale_met_JES"+"Down", "_CMS_scale_met_JES"+"Up"]
     Signal_Unc_TopPTRW = ["_CMS_top_pt_Reweighting"+"Up","_CMS_top_pt_Reweighting"+"Down"]
 
@@ -105,8 +106,8 @@ def MakeTheHistogram(channel,NormMC,NormQCD,ShapeQCD,NormMCTT,chl,Binning):
                 for mscale in range(len(METScale)):
                 
                     if jscale != 1 and mscale!=1 : continue
-                    if jscale != 1 and jres!=0 : continue
-                    if jres != 0 and mscale!=1 : continue
+                    if jscale != 1 and jres!=1 : continue
+                    if jres != 1 and mscale!=1 : continue
                     ################################################
                     #   Filling Signal
                     ################################################
@@ -190,8 +191,8 @@ def MakeTheHistogram(channel,NormMC,NormQCD,ShapeQCD,NormMCTT,chl,Binning):
                     
                     
                     ###############  Systematics on Shape and Norm for  qcd Scale ####
-                    if jscale==1 and mscale==1 and jres==0:
-                        qcdScaleTT=TFile('QCDScale_TTbar.root','R')
+                    if jscale==1 and mscale==1 and jres==1:
+                        qcdScaleTT=TFile('../interface/QCDScale_TTbar.root','R')
                         ttScaleUp=qcdScaleTT.Get('qcdScaleUp')
                         ttScaleDown=qcdScaleTT.Get('qcdScaleDown')
                 
@@ -206,7 +207,7 @@ def MakeTheHistogram(channel,NormMC,NormQCD,ShapeQCD,NormMCTT,chl,Binning):
                     
     
                     ###############  Systematics on Shape and Norm for  To PT Reweighting ####
-                    if jscale==1 and mscale==1 and jres==0:
+                    if jscale==1 and mscale==1 and jres==1:
                         for systTopRW in range(len(SystematicTopPtReWeight)):
                             tDirectory.cd()
 
@@ -241,6 +242,29 @@ def MakeTheHistogram(channel,NormMC,NormQCD,ShapeQCD,NormMCTT,chl,Binning):
                     
                     RebinedHist= NormHisto.Rebin(len(Binning)-1,"",Binning)
                     tDirectory.WriteObject(RebinedHist,NameOut)
+                    
+                    
+                    
+                    ###############  Systematics on DY k-factor for ewk correction ####
+                    if jscale==1 and mscale==1 and jres==1:
+                        for zkfactor in range(len(SystematicsystZk_factor)):
+                            tDirectory.cd()
+                            
+                            HistogramNorm = NormMC+SystematicsystZk_factor[zkfactor]
+                            
+                            NameOut= "ZTT"+str(SystematicsystZk_factor[zkfactor])
+                            
+                            NormFile= _FileReturn(Name, channel,NameCat, HistogramNorm, JetScale[jscale] , JetResol[jres] , METScale[mscale] )
+                            NormHisto=NormFile.Get("XXX")
+                            
+                            NormFileShape= _FileReturn(Name, channel,NameCat, HistogramNorm, JetScale[jscale] , JetResol[jres] , METScale[mscale] )
+                            NormHistoShape=NormFileShape.Get("XXX")
+                            
+                            NormHistoShape.Scale(NormHisto.Integral()*1.0/NormHistoShape.Integral())
+                            RebinedHist= NormHistoShape.Rebin(len(Binning)-1,"",Binning)
+                            tDirectory.WriteObject(RebinedHist,NameOut)
+                                
+                    
 
                     ################################################
                     #  Filling W
@@ -266,8 +290,8 @@ def MakeTheHistogram(channel,NormMC,NormQCD,ShapeQCD,NormMCTT,chl,Binning):
                     
                     
                     ###############  Systematics on Shape and Norm for  qcd Scale ####
-                    if jscale==1 and mscale==1 and jres==0:
-                        qcdScaleW=TFile('QCDScale_W.root','R')
+                    if jscale==1 and mscale==1 and jres==1:
+                        qcdScaleW=TFile('../interface/QCDScale_W.root','R')
                         wScaleUp=qcdScaleW.Get('qcdScaleUp')
                         wScaleDown=qcdScaleW.Get('qcdScaleDown')
                         
@@ -279,13 +303,35 @@ def MakeTheHistogram(channel,NormMC,NormQCD,ShapeQCD,NormMCTT,chl,Binning):
                         
                         tDirectory.WriteObject(ScaleUpW,'W_qcdScale_WUp')
                         tDirectory.WriteObject(ScaleDownW,'W_qcdScale_WDown')
-
+                
+                
+                
+                    ###############  Systematics on W k-factor for ewk correction ####
+                    if jscale==1 and mscale==1 and jres==1:
+                        for wkfactor in range(len(SystematicsystWk_factor)):
+                            tDirectory.cd()
+                            
+                            HistogramNorm = NormMC+SystematicsystWk_factor[wkfactor]
+                            
+                            NameOut= "W"+str(SystematicsystWk_factor[wkfactor])
+                            
+                            NormFile= _FileReturn(Name, channel,NameCat, HistogramNorm, JetScale[jscale] , JetResol[jres] , METScale[mscale] )
+                            NormHisto=NormFile.Get("XXX")
+                            
+                            NormFileShape= _FileReturn(Name, channel,NameCat, HistogramNorm, JetScale[jscale] , JetResol[jres] , METScale[mscale] )
+                            NormHistoShape=NormFileShape.Get("XXX")
+                            
+                            NormHistoShape.Scale(NormHisto.Integral()*1.0/NormHistoShape.Integral())
+                            NormHistoShape.Scale(SF_W_SingleLep())
+                            RebinedHist= NormHistoShape.Rebin(len(Binning)-1,"",Binning)
+                            tDirectory.WriteObject(RebinedHist,NameOut)
+                    
 
 
                     ################################################
                     #  Filling QCD
                     ################################################
-                    if jscale==1 and mscale==1 and jres==0:
+                    if jscale==1 and mscale==1 and jres==1:
                         print "--------------------------------------------------->     Processing QCD"
                         tDirectory.cd()
                         
@@ -380,7 +426,7 @@ def MakeTheHistogram(channel,NormMC,NormQCD,ShapeQCD,NormMCTT,chl,Binning):
                     ################################################
                     #  Filling Data
                     ################################################
-                    if jscale==1 and mscale==1 and jres==0:
+                    if jscale==1 and mscale==1 and jres==1:
                         print "--------------------------------------------------->     Processing Data"
                         tDirectory.cd()
 
