@@ -1513,14 +1513,39 @@ float Cor80X_Trigger_Mu_FIT(float pt,float eta, TH2F* HistoTrg ){
         //    cout<< "--->Electron    pt= "<<pt<<  "   eta" <<eta<< "  SF="<<HistoEleSF->GetBinContent(etaBIN, ptBIN)<<"\n";
         return HistoEleSF->GetBinContent(etaBIN, ptBIN);
         
-        
-        
-        
     }
-    float Cor80X_Trg_Ele(float pt, float eta){
-        
-        
-        
+
+// This is for efficiency of the electron
+float Cor80X_Ele_EffVeto(float pt, float eta,  TH2F * HistoEleSF){
+    
+    if (pt >= 10 && pt < 20 ) ptBIN=1;
+    if (pt >= 20 && pt < 35 ) ptBIN=2;
+    if (pt >= 35 && pt < 50) ptBIN=3;
+    if (pt >= 50 && pt < 90) ptBIN=4;
+    if (pt >= 90 && pt < 150) ptBIN=5;
+    if (pt >= 150 ) ptBIN=6;
+    
+    if (eta >= -2.5 && eta < -2 ) etaBIN=1;
+    if (eta >= -2 && eta < -1.566 ) etaBIN=2;
+    if (eta >= -1.566 && eta < -1.444) etaBIN=3;
+    if (eta >= -1.444 && eta < -0.800) etaBIN=4;
+    if (eta >= -0.800 && eta < 0 ) etaBIN=5;
+    if (eta >= 0 && eta < 0.800 ) etaBIN=6;
+    if (eta >= 0.800 && eta < 1.444 ) etaBIN=7;
+    if (eta >= 1.444 && eta < 1.566 ) etaBIN=8;
+    if (eta >= 1.566 && eta < 2 ) etaBIN=9;
+    if (eta >= 2 && eta < 2.5 ) etaBIN=10;
+    
+    return HistoEleSF->GetBinContent(etaBIN, ptBIN);
+    
+}
+
+
+
+float Cor80X_Trg_Ele(float pt, float eta){
+    
+    
+    
         if (pt >= 50 && pt < 55){
             if (eta >= -2.5 && eta < -2 ) return   .729;
             if (eta >= -2 && eta < -1.566 ) return   .752;
@@ -1684,8 +1709,42 @@ float getCorrFactorMuon74X(bool isData, float pt, float eta, TH2F * HistoId, TH2
         else
             return Cor80X_IDIso_Ele(pt,eta,HistoEleSF);
     }
+
+float getEffVetoMVA90WPElectron80X(bool isData, float pt, float eta,    TH2F * HistoEleSF , TH2F*  HistoEleEffVetoMC, TH2F*  HistoEleEffVetoData){
     
+    if (isData)
+        return 1;
+    else
+    {
+        
+//        float SF=getCorrFactorMVA90WPElectron80X( isData,  pt,  eta, HistoEleSF );
+        float EffMC= 1 - Cor80X_Ele_EffVeto(pt,eta,HistoEleEffVetoMC);
+        float EffData= 1 - Cor80X_Ele_EffVeto(pt,eta,HistoEleEffVetoData);
+        float SFIneff=EffData/EffMC;
+        return (1- SFIneff * EffMC)/(1-EffMC);
+    }
+}
+
+
+
+
+
+float getCorrFactorMuon80X_TriMu(bool isData, float pt, float eta, TH2F ** HistoId, TH2F ** HistoIso,TH2F ** HistoTrg, TGraphAsymmErrors * graph) {
     
+    if (isData)
+        return 1;
+    else{
+        float Weighted_IDSF=CalcWeightedObj(Cor80X_ID_Mu_BCDEF(pt,eta,HistoId[0]), Cor80X_ID_Mu_GH(pt,eta,HistoId[1]));
+        float Weighted_IsoSF=CalcWeightedObj(Cor80X_Iso_Mu_BCDEF(pt,eta,HistoIso[0]), Cor80X_Iso_Mu_GH(pt,eta,HistoIso[1]));        
+        float Tracking_SF=Cor80X_TRK_Mu_Full2016(eta, graph);
+        return (Weighted_IDSF * Weighted_IsoSF * Tracking_SF);
+    }
     
-    
-    
+}
+
+
+
+
+
+
+

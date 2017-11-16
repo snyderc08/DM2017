@@ -395,50 +395,18 @@ int main(int argc, char** argv) {
             
             
             //###########       Trigger Requirement ###########################################################
-            bool PassTrigger = (HLTEleMuX >> 21 & 1) == 1; //   else if (name.find("HLT_Mu50_v") != string::npos) bitEleMuX = 21;
+            //            else if (name.find("HLT_IsoMu24_v")   != string::npos) bitEleMuX = 19;
+            //            else if (name.find("HLT_IsoTkMu24_v") != string::npos) bitEleMuX = 20;
+            
+            bool PassTrigger = ((HLTEleMuX >> 20 & 1) == 1 || (HLTEleMuX >> 19 & 1) == 1 );
+            
             if (! PassTrigger) continue;
             
             //###########       tau Veto   ###########################################################
             int numTau=0;
-            for  (int itau=0 ; itau < nTau; itau++){
-                
-                if (tauPt->at(itau) < TauPtCut_  || fabs(tauEta->at(itau)) > 2.3 ) continue;
-                
-                bool TauIdIso =  taupfTausDiscriminationByDecayModeFinding->at(itau) > 0.5 && tauByLooseMuonRejection3->at(itau) > 0 && tauByMVA6LooseElectronRejection->at(itau) > 0 && tauByLooseIsolationMVArun2v1DBoldDMwLT->at(itau) > 0;
-                
-                if (!TauIdIso) continue;
-                numTau++;
-            }
             //###########       Ele Veto   ###########################################################
             //            https://twiki.cern.ch/twiki/bin/view/CMS/MultivariateElectronIdentificationRun2#Recommended_MVA_recipes_for_2016
             int numElectron=0;
-            float ElectronCor=1;
-            TLorentzVector Ele4Momentum;
-            float ElectronEffVeto=1;
-            Ele4Momentum.SetPtEtaPhiM(0,0,0,0);
-            for  (int jele=0 ; jele < nEle; jele++){
-                
-                if ( elePt->at(jele) < 15 || fabs(eleEta->at(jele)) > 2.5) continue;
-                
-                bool eleMVAIdExtra= false;
-                if (fabs (eleSCEta->at(jele)) <= 0.8 && eleIDMVA->at(jele) >   0.837  ) eleMVAIdExtra= true;
-                else if (fabs (eleSCEta->at(jele)) >  0.8 &&fabs (eleSCEta->at(jele)) <=  1.5 && eleIDMVA->at(jele) >   0.715  ) eleMVAIdExtra= true;
-                else if ( fabs (eleSCEta->at(jele)) >=  1.5 && eleIDMVA->at(jele) >  0.357  ) eleMVAIdExtra= true;
-                else eleMVAIdExtra= false;
-                
-                
-                
-                if (!(eleMVAIdExtra )) {
-                    ElectronEffVeto= ElectronEffVeto * getEffVetoMVA90WPElectron80X(isData,  elePt->at(jele),eleSCEta->at(jele),    HistoEleMVAIdIso90 , HistoEleMVAIdIso90_EffMC,HistoEleMVAIdIso90_EffData);
-                continue;
-                }
-                
-                ElectronCor=getCorrFactorMVA90WPElectron80X(isData,  elePt->at(jele),eleSCEta->at(jele),    HistoEleMVAIdIso90 );
-                Ele4Momentum.SetPtEtaPhiM(elePt->at(jele),eleEta->at(jele),elePhi->at(jele),eleMass);
-                numElectron++;
-                
-                break;
-            }
             //###########       bJet Veto   ###########################################################
             int numBJet=0;
             int numlightJet=0;
@@ -487,25 +455,7 @@ int main(int argc, char** argv) {
             
             //###########       Z boson Veto   ###########################################################
             int numZboson=0;
-            if (nMu > 1){
-                TLorentzVector Mu4Momentum_0,Mu4Momentum_1,Z4Momentum;
-                Mu4Momentum_0.SetPtEtaPhiM(muPt->at(0),muEta->at(0),muPhi->at(0),MuMass);
-                Mu4Momentum_1.SetPtEtaPhiM(muPt->at(1),muEta->at(1),muPhi->at(1),MuMass);
-                Z4Momentum=Mu4Momentum_1+Mu4Momentum_0;
-                
-                float IsoMu1=muPFChIso->at(0)/muPt->at(0);
-                if ( (muPFNeuIso->at(0) + muPFPhoIso->at(0) - 0.5* muPFPUIso->at(0) )  > 0.0)
-                    IsoMu1= ( muPFChIso->at(0)/muPt->at(0) + muPFNeuIso->at(0) + muPFPhoIso->at(0) - 0.5* muPFPUIso->at(0))/muPt->at(0);
-                
-                float IsoMu2=muPFChIso->at(1)/muPt->at(1);
-                if ( (muPFNeuIso->at(1) + muPFPhoIso->at(1) - 0.5* muPFPUIso->at(1) )  > 0.0)
-                    IsoMu2= ( muPFChIso->at(1)/muPt->at(1) + muPFNeuIso->at(1) + muPFPhoIso->at(1) - 0.5* muPFPUIso->at(1))/muPt->at(1);
-                
-                if ( muPt->at(0) > 60 && muPt->at(1) > 15 &&  IsoMu1 < 0.25  && IsoMu2 < 0.25 && Z4Momentum.M() > 80 && Z4Momentum.M()< 100 ) numZboson++;
-            }
-            
-            
-            
+            if (numBJet > 0) continue;
             //###############################################################################################
             //  Some Histogram Filling
             //###############################################################################################
@@ -527,124 +477,78 @@ int main(int argc, char** argv) {
             //############################################################################################
             //###########       Loop over MuJet events   #################################################
             //############################################################################################
-            TLorentzVector Mu4Momentum, Jet4Momentum,KJet4Momentum,LQ4Momentum,Mu24Momentum;
+            TLorentzVector Mui_4Momentum, Muj_4Momentum,Elei_4Momentum;
             
             for  (int imu=0 ; imu < nMu; imu++){
                 
-                float IsoMu=muPFChIso->at(imu)/muPt->at(imu);
+                float IsoMu_i=muPFChIso->at(imu)/muPt->at(imu);
                 if ( (muPFNeuIso->at(imu) + muPFPhoIso->at(imu) - 0.5* muPFPUIso->at(imu) )  > 0.0)
-                    IsoMu= ( muPFChIso->at(imu)/muPt->at(imu) + muPFNeuIso->at(imu) + muPFPhoIso->at(imu) - 0.5* muPFPUIso->at(imu))/muPt->at(imu);
+                    IsoMu_i= ( muPFChIso->at(imu)/muPt->at(imu) + muPFNeuIso->at(imu) + muPFPhoIso->at(imu) - 0.5* muPFPUIso->at(imu))/muPt->at(imu);
                 
-                bool MuPtCut = muPt->at(imu) > LeptonPtCut_ && fabs(muEta->at(imu)) < 2.4 ;
-                bool MuIdIso=( (muIDbit->at(imu) >> 2 & 1)  && fabs(muD0->at(imu)) < 0.045 && fabs(muDz->at(imu)) < 0.2); //Tight Muon Id
-//                bool MuIdIso=( (muIDbit->at(imu) >> 2 & 1)); //Tight Muon Id
-                
-                
-                if (! MuPtCut || !MuIdIso ) continue;
+                bool MuPtCut_i = muPt->at(imu) > 30 && fabs(muEta->at(imu)) < 2.4 ;
+                bool MuIdIso_i=( (muIDbit->at(imu) >> 2 & 1) && IsoMu_i < 0.15); //Tight Muon Id
                 
                 
-                float MuonCor=getCorrFactorMuon80X(isData,  muPt->at(imu), muEta->at(imu) , HistoMuId,HistoMuIso,HistoMuTrg,HistoMuTrack);
+                if (! MuPtCut_i || !MuIdIso_i ) continue;
                 
+                float MuonCor_i=getCorrFactorMuon80X_TriMu(isData,  muPt->at(imu), muEta->at(imu) , HistoMuId,HistoMuIso,HistoMuTrg,HistoMuTrack);
+                Mui_4Momentum.SetPtEtaPhiM(muPt->at(imu),muEta->at(imu),muPhi->at(imu),MuMass);
                 
-                Mu4Momentum.SetPtEtaPhiM(muPt->at(imu),muEta->at(imu),muPhi->at(imu),MuMass);
-                
-                
-                //###########      Finding the closest jet near mu   ###########################################################
-                if (nMu > 1) Mu24Momentum.SetPtEtaPhiE(muPt->at(1), muEta->at(1), muPhi->at(1), MuMass);
-                
-                float CLoseJetMuPt=muPt->at(imu);
-                float CLoseJetMuEta=muEta->at(imu);
-                
-                if (MuPtCut && MuIdIso ){
+            
+                for  (int jmu=imu+1 ; jmu < nMu; jmu++){
                     
-                    double Refer_R_jetmu = 5;
+                    float IsoMu_j=muPFChIso->at(jmu)/muPt->at(jmu);
+                    if ( (muPFNeuIso->at(jmu) + muPFPhoIso->at(jmu) - 0.5* muPFPUIso->at(jmu) )  > 0.0)
+                        IsoMu_j= ( muPFChIso->at(jmu)/muPt->at(jmu) + muPFNeuIso->at(jmu) + muPFPhoIso->at(jmu) - 0.5* muPFPUIso->at(jmu))/muPt->at(jmu);
                     
-                    for (int kjet= 0 ; kjet < nJet ; kjet++){
-                        KJet4Momentum.SetPtEtaPhiE(jetPt->at(kjet),jetEta->at(kjet),jetPhi->at(kjet),jetEn->at(kjet));
+                    bool MuPtCut_j = muPt->at(jmu) > 30 && fabs(muEta->at(jmu)) < 2.4 ;
+                    bool MuIdIso_j=( (muIDbit->at(jmu) >> 2 & 1) && IsoMu_j < 0.15); //Tight Muon Id
+                    
+                    
+                    if (! MuPtCut_j || !MuIdIso_j ) continue;
+                    
+                    float MuonCor_j=getCorrFactorMuon80X_TriMu(isData,  muPt->at(jmu), muEta->at(jmu) , HistoMuId,HistoMuIso,HistoMuTrg,HistoMuTrack);
+                    Muj_4Momentum.SetPtEtaPhiM(muPt->at(jmu),muEta->at(jmu),muPhi->at(jmu),MuMass);
+                    
+                    
+                    for  (int iele=0 ; iele < nEle; iele++){
                         
                         
-                        if (KJet4Momentum.DeltaR(Mu4Momentum) < Refer_R_jetmu) {
-                            Refer_R_jetmu = KJet4Momentum.DeltaR(Mu4Momentum);
-                            if (Refer_R_jetmu < 0.5 && jetPt->at(kjet)  >= muPt->at(imu)) {
-                                CLoseJetMuPt = jetPt->at(kjet);
-                                CLoseJetMuEta = jetEta->at(kjet);
-                                
-                            }
-                        }
-                    }
-                }
-                
-                //###########    loop over  Jet    ###########################################################
-                
-                for (int ijet= 0 ; ijet < nJet ; ijet++){
+                        bool eleMVAIdExtra_i= false;
+                        if (fabs (eleSCEta->at(iele)) <= 0.8 && eleIDMVA->at(iele) >   0.941  ) eleMVAIdExtra_i= true;
+                        else if (fabs (eleSCEta->at(iele)) >  0.8 &&fabs (eleSCEta->at(iele)) <=  1.5 && eleIDMVA->at(iele) >   0.899  ) eleMVAIdExtra_i= true;
+                        else if ( fabs (eleSCEta->at(iele)) >=  1.5 && eleIDMVA->at(iele) >  0.758  ) eleMVAIdExtra_i= true;
+                        else eleMVAIdExtra_i= false;
+                        
+                        bool ElePtCut = elePt->at(iele) > 10 && fabs(eleEta->at(iele)) < 2.5 ;
+                        bool EleIdIso=eleMVAIdExtra_i; //Tight Muon Id
+                        
+                        
+                        
+                        
+                        if (! ElePtCut || !EleIdIso ) continue;
+                        
+                        float MuonCor_k=1;
+                        
+                        Elei_4Momentum.SetPtEtaPhiM(elePt->at(iele),eleEta->at(iele),elePhi->at(iele),eleMass);
+                        
                     
-                    Jet4Momentum.SetPtEtaPhiE(jetPt->at(ijet),jetEta->at(ijet),jetPhi->at(ijet),jetEn->at(ijet));
+//                        float M_ij=100;
+//                        float M_ik=100;
+//                        float M_jk=100;
+//                        float M_Zboson=0;
+//                        float M_Wboson=0;
+//                        
+//                        if (muCharge->at(imu) * muCharge->at(jmu) < 0)  M_ij = fabs((Mui_4Momentum+Muj_4Momentum).M()-91);
+//                        if (muCharge->at(imu) * muCharge->at(kmu) < 0)  M_ik = fabs((Mui_4Momentum+Muk_4Momentum).M()-91);
+//                        if (muCharge->at(jmu) * muCharge->at(kmu) < 0)  M_jk = fabs((Muj_4Momentum+Muk_4Momentum).M()-91);
+                        
+                 
+                        float M_Zboson=(Mui_4Momentum+Muj_4Momentum).M();
+                        float M_Wboson=TMass_F(Elei_4Momentum.Pt(), Elei_4Momentum.Px(),Elei_4Momentum.Py() , pfMET, pfMETPhi);
+//                        if (M_ik < M_ij && M_ik < M_jk) {M_Zboson=(Mui_4Momentum+Muk_4Momentum).M(); M_Wboson=TMass_F(Muj_4Momentum.Pt(), Muj_4Momentum.Px(),Muj_4Momentum.Py() , pfMET, pfMETPhi);}
+//                        if (M_jk < M_ij && M_jk < M_ik) {M_Zboson=(Muj_4Momentum+Muk_4Momentum).M(); M_Wboson=TMass_F(Mui_4Momentum.Pt(), Mui_4Momentum.Px(),Mui_4Momentum.Py() , pfMET, pfMETPhi);}
                     
-                    
-                    bool goodJet = (jetPFLooseId->at(ijet) > 0.5 && jetPt->at(ijet) > JetPtCut && fabs(jetEta->at(ijet)) < 2.4 && Jet4Momentum.DeltaR(Mu4Momentum) > 0.5);
-                    if (! goodJet) continue;
-                    
-                    LQ4Momentum=Jet4Momentum + Mu4Momentum;
-                    
-                    bool isThisJetElectron= Jet4Momentum.DeltaR(Ele4Momentum) < 0.5;
-                    //###############################################################################################
-                    //  Isolation Categorization
-                    //###############################################################################################
-                    bool LepPassIsolation= IsoMu < LeptonIsoCut;
-                    
-                    const int size_isoCat = 3;
-                    bool Isolation = LepPassIsolation;
-                    bool AntiIsolation =  !LepPassIsolation;
-                    bool Total = 1;
-                    
-                    bool Iso_category[size_isoCat] = {Isolation, AntiIsolation,Total};
-                    std::string iso_Cat[size_isoCat] = {"_Iso", "_AntiIso","_Total"};
-                    //###############################################################################################
-                    //  MT Categorization
-                    //###############################################################################################
-                    float tmass_MuMet= TMass_F(muPt->at(imu), muPt->at(imu)*cos(muPhi->at(imu)),muPt->at(imu)*sin(muPhi->at(imu)) , pfMET, pfMETPhi);
-                    float tmass_JetMet= TMass_F(jetPt->at(ijet), jetPt->at(ijet)*cos(jetPhi->at(ijet)),jetPt->at(ijet)*sin(jetPhi->at(ijet)) , pfMET, pfMETPhi);
-                    float tmass_LQMet= TMass_F(LQ4Momentum.Pt(), LQ4Momentum.Px(),LQ4Momentum.Py(), pfMET, pfMETPhi);
-                    
-                    
-                    const int size_mTCat = 10;
-                    
-                    bool NoMT = 1;
-                    bool HighMT = (tmass_MuMet > 100);
-                    bool MT50To150=(tmass_MuMet > 50 && tmass_MuMet <= 150);
-                    bool MT150To200=(tmass_MuMet > 150 && tmass_MuMet <= 200);
-                    bool MT200To250=(tmass_MuMet > 200 && tmass_MuMet <= 250);
-                    bool MT250To300=(tmass_MuMet > 250 && tmass_MuMet <= 300);
-                    bool MT300To350=(tmass_MuMet > 300 && tmass_MuMet <= 350);
-                    bool MTMore200=tmass_MuMet > 200 ;
-                    bool MTMore300=tmass_MuMet > 300 ;
-                    bool MTMore400=tmass_MuMet > 400 ;
-                    
-                    bool MT_category[size_mTCat] = {NoMT,HighMT,MT50To150,MT150To200,MT200To250,MT250To300,MT300To350,MTMore200,MTMore300,MTMore400};
-                    std::string MT_Cat[size_mTCat] = {"_NoMT","_HighMT","_MT50To150","_MT150to200","_MT200to250","_MT250to300","_MT300to350","_MT200","_MT300","_MT400"};
-                    
-                    //###############################################################################################
-                    //  dPhi Jet_MET Categorization
-                    //###############################################################################################
-                    const int size_jetMetPhi = 2;
-                    bool lowDPhi = (deltaPhi(Jet4Momentum.Phi(),pfMETPhi) < 0.5 || deltaPhi(Mu4Momentum.Phi(),pfMETPhi) < 0.5 );
-                    bool HighDPhi = (deltaPhi(Jet4Momentum.Phi(),pfMETPhi) >= 0.5 && deltaPhi(Mu4Momentum.Phi(),pfMETPhi) >= 0.5  );
-                    
-                    bool jetMetPhi_category[size_jetMetPhi] = {lowDPhi,HighDPhi};
-                    std::string jetMetPhi_Cat[size_jetMetPhi] = {"_LowDPhi", "_HighDPhi"};
-                    
-                    //###############################################################################################
-                    //  TTbar & DY control region Categorization
-                    //###############################################################################################
-                    const int size_CR = 3;
-                    
-                    bool signalRegion = numTau+numZboson + numElectron  < 1  && numBJet < 1;
-                    bool TTcontrolRegion_DiLep = (numTau <1 && numZboson < 1 && numElectron > 0 && !isThisJetElectron );
-                    if (TTcontrolRegion_DiLep) FinalBTagSF=1;
-                    bool TTcontrolRegion_SingleLep = (numTau+numZboson + numElectron  < 1  && numBJet >= 1);
-                    
-                    bool region_category[size_CR] = {signalRegion,TTcontrolRegion_DiLep,TTcontrolRegion_SingleLep};
-                    std::string region_Cat[size_CR] = {"", "_ttbarCRDiLep","_ttbarCRSingleLep"};
                     
                     //###############################################################################################
                     //  Top Pt Reweighting Cat: The SF is meant to correct only the shape of the pt(top) distribution- not the amount of generated events ( you have to consider that the average weight is not 1 ! ) So we define two category for ttbar events
@@ -659,29 +563,19 @@ int main(int argc, char** argv) {
                     
                     //###############################################################################################
                     
-                    std::string CHL="MuJet";
-                    
-                    plotFill("Weight_Mu", MuonCor,200,0,2);
-                    plotFill("Weight_Ele", ElectronCor,200,0,2);
-                    plotFill("TotalWeight_Mu",TotalWeight[0]*MuonCor,1000,0,10);
-                    plotFill("TotalNonLumiWeight_Mu",TotalWeight[0]*MuonCor/LumiWeight,200,0,2);
+                    std::string CHL="TriMu";
                     
                     
-                    for (int iso = 0; iso < size_isoCat; iso++) {
-                        if (Iso_category[iso]) {
-                            for (int imt = 0; imt < size_mTCat; imt++) {
-                                if (MT_category[imt]) {
-                                    for (int jpt = 0; jpt < size_jetMetPhi; jpt++) {
-                                        if (jetMetPhi_category[jpt]) {
-                                            for (int iCR = 0; iCR < size_CR; iCR++) {
-                                                if (region_category[iCR]) {
+                    
+                    
+                    
                                                     for (int itopRW = 0; itopRW < size_topPtRW; itopRW++) {
                                                         
                                                         
                                                         
                                                         ////////////////////////////////////   Naming the Histogram
-                                                        float FullWeight = TotalWeight[itopRW] * MuonCor *ElectronCor * FinalBTagSF;
-                                                        std::string FullStringName = topPtRW[itopRW] + MT_Cat[imt] + jetMetPhi_Cat[jpt] +  region_Cat[iCR] + iso_Cat[iso]  ;
+                                                        float FullWeight = TotalWeight[itopRW] * MuonCor_i *MuonCor_j *MuonCor_k * FinalBTagSF;
+                                                        std::string FullStringName = topPtRW[itopRW];
                                                         
                                                         
                                                         
@@ -690,42 +584,15 @@ int main(int argc, char** argv) {
                                                         if (!( std::find(HistNamesFilled.begin(), HistNamesFilled.end(), FullStringName) != HistNamesFilled.end())){
                                                             HistNamesFilled.push_back(FullStringName);
                                                             //##################
-                                                            plotFill(CHL+"_ElectronEffVeto"+FullStringName,ElectronEffVeto,300,0,3);
-                                                            plotFill(CHL+"_tmass_MuMet"+FullStringName,tmass_MuMet,200,0,2000,FullWeight);
-                                                            plotFill(CHL+"_MET"+FullStringName,pfMET,200,0,2000,FullWeight);
-                                                            plotFill(CHL+"_JetPt"+FullStringName,jetPt->at(ijet) ,2000,0,2000,FullWeight);
-                                                            plotFill(CHL+"_JetEta"+FullStringName,jetEta->at(ijet),120,-3,3,FullWeight);
-                                                            plotFill(CHL+"_LepPt"+FullStringName,muPt->at(imu),2000,0,2000,FullWeight);
-                                                            plotFill(CHL+"_LepEta"+FullStringName,muEta->at(imu),100,-2.5,2.5,FullWeight);
-                                                            plotFill(CHL+"_CloseJetLepPt"+FullStringName,CLoseJetMuPt,2000,0,2000,FullWeight);
                                                             
-                                                            //                                                                    plotFill(CHL+"_nVtx"+FullStringName,nVtx,50,0,50,FullWeight);
-                                                            //                                                                    plotFill(CHL+"_nVtx_NoPU"+FullStringName,nVtx,50,0,50,FullWeight/ PUWeight);
                                                             
-                                                            plotFill(CHL+"_LQMass"+FullStringName,LQ4Momentum.M(),200,0,2000,FullWeight);
-                                                            plotFill(CHL+"_LQEta"+FullStringName,LQ4Momentum.Eta(),500,-5,5,FullWeight);
+                                                            plotFill("pfMET"+FullStringName, pfMET,500,0,500,FullWeight);
+                                                            plotFill("M_Zboson"+FullStringName, M_Zboson,500,0,500,FullWeight);
+                                                            plotFill("M_Wboson"+FullStringName, M_Wboson,500,0,500,FullWeight);
                                                             
-                                                            plotFill(CHL+"_dPhi_Jet_Met"+FullStringName,deltaPhi(Jet4Momentum.Phi(),pfMETPhi),160,0,3.2,FullWeight);
-                                                            plotFill(CHL+"_dPhi_Mu_Met"+FullStringName,deltaPhi(Mu4Momentum.Phi(),pfMETPhi),160,0,3.2,FullWeight);
-                                                            if (nMu > 1) plotFill(CHL+"_dPhi_Mu2_Met"+FullStringName,deltaPhi(Mu24Momentum.Phi(),pfMETPhi),160,0,3.2,FullWeight);
-                                                            plotFill(CHL+"_dPhi_Mu_Jet"+FullStringName,deltaPhi(Mu4Momentum.Phi(),Jet4Momentum.Phi()),160,0,3.2,FullWeight);
-                                                            
-                                                            plotFill(CHL+"_BosonKFactor"+FullStringName,ZBosonKFactor*WBosonKFactor,200,0,2,FullWeight);
-                                                            plotFill(CHL+"_WBosonPt"+FullStringName,WBosonPt,150,0,1500,FullWeight);
-                                                            plotFill(CHL+"_ZBosonPt"+FullStringName,ZBosonPt,150,0,1500,FullWeight);
-                                                            plotFill(CHL+"_NumJet"+FullStringName,numJet,10,0,10,FullWeight);
-                                                            plotFill(CHL+"_NumBJet"+FullStringName,numBJet,10,0,10,FullWeight);
-                                                            plotFill("_FinalBTagSF"+FullStringName, FinalBTagSF,200,0,2);
                                                             
                                                         }
-                                                    }
-                                                    
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            }
+                                                   
                         }
                     }
                     

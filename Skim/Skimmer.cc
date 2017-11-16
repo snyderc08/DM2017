@@ -79,7 +79,7 @@ void Skimmer::Loop(TString outputName, int skm)
         bool isEleJet=0;
         
         
-        TLorentzVector Ele4Momentum,jele4Momentum, Jet4Momentum;
+        TLorentzVector elei4Momentum,elej4Momentum, Jet4Momentum;
         
         
         if(pfMET < 100) continue;
@@ -88,16 +88,35 @@ void Skimmer::Loop(TString outputName, int skm)
         //DiEleJet
         for (int iele = 0; iele < nEle; ++iele){
             if (elePt->at(iele) > 30 &&  fabs(eleEta->at(iele)) < 2.5){
-                Ele4Momentum.SetPtEtaPhiM(elePt->at(iele),eleEta->at(iele),elePhi->at(iele),eleMass);
+                
+                bool eleMVAId_i= false;
+                if (fabs (eleSCEta->at(iele)) <= 0.8 && eleIDMVA->at(iele) >   0.837  ) eleMVAId_i= true;
+                else if (fabs (eleSCEta->at(iele)) >  0.8 &&fabs (eleSCEta->at(iele)) <=  1.5 && eleIDMVA->at(iele) >   0.715  ) eleMVAId_i= true;
+                else if ( fabs (eleSCEta->at(iele)) >=  1.5 && eleIDMVA->at(iele) >  0.357  ) eleMVAId_i= true;
+                else eleMVAId_i= false;
+                if (eleMVAId_i) continue;
+                
+                
+                
+                
+                elei4Momentum.SetPtEtaPhiM(elePt->at(iele),eleEta->at(iele),elePhi->at(iele),eleMass);
                 
                 for (int jele = 0; jele < nEle; ++jele){
                     if (elePt->at(jele) > 30 &&  fabs(eleEta->at(jele)) < 2.5){
-                        jele4Momentum.SetPtEtaPhiM(elePt->at(jele),eleEta->at(jele),elePhi->at(jele),eleMass);
+                        
+                        bool eleMVAId_j= false;
+                        if (fabs (eleSCEta->at(jele)) <= 0.8 && eleIDMVA->at(jele) >   0.837  ) eleMVAId_j= true;
+                        else if (fabs (eleSCEta->at(jele)) >  0.8 &&fabs (eleSCEta->at(jele)) <=  1.5 && eleIDMVA->at(jele) >   0.715  ) eleMVAId_j= true;
+                        else if ( fabs (eleSCEta->at(jele)) >=  1.5 && eleIDMVA->at(jele) >  0.357  ) eleMVAId_j= true;
+                        else eleMVAId_j= false;
+                        if (eleMVAId_j) continue;
+                        
+                        elej4Momentum.SetPtEtaPhiM(elePt->at(jele),eleEta->at(jele),elePhi->at(jele),eleMass);
                         
                         
                         for (int ijet = 0; ijet < nJet; ++ijet){
                             Jet4Momentum.SetPtEtaPhiM(jetPt->at(ijet),jetEta->at(ijet),jetPhi->at(ijet),jetEn->at(ijet));
-                            if (jetPt->at(ijet) > 100 &&  fabs(jetEta->at(ijet)) < 3.0   && Jet4Momentum.DeltaR(Ele4Momentum) > 0.5  && Jet4Momentum.DeltaR(jele4Momentum) > 0.5  && jele4Momentum.DeltaR(Ele4Momentum) > 0.5  ){
+                            if (jetPt->at(ijet) > 100 &&  fabs(jetEta->at(ijet)) < 3.0   && Jet4Momentum.DeltaR(elei4Momentum) > 0.5  && Jet4Momentum.DeltaR(elej4Momentum) > 0.5  && elej4Momentum.DeltaR(elei4Momentum) > 0.5  ){
                                 isEleJet=1;
                                 break;
                                 

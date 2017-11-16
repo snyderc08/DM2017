@@ -1,7 +1,7 @@
 // This code is to estimate the QCD scale and  pdf uncertainty
 // The input root files are located in ../ROOT80X/ForSystematic/   directory
 // The output would be OutFiles_SignalPDF/ directory
-//After running the RunFullSamples_PDF.sh, one need to run a script to get the envelop for QCD scale v.s. mass & PDF v.s. mass & QCD scale v.s. bins of the M_lj & PDF v.s. bins of the M_lj 
+//After running the RunFullSamples_PDF.sh, one need to run a script to get the envelop for QCD scale v.s. mass & PDF v.s. mass & QCD scale v.s. bins of the M_lj & PDF v.s. bins of the M_lj
 
 
 #include "../interface/CodexAnalyzer.h"
@@ -101,7 +101,7 @@ int main(int argc, char** argv) {
         TFile * myFile = TFile::Open(f_Double->GetName());
         TH1F * HistoTot = (TH1F*) myFile->Get("hcount");
         
-//                        TTree *Run_Tree = (TTree*) f_Double->Get("ggNtuplizer/EventTree");
+        //                        TTree *Run_Tree = (TTree*) f_Double->Get("ggNtuplizer/EventTree");
         TTree *Run_Tree = (TTree*) f_Double->Get("EventTree");
         
         cout.setf(ios::fixed, ios::floatfield);
@@ -284,17 +284,24 @@ int main(int argc, char** argv) {
             //###############################################################################################
             //  Systematic Weight Calculation
             //###############################################################################################
-            int counterSys=0;
+            
+            int counterscale_denum=0;
+            int counterpdf_denum=0;
             for (int isys=0; isys < pdfSystWeight->size(); isys++){
-//                cout<<isys<<" id="<<pdfSystWeightId->at(isys)<<"  weight="<<pdfSystWeight->at(isys)/pdfWeight<<"\n";
-//                if (atoi(pdfSystWeightId->at(isys).c_str()) > 109 && atoi(pdfSystWeightId->at(isys).c_str()) < 210){  // This is for LQ
-//                    if (atoi(pdfSystWeightId->at(isys).c_str()) > 1000 && atoi(pdfSystWeightId->at(isys).c_str()) < 1010){ // This is for ttbar powheg qcdScale
-                        if (atoi(pdfSystWeightId->at(isys).c_str()) > 0 && atoi(pdfSystWeightId->at(isys).c_str()) < 10){ // This is for W Madgr qcdScale
-                    
-                    plotFill("___Sys_"+std::to_string(counterSys),pdfSystWeight->at(isys)/pdfWeight, 500,0,5);
-                    counterSys++;
+                //                cout<<isys<<" id="<<pdfSystWeightId->at(isys)<<"  weight="<<pdfSystWeight->at(isys)/pdfWeight<<"\n";
+                //                if (atoi(pdfSystWeightId->at(isys).c_str()) > 109 && atoi(pdfSystWeightId->at(isys).c_str()) < 210){  // This is for LQ
+                //                    if (atoi(pdfSystWeightId->at(isys).c_str()) > 1000 && atoi(pdfSystWeightId->at(isys).c_str()) < 1010){ // This is for ttbar powheg qcdScale
+                
+                if (atoi(pdfSystWeightId->at(isys).c_str()) > 0 && atoi(pdfSystWeightId->at(isys).c_str()) < 10){ // This is for W Madgr qcdScale and signal
+                    plotFill("___SysScaleDenumerator_"+std::to_string(counterscale_denum),1, 500,0,5,pdfSystWeight->at(isys)/pdfWeight);
+                    counterscale_denum++;
                 }
-                //                cout<< atoi(pdfSystWeightId->at(isys).c_str())<<"\n";
+                
+                if (atoi(pdfSystWeightId->at(isys).c_str()) > 109 && atoi(pdfSystWeightId->at(isys).c_str()) < 210){ // This is for signal
+                    plotFill("___SysPDFDenumerator_"+std::to_string(counterpdf_denum),1, 500,0,5,pdfSystWeight->at(isys)/pdfWeight);
+                    counterpdf_denum++;
+                }                
+                
             }
             
             
@@ -685,8 +692,8 @@ int main(int argc, char** argv) {
                                                                     if (atoi(pdfSystWeightId->at(isys).c_str()) > 0 && atoi(pdfSystWeightId->at(isys).c_str()) < 10){ // This for signal and Madgraph W
                                                                         
                                                                         
-//                                                                if (atoi(pdfSystWeightId->at(isys).c_str()) > 1000 && atoi(pdfSystWeightId->at(isys).c_str()) < 1010  // This is for ttbar Powheg
-//                                                                        ){
+                                                                        //                                                                if (atoi(pdfSystWeightId->at(isys).c_str()) > 1000 && atoi(pdfSystWeightId->at(isys).c_str()) < 1010  // This is for ttbar Powheg
+                                                                        //                                                                        ){
                                                                         
                                                                         plotFill(CHL+"_LQMass_Scale"+std::to_string(counterscale)+FullStringName,LQ.M(),20,0,2000,FullWeight*pdfSystWeight->at(isys)/pdfWeight);
                                                                         counterscale++;

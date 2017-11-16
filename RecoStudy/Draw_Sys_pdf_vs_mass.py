@@ -114,10 +114,12 @@ for inFile in InputRootFiles:
     for isys in range(0,100):
         HisMean=File.Get('MuJet_LQMass_MT500_MET100_Iso')
         HistSys=File.Get('MuJet_LQMass_PDF%s_MT500_MET100_Iso'%str(isys))
-            
+        HistSys_Denum=File.Get('___SysPDFDenumerator_%s'%str(isys))
+        HistSys_Denum0=File.Get('___SysPDFDenumerator_1')
+
             
         meanCental=HisMean.Integral()
-        meanSys=HistSys.Integral()
+        meanSys=HistSys.Integral()/(HistSys_Denum.Integral()*1.0/HistSys_Denum0.Integral())
 
 
             
@@ -161,6 +163,8 @@ for inFile in InputRootFiles:
         
         HistCentral=File.Get('MuJet_LQMass_MT500_MET100_Iso')
         HistSys=File.Get('MuJet_LQMass_Scale%s_MT500_MET100_Iso'%str(isys))
+        HistSys_Denum=File.Get('___SysScaleDenumerator_%s'%str(isys))
+        HistSys_Denum0=File.Get('___SysScaleDenumerator_0')
         
         #        HistCentral.Rebin(10)
         #        HistSys.Rebin(10)
@@ -170,7 +174,7 @@ for inFile in InputRootFiles:
         #        meanCental=HistCentral.Integral()
         #        meanSys=HistSys.Integral()
         meanCental=HistCentral.Integral()
-        meanSys=HistSys.Integral()
+        meanSys=HistSys.Integral()/(HistSys_Denum.Integral()*1.0/HistSys_Denum0.Integral())
         
         
         if meanSys/meanCental > Minimum:
@@ -241,7 +245,7 @@ histo_scale_vs_mass_low.Draw('pLsame')
 #histo_pdf_vs_mass_high.Draw('AXIS')
 
 histo_pdf_vs_mass_high.GetXaxis().SetRangeUser(0,8)
-histo_pdf_vs_mass_high.GetYaxis().SetRangeUser(0,2)
+histo_pdf_vs_mass_high.GetYaxis().SetRangeUser(0.8,1.2)
 histo_pdf_vs_mass_high.GetXaxis().SetTitle("M_{LQ} [GeV]")
 histo_pdf_vs_mass_high.GetXaxis().SetNdivisions(505)
 histo_pdf_vs_mass_high.GetYaxis().SetLabelFont(42)
@@ -250,7 +254,7 @@ histo_pdf_vs_mass_high.GetYaxis().SetLabelSize(0.03)
 histo_pdf_vs_mass_high.GetYaxis().SetTitleSize(0.04)
 histo_pdf_vs_mass_high.GetYaxis().SetTitleOffset(1.2)
 histo_pdf_vs_mass_high.SetTitle("")
-histo_pdf_vs_mass_high.GetYaxis().SetTitle("PDF Uncertainty")
+histo_pdf_vs_mass_high.GetYaxis().SetTitle("PDF/QCD scale Uncertainty")
 histo_pdf_vs_mass_high.SetLineColor(38)
 histo_pdf_vs_mass_high.SetLineWidth(3)
 histo_pdf_vs_mass_high.SetMarkerColor(38)
@@ -280,8 +284,8 @@ histo_scale_vs_mass_low.SetMarkerStyle(21)
 
 
 legende=make_legend()
-legende.AddEntry(histo_pdf_vs_mass_low,"PDF Uncertainty","lp")
-legende.AddEntry(histo_scale_vs_mass_high,"QCD Scale Uncertainty","lp")
+legende.AddEntry(histo_pdf_vs_mass_low,"PDF uncertainty","lp")
+legende.AddEntry(histo_scale_vs_mass_high,"QCD scale uncertainty","lp")
 legende.Draw()
 
 
