@@ -180,10 +180,10 @@ def MakePlot(FileName,Histo,Xaxis):
 
     legende=make_legend()
     legende.AddEntry(Data,"Observed","elp")
+    legende.AddEntry(VV,"Diboson","f")
     legende.AddEntry(TT,"t#bar{t}+jets","f")
     legende.AddEntry(SingleT,"SingleTop","f")
     legende.AddEntry(DYS,"DY #rightarrowll ","f")
-    legende.AddEntry(VV,"Diboson","f")
     legende.AddEntry(W,"W","f")
     legende.AddEntry(errorBand,"Uncertainty","f")
 
@@ -276,7 +276,7 @@ def MakePlot(FileName,Histo,Xaxis):
     ROOT.gPad.RedrawAxis()
 
     c.Modified()
-    c.SaveAs("_plot_variosMT"+Histo+".pdf")
+    c.SaveAs("_plot_VV_CR_"+Histo+".pdf")
 
 
 #FileNamesInfo=[
