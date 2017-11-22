@@ -120,35 +120,46 @@ int main() {
     .AddSyst(cb, "CMS_trg_m", "lnN", SystMap<>::init(1.05));
     
     cb.cp().process(ch::JoinStr({sig_procs, {"ZTT", "W", "TT","VV","SingleTop"}}))
-    .AddSyst(cb, "CMS_trg_m", "lnN", SystMap<>::init(1.05));
+    .AddSyst(cb, "CMS_eff_m", "lnN", SystMap<>::init(1.05));
     
     
     cb.cp().process(ch::JoinStr({sig_procs, {"ZTT", "W", "TT","VV","SingleTop"}}))
     .AddSyst(cb, "CMS_b_mistag_rate", "lnN", SystMap<>::init(1.01));
     
+    cb.cp().process(ch::JoinStr({sig_procs, {"ZTT", "W", "TT","VV","SingleTop"}}))
+    .AddSyst(cb, "CMS_e_veto", "lnN", SystMap<>::init(1.02));
     
+    cb.cp().process(ch::JoinStr({sig_procs, {"ZTT", "W", "TT","VV","SingleTop"}}))
+    .AddSyst(cb, "CMS_tau_veto", "lnN", SystMap<>::init(1.03));
     
     
     cb.cp().process(JoinStr({sig_procs, {"ZTT", "W", "TT","VV","SingleTop"}}))
     .AddSyst(cb, "CMS_scale_jes", "shape", SystMap<>::init(1.00));
     
-//    cb.cp().process(JoinStr({sig_procs, {"ZTT", "W", "TT","VV","SingleTop"}}))
-//    .AddSyst(cb, "CMS_scale_jer", "shape", SystMap<>::init(1.00));
+    cb.cp().process({sig_procs})
+    .AddSyst(cb, "CMS_scale_jer", "shape", SystMap<>::init(1.00));
+    
+    cb.cp().process({sig_procs})
+    .AddSyst(cb, "CMS_signal_qcdScale", "lnN", SystMap<>::init(1.01));
+    
+    cb.cp().process({sig_procs})
+    .AddSyst(cb, "CMS_signal_pdf", "lnN", SystMap<>::init(1.03));
+    
     
     cb.cp().process(JoinStr({sig_procs, {"ZTT", "W", "TT","VV","SingleTop"}}))
     .AddSyst(cb, "CMS_scale_met_UES", "shape", SystMap<>::init(1.00));
     
-    cb.cp().process(JoinStr({sig_procs, {"ZTT", "W", "TT","VV","SingleTop"}}))
-    .AddSyst(cb, "CMS_scale_met_JES", "shape", SystMap<>::init(1.00));
+//    cb.cp().process(JoinStr({sig_procs, {"ZTT", "W", "TT","VV","SingleTop"}}))
+//    .AddSyst(cb, "CMS_scale_met_JES", "shape", SystMap<>::init(1.00));
     
     
-    cb.cp().process(JoinStr({ { "TT"}}))
+    cb.cp().process({"TT"})
     .AddSyst(cb, "CMS_top_pt_Reweighting", "shape", SystMap<>::init(1.00));
     
-    cb.cp().process(JoinStr({ { "TT"}}))
+    cb.cp().process({"TT"})
     .AddSyst(cb, "qcdScale_TT", "shape", SystMap<>::init(1.00));
     
-    cb.cp().process(JoinStr({ { "W"}}))
+    cb.cp().process({"W"})
     .AddSyst(cb, "qcdScale_W", "shape", SystMap<>::init(1.00));
     
     
@@ -170,25 +181,6 @@ int main() {
     
     cb.cp().process({"QCD"})
     .AddSyst(cb, "CMS_htt_QCDNorm", "lnN", SystMap<>::init(1.50));
-    
-    cb.cp().process(sig_procs)
-    .AddSyst(cb, "CMS_signal_PDF", "lnN", SystMap<>::init(1.20));
-    
-    cb.cp().process(sig_procs)
-    .AddSyst(cb, "CMS_signal_QCDScale", "lnN", SystMap<>::init(1.30));
-    
-    
-    
-    //cb.cp()
-    //.AddSyst(cb,
-    //"CMS_scale_met_$ERA", "lnN", SystMap<era, bin_id, process>::init
-    //({"13TeV"}, {1},     {"Codex_"},        1.05)
-    //({"13TeV"}, {1},     {"ZTT"},        1.05)
-    //({"13TeV"}, {1},     {"TT"},         1.05)
-    //({"13TeV"}, {1},     {"W"},        1.05)
-    //({"13TeV"}, {1},     {"VV"},        1.05)
-    //({"13TeV"}, {1},     {"SingleTop"},        1.05));
-    //
     
     
     

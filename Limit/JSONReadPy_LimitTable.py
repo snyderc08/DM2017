@@ -162,7 +162,18 @@ with open(FinalSampleDirectory) as data_file:
         BR=2*BR_visible*BR_Invisible
         XbinLQ=GetLQBin(M[1])
         YbinDM=GetDMBin(M[2])
-        print 'ExpctedExclusionLimit2sigmaMinus->SetBinContent(%d,%d,%f); // Bin_%d_LQ_%d_DM_%d_X_%d'%(XbinLQ,YbinDM,data[str(M[0])]["exp-2"]/(LQXS(M[1])* 1000 * BR),M[0], M[1], M[2], M[3])
+#        print 'ExpctedExclusionLimit2sigmaMinus->SetBinContent(%d,%d,%f); // Bin_%d_LQ_%d_DM_%d_X_%d'%(XbinLQ,YbinDM,data[str(M[0])]["exp-2"]/(LQXS(M[1])* 1000 * BR),M[0], M[1], M[2], M[3])
+
+
+
+        expm2=data[str(M[0])]["exp-2"]/(LQXS(M[1])* 1000 * BR)
+        expm1=data[str(M[0])]["exp-1"]/(LQXS(M[1])* 1000 * BR)
+        exp=data[str(M[0])]["exp0"]/(LQXS(M[1])* 1000 * BR)
+        expp1=data[str(M[0])]["exp+1"]/(LQXS(M[1])* 1000 * BR)
+        expp2=data[str(M[0])]["exp+2"]/(LQXS(M[1])* 1000 * BR)
+        obs=data[str(M[0])]["obs"]/(LQXS(M[1])* 1000 * BR)
+
+        print 'LQ%d-DM%d-X%d & $%2.2f$&$%2.2f$&$%2.2f$&$%2.2f$&$%2.2f$&$%2.2f$ \\\\'%(M[1], M[2], M[3],expm2,expm1,exp,expp1,expp2,obs )
 
 
 

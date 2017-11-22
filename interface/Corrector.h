@@ -1328,6 +1328,75 @@ float Cor80X_Trigger_Mu_GH(float pt,float eta, TH2F* HistoTrg ){
 
 
 
+
+
+
+/////////////////////////  Only Eta
+
+float Cor80X_Trigger_Mu_BCDEF_onlyEta(float eta, TH1F* HistoTrg ){
+    
+ 
+    if (eta >= -2.4 && eta < -2.1 ) etaBIN=1;
+    if (eta >= -2.1 && eta < -1.6 ) etaBIN=2;
+    if (eta >= -1.6 && eta < -1.2) etaBIN=3;
+    if (eta >= -1.2 && eta < -0.9) etaBIN=4;
+    if (eta >= -0.9 && eta < -0.3 ) etaBIN=5;
+    if (eta >= -0.3 && eta < -0.2 ) etaBIN=6;
+    if (eta >= -0.2 && eta < 0 ) etaBIN=7;
+    if (eta >= 0 && eta < 0.2 ) etaBIN=8;
+    if (eta >= 0.2 && eta < 0.3 ) etaBIN=9;
+    if (eta >= 0.3 && eta < 0.9 ) etaBIN=10;
+    if (eta >= 0.9 && eta < 1.2 ) etaBIN=11;
+    if (eta >= 1.2 && eta < 1.6 ) etaBIN=12;
+    if (eta >= 1.6 && eta < 2.1 ) etaBIN=13;
+    if (eta >= 2.1 && eta < 2.4 ) etaBIN=14;
+
+    
+    
+    
+    
+//        cout<< "--->Trigger  BCDEF   eta" <<eta<< "  SF="<<HistoTrg->GetBinContent(etaBIN)<<"\n";
+    return HistoTrg->GetBinContent(etaBIN);
+    
+}
+
+
+float Cor80X_Trigger_Mu_GH_onlyEta(float eta, TH1F* HistoTrg ){
+    
+    if (eta >= -2.4 && eta < -2.1 ) etaBIN=1;
+    if (eta >= -2.1 && eta < -1.6 ) etaBIN=2;
+    if (eta >= -1.6 && eta < -1.2) etaBIN=3;
+    if (eta >= -1.2 && eta < -0.9) etaBIN=4;
+    if (eta >= -0.9 && eta < -0.3 ) etaBIN=5;
+    if (eta >= -0.3 && eta < -0.2 ) etaBIN=6;
+    if (eta >= -0.2 && eta < 0 ) etaBIN=7;
+    if (eta >= 0 && eta < 0.2 ) etaBIN=8;
+    if (eta >= 0.2 && eta < 0.3 ) etaBIN=9;
+    if (eta >= 0.3 && eta < 0.9 ) etaBIN=10;
+    if (eta >= 0.9 && eta < 1.2 ) etaBIN=11;
+    if (eta >= 1.2 && eta < 1.6 ) etaBIN=12;
+    if (eta >= 1.6 && eta < 2.1 ) etaBIN=13;
+    if (eta >= 2.1 && eta < 2.4 ) etaBIN=14;
+
+    
+//    cout<< "--->Trigger  GH  eta" <<eta<< "  SF="<<HistoTrg->GetBinContent(etaBIN)<<"\n";
+    return HistoTrg->GetBinContent(etaBIN);
+    
+}
+
+
+
+///////////////////////////////////////
+
+
+
+
+
+
+
+
+
+
 float Cor80X_Trigger_Mu(float pt,float eta, TH2F* HistoTrg ){
     
     if (pt >= 45 && pt < 50 ) ptBIN=1;
@@ -1642,14 +1711,16 @@ float Cor80X_Trg_Ele(float pt, float eta){
         return weighted_obj;
    }
 
-   float getCorrFactorMuon80X(bool isData, float pt, float eta, TH2F ** HistoId, TH2F ** HistoIso,TH2F ** HistoTrg, TGraphAsymmErrors * graph) {
+//   float getCorrFactorMuon80X(bool isData, float pt, float eta, TH2F ** HistoId, TH2F ** HistoIso,TH2F ** HistoTrg, TGraphAsymmErrors * graph) { // This for pt_eta-Trigger
+       float getCorrFactorMuon80X(bool isData, float pt, float eta, TH2F ** HistoId, TH2F ** HistoIso,TH1F ** HistoTrg, TGraphAsymmErrors * graph) {
 
         if (isData)
             return 1;
         else{
             float Weighted_IDSF=CalcWeightedObj(Cor80X_ID_Mu_BCDEF(pt,eta,HistoId[0]), Cor80X_ID_Mu_GH(pt,eta,HistoId[1]));
             float Weighted_IsoSF=CalcWeightedObj(Cor80X_Iso_Mu_BCDEF(pt,eta,HistoIso[0]), Cor80X_Iso_Mu_GH(pt,eta,HistoIso[1]));
-            float Weighted_TriggerSF=CalcWeightedObj(Cor80X_Trigger_Mu_BCDEF(pt,eta,HistoTrg[0]), Cor80X_Trigger_Mu_GH(pt,eta,HistoTrg[1]));
+//            float Weighted_TriggerSF=CalcWeightedObj(Cor80X_Trigger_Mu_BCDEF(pt,eta,HistoTrg[0]), Cor80X_Trigger_Mu_GH(pt,eta,HistoTrg[1]));
+            float Weighted_TriggerSF=CalcWeightedObj(Cor80X_Trigger_Mu_BCDEF_onlyEta(eta,HistoTrg[0]), Cor80X_Trigger_Mu_GH_onlyEta(eta,HistoTrg[1]));
             float Tracking_SF=Cor80X_TRK_Mu_Full2016(eta, graph);
             return (Weighted_IDSF * Weighted_IsoSF * Tracking_SF * Weighted_TriggerSF);
         }
@@ -1702,13 +1773,23 @@ float getCorrFactorMuon74X(bool isData, float pt, float eta, TH2F * HistoId, TH2
         else
             return Cor80X_IDIso_Ele(pt,eta,HistoEleSF)*Cor80X_Trg_Ele(pt,eta);
     }
-    
+
+    // Loose WP of MVA Ele
     float getCorrFactorMVA90WPElectron80X(bool isData, float pt, float eta,    TH2F * HistoEleSF ){
         if (isData)
             return 1;
         else
             return Cor80X_IDIso_Ele(pt,eta,HistoEleSF);
     }
+
+    // Tight WP of MVA Ele
+    float getCorrFactorMVA80WPElectron80X(bool isData, float pt, float eta,    TH2F * HistoEleSF ){
+    if (isData)
+        return 1;
+    else
+        return Cor80X_IDIso_Ele(pt,eta,HistoEleSF);
+}
+
 
 float getEffVetoMVA90WPElectron80X(bool isData, float pt, float eta,    TH2F * HistoEleSF , TH2F*  HistoEleEffVetoMC, TH2F*  HistoEleEffVetoData){
     

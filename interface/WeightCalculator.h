@@ -61,10 +61,10 @@ float XSection(std::string OutName) {
     else if (OutName.find("DYJetsToLL_M-50_HT-2500toInf") != string::npos) return 0.003647;
     
     
-    //Di-boson
-    else if (OutName.find("WW_pythia") != string::npos) return 115.0;
-    else if (OutName.find("WZ_pythia") != string::npos) return 47.13;
-    else if (OutName.find("ZZ_pythia") != string::npos) return 16.523;
+    //Di-boson   Pythia is not useful in this analysis
+//    else if (OutName.find("WW_pythia") != string::npos) return 115.0;
+//    else if (OutName.find("WZ_pythia") != string::npos) return 47.13;
+//    else if (OutName.find("ZZ_pythia") != string::npos) return 16.523;
     
     
     

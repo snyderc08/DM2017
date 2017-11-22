@@ -22,7 +22,7 @@ int main(int argc, char** argv) {
     std::vector<string> input;
     for (int f = 2; f < argc; f++) {
         input.push_back(*(argv + f));
-        cout << "\n INPUT NAME IS:   " << input[f - 2] << "\n";
+        cout <<"INPUT NAME IS:   " << input[f - 2] << "\n";
     }
     
     //########################################
@@ -52,17 +52,19 @@ int main(int argc, char** argv) {
     TH2F * HistoMuIso_GH= (TH2F *) MuCorrIso_GH->Get("TightISO_TightID_pt_eta/pt_abseta_ratio");
     
     TFile * MuCorrTrg_BCDEF= TFile::Open(("../interface/pileup-hists/Trigger_EfficienciesAndSF_RunBtoF.root"));
-    TH2F * HistoMuTrg_BCDEF= (TH2F *) MuCorrTrg_BCDEF->Get("Mu50_OR_TkMu50_PtEtaBins/pt_abseta_ratio");
+    //    TH2F * HistoMuTrg_BCDEF= (TH2F *) MuCorrTrg_BCDEF->Get("Mu50_OR_TkMu50_PtEtaBins/pt_abseta_ratio");
+    TH1F * HistoMuTrg_BCDEF= (TH1F *) MuCorrTrg_BCDEF->Get("Mu50_OR_TkMu50_EtaBins/eta_ratio");
     
     TFile * MuCorrTrg_GH= TFile::Open(("../interface/pileup-hists/Trigger_EfficienciesAndSF_Period4.root"));
-    TH2F * HistoMuTrg_GH= (TH2F *) MuCorrTrg_GH->Get("Mu50_OR_TkMu50_PtEtaBins/pt_abseta_ratio");
+    //    TH2F * HistoMuTrg_GH= (TH2F *) MuCorrTrg_GH->Get("Mu50_OR_TkMu50_PtEtaBins/pt_abseta_ratio");
+    TH1F * HistoMuTrg_GH= (TH1F *) MuCorrTrg_GH->Get("Mu50_OR_TkMu50_EtaBins/eta_ratio");
     
     TFile * MuCorrTrack= TFile::Open(("../interface/pileup-hists/Tracking_EfficienciesAndSF_BCDEFGH.root"));
     TGraphAsymmErrors * HistoMuTrack= (TGraphAsymmErrors *) MuCorrTrack->Get("ratio_eff_eta3_dr030e030_corr");
     
     TH2F* HistoMuId[2]={HistoMuId_BCDEF, HistoMuId_GH};
     TH2F* HistoMuIso[2]={HistoMuIso_BCDEF,HistoMuIso_GH};
-    TH2F* HistoMuTrg[2]={HistoMuTrg_BCDEF, HistoMuTrg_GH};
+    TH1F* HistoMuTrg[2]={HistoMuTrg_BCDEF, HistoMuTrg_GH};
     
     //########################################
     // Electron MVA IdIso files
@@ -714,6 +716,7 @@ int main(int argc, char** argv) {
                                     //###############################################################################################
                                     //  MT Categorization
                                     //###############################################################################################
+                                    float tmass_LQMet= TMass_F(LQ.Pt(), LQ.Px(),LQ.Py(), pfMET, pfMETPhi);
                                     float tmass_MuMet= TMass_F(muPt->at(imu), muPt->at(imu)*cos(muPhi->at(imu)),muPt->at(imu)*sin(muPhi->at(imu)) , jetMET, jetMETPhi);
                                     const int size_mTCat = 2;
                                     bool MT100 = tmass_MuMet > 100;
@@ -781,7 +784,7 @@ int main(int argc, char** argv) {
                                                                     
                                                                     plotFill(CHL+"_CloseJetLepPt"+FullStringName,CLoseJetMuPt,2000,0,2000,FullWeight);
                                                                     plotFill(CHL+"_LQMass"+FullStringName,LQ.M(),300,0,3000,FullWeight);
-                                                                    
+                                                                    plotFill(CHL+"_tmass_LQMet"+FullStringName,tmass_LQMet,300,0,3000,FullWeight);
                                                                     
                                                                     
                                                                     ////////   Systematic on K-factor for W and Z for  ewk correction
@@ -803,7 +806,9 @@ int main(int argc, char** argv) {
                                                                     //##############################################################################
                                                                     //  QCD Scale Uncertainty for TTbar and W+Jets
                                                                     //##############################################################################
-                                                                    if (isTTJets== string::npos &&  isWJets== string::npos &&  isDYJets== string::npos) continue; //scale factor only for W and TT
+//                                                                    if (isTTJets== string::npos &&  isWJets== string::npos &&  isDYJets== string::npos)
+                                                                    if (isTTJets== string::npos &&  isWJets== string::npos)
+                                                                        continue; //scale factor only for W and TT
                                                                     
                                                                     int counterscale=0;
                                                                     int counterpdf=0;

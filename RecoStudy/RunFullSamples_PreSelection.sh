@@ -9,7 +9,7 @@
 
 ./CodexAnalyzer_Preselection.exe  OutFiles_PreSelection/TTJets.root ../ROOT80X/TTJets.root
 
-./CodexAnalyzer_Preselection.exe  OutFiles_PreSelection/VV.root ../ROOT80X/ZZ.root  ../ROOT80X/WW.root  ../ROOT80X/WZ.root
+./CodexAnalyzer_Preselection.exe  OutFiles_PreSelection/VV.root ../ROOT80X/ZZ*.root  ../ROOT80X/WW*.root  ../ROOT80X/WZ*.root
 
 ./CodexAnalyzer_Preselection.exe  OutFiles_PreSelection/SingleTop.root ../ROOT80X/ST_*.root
 

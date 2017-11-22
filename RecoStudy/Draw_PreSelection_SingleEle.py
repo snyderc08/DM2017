@@ -3,7 +3,7 @@ import ROOT
 import re
 from array import array
 
-from Step5_TT_W_ScaleFactor import *
+#from Step5_TT_W_ScaleFactor import *
 
 RB_=20
 def add_lumi():
@@ -72,24 +72,24 @@ def MakePlot(FileName,categoriy,HistName,Xaxis,Info,RB_,channel,yMin,isLOG,ttbar
     Data=file.Get(categoriy).Get("data_obs")
     Data.Rebin(RB_)
     
-    QCD=file.Get(categoriy).Get("QCD")
-    QCD.Rebin(RB_)
-    
+#    QCD=file.Get(categoriy).Get("QCD")
+#    QCD.Rebin(RB_)
+
 
     W=file.Get(categoriy).Get("W")
     W.Rebin(RB_)
-    if ttbarCR=="" :  W.Scale(SF_W_SingleLep())
-    if ttbarCR=="_ttbarCRSingleLep" :  W.Scale(SF_W_SingleLep())
-    if ttbarCR=="_ttbarCRDiLep" :  W.Scale(SF_W_DiLep())
-#    W.Scale(1)
+#    if ttbarCR=="" :  W.Scale(SF_W_SingleLep())
+#    if ttbarCR=="_ttbarCRSingleLep" :  W.Scale(SF_W_SingleLep())
+#    if ttbarCR=="_ttbarCRDiLep" :  W.Scale(SF_W_DiLep())
+    W.Scale(1)
 
 
     TT=file.Get(categoriy).Get("TT")
     TT.Rebin(RB_)
-#    TT.Scale(1)
-    if ttbarCR=="" :  TT.Scale(SF_TT_SingleLep())
-    if ttbarCR=="_ttbarCRSingleLep" :  TT.Scale(SF_TT_SingleLep())
-    if ttbarCR=="_ttbarCRDiLep" :  TT.Scale(SF_TT_DiLep())
+    TT.Scale(1)
+#    if ttbarCR=="" :  TT.Scale(SF_TT_SingleLep())
+#    if ttbarCR=="_ttbarCRSingleLep" :  TT.Scale(SF_TT_SingleLep())
+#    if ttbarCR=="_ttbarCRDiLep" :  TT.Scale(SF_TT_DiLep())
 
     SingleT=file.Get(categoriy).Get("SingleTop")
     SingleT.Rebin(RB_)
@@ -113,16 +113,16 @@ def MakePlot(FileName,categoriy,HistName,Xaxis,Info,RB_,channel,yMin,isLOG,ttbar
     Data.GetYaxis().SetTitle("Events")
 
 
-    Signal=file.Get(categoriy).Get("Codex_1200")
-    Signal.Scale(1.50E-03*.5)
-    Signal.Rebin(RB_)
-    Signal.SetLineStyle(11)
-    Signal.SetLineWidth(3)
-    Signal.SetLineColor(4)
-    Signal.SetMarkerColor(4)
+#    Signal=file.Get(categoriy).Get("Codex_1200")
+#    Signal.Scale(1.50E-03*.5)
+#    Signal.Rebin(RB_)
+#    Signal.SetLineStyle(11)
+#    Signal.SetLineWidth(3)
+#    Signal.SetLineColor(4)
+#    Signal.SetMarkerColor(4)
 
 
-    QCD.SetFillColor(ROOT.TColor.GetColor(408, 106, 154))
+#    QCD.SetFillColor(ROOT.TColor.GetColor(408, 106, 154))
     W.SetFillColor(ROOT.TColor.GetColor(200, 2, 285))
     TT.SetFillColor(ROOT.TColor.GetColor(208, 376, 124))
     SingleT.SetFillColor(ROOT.TColor.GetColor(150, 132, 232))
@@ -149,7 +149,7 @@ def MakePlot(FileName,categoriy,HistName,Xaxis,Info,RB_,channel,yMin,isLOG,ttbar
 
     Data.SetMarkerStyle(20)
     Data.SetMarkerSize(1)
-    QCD.SetLineColor(ROOT.kBlack)
+#    QCD.SetLineColor(ROOT.kBlack)
     W.SetLineColor(ROOT.kBlack)
     TT.SetLineColor(ROOT.kBlack)
     DYS.SetLineColor(ROOT.kBlack)
@@ -180,7 +180,7 @@ def MakePlot(FileName,categoriy,HistName,Xaxis,Info,RB_,channel,yMin,isLOG,ttbar
 
 
     stack=ROOT.THStack("stack","stack")
-    stack.Add(QCD)
+#    stack.Add(QCD)
     stack.Add(VV)
     stack.Add(DYS)
     stack.Add(SingleT)
@@ -188,7 +188,7 @@ def MakePlot(FileName,categoriy,HistName,Xaxis,Info,RB_,channel,yMin,isLOG,ttbar
     stack.Add(W)
 
     errorBand = W.Clone()
-    errorBand.Add(QCD)
+#    errorBand.Add(QCD)
     errorBand.Add(TT)
     errorBand.Add(VV)
     errorBand.Add(SingleT)
@@ -225,17 +225,17 @@ def MakePlot(FileName,categoriy,HistName,Xaxis,Info,RB_,channel,yMin,isLOG,ttbar
     stack.Draw("histsame")
     errorBand.Draw("e2same")
     Data.Draw("esame")
-    Signal.Draw("histsame")
+#    Signal.Draw("histsame")
 
     legende=make_legend()
     legende.AddEntry(Data,"Observed","elp")
-    legende.AddEntry(Signal,"Codex_1200","l")
+#    legende.AddEntry(Signal,"Codex_1200","l")
     legende.AddEntry(TT,"t#bar{t}+jets","f")
     legende.AddEntry(SingleT,"SingleTop","f")
     legende.AddEntry(DYS,"DY #rightarrowll ","f")
     legende.AddEntry(VV,"Diboson","f")
     legende.AddEntry(W,"W","f")
-    legende.AddEntry(QCD,"QCD multijet","f")
+#    legende.AddEntry(QCD,"QCD multijet","f")
     legende.AddEntry(errorBand,"Uncertainty","f")
 
     legende.Draw()
@@ -326,7 +326,7 @@ def MakePlot(FileName,categoriy,HistName,Xaxis,Info,RB_,channel,yMin,isLOG,ttbar
     ROOT.gPad.RedrawAxis()
 
     c.Modified()
-    c.SaveAs("_plot_variosMT"+FileName.replace('TotalRootForLimit_PreSelection_MuJet','').replace('.root','')+str(isLOG)+".pdf")
+    c.SaveAs("_plot_SingleEle"+FileName.replace('ROOT_PreSelection_EleJet','').replace('.root','')+str(isLOG)+".pdf")
 
 
 FileNamesInfo=[
@@ -340,9 +340,9 @@ FileNamesInfo=[
 ##               ["_nVtx_NoPU","# of vertex before PU reweighting","",1,10],
                ["_MET","MET  (GeV)","",5,1],
                ["_LQMass","M_{LQ}   (GeV)","",5,1],
-               ["_tmass_MuMet","M_{T}(#mu,MET) (GeV)","",5,1],
+               ["_tmass_EleMet","M_{T}(#mu,MET) (GeV)","",5,1],
                ["_dPhi_Jet_Met","#Delta#phi (jet,MET)","",5,1],
-               ["_dPhi_Mu_Jet","#Delta#phi (#mu,jet)","",5,1],
+               ["_dPhi_Ele_Jet","#Delta#phi (#mu,jet)","",5,1],
 ##               ["_LQEta","#eta_{LQ}","",10,10],
                ["_NumJet","Jet multiplicity","",1,1],
                ["_NumBJet","BJet multiplicity","",1,1],
@@ -386,10 +386,10 @@ for i in range(0,len(FileNamesInfo)):
                     for reg in region:
                         for isLOG in logStat:
                     
-                            FileName="TotalRootForLimit_PreSelection_"+"MuJet"+NormMC+mt+jpt+etalq+reg+iso+".root"
+                            FileName="ROOT_PreSelection_SingleEle"+"EleJet"+NormMC+mt+jpt+etalq+reg+iso+".root"
                             Info=NormMC+mt+jpt+etalq+reg+iso
                             print "---->", FileName
-                            MakePlot(FileName,"MuJet","",axisName,Info,Bin,"",yMin,isLOG,reg,mt)
+                            MakePlot(FileName,"EleJet","",axisName,Info,Bin,"",yMin,isLOG,reg,mt)
 
 
 

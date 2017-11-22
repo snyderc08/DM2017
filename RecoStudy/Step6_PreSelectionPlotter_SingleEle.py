@@ -23,10 +23,10 @@ from ctypes import *
 import ROOT as r
 import array
 
-##### Get Jet to Tau FR
-from Step1_JetToMuFR_Data import Make_Mu_FakeRate
-from Step1_JetToMuFR_Data import *
-##### Get Jet to Tau FR
+###### Get Jet to Tau FR
+#from Step1_JetToMuFR_Data import Make_Mu_FakeRate
+#from Step1_JetToMuFR_Data import *
+###### Get Jet to Tau FR
 
 gROOT.Reset()
 import os
@@ -34,7 +34,7 @@ import os
 
 ROOT.gROOT.SetBatch(True)
 #ROOT.gROOT.ProcessLine('.x rootlogon.C')
-SubRootDir = 'OutFiles_PreSelection/'
+SubRootDir = 'OutFiles_PreSelection_SingleEle/'
 #SubRootDir = 'OutFiles_PreSelection_100to150/'  # changed October 23rd
 #SubRootDir = 'OutFiles_PreSelection_OldKFactor/'
 #SubRootDir = 'OutFiles_PreSelection_dPhiOverLapWithJetOnly/'
@@ -43,7 +43,7 @@ SubRootDir = 'OutFiles_PreSelection/'
 
 verbos_ = True
 RB_=1
-includeSignal= True
+includeSignal= False
 
 #signal = ['LQ_']
 #signalName = ['LQ_']
@@ -75,7 +75,7 @@ def _FileReturn(Name, channel,cat,HistoName):
 ####################################################
 def MakeTheHistogram(channel,NormMC,NormQCD,ShapeQCD,NormTTbar):
     
-    OutFile = TFile("TotalRootForLimit_PreSelection_"+channel + NormMC+".root" , 'RECREATE') # Name Of the output file
+    OutFile = TFile("ROOT_PreSelection_SingleEle"+channel + NormMC+".root" , 'RECREATE') # Name Of the output file
 
     for NameCat in category:
         print "\nstarting NameCat and channel and HistoName ", NameCat, channel, NormMC
@@ -204,86 +204,86 @@ def MakeTheHistogram(channel,NormMC,NormQCD,ShapeQCD,NormTTbar):
             tDirectory.WriteObject(RebinedHist,NameOut)
         
 
-        ################################################
-        #  Filling QCD
-        ################################################
-        print "--------------------------------------------------->     Processing QCD"
-        tDirectory.cd()
-        
-        Name= "SingleTop"
-        SingleTSampleQCDNorm= _FileReturn(Name, channel,NameCat, NormQCD)
-        SingleTSampleQCDShape= _FileReturn(Name, channel,NameCat, ShapeQCD)
-        
-        Name= "VV"
-        VVSampleQCDNorm= _FileReturn(Name, channel,NameCat, NormQCD)
-        VVSampleQCDShape= _FileReturn(Name, channel,NameCat, ShapeQCD)
-
-        Name= "TTJets"
-        TTSampleQCDNorm= _FileReturn(Name, channel,NameCat, NormQCD)
-        TTSampleQCDShape= _FileReturn(Name, channel,NameCat, ShapeQCD)
-
-        Name= "DYJetsToLL"
-        ZTTSampleQCDNorm= _FileReturn(Name, channel,NameCat, NormQCD)
-        ZTTSampleQCDShape= _FileReturn(Name, channel,NameCat, ShapeQCD)
-
-        Name= "WJetsToLNu"
-        WSampleQCDNorm= _FileReturn(Name, channel,NameCat, NormQCD)
-        WSampleQCDShape= _FileReturn(Name, channel,NameCat, ShapeQCD)
-                    
-        Name="Data"
-        DataSampleQCDNorm= _FileReturn(Name, channel,NameCat, NormQCD)
-        DataSampleQCDShape= _FileReturn(Name, channel,NameCat, ShapeQCD)
-
-
-
-        SingleTSampleQCDShapeHist=SingleTSampleQCDShape.Get("HISTO")
-        VVSampleQCDShapeHist=VVSampleQCDShape.Get("HISTO")
-        TTSampleQCDShapeHist=TTSampleQCDShape.Get("HISTO")
-        ZTTSampleQCDShapeHist=ZTTSampleQCDShape.Get("HISTO")
-        WSampleQCDShapeHist=WSampleQCDShape.Get("HISTO")
-        DataSampleQCDShapeHist=DataSampleQCDShape.Get("HISTO")
-        dataBeforeSub=DataSampleQCDShapeHist.Integral()  #Here we get the data yeild before subtracting other background
-#        if SingleTSampleQCDShapeHist: DataSampleQCDShapeHist.Add(SingleTSampleQCDShapeHist, -1)
-#        if VVSampleQCDShapeHist: DataSampleQCDShapeHist.Add(VVSampleQCDShapeHist, -1)
-#        DataSampleQCDShapeHist.Add(TTSampleQCDShapeHist, -1)
-#        DataSampleQCDShapeHist.Add(ZTTSampleQCDShapeHist, -1)
-#        DataSampleQCDShapeHist.Add(WSampleQCDShapeHist, -1)
-        dataAfterSub=DataSampleQCDShapeHist.Integral() #Here we get the data yeild after subtracting other background
-        if verbos_: print "\n##########\n QCD --Shape-- Purity is = ", dataAfterSub/dataBeforeSub, " which is ",  dataAfterSub, "/",dataBeforeSub
-
-
-
-        SingleTSampleQCDNormHist=SingleTSampleQCDNorm.Get("HISTO")
-        VVSampleQCDNormHist=VVSampleQCDNorm.Get("HISTO")
-        TTSampleQCDNormHist=TTSampleQCDNorm.Get("HISTO")
-        ZTTSampleQCDNormHist=ZTTSampleQCDNorm.Get("HISTO")
-        WSampleQCDNormHist=WSampleQCDNorm.Get("HISTO")
-        DataSampleQCDNormHist=DataSampleQCDNorm.Get("HISTO")
-        dataBeforeSub=DataSampleQCDNormHist.Integral() #Here we get the data yeild before subtracting other background
-        if SingleTSampleQCDNormHist:  DataSampleQCDNormHist.Add(SingleTSampleQCDNormHist, -1)
-        if VVSampleQCDNormHist: DataSampleQCDNormHist.Add(VVSampleQCDNormHist, -1)
-        DataSampleQCDNormHist.Add(TTSampleQCDNormHist, -1)
-        DataSampleQCDNormHist.Add(ZTTSampleQCDNormHist, -1)
-        DataSampleQCDNormHist.Add(WSampleQCDNormHist, -1)
-        dataAfterSub=DataSampleQCDNormHist.Integral() #Here we get the data yeild after subtracting other background
-        if verbos_: print "\n##########\n QCD ++Norm++ Purity is = ", dataAfterSub/dataBeforeSub, " which is ",  dataAfterSub, "/",dataBeforeSub
-        
-
-        FR_FitMaram=Make_Mu_FakeRate(channel,'Lepton')
-        QCDEstimation=0
-        for bin in xrange(50,1000):
-            value=DataSampleQCDNormHist.GetBinContent(bin)
-#            if value < 0 : value=0  Not needed otherwise the estimate will be larger
-            FR= ApplyTheFakeRate(bin+1.5,FR_FitMaram,'Lepton')
-            if FR> 0.9: FR=0.9
-            QCDEstimation += value * FR/(1-FR)
-        if verbos_: print "\n##########\n QCDEstimation",    QCDEstimation
-
-
-        NameOut= "QCD"
-        DataSampleQCDShapeHist.Scale(QCDEstimation/DataSampleQCDShapeHist.Integral())
-        RebinedHist= DataSampleQCDShapeHist.Rebin(RB_)
-        tDirectory.WriteObject(RebinedHist,NameOut)
+#        ################################################
+#        #  Filling QCD
+#        ################################################
+#        print "--------------------------------------------------->     Processing QCD"
+#        tDirectory.cd()
+#        
+#        Name= "SingleTop"
+#        SingleTSampleQCDNorm= _FileReturn(Name, channel,NameCat, NormQCD)
+#        SingleTSampleQCDShape= _FileReturn(Name, channel,NameCat, ShapeQCD)
+#        
+#        Name= "VV"
+#        VVSampleQCDNorm= _FileReturn(Name, channel,NameCat, NormQCD)
+#        VVSampleQCDShape= _FileReturn(Name, channel,NameCat, ShapeQCD)
+#
+#        Name= "TTJets"
+#        TTSampleQCDNorm= _FileReturn(Name, channel,NameCat, NormQCD)
+#        TTSampleQCDShape= _FileReturn(Name, channel,NameCat, ShapeQCD)
+#
+#        Name= "DYJetsToLL"
+#        ZTTSampleQCDNorm= _FileReturn(Name, channel,NameCat, NormQCD)
+#        ZTTSampleQCDShape= _FileReturn(Name, channel,NameCat, ShapeQCD)
+#
+#        Name= "WJetsToLNu"
+#        WSampleQCDNorm= _FileReturn(Name, channel,NameCat, NormQCD)
+#        WSampleQCDShape= _FileReturn(Name, channel,NameCat, ShapeQCD)
+#                    
+#        Name="Data"
+#        DataSampleQCDNorm= _FileReturn(Name, channel,NameCat, NormQCD)
+#        DataSampleQCDShape= _FileReturn(Name, channel,NameCat, ShapeQCD)
+#
+#
+#
+#        SingleTSampleQCDShapeHist=SingleTSampleQCDShape.Get("HISTO")
+#        VVSampleQCDShapeHist=VVSampleQCDShape.Get("HISTO")
+#        TTSampleQCDShapeHist=TTSampleQCDShape.Get("HISTO")
+#        ZTTSampleQCDShapeHist=ZTTSampleQCDShape.Get("HISTO")
+#        WSampleQCDShapeHist=WSampleQCDShape.Get("HISTO")
+#        DataSampleQCDShapeHist=DataSampleQCDShape.Get("HISTO")
+#        dataBeforeSub=DataSampleQCDShapeHist.Integral()  #Here we get the data yeild before subtracting other background
+##        if SingleTSampleQCDShapeHist: DataSampleQCDShapeHist.Add(SingleTSampleQCDShapeHist, -1)
+##        if VVSampleQCDShapeHist: DataSampleQCDShapeHist.Add(VVSampleQCDShapeHist, -1)
+##        DataSampleQCDShapeHist.Add(TTSampleQCDShapeHist, -1)
+##        DataSampleQCDShapeHist.Add(ZTTSampleQCDShapeHist, -1)
+##        DataSampleQCDShapeHist.Add(WSampleQCDShapeHist, -1)
+#        dataAfterSub=DataSampleQCDShapeHist.Integral() #Here we get the data yeild after subtracting other background
+#        if verbos_: print "\n##########\n QCD --Shape-- Purity is = ", dataAfterSub/dataBeforeSub, " which is ",  dataAfterSub, "/",dataBeforeSub
+#
+#
+#
+#        SingleTSampleQCDNormHist=SingleTSampleQCDNorm.Get("HISTO")
+#        VVSampleQCDNormHist=VVSampleQCDNorm.Get("HISTO")
+#        TTSampleQCDNormHist=TTSampleQCDNorm.Get("HISTO")
+#        ZTTSampleQCDNormHist=ZTTSampleQCDNorm.Get("HISTO")
+#        WSampleQCDNormHist=WSampleQCDNorm.Get("HISTO")
+#        DataSampleQCDNormHist=DataSampleQCDNorm.Get("HISTO")
+#        dataBeforeSub=DataSampleQCDNormHist.Integral() #Here we get the data yeild before subtracting other background
+#        if SingleTSampleQCDNormHist:  DataSampleQCDNormHist.Add(SingleTSampleQCDNormHist, -1)
+#        if VVSampleQCDNormHist: DataSampleQCDNormHist.Add(VVSampleQCDNormHist, -1)
+#        DataSampleQCDNormHist.Add(TTSampleQCDNormHist, -1)
+#        DataSampleQCDNormHist.Add(ZTTSampleQCDNormHist, -1)
+#        DataSampleQCDNormHist.Add(WSampleQCDNormHist, -1)
+#        dataAfterSub=DataSampleQCDNormHist.Integral() #Here we get the data yeild after subtracting other background
+#        if verbos_: print "\n##########\n QCD ++Norm++ Purity is = ", dataAfterSub/dataBeforeSub, " which is ",  dataAfterSub, "/",dataBeforeSub
+#        
+#
+#        FR_FitMaram=Make_Mu_FakeRate(channel,'Lepton')
+#        QCDEstimation=0
+#        for bin in xrange(50,1000):
+#            value=DataSampleQCDNormHist.GetBinContent(bin)
+##            if value < 0 : value=0  Not needed otherwise the estimate will be larger
+#            FR= ApplyTheFakeRate(bin+1.5,FR_FitMaram,'Lepton')
+#            if FR> 0.9: FR=0.9
+#            QCDEstimation += value * FR/(1-FR)
+#        if verbos_: print "\n##########\n QCDEstimation",    QCDEstimation
+#
+#
+#        NameOut= "QCD"
+#        DataSampleQCDShapeHist.Scale(QCDEstimation/DataSampleQCDShapeHist.Integral())
+#        RebinedHist= DataSampleQCDShapeHist.Rebin(RB_)
+#        tDirectory.WriteObject(RebinedHist,NameOut)
 #
         ################################################
         #  Filling Data
@@ -314,7 +314,7 @@ def MakeTheHistogram(channel,NormMC,NormQCD,ShapeQCD,NormTTbar):
 
 if __name__ == "__main__":
     
-    PlotName=["_tmass_MuMet","_tmass_LQMet","_LepEta","_LepPt","_JetPt","_JetEta","_MET","_LQMass","_dPhi_Jet_Met","_dPhi_Mu_Jet","_dPhi_Mu_Met","_NumJet","_NumBJet"]
+    PlotName=["_tmass_EleMet","_tmass_LQMet","_LepEta","_LepPt","_JetPt","_JetEta","_MET","_LQMass","_dPhi_Jet_Met","_dPhi_Ele_Jet","_dPhi_Ele_Met","_NumJet","_NumBJet"]
 #    PlotName=["_LQMass"]
 
 
@@ -323,11 +323,12 @@ if __name__ == "__main__":
     Isolation=["_Iso"]
     
     
-    MT= ["_NoMT","_HighMT","_MT50To150","_MT150to200","_MT200to250","_MT250to300","_MT300to350","_MT200","_MT300","_MT400"]
+    MT= ["_NoMT","_HighMT","_MT50To150","_MT150to200","_MT200to250","_MT250to300","_MT300to350","_MT200","_MT300","_MT400","_MT500"]
 
     JPT=[ "_HighDPhi"]
 
-    region= ["", "_ttbarCRDiLep","_ttbarCRSingleLep"]
+#    region= ["", "_ttbarCRDiLep","_ttbarCRSingleLep"]
+    region= [""]
 
     for Norm in PlotName:
         for iso in Isolation:
@@ -335,7 +336,7 @@ if __name__ == "__main__":
                 for jpt in JPT:
                     for reg in region:
                     
-                        channel='MuJet'
+                        channel='EleJet'
                         
                         NormMC=Norm+mt+jpt+reg+iso
 #                            NormQCD="_CloseJetLepPt"+mt+jpt+reg+"_AntiIso"

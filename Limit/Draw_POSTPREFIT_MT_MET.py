@@ -87,14 +87,14 @@ def MakePlot(FileName,categoriy,HistName,Xaxis,MaxRange,sig,sigLeg,XSection, Sta
     
     VV=file.Get(categoriy).Get("VV")
     VV.Rebin(RB_)
-#    SingleT.Add(VV)
+    SingleT.Add(VV)
 
     DYS=file.Get(categoriy).Get("ZTT")
     DYS.Rebin(RB_)
-#    SingleT.Add(DYS)
-
+    SingleT.Add(DYS)
+    
     Signal=file.Get(categoriy).Get(sig)
-    Signal.Scale( XSection* 0.1)
+#    Signal.Scale( XSection* 0.15)
     Signal.Rebin(RB_)
     #    Signal.SetFillStyle(0.)
     Signal.SetLineStyle(11)
@@ -121,7 +121,7 @@ def MakePlot(FileName,categoriy,HistName,Xaxis,MaxRange,sig,sigLeg,XSection, Sta
 
 
 ##### chnage binning content
-    ALLSample=[Data,QCD,W,TT,SingleT,Signal,VV,DYS]
+    ALLSample=[Data,QCD,W,TT,SingleT,Signal]
     for sample in ALLSample:
         for ibin in range(sample.GetXaxis().GetNbins()):
 #            print ibin+1, sample.GetBinWidth(ibin+1)
@@ -152,8 +152,8 @@ def MakePlot(FileName,categoriy,HistName,Xaxis,MaxRange,sig,sigLeg,XSection, Sta
     W.SetFillColor(ROOT.TColor.GetColor(200, 2, 285))
     TT.SetFillColor(ROOT.TColor.GetColor(208, 376, 124))
     SingleT.SetFillColor(ROOT.TColor.GetColor(150, 132, 232))
-    VV.SetFillColor(ROOT.TColor.GetColor(200, 282, 232))
-    DYS.SetFillColor(ROOT.TColor.GetColor(108, 226, 354))
+#    VV.SetFillColor(ROOT.TColor.GetColor(200, 282, 232))
+#    DYS.SetFillColor(ROOT.TColor.GetColor(108, 226, 354))
 
 
 #    for i in range(Data.GetNbinsX()):
@@ -179,8 +179,8 @@ def MakePlot(FileName,categoriy,HistName,Xaxis,MaxRange,sig,sigLeg,XSection, Sta
     QCD.SetLineColor(ROOT.kBlack)
     W.SetLineColor(ROOT.kBlack)
     TT.SetLineColor(ROOT.kBlack)
-    DYS.SetLineColor(ROOT.kBlack)
-    VV.SetLineColor(ROOT.kBlack)
+#    DYS.SetLineColor(ROOT.kBlack)
+#    VV.SetLineColor(ROOT.kBlack)
     SingleT.SetLineColor(ROOT.kBlack)
     Data.SetLineColor(ROOT.kBlack)
     Data.SetLineWidth(2)
@@ -188,8 +188,8 @@ def MakePlot(FileName,categoriy,HistName,Xaxis,MaxRange,sig,sigLeg,XSection, Sta
     stack=ROOT.THStack("stack","stack")
     stack.Add(QCD)
 
-    stack.Add(VV)
-    stack.Add(DYS)
+#    stack.Add(VV)
+#    stack.Add(DYS)
     stack.Add(SingleT)
     stack.Add(TT)
     stack.Add(W)
@@ -198,9 +198,9 @@ def MakePlot(FileName,categoriy,HistName,Xaxis,MaxRange,sig,sigLeg,XSection, Sta
     errorBand = QCD.Clone()
     errorBand.Add(W)
     errorBand.Add(TT)
-    errorBand.Add(VV)
+#    errorBand.Add(VV)
     errorBand.Add(SingleT)
-    errorBand.Add(DYS)
+#    errorBand.Add(DYS)
     errorBand.SetMarkerSize(0)
     errorBand.SetFillColor(16)
     errorBand.SetFillStyle(3001)
@@ -250,9 +250,9 @@ def MakePlot(FileName,categoriy,HistName,Xaxis,MaxRange,sig,sigLeg,XSection, Sta
     legende.AddEntry(Signal,sigLeg,"l")
     legende.AddEntry(W,"W","f")
     legende.AddEntry(TT,"t#bar{t}+jets","f")
-    legende.AddEntry(SingleT,"SingleT","f")
-    legende.AddEntry(DYS,"DY #rightarrowll ","f")
-    legende.AddEntry(VV,"VV","f")
+    legende.AddEntry(SingleT,"EWK","f")
+#    legende.AddEntry(DYS,"DY #rightarrowll ","f")
+#    legende.AddEntry(VV,"VV","f")
 
     legende.AddEntry(QCD,"QCD multijet","f")
     legende.AddEntry(errorBand,"Uncertainty","f")
@@ -361,7 +361,7 @@ def MakePlot(FileName,categoriy,HistName,Xaxis,MaxRange,sig,sigLeg,XSection, Sta
 #    c.Modified()
     h1.GetYaxis().SetRangeUser(.01,2.99)
 #    c.Modified()
-    c.SaveAs("_Finalplot_"+categoriy+Status+".pdf")
+    c.SaveAs("_Finalplot_"+categoriy+Status+"_MT.pdf")
 #    c.SaveAs("_Finalplot_"+categoriy+".pdf")
     #       c.SaveAs("mvis"+categoriy+".png")
 
@@ -374,8 +374,8 @@ def MakePlot(FileName,categoriy,HistName,Xaxis,MaxRange,sig,sigLeg,XSection, Sta
 
 
 FileNamesInfo=[
-               ["postfit_shapes.root","Codex__mj_1_13TeV_prefit","M_{#muj} [GeV]","#mu j ",2000,"Codex_","LQ 1200GeV (DM 500 GeV)",10],
-               ["postfit_shapes.root","Codex__mj_1_13TeV_postfit","M_{#muj} [GeV]","#mu j ",2000,"Codex_","LQ 1200GeV (DM 500 GeV)",10],
+               ["postfit_shapes_MT_MET.root","Codex__mj_1_13TeV_prefit","M_{T}(lq,MET) [GeV]","#mu j ",2000,"Codex_","LQ 1200GeV (DM 500 GeV)",10],
+               ["postfit_shapes_MT_MET.root","Codex__mj_1_13TeV_postfit","M_{T}(lq,MET) [GeV]","#mu j ",2000,"Codex_","LQ 1200GeV (DM 500 GeV)",10],
                ]
 
 
