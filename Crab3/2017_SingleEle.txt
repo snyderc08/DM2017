@@ -1,0 +1,27 @@
+Dataset: /SingleElectron/Run2016B-03Feb2017_ver1-v1/MINIAOD
+Creation time: 2017-02-07 14:58:06, Physics group: NoGroup, Status: VALID, Type: data
+Release, Blocks, Files, Runs, Configs, Parents, Children, Sites, Physics Groups, py , Subscribe to PhEDEx , XsecDB Sources: dbs3 show
+Dataset: /SingleElectron/Run2016B-03Feb2017_ver2-v2/MINIAOD
+Creation time: 2017-02-04 07:25:35, Physics group: NoGroup, Status: VALID, Type: data
+Release, Blocks, Files, Runs, Configs, Parents, Children, Sites, Physics Groups, py , Subscribe to PhEDEx , XsecDB Sources: dbs3 show
+Dataset: /SingleElectron/Run2016C-03Feb2017-v1/MINIAOD
+Creation time: 2017-02-05 06:51:51, Physics group: NoGroup, Status: VALID, Type: data
+Release, Blocks, Files, Runs, Configs, Parents, Children, Sites, Physics Groups, py , Subscribe to PhEDEx , XsecDB Sources: dbs3 show
+Dataset: /SingleElectron/Run2016D-03Feb2017-v1/MINIAOD
+Creation time: 2017-02-04 01:37:05, Physics group: NoGroup, Status: VALID, Type: data
+Release, Blocks, Files, Runs, Configs, Parents, Children, Sites, Physics Groups, py , Subscribe to PhEDEx , XsecDB Sources: dbs3 show
+Dataset: /SingleElectron/Run2016E-03Feb2017-v1/MINIAOD
+Creation time: 2017-02-03 23:54:34, Physics group: NoGroup, Status: VALID, Type: data
+Release, Blocks, Files, Runs, Configs, Parents, Children, Sites, Physics Groups, py , Subscribe to PhEDEx , XsecDB Sources: dbs3 show
+Dataset: /SingleElectron/Run2016F-03Feb2017-v1/MINIAOD
+Creation time: 2017-02-04 09:52:56, Physics group: NoGroup, Status: VALID, Type: data
+Release, Blocks, Files, Runs, Configs, Parents, Children, Sites, Physics Groups, py , Subscribe to PhEDEx , XsecDB Sources: dbs3 show
+Dataset: /SingleElectron/Run2016G-03Feb2017-v1/MINIAOD
+Creation time: 2017-02-04 08:10:11, Physics group: NoGroup, Status: VALID, Type: data
+Release, Blocks, Files, Runs, Configs, Parents, Children, Sites, Physics Groups, py , Subscribe to PhEDEx , XsecDB Sources: dbs3 show
+Dataset: /SingleElectron/Run2016H-03Feb2017_ver2-v1/MINIAOD
+Creation time: 2017-02-04 05:10:50, Physics group: NoGroup, Status: VALID, Type: data
+Release, Blocks, Files, Runs, Configs, Parents, Children, Sites, Physics Groups, py , Subscribe to PhEDEx , XsecDB Sources: dbs3 show
+Dataset: /SingleElectron/Run2016H-03Feb2017_ver3-v1/MINIAOD
+Creation time: 2017-02-06 12:26:08, Physics group: NoGroup, Status: VALID, Type: data
+Release, Blocks, Files, Runs, Configs, Parents, Children, Sites, Physics Groups, py , Subscribe to PhEDEx , XsecDB Sources: dbs3 show

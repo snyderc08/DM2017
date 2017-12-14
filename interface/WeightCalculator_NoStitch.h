@@ -39,8 +39,8 @@ float XSection(std::string OutName) {
     
     
     
-    if (OutName.find("WJetsToLNu_Inc") != string::npos) return 50690;   // As we have large cut at Skim, this one is not needed
-    else if (OutName.find("WJetsToLNu_HT-70to100") != string::npos) return 1372;
+//        if (OutName.find("WJetsToLNu_Inc") != string::npos) return 50690;   // As we have large cut at Skim, this one is not needed
+    if (OutName.find("WJetsToLNu_HT-70to100") != string::npos) return 1372;
     else if (OutName.find("WJetsToLNu_HT-100to200") != string::npos) return 1343;
     else if (OutName.find("WJetsToLNu_HT-200to400") != string::npos) return 359.6;
     else if (OutName.find("WJetsToLNu_HT-400to600") != string::npos) return 48.85;
@@ -48,19 +48,6 @@ float XSection(std::string OutName) {
     else if (OutName.find("WJetsToLNu_HT-800to1200") != string::npos) return 5.501;
     else if (OutName.find("WJetsToLNu_HT-1200to2500") != string::npos) return 1.329;
     else if (OutName.find("WJetsToLNu_HT-2500toInf") != string::npos) return 0.03216;
-    
-    //http://cms.cern.ch/iCMS/jsp/db_notes/noteInfo.jsp?cmsnoteid=CMS%20AN-2016/204
-    else if (OutName.find("WMass_100_") != string::npos) return 163.15;
-    else if (OutName.find("WMass_200_") != string::npos) return 6.236;
-    else if (OutName.find("WMass_500_") != string::npos) return 0.2138;
-    else if (OutName.find("WMass_1000_") != string::npos) return 0.01281;
-    else if (OutName.find("WMass_2000_") != string::npos) return 5.56e-04;
-//    else if (OutName.find("WMass_3000_") != string::npos) return 2.904e-05;
-    
-    
-    
-    
-    
     
     
     //    else if (OutName.find("DYJetsToLL_Inc") != string::npos) return 4895 * 1.012; // As we have large cut at Skim, this one is not needed
@@ -75,9 +62,9 @@ float XSection(std::string OutName) {
     
     
     //Di-boson   Pythia is not useful in this analysis
-    //    else if (OutName.find("WW_pythia") != string::npos) return 115.0;
-    //    else if (OutName.find("WZ_pythia") != string::npos) return 47.13;
-    //    else if (OutName.find("ZZ_pythia") != string::npos) return 16.523;
+//    else if (OutName.find("WW_pythia") != string::npos) return 115.0;
+//    else if (OutName.find("WZ_pythia") != string::npos) return 47.13;
+//    else if (OutName.find("ZZ_pythia") != string::npos) return 16.523;
     
     
     
@@ -187,48 +174,24 @@ float XSection(std::string OutName) {
 
 
 vector <float> W_HTBin(std::string FileLoc){
-    
-    const int WSize=9;
-    std::string W_ROOTFiles[WSize]={"WJetsToLNu_Inc.root","WJetsToLNu_HT-70to100.root", "WJetsToLNu_HT-100To200.root","WJetsToLNu_HT-200To400.root","WJetsToLNu_HT-400To600.root", "WJetsToLNu_HT-600To800.root","WJetsToLNu_HT-800To1200.root","WJetsToLNu_HT-1200To2500.root","WJetsToLNu_HT-2500ToInf.root"};
-    
+
+    const int WSize=8;
+    std::string W_ROOTFiles[WSize]={"WJetsToLNu_Inc.root", "WJetsToLNu_HT-100To200.root","WJetsToLNu_HT-200To400.root","WJetsToLNu_HT-400To600.root", "WJetsToLNu_HT-600To800.root","WJetsToLNu_HT-800To1200.root","WJetsToLNu_HT-1200To2500.root","WJetsToLNu_HT-2500ToInf.root"};
+
     vector<float> W_events;
     W_events.clear();
-    
+
     for (int i=0; i <WSize;i++){
-        
+
         TFile * File_W = new TFile((FileLoc+W_ROOTFiles[i]).c_str());
         TH1F * Histo_W = (TH1F*) File_W->Get("hcount");
         W_events.push_back(Histo_W->GetBinContent(2));
         cout<<"Number of proccessed evenets for "<<W_ROOTFiles[i]<<" = "<<Histo_W->GetBinContent(2)<<"\n";
     }
-    
+
     return W_events ;
-    
+
 }
-
-
-
-
-vector <float> W_MassBin(std::string FileLoc){
-    
-    const int WSize=5;
-    std::string W_ROOTFiles[WSize]={"WToMuNu_M-100.root","WToMuNu_M-200.root", "WToMuNu_M-500.root","WToMuNu_M-1000.root","WToMuNu_M-2000.root"};
-    
-    vector<float> W_events;
-    W_events.clear();
-    
-    for (int i=0; i <WSize;i++){
-        
-        TFile * File_W = new TFile((FileLoc+W_ROOTFiles[i]).c_str());
-        TH1F * Histo_W = (TH1F*) File_W->Get("hcount");
-        W_events.push_back(Histo_W->GetBinContent(2));
-        cout<<"Number of proccessed evenets for "<<W_ROOTFiles[i]<<" = "<<Histo_W->GetBinContent(2)<<"\n";
-    }
-    
-    return W_events ;
-    
-}
-
 
 //vector <float> DY_HTBin(std::string FileLoc){
 //
@@ -319,90 +282,7 @@ vector <float> Z_PTBinNLO(std::string FileLoc){
 //####################################################################################################################################
 
 
-float weightCalc(TH1F *Histo,std::string outputName, float genHT,vector<float> W_HTbin, float WMass, vector<float> W_Massbin) {
-    
-    
-    stringstream ss(outputName);
-    
-    string token;
-    string M;
-    while (getline(ss,token, '/'))  M=token;
-    
-    std::string FirstPart = "";
-    std::string LastPart = ".root";
-    std::string newOut = M.substr(FirstPart.size());
-    newOut = newOut.substr(0, newOut.size() - LastPart.size());
-    
-    
-    //    float LOtoNLO_DY = 1.230888662;
-    float LOtoNLO_DY = 1; // Now we boson have pt dependent SF
-    //    float LOtoNLO_W = 1.213783784;
-    float LOtoNLO_W = 1;  // Now we boson have pt dependent SF
-    //    float luminosity=    12900;
-    float luminosity=    35867;
-    
-    
-    size_t isSingleMu = outputName.find("SingleMu");
-    size_t isSingleEle = outputName.find("SingleEle");
-    
-    
-    if (isSingleMu != string::npos || isSingleEle!= string::npos)   return 1;
-    
-    
-    size_t isWjet = outputName.find("WJets");
-    size_t isWToMuNu = outputName.find("WToMuNu");
-    
-    
-    
-    //##################################################################
-    //   Stitching for  W sample
-    //##################################################################
-    if (isWjet != string::npos || isWToMuNu != string::npos) {
-        
-        if (WMass <= 100){
-            if (genHT <= 70)  return  luminosity * XSection("WJetsToLNu_Inc") / W_HTbin[0];
-            else if (genHT > 70 && genHT <= 100)  return   luminosity * XSection("WJetsToLNu_HT-70to100") / W_HTbin[1];
-            else if (genHT > 100 && genHT <= 200)  return   luminosity * XSection("WJetsToLNu_HT-100to200") / W_HTbin[2];
-            else if (genHT > 200 && genHT <= 400)  return   luminosity * XSection("WJetsToLNu_HT-200to400") / W_HTbin[3];
-            else if (genHT > 400 && genHT <= 600)  return   luminosity * XSection("WJetsToLNu_HT-400to600") / W_HTbin[4];
-            else if (genHT > 600 && genHT <= 800)  return   luminosity * XSection("WJetsToLNu_HT-600to800") / W_HTbin[5];
-            else if (genHT > 800 && genHT <= 1200)  return   luminosity * XSection("WJetsToLNu_HT-800to1200") / W_HTbin[6];
-            else if (genHT > 1200 && genHT <= 2500)  return   luminosity * XSection("WJetsToLNu_HT-1200to2500") / W_HTbin[7];
-            else if (genHT > 2500 )  return   luminosity * XSection("WJetsToLNu_HT-2500toInf") / W_HTbin[8];
-            else   {cout<<"**********   wooow  ********* There is a problem here\n";return 0;}
-        }
-        
-        else if  (WMass > 100 && WMass <= 200)  return   luminosity /  (W_Massbin[0] /XSection("WMass_100_"));
-        else if  (WMass > 200 && WMass <= 500)  return   luminosity /  (W_Massbin[0] /XSection("WMass_100_") +  W_Massbin[1]/ XSection("WMass_200_")) ;
-        else if  (WMass > 500 && WMass <= 1000)  return   luminosity /  (W_Massbin[0] /XSection("WMass_100_") +  W_Massbin[1]/ XSection("WMass_200_") +  W_Massbin[2]/ XSection("WMass_500_")) ;
-        
-        else if  (WMass > 1000 && WMass <= 2000)  return   luminosity /  (W_Massbin[0] /XSection("WMass_100_") +  W_Massbin[1]/ XSection("WMass_200_") +  W_Massbin[2]/ XSection("WMass_500_") + W_Massbin[3]/ XSection("WMass_1000_")) ;
-        
-        else if  (WMass > 2000 )  return   luminosity / (W_Massbin[0] /XSection("WMass_100_") +  W_Massbin[1]/ XSection("WMass_200_") +  W_Massbin[2]/ XSection("WMass_500_") + W_Massbin[3]/ XSection("WMass_1000_") + W_Massbin[4]/ XSection("WMass_2000_")) ;
-        
-        else   {cout<<"**********   wooow  ********* There is a problem here\n";return 0;}
-    }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    else
-        return luminosity * XSection(newOut)*1.0 / Histo->GetBinContent(2);
-    
-    
-}
-
-
-//####################################################################################################################################
-
-
-float weightCalc_NoWStitch(TH1F *Histo,std::string outputName, float genHT) {
+float weightCalc(TH1F *Histo,std::string outputName, float genHT) {
     
     
     stringstream ss(outputName);
@@ -443,7 +323,7 @@ float weightCalc_NoWStitch(TH1F *Histo,std::string outputName, float genHT) {
 }
 
 
-
+//####################################################################################################################################
 //####################################################################################################################################
 //####################################################################################################################################
 //     ONLY for FXFX sample for K-factor Study

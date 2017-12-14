@@ -2,20 +2,20 @@
 
 
 
+cp CodexAnalyzer_Excess.*    OutFiles_Excess_MTGreat1400/.
+./CodexAnalyzer_Excess.exe  OutFiles_Excess_MTGreat1400/DYJetsToLL.root ../ROOT80X/SampleLQ2/DYJetsToLL_M-50_HT*.root
 
-./CodexAnalyzer_Excess.exe  OutFiles_Excess/DYJetsToLL.root ../ROOT80X/DYJetsToLL_M-50_HT*.root
+./CodexAnalyzer_Excess.exe  OutFiles_Excess_MTGreat1400/WJetsToLNu.root ../ROOT80X/SampleLQ2/WJetsToLNu_HT-*.root
 
-./CodexAnalyzer_Excess.exe  OutFiles_Excess/WJetsToLNu.root ../ROOT80X/WJetsToLNu_HT-*.root
+./CodexAnalyzer_Excess.exe  OutFiles_Excess_MTGreat1400/TTJets.root ../ROOT80X/SampleLQ2/TTJets.root
 
-./CodexAnalyzer_Excess.exe  OutFiles_Excess/TTJets.root ../ROOT80X/TTJets.root
+./CodexAnalyzer_Excess.exe  OutFiles_Excess_MTGreat1400/VV.root ../ROOT80X/SampleLQ2/ZZ*.root  ../ROOT80X/SampleLQ2/WW*.root  ../ROOT80X/SampleLQ2/WZ*.root
 
-./CodexAnalyzer_Excess.exe  OutFiles_Excess/VV.root ../ROOT80X/ZZ*.root  ../ROOT80X/WW*.root  ../ROOT80X/WZ*.root
+./CodexAnalyzer_Excess.exe  OutFiles_Excess_MTGreat1400/SingleTop.root ../ROOT80X/SampleLQ2/ST_*.root
 
-./CodexAnalyzer_Excess.exe  OutFiles_Excess/SingleTop.root ../ROOT80X/ST_*.root
+./CodexAnalyzer_Excess.exe  OutFiles_Excess_MTGreat1400/Data.root ../ROOT80X/SampleLQ2/SingleMu.root
 
-./CodexAnalyzer_Excess.exe  OutFiles_Excess/Data.root ../ROOT80X/SingleMu.root
-
-./CodexAnalyzer_Excess.exe  OutFiles_Excess/Codex_1200.root ../ROOT80X/PrivateSample/Codex_LQ1200_DM_500_X_550.root
+./CodexAnalyzer_Excess.exe  OutFiles_Excess_MTGreat1400/Codex_1200.root ../ROOT80X/PrivateSample/Codex_LQ1200_DM_500_X_550.root
 
 
 

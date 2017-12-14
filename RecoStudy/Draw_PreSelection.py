@@ -249,16 +249,18 @@ def MakePlot(FileName,categoriy,HistName,Xaxis,Info,RB_,channel,yMin,isLOG,ttbar
 
     pad1.RedrawAxis()
 
-    categ  = ROOT.TPaveText(0.18, 0.5+0.013, 0.43, 0.70+0.155, "NDC")
+    categ  = ROOT.TPaveText(0.20, 0.45+0.013, 0.43, 0.60+0.155, "NDC")
     categ.SetBorderSize(   0 )
     categ.SetFillStyle(    0 )
     categ.SetTextAlign(   12 )
     categ.SetTextSize ( 0.04 )
     categ.SetTextColor(    1 )
-    categ.SetTextFont (   41 )
+#    categ.SetTextFont (   41 )
     #       if i==1 or i==3:
-    categ.AddText(MTLegend)
-    categ.AddText(ttbarCR)
+    if MTLegend=='_HighMT': categ.AddText("M_{T}(#mu,j) > 100 GeV")
+    if MTLegend=='_MT500': categ.AddText("M_{T}(#mu,j) > 500 GeV")
+#    categ.AddText(ttbarCR)
+    categ.AddText('1100 < M_{LQ} < 1400 GeV')
 #    categ.AddText(MTLegend)
     #       else :
     #        categ.AddText("SS")
@@ -279,8 +281,8 @@ def MakePlot(FileName,categoriy,HistName,Xaxis,Info,RB_,channel,yMin,isLOG,ttbar
     pad2.cd()
     
     h1=errorBand.Clone()
-    h1.SetMaximum(1.5)
-    h1.SetMinimum(0.5)
+    h1.SetMaximum(3)
+    h1.SetMinimum(0)
     h1.SetMarkerStyle(20)
 
     h3=Data.Clone()
@@ -326,34 +328,62 @@ def MakePlot(FileName,categoriy,HistName,Xaxis,Info,RB_,channel,yMin,isLOG,ttbar
     ROOT.gPad.RedrawAxis()
 
     c.Modified()
-    c.SaveAs("_plot_variosMT"+FileName.replace('TotalRootForLimit_PreSelection_MuJet','').replace('.root','')+str(isLOG)+".pdf")
+    c.SaveAs("_plot_NewW_LQ1100_1400"+FileName.replace('TotalRootForLimit_PreSelection_MuJet','').replace('.root','')+str(isLOG)+".pdf")
+
+
+#FileNamesInfo=[
+###               ["_tmass_JetMet","M_{T}(jet,MET) (GeV)","",5,1],
+#               ["_tmass_LQMet","M_{T}(LQ,MET)  (GeV)","",10,1],
+#               ["_LepPt","lepton p_{T} (GeV)","",50,1],
+#               ["_LepEta","lepton #eta ","",5,10],
+#               ["_JetPt","jet p_{T} (GeV)","",50,1],
+#               ["_JetEta","jet #eta ","",5,10],
+###               ["_nVtx","# of vertex","",1,10],
+###               ["_nVtx_NoPU","# of vertex before PU reweighting","",1,10],
+#               ["_MET","MET  (GeV)","",5,1],
+#               ["_LQMass","M_{LQ}   (GeV)","",5,1],
+#               ["_tmass_MuMet","M_{T}(#mu,MET) (GeV)","",5,1],
+#               ["_dPhi_Jet_Met","#Delta#phi (jet,MET)","",5,1],
+#               ["_dPhi_Mu_Jet","#Delta#phi (#mu,jet)","",5,1],
+###               ["_LQEta","#eta_{LQ}","",10,10],
+#               ["_NumJet","Jet multiplicity","",1,1],
+#               ["_NumBJet","BJet multiplicity","",1,1],
+#               ]
+
 
 
 FileNamesInfo=[
-##               ["_tmass_JetMet","M_{T}(jet,MET) (GeV)","",5,1],
+               ##               ["_tmass_JetMet","M_{T}(jet,MET) (GeV)","",5,1],
                ["_tmass_LQMet","M_{T}(LQ,MET)  (GeV)","",10,1],
-               ["_LepPt","lepton p_{T} (GeV)","",50,1],
-               ["_LepEta","lepton #eta ","",5,10],
-               ["_JetPt","jet p_{T} (GeV)","",50,1],
-               ["_JetEta","jet #eta ","",5,10],
-##               ["_nVtx","# of vertex","",1,10],
-##               ["_nVtx_NoPU","# of vertex before PU reweighting","",1,10],
-               ["_MET","MET  (GeV)","",5,1],
-               ["_LQMass","M_{LQ}   (GeV)","",5,1],
-               ["_tmass_MuMet","M_{T}(#mu,MET) (GeV)","",5,1],
-               ["_dPhi_Jet_Met","#Delta#phi (jet,MET)","",5,1],
-               ["_dPhi_Mu_Jet","#Delta#phi (#mu,jet)","",5,1],
-##               ["_LQEta","#eta_{LQ}","",10,10],
+               ["_LepPt","lepton p_{T} (GeV)","",100,1],
+               ["_LepEta","lepton #eta ","",10,.1],
+               ["_JetPt","jet p_{T} (GeV)","",50,.1],
+               ["_JetEta","jet #eta ","",10,1],
+               ##               ["_nVtx","# of vertex","",1,10],
+               ##               ["_nVtx_NoPU","# of vertex before PU reweighting","",1,10],
+               ["_MET","MET  (GeV)","",10,1],
+               ["_LQMass","M_{LQ}   (GeV)","",10,1],
+               ["_tmass_MuMet","M_{T}(#mu,MET) (GeV)","",10,1],
+               ["_dPhi_Jet_Met","#Delta#phi (jet,MET)","",10,1],
+               ["_dPhi_Mu_Jet","#Delta#phi (#mu,jet)","",10,1],
+               ##               ["_LQEta","#eta_{LQ}","",10,10],
                ["_NumJet","Jet multiplicity","",1,1],
                ["_NumBJet","BJet multiplicity","",1,1],
+               ["_recoHT","Jet HT  (GeV)","",10,1],
+               ["_ST"," ST  (GeV)","",10,1],
+               ["_dR_Mu_Jet","#DeltaR (#mu,jet)","",20,1],
+               ["_dEta_Mu_Jet","#Delta#eta (#mu,jet)","",50,1],
                ]
+
+
 
 
 
 #    Isolation=["_Iso", "_AntiIso","_Total"]
 
 Isolation=["_Iso"]
-MT=["_HighMT"]
+#MT=["_MT500"]
+MT=["_HighMT","_MT500"]
 #MT= ["_NoMT","_HighMT","_MT50To150","_MT100","_MT150","_MT200","_MT300","_MT400","_MT500"]
 #MT= ["_MT100","_MT150"]
 #MT_legend= [" 50 < M_{T} < 100","100 < M_{T} < 150"]

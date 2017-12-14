@@ -276,7 +276,7 @@ def MakePlot(FileName,categoriy,HistName,Xaxis,MaxRange,sig,sigLeg,XSection, Sta
     categ.SetTextColor(    1 )
 #    categ.SetTextFont (   41 )
     #       if i==1 or i==3:
-#    categ.AddText(HistName)
+    categ.AddText('|#eta_{#mu} < 2.0|')
     #       else :
     #        categ.AddText("SS")
     categ.Draw()
@@ -361,7 +361,7 @@ def MakePlot(FileName,categoriy,HistName,Xaxis,MaxRange,sig,sigLeg,XSection, Sta
 #    c.Modified()
     h1.GetYaxis().SetRangeUser(.01,2.99)
 #    c.Modified()
-    c.SaveAs("_Finalplot_"+categoriy+Status+".pdf")
+    c.SaveAs("_Finalplot_MuEta2p0"+categoriy+Status+".pdf")
 #    c.SaveAs("_Finalplot_"+categoriy+".pdf")
     #       c.SaveAs("mvis"+categoriy+".png")
 
@@ -373,10 +373,17 @@ def MakePlot(FileName,categoriy,HistName,Xaxis,MaxRange,sig,sigLeg,XSection, Sta
 #Category = ["_inclusive"]
 
 
+
 FileNamesInfo=[
-               ["postfit_shapes.root","Codex__mj_1_13TeV_prefit","M_{#muj} [GeV]","#mu j ",2000,"Codex_","LQ 1200GeV (DM 500 GeV)",10],
-               ["postfit_shapes.root","Codex__mj_1_13TeV_postfit","M_{#muj} [GeV]","#mu j ",2000,"Codex_","LQ 1200GeV (DM 500 GeV)",10],
+               ["postfit_shapes_MuEta2.root","Codex__mj_1_13TeV_prefit","M_{#muj} [GeV]","#mu j ",2000,"Codex_","LQ 1200GeV (DM 500 GeV)",10],
+               ["postfit_shapes_MuEta2.root","Codex__mj_1_13TeV_postfit","M_{#muj} [GeV]","#mu j ",2000,"Codex_","LQ 1200GeV (DM 500 GeV)",10],
                ]
+
+
+#FileNamesInfo=[
+#               ["postfit_shapes.root","Codex__mj_1_13TeV_prefit","M_{#muj} [GeV]","#mu j ",2000,"Codex_","LQ 1200GeV (DM 500 GeV)",10],
+#               ["postfit_shapes.root","Codex__mj_1_13TeV_postfit","M_{#muj} [GeV]","#mu j ",2000,"Codex_","LQ 1200GeV (DM 500 GeV)",10],
+#               ]
 
 
 #for ch in channelDirectory:

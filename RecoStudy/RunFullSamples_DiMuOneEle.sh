@@ -1,7 +1,7 @@
 ./Make.sh CodexAnalyzer_Preselection_2Mu1Ele.cc
 
 
-
+cp CodexAnalyzer_Preselection_2Mu1Ele.*   OutFiles_DiMuOneEle/.
 ./CodexAnalyzer_Preselection_2Mu1Ele.exe  OutFiles_DiMuOneEle/WJetsToLNu.root ../ROOT80X/DiMu/WJetsToLNu_HT-*.root
 
 ./CodexAnalyzer_Preselection_2Mu1Ele.exe  OutFiles_DiMuOneEle/TTJets.root ../ROOT80X/DiMu/TTJets.root

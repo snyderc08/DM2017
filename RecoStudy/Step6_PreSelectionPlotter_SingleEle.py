@@ -34,7 +34,7 @@ import os
 
 ROOT.gROOT.SetBatch(True)
 #ROOT.gROOT.ProcessLine('.x rootlogon.C')
-SubRootDir = 'OutFiles_PreSelection_SingleEle/'
+SubRootDir = 'OutFiles_PreSelection_SampleLQ1/'
 #SubRootDir = 'OutFiles_PreSelection_100to150/'  # changed October 23rd
 #SubRootDir = 'OutFiles_PreSelection_OldKFactor/'
 #SubRootDir = 'OutFiles_PreSelection_dPhiOverLapWithJetOnly/'
@@ -327,8 +327,8 @@ if __name__ == "__main__":
 
     JPT=[ "_HighDPhi"]
 
-#    region= ["", "_ttbarCRDiLep","_ttbarCRSingleLep"]
-    region= [""]
+    region= ["", "_ttbarCRDiLep","_ttbarCRSingleLep"]
+#    region= [""]
 
     for Norm in PlotName:
         for iso in Isolation:

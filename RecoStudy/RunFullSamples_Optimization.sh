@@ -1,7 +1,7 @@
 ./Make.sh CodexAnalyzer_Optimization.cc
 
 
-
+cp CodexAnalyzer_Optimization.*  OutFiles_Optimization/.
 
 ./CodexAnalyzer_Optimization.exe  OutFiles_Optimization/DYJetsToLL.root ../ROOT80X/DYJetsToLL_M-50_HT*.root
 

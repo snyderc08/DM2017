@@ -1,7 +1,7 @@
 ./Make.sh CodexAnalyzer_FinalSelection.cc
 
 
-
+cp CodexAnalyzer_FinalSelection.*  OutFiles_FullSelection/.
 
 ./CodexAnalyzer_FinalSelection.exe  OutFiles_FullSelection/DYJetsToLL.root ../ROOT80X/DYJetsToLL_M-50_HT*.root
 

@@ -1,3 +1,4 @@
+//Change of muon eta from 2.4 to 2.0
 #include "../interface/CodexAnalyzer.h"
 #include "../interface/WeightCalculator.h"
 #include "../interface/Corrector.h"
@@ -94,9 +95,11 @@ int main(int argc, char** argv) {
     TH1F * ZNLO_qcd= (TH1F *) KFactor->Get("DYJets_012j_NLO/nominal");
     
     
-    //        std::string ROOTLoc= "/Users/abdollah1/GIT_abdollah110/DM2016/ROOT80X/";
+    std::string ROOTLocHT= "/Users/abdollah1/GIT_abdollah110/DM2017/ROOT80X/SampleLQ2/";
+    std::string ROOTLocMass= "/Users/abdollah1/GIT_abdollah110/DM2017/ROOT80X/WMASS/";
     //        vector<float> DY_Events = DY_HTBin(ROOTLoc);
-    //        vector<float> W_Events = W_HTBin(ROOTLoc);
+    vector<float> W_HTBinROOTFiles = W_HTBin(ROOTLocHT);
+    vector<float> W_MassBinROOTFiles = W_MassBin(ROOTLocMass);
     //        vector<float> W_EventsNLO = W_PTBinNLO(ROOTLoc); //This is for the NLO samples (as the stat is too low we do not use them)
     //        vector<float> W_EventsNLO = W_HTBin(ROOTLoc);
     
@@ -372,28 +375,46 @@ int main(int argc, char** argv) {
             int modPDGId=-10;
             int AntimodPDGId=-10;
             
-            TLorentzVector GenMu4Momentum,GenAntiMu4Momentum;
+            float WBosonMass=0;
+            
+            TLorentzVector GenMu4Momentum,GenAntiMu4Momentum, WGEN4Momentum, MUGEN4Momentum, NUGEN4Momentum;
             
             for (int igen=0;igen < nMC; igen++){
                 if (mcPID->at(igen) == 6 && mcStatus->at(igen) ==62) GenTopPt=mcPt->at(igen) ;
                 if (mcPID->at(igen) == -6 && mcStatus->at(igen) ==62) GenAntiTopPt=mcPt->at(igen);
-                if (fabs(mcPID->at(igen)) ==24   && mcStatus->at(igen) ==22)  WBosonPt= mcPt->at(igen); // In inclusive we have status 62||22||44 while in HTbins we have just 22
+                if (fabs(mcPID->at(igen)) ==24   && mcStatus->at(igen) ==22)  {WBosonPt= mcPt->at(igen); WBosonMass=mcMass->at(igen);} // In inclusive we have status 62||22||44 while in HTbins we have just 22
+                //                if (fabs(mcPID->at(igen)) ==24)  cout << mcStatus->at(igen)<< " mcStatus  & boson pt= " << mcPt->at(igen)<<"\n";
+                //                cout<< "id= "<<mcPID->at(igen) << "  stat= "<<mcStatus->at(igen) << " pt="<<mcPt->at(igen)<<"\n";
                 if (fabs(mcPID->at(igen)) ==23)  ZBosonPt= mcPt->at(igen); //FIXME somethime we do not have Z in the DY events
                 if ( mcPID->at(igen) ==13  )  {GenMu4Momentum.SetPtEtaPhiM(mcPt->at(igen),mcEta->at(igen),mcPhi->at(igen),mcMass->at(igen)); modPDGId=mcMomPID->at(igen);}
                 if ( mcPID->at(igen) ==-13  )  {GenAntiMu4Momentum.SetPtEtaPhiM(mcPt->at(igen),mcEta->at(igen),mcPhi->at(igen),mcMass->at(igen)); AntimodPDGId=mcMomPID->at(igen);}
                 
+                if ( fabs(mcPID->at(igen)) ==13 && mcStatus->at(igen) ==1 )  {MUGEN4Momentum.SetPtEtaPhiM(mcPt->at(igen),mcEta->at(igen),mcPhi->at(igen),mcMass->at(igen));}
+                if ( fabs(mcPID->at(igen)) ==14  && mcStatus->at(igen) ==1)  {NUGEN4Momentum.SetPtEtaPhiM(mcPt->at(igen),mcEta->at(igen),mcPhi->at(igen),mcMass->at(igen));}
+                
+                
+                
+                
+                
             }
+            WGEN4Momentum=MUGEN4Momentum+NUGEN4Momentum;
+            //            cout<<WGEN4Momentum.Pt()<<"\n";
             if (ZBosonPt ==0)
                 ZBosonPt=(GenMu4Momentum+GenAntiMu4Momentum).Pt();  //This is a temp solution to the above problem
+            
+            
             
             //######################## Top Pt Reweighting
             size_t isTTJets = InputROOT.find("TTJets");
             if (isTTJets!= string::npos) TopPtReweighting = compTopPtWeight(GenTopPt, GenAntiTopPt);
             
             //######################## W K-factor
+            size_t isWJetsToLNu_Inc = InputROOT.find("WJetsToLNu_Inc");
             size_t isWJets = InputROOT.find("WJets");
+            size_t isWToMuNu = InputROOT.find("WToMuNu");
             //            if (isWJets!= string::npos) WBosonKFactor=Get_W_Z_BosonKFactor(WBosonPt,WLO,WNLO_ewk);  //Swtch ON only for LO Madgraph sample
-            if (isWJets!= string::npos) WBosonKFactor= kf_W_1 + kf_W_2 * WBosonPt;
+            if ((isWJets!= string::npos || isWToMuNu!= string::npos) &&  WBosonPt==0)  WBosonPt = WGEN4Momentum.Pt();
+            if (isWJets!= string::npos || isWToMuNu!= string::npos ) WBosonKFactor= kf_W_1 + kf_W_2 * WBosonPt;
             if (isWJets!= string::npos) WBosonKFactor_ewkUp= (kf_W_1Up + kf_W_2Up * WBosonPt)/WBosonKFactor;
             if (isWJets!= string::npos) WBosonKFactor_ewkDown= (kf_W_1Down + kf_W_2Down * WBosonPt)/WBosonKFactor;
             
@@ -416,7 +437,7 @@ int main(int argc, char** argv) {
                 
                 //######################## Lumi Weight
                 //                if (HistoTot) LumiWeight = weightCalc(HistoTot, InputROOT, genHT,WBosonPt, W_Events, DY_Events,W_EventsNLO);
-                if (HistoTot) LumiWeight = weightCalc(HistoTot, InputROOT);
+                if (HistoTot) LumiWeight = weightCalc(HistoTot, InputROOT,genHT, W_HTBinROOTFiles, WBosonMass, W_MassBinROOTFiles);
                 
                 //######################## Gen Weight
                 GetGenWeight=genWeight;
@@ -432,7 +453,13 @@ int main(int argc, char** argv) {
                     PUWeight= PUData_/PUMC_;
                 
             }
+            //................................................................................................................
+            //................................................................................................................
+            if (isWJets!= string::npos && WBosonMass > 100) continue;
+            if (isWJetsToLNu_Inc!= string::npos && genHT > 70.0) continue;
             
+            //................................................................................................................
+            //................................................................................................................
             
             //############################################################################################
             //   Final Total Weight
@@ -593,7 +620,8 @@ int main(int argc, char** argv) {
                 if ( (muPFNeuIso->at(imu) + muPFPhoIso->at(imu) - 0.5* muPFPUIso->at(imu) )  > 0.0)
                     IsoMu= ( muPFChIso->at(imu)/muPt->at(imu) + muPFNeuIso->at(imu) + muPFPhoIso->at(imu) - 0.5* muPFPUIso->at(imu))/muPt->at(imu);
                 
-                bool MuPtCut = muPt->at(imu) > LeptonPtCut_ && fabs(muEta->at(imu)) < 2.4 ;
+//                bool MuPtCut = muPt->at(imu) > LeptonPtCut_ && fabs(muEta->at(imu)) < 2.4 ;
+                bool MuPtCut = muPt->at(imu) > LeptonPtCut_ && fabs(muEta->at(imu)) < 2.0 ;
                 bool MuIdIso=( (muIDbit->at(imu) >> 2 & 1)  && fabs(muD0->at(imu)) < 0.045 && fabs(muDz->at(imu)) < 0.2); //Tight Muon Id
                 
                 if (! MuPtCut || !MuIdIso ) continue;

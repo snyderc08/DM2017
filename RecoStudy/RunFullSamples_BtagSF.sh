@@ -1,6 +1,6 @@
 ./Make.sh CodexAnalyzer_BTagEff.cc
 
-
+cp CodexAnalyzer_BTagEff*  OutFiles_BTagSF/.
 ./CodexAnalyzer_BTagEff.exe  OutFiles_BTagSF/DYJetsToLL.root ../ROOT80X/DYJetsToLL_M-50_HT*.root
 
 ./CodexAnalyzer_BTagEff.exe  OutFiles_BTagSF/WJetsToLNu.root ../ROOT80X/WJetsToLNu_HT-*.root

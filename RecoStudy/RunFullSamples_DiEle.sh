@@ -4,7 +4,7 @@
 
 
 
-
+cp CodexAnalyzer_DiEle.* OutFiles_DiEle/.
 ./CodexAnalyzer_DiEle.exe  OutFiles_DiEle/WJetsToLNu.root ../ROOT80X/DiEle/WJetsToLNu_HT-*.root
 
 ./CodexAnalyzer_DiEle.exe  OutFiles_DiEle/TTJets.root ../ROOT80X/DiEle/TTJets.root

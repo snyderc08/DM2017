@@ -4,7 +4,7 @@
 
 
 
-
+cp CodexAnalyzer_DiMu.*   OutFiles_DiMu/.
 ./CodexAnalyzer_DiMu.exe  OutFiles_DiMu/WJetsToLNu.root ../ROOT80X/DiMu/WJetsToLNu_HT-*.root
 
 ./CodexAnalyzer_DiMu.exe  OutFiles_DiMu/TTJets.root ../ROOT80X/DiMu/TTJets.root

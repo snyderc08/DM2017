@@ -1,7 +1,7 @@
 ./Make.sh CodexAnalyzer_FinalSelection_MT_LQMET.cc
 
 
-
+cp CodexAnalyzer_FinalSelection_MT_LQMET.*   OutFiles_FullSelection_MT_LQMET/.
 
 ./CodexAnalyzer_FinalSelection_MT_LQMET.exe  OutFiles_FullSelection_MT_LQMET/DYJetsToLL.root ../ROOT80X/DYJetsToLL_M-50_HT*.root
 

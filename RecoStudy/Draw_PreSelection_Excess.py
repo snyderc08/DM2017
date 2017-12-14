@@ -59,7 +59,7 @@ def MakePlot(FileName,categoriy,HistName,Xaxis,Info,RB_,channel,yMin,isLOG,ttbar
     ROOT.gStyle.SetFrameLineWidth(3)
     ROOT.gStyle.SetLineWidth(3)
     ROOT.gStyle.SetOptStat(0)
-    yMin=0
+    yMin=0.1
     c=ROOT.TCanvas("canvas","",0,0,600,600)
     c.cd()
 
@@ -83,7 +83,7 @@ def MakePlot(FileName,categoriy,HistName,Xaxis,Info,RB_,channel,yMin,isLOG,ttbar
 
 #    if ttbarCR=="_ttbarCRDiLep" :  W.Scale(SF_W_DiLep())
 #    W.Scale(1)
-    W.Scale(SF_W_SingleLep())
+#    W.Scale(SF_W_SingleLep())
 
 
     TT=file.Get(categoriy).Get("TT")
@@ -92,10 +92,13 @@ def MakePlot(FileName,categoriy,HistName,Xaxis,Info,RB_,channel,yMin,isLOG,ttbar
 #    if ttbarCR=="" :  TT.Scale(SF_TT_SingleLep())
 #    if ttbarCR=="_ttbarCRSingleLep" :  TT.Scale(SF_TT_SingleLep())
 #    if ttbarCR=="_ttbarCRDiLep" :  TT.Scale(SF_TT_DiLep())
-    TT.Scale(SF_TT_SingleLep())
+#    TT.Scale(SF_TT_SingleLep())
 
     SingleT=file.Get(categoriy).Get("SingleTop")
+    if not SingleT:
+        SingleT=file.Get(categoriy).Get("VV")
     SingleT.Rebin(RB_)
+    SingleT.Scale(0.00001)
 
     VV=file.Get(categoriy).Get("VV")
     VV.Rebin(RB_)
@@ -254,7 +257,7 @@ def MakePlot(FileName,categoriy,HistName,Xaxis,Info,RB_,channel,yMin,isLOG,ttbar
 
     pad1.RedrawAxis()
 
-    categ  = ROOT.TPaveText(0.18, 0.5+0.013, 0.43, 0.50+0.155, "NDC")
+    categ  = ROOT.TPaveText(0.22, 0.4+0.013, 0.43, 0.50+0.155, "NDC")
     categ.SetBorderSize(   0 )
     categ.SetFillStyle(    0 )
     categ.SetTextAlign(   12 )
@@ -263,9 +266,15 @@ def MakePlot(FileName,categoriy,HistName,Xaxis,Info,RB_,channel,yMin,isLOG,ttbar
 #    categ.SetTextFont (   41 )
     #       if i==1 or i==3:
     
-    categ.AddText(" M_{T}(#mu,MET)> 500 GeV ")
-    categ.AddText(" 1100 < M_{LQ} < 1400 GeV")
-#    categ.AddText(MTLegend)
+#    categ.AddText(" M_{T}(#mu,MET)> 500 GeV ")
+#    categ.AddText(" 1100 < M_{LQ} < 1400 GeV")
+#    categ.AddText("Jet pt > 50 GeV ")
+#    categ.AddText(" M_{T}(#mu,MET)> 500 GeV ")
+
+    if MTLegend=='_NoMT': categ.AddText("M_{T}(#mu,MET) > 100 GeV")
+    if MTLegend=='_HighMT': categ.AddText("M_{T}(#mu,MET) > 500 GeV")
+    categ.AddText("1100 < M_{LQ} < 1400 GeV ")
+    categ.AddText("100 < Jet pt < 200 GeV ")
     #       else :
     #        categ.AddText("SS")
     categ.Draw()
@@ -332,23 +341,27 @@ def MakePlot(FileName,categoriy,HistName,Xaxis,Info,RB_,channel,yMin,isLOG,ttbar
     ROOT.gPad.RedrawAxis()
 
     c.Modified()
-    c.SaveAs("_plot_Excess"+FileName.replace('TotalRootForLimit_PreSelection_Excess_MuJet','').replace('.root','')+str(isLOG)+".pdf")
+    c.SaveAs("_plot_Excess_JePt50_"+FileName.replace('TotalRootForLimit_PreSelection_Excess_MuJet','').replace('.root','')+str(isLOG)+".pdf")
 
 
 FileNamesInfo=[
 ##               ["_tmass_JetMet","M_{T}(jet,MET) (GeV)","",5,1],
-               ["_tmass_LQMet","M_{T}(LQ,MET)  (GeV)","",20,1],
+#               ["_tmass_LQMet","M_{T}(LQ,MET)  (GeV)","",10,1],
                ["_LepPt","lepton p_{T} (GeV)","",100,1],
                ["_LepEta","lepton #eta ","",10,10],
                ["_JetPt","jet p_{T} (GeV)","",50,1],
                ["_JetEta","jet #eta ","",10,10],
                ["_MET","MET  (GeV)","",10,1],
-               ["_LQMass","M_{LQ}   (GeV)","",5,1],
+               ["_LQMass","M_{LQ}   (GeV)","",10,1],
                ["_tmass_MuMet","M_{T}(#mu,MET) (GeV)","",10,1],
                ["_dPhi_Jet_Met","#Delta#phi (jet,MET)","",10,1],
                ["_dPhi_Mu_Jet","#Delta#phi (#mu,jet)","",10,1],
                ["_NumJet","Jet multiplicity","",1,1],
                ["_NumBJet","BJet multiplicity","",1,1],
+               ["_recoHT","Jet HT  (GeV)","",10,1],
+               ["_ST"," ST  (GeV)","",10,1],
+               ["_dR_Mu_Jet","#DeltaR (#mu,jet)","",20,1],
+               ["_dEta_Mu_Jet","#Delta#eta (#mu,jet)","",50,1],
                ]
 
 
@@ -356,14 +369,14 @@ FileNamesInfo=[
 #    Isolation=["_Iso", "_AntiIso","_Total"]
 
 Isolation=["_Iso"]
-MT= ["_HighMT"]
+MT= ["_NoMT","_HighMT"]
 
 JPT=[ "_HighDPhi"]
 
 region= [ ""]
 
-logStat=[0]
-#logStat=[1]
+#logStat=[0]
+logStat=[1]
 
 
 for i in range(0,len(FileNamesInfo)):

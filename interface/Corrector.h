@@ -50,13 +50,13 @@ float getBtagEfficiency(bool isData, bool passCSV, float pt, float eta, TH2F ** 
     TH2F * TTSF5_btagged=Btagg_TT[2];
     TH2F * TTSF5_total=Btagg_TT[3];
     
-//    cout << "Btag efficiency is = "<< pt << " ptBIN " <<ptBIN << "   "<<eta << " etaBIN " << etaBIN <<"  ratio=  " <<TTSF0_btagged->GetBinContent(ptBIN,etaBIN) << "    "<<TTSF0_total->GetBinContent(ptBIN,etaBIN) <<"\n";
+    //    cout << "Btag efficiency is = "<< pt << " ptBIN " <<ptBIN << "   "<<eta << " etaBIN " << etaBIN <<"  ratio=  " <<TTSF0_btagged->GetBinContent(ptBIN,etaBIN) << "    "<<TTSF0_total->GetBinContent(ptBIN,etaBIN) <<"\n";
     
     
     if (passCSV)
-    return  TTSF5_btagged->GetBinContent(ptBIN,etaBIN)*1.0/TTSF5_total->GetBinContent(ptBIN,etaBIN);
+        return  TTSF5_btagged->GetBinContent(ptBIN,etaBIN)*1.0/TTSF5_total->GetBinContent(ptBIN,etaBIN);
     else
-    return  TTSF0_btagged->GetBinContent(ptBIN,etaBIN)*1.0/TTSF0_total->GetBinContent(ptBIN,etaBIN);
+        return  TTSF0_btagged->GetBinContent(ptBIN,etaBIN)*1.0/TTSF0_total->GetBinContent(ptBIN,etaBIN);
     
     
 }
@@ -290,12 +290,12 @@ float GetBJetSF(bool isData, float x, float jetEta, float jetHadFlvr){
     
     if (isData) return 1;
     else {
-    if (jetHadFlvr ==0 )
-        return 0.971945+163.215/(x*x)+0.000517836*x ;
-    else if (jetHadFlvr ==4 || jetHadFlvr ==5 )
-        return 0.817647*((1.+(0.038703*x))/(1.+(0.0312388*x)));
-    else
-        return 1;
+        if (jetHadFlvr ==0 )
+            return 0.971945+163.215/(x*x)+0.000517836*x ;
+        else if (jetHadFlvr ==4 || jetHadFlvr ==5 )
+            return 0.817647*((1.+(0.038703*x))/(1.+(0.0312388*x)));
+        else
+            return 1;
     }
 }
 
@@ -316,7 +316,7 @@ float GetBJetSFUp (bool isData,float x, float jetEta, float jetHadFlvr){
     //        return  1.10884+0.000279575*x+6.77543e-07*x*x+-9.4973e-10*x*x*x;
     
     else if (jetHadFlvr ==4  ){
-
+        
         
         
         
@@ -379,7 +379,7 @@ float GetBJetSFDown (bool isData,float x, float jetEta, float jetHadFlvr){
     else if (jetHadFlvr ==5 ){
         
         
-
+        
         
         
         
@@ -426,28 +426,28 @@ float Get_W_Z_BosonKFactor(float WBosonPt, TH1F* WLO, TH1F* WNLO){
     float NLO=0;
     float kfactor=1;
     for (int ibin =1; ibin < WLO->GetNbinsX()+1;ibin++){
-    
+        
         if ( WBosonPt > (WLO->GetBinCenter(ibin) - WLO->GetBinWidth(ibin)/2)   && WBosonPt < (WLO->GetBinCenter(ibin) + WLO->GetBinWidth(ibin)/2) ){
             LO=WLO->GetBinContent(ibin);
             NLO=WNLO->GetBinContent(ibin);
             kfactor=NLO/LO;
-//            cout << "    k-factor is "<<kfactor<<"\n";
+            //            cout << "    k-factor is "<<kfactor<<"\n";
             break;
         }
     }
     
     if ( WBosonPt < WLO->GetBinCenter(1) - WLO->GetBinWidth(1)/2){
-            LO=WLO->GetBinContent(1);
-            NLO=WNLO->GetBinContent(1);
-            kfactor=NLO/LO;
-        }
+        LO=WLO->GetBinContent(1);
+        NLO=WNLO->GetBinContent(1);
+        kfactor=NLO/LO;
+    }
     if ( WBosonPt > WLO->GetBinCenter(WLO->GetNbinsX()) + WLO->GetBinWidth(WLO->GetNbinsX())/2){
-            LO=WLO->GetBinContent(WLO->GetNbinsX());
-            NLO=WNLO->GetBinContent(WLO->GetNbinsX());
-            kfactor=NLO/LO;
-        }
+        LO=WLO->GetBinContent(WLO->GetNbinsX());
+        NLO=WNLO->GetBinContent(WLO->GetNbinsX());
+        kfactor=NLO/LO;
+    }
     
-//    cout << " WBosonPt = " << WBosonPt << "   & kfactor=" << kfactor<< "  WLO->GetBinCenter(1)="<<WLO->GetBinCenter(1) << " width=" << WLO->GetBinWidth(1)  <<  "\n";
+    //    cout << " WBosonPt = " << WBosonPt << "   & kfactor=" << kfactor<< "  WLO->GetBinCenter(1)="<<WLO->GetBinCenter(1) << " width=" << WLO->GetBinWidth(1)  <<  "\n";
     return kfactor;
     
     
@@ -462,8 +462,8 @@ float compTopPtWeight(float topPt) {
     //Updated values for 13 TeV
     const float a =  0.0615  ;
     const float b =  -0.0005 ;
-//    const float a =  0.148 ;
-//    const float b =  -0.00129;
+    //    const float a =  0.148 ;
+    //    const float b =  -0.00129;
     //    const float a = 0.156;
     //    const float b = -0.00137;
     return TMath::Exp(a + b * topPt);
@@ -1038,7 +1038,7 @@ int etaBIN=0;
 int etaPOINT=-1;
 
 //Lumi in fb-1 taken from  CMS AN-16-362
-float LumiB=5.93; 
+float LumiB=5.93;
 float LumiC=2.65;
 float LumiD=4.35;
 float LumiE=4.12;
@@ -1068,10 +1068,10 @@ float LumiGH=LumiG+LumiHv2+LumiHv3;
 ////////////////////////////////////////////////////////////
 
 float Cor80X_TRK_Mu_Full2016(float eta, TGraphAsymmErrors * graph ) {
-// take the ratio_eff_eta3_dr030e030_corr histogram (as function of eta).
+    // take the ratio_eff_eta3_dr030e030_corr histogram (as function of eta).
     double * ipoint=NULL;
     double x_point,y_sf;
-    ipoint=graph->GetX(); 
+    ipoint=graph->GetX();
     if (eta >=(ipoint[0]-graph->GetErrorXlow(0))  && eta < (ipoint[0]+graph->GetErrorXhigh(0)) )  etaPOINT=0 ;
     else if (eta >= (ipoint[1]-graph->GetErrorXlow(1))  && eta < (ipoint[1]+graph->GetErrorXhigh(1)) ) etaPOINT=1;
     else if (eta >= (ipoint[2]-graph->GetErrorXlow(2)) && eta < (ipoint[2]+graph->GetErrorXhigh(2)) ) etaPOINT=2;
@@ -1088,10 +1088,10 @@ float Cor80X_TRK_Mu_Full2016(float eta, TGraphAsymmErrors * graph ) {
     else if (eta >= (ipoint[13]-graph->GetErrorXlow(13)) && eta < (ipoint[13]+graph->GetErrorXhigh(13)) ) etaPOINT=13;
     else if (eta >= (ipoint[14]-graph->GetErrorXlow(14)) && eta < (ipoint[14]+graph->GetErrorXhigh(14)) ) etaPOINT=14;
     else return 1;
-
+    
     graph->GetPoint(etaPOINT,x_point,y_sf);
     return y_sf;
-
+    
 }
 
 
@@ -1114,7 +1114,7 @@ float Cor80X_TRK_Mu(float eta ) {
 }
 
 /////////////////////////////////////////////////////
-//  Muon Id Correction 74X
+//  Muon Id Correction 80X
 ////////////////////////////////////////////////////////////
 
 
@@ -1128,20 +1128,20 @@ float Cor80X_ID_Mu_BCDEF(float pt, float eta , TH2F * HistoId) {
     if (pt >= 50 && pt < 60 ) ptBIN=5;
     if (pt >= 60  ) ptBIN=6;
     
-
+    
     if (fabs(eta) <= 0.9) etaBIN=1;
     if (0.9 <= fabs(eta) && fabs(eta) < 1.2) etaBIN=2;
     if (1.2 <= fabs(eta) && fabs(eta) < 2.1) etaBIN=3;
     if (2.1 <= fabs(eta) && fabs(eta) < 2.4) etaBIN=4;
-
-
- //       cout<< "--->Muon Id    pt= "<<pt<<  "   eta" <<eta<< "  SF="<<HistoId->GetBinContent(ptBIN,etaBIN)<<"\n";
+    
+    
+    //       cout<< "--->Muon Id    pt= "<<pt<<  "   eta" <<eta<< "  SF="<<HistoId->GetBinContent(ptBIN,etaBIN)<<"\n";
     return HistoId->GetBinContent(ptBIN,etaBIN);
 }
-    
+
 
 float Cor80X_ID_Mu_GH(float pt, float eta , TH2F * HistoId) {
-
+    
     if (pt >= 20 && pt < 25 ) ptBIN=1;
     if (pt >= 25 && pt < 30 ) ptBIN=2;
     if (pt >= 30 && pt < 40 ) ptBIN=3;
@@ -1149,13 +1149,13 @@ float Cor80X_ID_Mu_GH(float pt, float eta , TH2F * HistoId) {
     if (pt >= 50 && pt < 60 ) ptBIN=5;
     if (pt >= 60  ) ptBIN=6;
     
-
+    
     if (fabs(eta) <= 0.9) etaBIN=1;
     if (0.9 <= fabs(eta) && fabs(eta) < 1.2) etaBIN=2;
     if (1.2 <= fabs(eta) && fabs(eta) < 2.1) etaBIN=3;
     if (2.1 <= fabs(eta) && fabs(eta) < 2.4) etaBIN=4;
-
-
+    
+    
     //    cout<< "--->Muon Id    pt= "<<pt<<  "   eta" <<eta<< "  SF="<<HistoId->GetBinContent(ptBIN,etaBIN)<<"\n";
     return HistoId->GetBinContent(ptBIN,etaBIN);
 }
@@ -1220,7 +1220,7 @@ float Cor80X_ID_Mu(float pt, float eta , TH2F * HistoId) {
 
 
 float Cor80X_Iso_Mu_BCDEF(float pt,float eta, TH2F* HistoIso){
-
+    
     if (pt >= 20 && pt < 25 ) ptBIN=1;
     if (pt >= 25 && pt < 30 ) ptBIN=2;
     if (pt >= 30 && pt < 40 ) ptBIN=3;
@@ -1228,31 +1228,31 @@ float Cor80X_Iso_Mu_BCDEF(float pt,float eta, TH2F* HistoIso){
     if (pt >= 50 && pt < 60 ) ptBIN=5;
     if (pt >= 60  ) ptBIN=6;
     
-
+    
     if (fabs(eta) <= 0.9) etaBIN=1;
     if (0.9 <= fabs(eta) && fabs(eta) < 1.2) etaBIN=2;
     if (1.2 <= fabs(eta) && fabs(eta) < 2.1) etaBIN=3;
     if (2.1 <= fabs(eta) && fabs(eta) < 2.4) etaBIN=4;
-
+    
     //    cout<< "--->Muon Iso    pt= "<<pt<<  "   eta" <<eta<< "  SF="<<HistoIso->GetBinContent(ptBIN,etaBIN)<<"\n";
     return HistoIso->GetBinContent(ptBIN,etaBIN);
 }
 
 
 float Cor80X_Iso_Mu_GH(float pt,float eta, TH2F* HistoIso){
-
+    
     if (pt >= 20 && pt < 25 ) ptBIN=1;
     if (pt >= 25 && pt < 30 ) ptBIN=2;
     if (pt >= 30 && pt < 40 ) ptBIN=3;
     if (pt >= 40 && pt < 50 ) ptBIN=4;
     if (pt >= 50 && pt < 60 ) ptBIN=5;
     if (pt >= 60 ) ptBIN=6;
-
+    
     if (fabs(eta) <= 0.9) etaBIN=1;
     if (0.9 <= fabs(eta) && fabs(eta) < 1.2) etaBIN=2;
     if (1.2 <= fabs(eta) && fabs(eta) < 2.1) etaBIN=3;
     if (2.1 <= fabs(eta) && fabs(eta) < 2.4) etaBIN=4;
-
+    
     //    cout<< "--->Muon Iso    pt= "<<pt<<  "   eta" <<eta<< "  SF="<<HistoIso->GetBinContent(ptBIN,etaBIN)<<"\n";
     return HistoIso->GetBinContent(ptBIN,etaBIN);
 }
@@ -1278,11 +1278,11 @@ float Cor80X_Iso_Mu(float pt,float eta, TH2F* HistoIso){
 }
 
 ///////////////////////////////////////////////
-//  Muon Trigger Correction 74X
+//  Muon Trigger Correction 80X
 ////////////////////////////////////////////////////////////
 
 float Cor80X_Trigger_Mu_BCDEF(float pt,float eta, TH2F* HistoTrg ){
-
+    
     if (pt >=52 && pt < 55 ) ptBIN=1;
     if (pt >= 55 && pt < 60 ) ptBIN=2;
     if (pt >= 60 && pt < 80) ptBIN=3;
@@ -1292,20 +1292,20 @@ float Cor80X_Trigger_Mu_BCDEF(float pt,float eta, TH2F* HistoTrg ){
     if (pt >= 300 && pt < 400) ptBIN=7;
     if (pt >= 400) ptBIN=8;
     
-
+    
     if (fabs(eta) <= 0.9) etaBIN=1;
     if (0.9 <= fabs(eta) && fabs(eta) < 1.2) etaBIN=2;
     if (1.2 <= fabs(eta) && fabs(eta) < 2.1) etaBIN=3;
     if (2.1 <= fabs(eta) && fabs(eta) < 2.4) etaBIN=4;
-
+    
     //    cout<< "--->Trigger    pt= "<<pt<<  "   eta" <<eta<< "  SF="<<HistoTrg->GetBinContent(ptBIN,etaBIN)<<"\n";
     return HistoTrg->GetBinContent(ptBIN,etaBIN);
-
+    
 }
 
 
 float Cor80X_Trigger_Mu_GH(float pt,float eta, TH2F* HistoTrg ){
-
+    
     if (pt >=52 && pt < 55 ) ptBIN=1;
     if (pt >= 55 && pt < 60 ) ptBIN=2;
     if (pt >= 60 && pt < 80) ptBIN=3;
@@ -1315,15 +1315,15 @@ float Cor80X_Trigger_Mu_GH(float pt,float eta, TH2F* HistoTrg ){
     if (pt >= 300 && pt < 400) ptBIN=7;
     if (pt >= 400) ptBIN=8;
     
-
+    
     if (fabs(eta) <= 0.9) etaBIN=1;
     if (0.9 <= fabs(eta) && fabs(eta) < 1.2) etaBIN=2;
     if (1.2 <= fabs(eta) && fabs(eta) < 2.1) etaBIN=3;
     if (2.1 <= fabs(eta) && fabs(eta) < 2.4) etaBIN=4;
-
+    
     //    cout<< "--->Trigger    pt= "<<pt<<  "   eta" <<eta<< "  SF="<<HistoTrg->GetBinContent(ptBIN,etaBIN)<<"\n";
     return HistoTrg->GetBinContent(ptBIN,etaBIN);
-
+    
 }
 
 
@@ -1335,7 +1335,7 @@ float Cor80X_Trigger_Mu_GH(float pt,float eta, TH2F* HistoTrg ){
 
 float Cor80X_Trigger_Mu_BCDEF_onlyEta(float eta, TH1F* HistoTrg ){
     
- 
+    
     if (eta >= -2.4 && eta < -2.1 ) etaBIN=1;
     if (eta >= -2.1 && eta < -1.6 ) etaBIN=2;
     if (eta >= -1.6 && eta < -1.2) etaBIN=3;
@@ -1350,12 +1350,12 @@ float Cor80X_Trigger_Mu_BCDEF_onlyEta(float eta, TH1F* HistoTrg ){
     if (eta >= 1.2 && eta < 1.6 ) etaBIN=12;
     if (eta >= 1.6 && eta < 2.1 ) etaBIN=13;
     if (eta >= 2.1 && eta < 2.4 ) etaBIN=14;
-
     
     
     
     
-//        cout<< "--->Trigger  BCDEF   eta" <<eta<< "  SF="<<HistoTrg->GetBinContent(etaBIN)<<"\n";
+    
+    //        cout<< "--->Trigger  BCDEF   eta" <<eta<< "  SF="<<HistoTrg->GetBinContent(etaBIN)<<"\n";
     return HistoTrg->GetBinContent(etaBIN);
     
 }
@@ -1377,9 +1377,9 @@ float Cor80X_Trigger_Mu_GH_onlyEta(float eta, TH1F* HistoTrg ){
     if (eta >= 1.2 && eta < 1.6 ) etaBIN=12;
     if (eta >= 1.6 && eta < 2.1 ) etaBIN=13;
     if (eta >= 2.1 && eta < 2.4 ) etaBIN=14;
-
     
-//    cout<< "--->Trigger  GH  eta" <<eta<< "  SF="<<HistoTrg->GetBinContent(etaBIN)<<"\n";
+    
+    //    cout<< "--->Trigger  GH  eta" <<eta<< "  SF="<<HistoTrg->GetBinContent(etaBIN)<<"\n";
     return HistoTrg->GetBinContent(etaBIN);
     
 }
@@ -1457,7 +1457,7 @@ vector<float> _getMuTrgWeight(float pt,float eta){
     return FitPar;
 }
 
-    //New
+//New
 //    EXT PARAMETER                                   STEP         FIRST
 //    NO.   NAME      VALUE            ERROR          SIZE      DERIVATIVE
 //    1  p0           9.22073e-01   3.72714e-03   1.86850e-04  -1.54306e-04
@@ -1468,20 +1468,20 @@ vector<float> _getMuTrgWeight(float pt,float eta){
 //    1  p0           9.23993e-01   8.03439e-03   1.85149e-04  -2.18784e-04
 //    2  p1          -4.14952e-04   8.46039e-05   1.20000e-05  -2.07779e-02
 //
-//    
+//
 //    NO.   NAME      VALUE            ERROR          SIZE      DERIVATIVE
 //    1  p0           9.50527e-01   6.90139e-03   1.83512e-04   1.05129e-04
 //    2  p1          -1.26964e-03   7.33305e-05   1.20000e-05   9.89566e-03
 
-    
+
 //    vector<float> FitPar;
 //    FitPar.clear();
-//    
-//    
+//
+//
 //    if (fabs(eta) <= 0.9) etaBIN=1;
 //    if (0.9 <= fabs(eta) && fabs(eta) < 1.2) etaBIN=2;
 //    if (1.2 <= fabs(eta) && fabs(eta) < 2.1) etaBIN=3;
-//    
+//
 //    if (etaBIN==1){
 //        FitPar.push_back(9.22073e-01);
 //        FitPar.push_back(-1.02098e-04);
@@ -1498,7 +1498,7 @@ vector<float> _getMuTrgWeight(float pt,float eta){
 //        FitPar.push_back(9.50527e-01);
 //        FitPar.push_back(-1.26964e-03);
 //    }
-//    
+//
 //    return FitPar;
 //}
 
@@ -1520,14 +1520,14 @@ float Cor80X_Trigger_Mu_FIT(float pt,float eta, TH2F* HistoTrg ){
     
     
     float Weight= HistoTrg->GetBinContent(ptBIN,etaBIN);
-
+    
     
     
     if (pt > 60){
-//        cout<<" pt and eta= "<<pt << "  "<<fabs(eta)<<" "<< Weight<<"\t";
+        //        cout<<" pt and eta= "<<pt << "  "<<fabs(eta)<<" "<< Weight<<"\t";
         vector<float>   Weight_vec=_getMuTrgWeight(pt,eta);
         Weight=Weight_vec[0] + Weight_vec[1]*pt;
-//        cout<< Weight<<"\n";
+        //        cout<< Weight<<"\n";
     }
     
     return Weight;
@@ -1535,54 +1535,54 @@ float Cor80X_Trigger_Mu_FIT(float pt,float eta, TH2F* HistoTrg ){
 }
 
 //float Cor74X_Trigger_Mu(float pt,float eta, TH2F* HistoTrg ){
-    //
-    //    if (pt >= 45 && pt < 50 ) ptBIN=1;
-    //    if (pt >= 50 && pt < 60 ) ptBIN=2;
-    //    if (pt >= 60 && pt < 120000) ptBIN=3;
-    //
-    //    if (fabs(eta) <= 0.9) etaBIN=1;
-    //    if (0.9 <= fabs(eta) && fabs(eta) < 1.2) etaBIN=2;
-    //    if (1.2 <= fabs(eta) && fabs(eta) < 2.1) etaBIN=3;
-    //
-    //    //    cout<< "pt= "<<pt<<  "   eta" <<eta<< "  SF="<<HistoTrg->GetBinContent(ptBIN,etaBIN)<<"\n";
-    //    return HistoTrg->GetBinContent(ptBIN,etaBIN);
-    //
-    //
-    //}
-    //////////////////////////////////////////////////////////////
-    //  Electron Id/Iso Correction 74X  from HTT group
-    ////////////////////////////////////////////////////////////
+//
+//    if (pt >= 45 && pt < 50 ) ptBIN=1;
+//    if (pt >= 50 && pt < 60 ) ptBIN=2;
+//    if (pt >= 60 && pt < 120000) ptBIN=3;
+//
+//    if (fabs(eta) <= 0.9) etaBIN=1;
+//    if (0.9 <= fabs(eta) && fabs(eta) < 1.2) etaBIN=2;
+//    if (1.2 <= fabs(eta) && fabs(eta) < 2.1) etaBIN=3;
+//
+//    //    cout<< "pt= "<<pt<<  "   eta" <<eta<< "  SF="<<HistoTrg->GetBinContent(ptBIN,etaBIN)<<"\n";
+//    return HistoTrg->GetBinContent(ptBIN,etaBIN);
+//
+//
+//}
+//////////////////////////////////////////////////////////////
+//  Electron Id/Iso Correction 74X  from HTT group
+////////////////////////////////////////////////////////////
+
+//https://twiki.cern.ch/twiki/bin/view/CMS/EgammaIDRecipesRun2#Electron_efficiencies_and_scale
+float Cor80X_IDIso_Ele(float pt, float eta,  TH2F * HistoEleSF){
     
-//https://twiki.cern.ch/twiki/bin/view/CMS/EgammaIDRecipesRun2#Electron_efficiencies_and_scale    
-    float Cor80X_IDIso_Ele(float pt, float eta,  TH2F * HistoEleSF){
-        
-        if (pt >= 10 && pt < 20 ) ptBIN=1;
-        if (pt >= 20 && pt < 35 ) ptBIN=2;
-        if (pt >= 35 && pt < 50) ptBIN=3;
-        if (pt >= 50 && pt < 90) ptBIN=4;
-        if (pt >= 90 && pt < 150) ptBIN=5;
-        if (pt >= 150 ) ptBIN=6;
-        
-        if (eta >= -2.5 && eta < -2 ) etaBIN=1;
-        if (eta >= -2 && eta < -1.566 ) etaBIN=2;
-        if (eta >= -1.566 && eta < -1.444) etaBIN=3;
-        if (eta >= -1.444 && eta < -0.800) etaBIN=4;
-        if (eta >= -0.800 && eta < 0 ) etaBIN=5;
-        if (eta >= 0 && eta < 0.800 ) etaBIN=6;
-        if (eta >= 0.800 && eta < 1.444 ) etaBIN=7;
-        if (eta >= 1.444 && eta < 1.566 ) etaBIN=8;
-        if (eta >= 1.566 && eta < 2 ) etaBIN=9;
-        if (eta >= 2 && eta < 2.5 ) etaBIN=10;
-        
-        //    float SF_0p5= HistoEleSF0p5->GetBinContent(etaBIN, ptBIN);
-        //    float SF_5= HistoEleSF5->GetBinContent(etaBIN, ptBIN);
-        //    float FinalSF= 0.05 * SF_0p5  + 0.95 * SF_5;   //approximation of 10/fb data
-        
-        //    cout << pt << "  " << eta << " "<<SF_0p5<<"  "<<SF_5 << "  "<< FinalSF <<"\n";
-        //    cout<< "--->Electron    pt= "<<pt<<  "   eta" <<eta<< "  SF="<<HistoEleSF->GetBinContent(etaBIN, ptBIN)<<"\n";
-        return HistoEleSF->GetBinContent(etaBIN, ptBIN);
-        
-    }
+    if (pt >= 10 && pt < 20 ) ptBIN=1;
+    if (pt >= 20 && pt < 35 ) ptBIN=2;
+    if (pt >= 35 && pt < 50) ptBIN=3;
+    if (pt >= 50 && pt < 90) ptBIN=4;
+    if (pt >= 90 && pt < 150) ptBIN=5;
+    if (pt >= 150 ) ptBIN=6;
+    
+    if (eta >= -2.5 && eta < -2 ) etaBIN=1;
+    if (eta >= -2 && eta < -1.566 ) etaBIN=2;
+    if (eta >= -1.566 && eta < -1.444) etaBIN=3;
+    if (eta >= -1.444 && eta < -0.800) etaBIN=4;
+    if (eta >= -0.800 && eta < 0 ) etaBIN=5;
+    if (eta >= 0 && eta < 0.800 ) etaBIN=6;
+    if (eta >= 0.800 && eta < 1.444 ) etaBIN=7;
+    if (eta >= 1.444 && eta < 1.566 ) etaBIN=8;
+    if (eta >= 1.566 && eta < 2 ) etaBIN=9;
+    if (eta >= 2 && eta < 2.5 ) etaBIN=10;
+    
+    //    float SF_0p5= HistoEleSF0p5->GetBinContent(etaBIN, ptBIN);
+    //    float SF_5= HistoEleSF5->GetBinContent(etaBIN, ptBIN);
+    //    float FinalSF= 0.05 * SF_0p5  + 0.95 * SF_5;   //approximation of 10/fb data
+    
+    //    cout << pt << "  " << eta << " "<<SF_0p5<<"  "<<SF_5 << "  "<< FinalSF <<"\n";
+    //    cout<< "--->Electron    pt= "<<pt<<  "   eta" <<eta<< "  SF="<<HistoEleSF->GetBinContent(etaBIN, ptBIN)<<"\n";
+    return HistoEleSF->GetBinContent(etaBIN, ptBIN);
+    
+}
 
 // This is for efficiency of the electron
 float Cor80X_Ele_EffVeto(float pt, float eta,  TH2F * HistoEleSF){
@@ -1615,117 +1615,147 @@ float Cor80X_Trg_Ele(float pt, float eta){
     
     
     
-        if (pt >= 50 && pt < 55){
-            if (eta >= -2.5 && eta < -2 ) return   .729;
-            if (eta >= -2 && eta < -1.566 ) return   .752;
-            if (eta >= -1.566 && eta < -1.444) return   .684;
-            if (eta >= -1.444 && eta < -0.800) return   .81;
-            if (eta >= -0.800 && eta < 0 ) return  .833 ;
-            if (eta >= 0 && eta < 0.800 ) return   .827;
-            if (eta >= 0.800 && eta < 1.444 ) return   .825;
-            if (eta >= 1.444 && eta < 1.566 ) return   .627;
-            if (eta >= 1.566 && eta < 2 ) return   .755;
-            if (eta >= 2 && eta < 2.5 ) return   .746;
-        }
-        else if (pt >= 55 && pt < 70){
-            if (eta >= -2.5 && eta < -2 ) return  .812 ;
-            if (eta >= -2 && eta < -1.566 ) return   .814;
-            if (eta >= -1.566 && eta < -1.444) return  .781 ;
-            if (eta >= -1.444 && eta < -0.800) return   .802;
-            if (eta >= -0.800 && eta < 0 ) return   .869;
-            if (eta >= 0 && eta < 0.800 ) return   .862;
-            if (eta >= 0.800 && eta < 1.444 ) return   .879;
-            if (eta >= 1.444 && eta < 1.566 ) return   .642;
-            if (eta >= 1.566 && eta < 2 ) return   .843;
-            if (eta >= 2 && eta < 2.5 ) return   .845;
-        }
-        else if (pt >= 70 && pt < 100){
-            if (eta >= -2.5 && eta < -2 ) return   .788;
-            if (eta >= -2 && eta < -1.566 ) return   .809;
-            if (eta >= -1.566 && eta < -1.444) return   .833;
-            if (eta >= -1.444 && eta < -0.800) return   .888;
-            if (eta >= -0.800 && eta < 0 ) return   .883;
-            if (eta >= 0 && eta < 0.800 ) return  .882 ;
-            if (eta >= 0.800 && eta < 1.444 ) return   .884;
-            if (eta >= 1.444 && eta < 1.566 ) return  .808 ;
-            if (eta >= 1.566 && eta < 2 ) return   .833;
-            if (eta >= 2 && eta < 2.5 ) return   .853;
-        }
-        else if (pt >= 100 && pt < 120){
-            if (eta >= -2.5 && eta < -2 ) return  .919 ;
-            if (eta >= -2 && eta < -1.566 ) return  .871 ;
-            if (eta >= -1.566 && eta < -1.444) return   .894;
-            if (eta >= -1.444 && eta < -0.800) return   .908;
-            if (eta >= -0.800 && eta < 0 ) return  .902 ;
-            if (eta >= 0 && eta < 0.800 ) return  .924 ;
-            if (eta >= 0.800 && eta < 1.444 ) return  .927 ;
-            if (eta >= 1.444 && eta < 1.566 ) return  .728 ;
-            if (eta >= 1.566 && eta < 2 ) return  .87 ;
-            if (eta >= 2 && eta < 2.5 ) return  .867 ;
-        }
-        else if (pt >= 120 && pt < 180){
-            if (eta >= -2.5 && eta < -2 ) return  .955 ;
-            if (eta >= -2 && eta < -1.566 ) return   .986;
-            if (eta >= -1.566 && eta < -1.444) return  .887 ;
-            if (eta >= -1.444 && eta < -0.800) return  .924 ;
-            if (eta >= -0.800 && eta < 0 ) return  .941 ;
-            if (eta >= 0 && eta < 0.800 ) return   .934;
-            if (eta >= 0.800 && eta < 1.444 ) return  .956 ;
-            if (eta >= 1.444 && eta < 1.566 ) return  .81 ;
-            if (eta >= 1.566 && eta < 2 ) return  .977 ;
-            if (eta >= 2 && eta < 2.5 ) return  .948 ;
-        }
-        else if (pt >= 180 && pt < 250){
-            if (eta >= -2.5 && eta < -2 ) return  1 ;
-            if (eta >= -2 && eta < -1.566 ) return  .984 ;
-            if (eta >= -1.566 && eta < -1.444) return  .918 ;
-            if (eta >= -1.444 && eta < -0.800) return  .934 ;
-            if (eta >= -0.800 && eta < 0 ) return   .981;
-            if (eta >= 0 && eta < 0.800 ) return   .937;
-            if (eta >= 0.800 && eta < 1.444 ) return  .931 ;
-            if (eta >= 1.444 && eta < 1.566 ) return   .939;
-            if (eta >= 1.566 && eta < 2 ) return   .968;
-            if (eta >= 2 && eta < 2.5 ) return  .954 ;
-        }
-        else if (pt >= 250 ){
-            if (eta >= -2.5 && eta < -2 ) return  1 ;
-            if (eta >= -2 && eta < -1.566 ) return  1 ;
-            if (eta >= -1.566 && eta < -1.444) return 1  ;
-            if (eta >= -1.444 && eta < -0.800) return  .927 ;
-            if (eta >= -0.800 && eta < 0 ) return  .953 ;
-            if (eta >= 0 && eta < 0.800 ) return   .959;
-            if (eta >= 0.800 && eta < 1.444 ) return  .972 ;
-            if (eta >= 1.444 && eta < 1.566 ) return  1 ;
-            if (eta >= 1.566 && eta < 2 ) return  1 ;
-            if (eta >= 2 && eta < 2.5 ) return   1;
-        }
-        return 1;
-        
+    if (pt >= 50 && pt < 55){
+        if (eta >= -2.5 && eta < -2 ) return   .729;
+        if (eta >= -2 && eta < -1.566 ) return   .752;
+        if (eta >= -1.566 && eta < -1.444) return   .684;
+        if (eta >= -1.444 && eta < -0.800) return   .81;
+        if (eta >= -0.800 && eta < 0 ) return  .833 ;
+        if (eta >= 0 && eta < 0.800 ) return   .827;
+        if (eta >= 0.800 && eta < 1.444 ) return   .825;
+        if (eta >= 1.444 && eta < 1.566 ) return   .627;
+        if (eta >= 1.566 && eta < 2 ) return   .755;
+        if (eta >= 2 && eta < 2.5 ) return   .746;
     }
-    //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
+    else if (pt >= 55 && pt < 70){
+        if (eta >= -2.5 && eta < -2 ) return  .812 ;
+        if (eta >= -2 && eta < -1.566 ) return   .814;
+        if (eta >= -1.566 && eta < -1.444) return  .781 ;
+        if (eta >= -1.444 && eta < -0.800) return   .802;
+        if (eta >= -0.800 && eta < 0 ) return   .869;
+        if (eta >= 0 && eta < 0.800 ) return   .862;
+        if (eta >= 0.800 && eta < 1.444 ) return   .879;
+        if (eta >= 1.444 && eta < 1.566 ) return   .642;
+        if (eta >= 1.566 && eta < 2 ) return   .843;
+        if (eta >= 2 && eta < 2.5 ) return   .845;
+    }
+    else if (pt >= 70 && pt < 100){
+        if (eta >= -2.5 && eta < -2 ) return   .788;
+        if (eta >= -2 && eta < -1.566 ) return   .809;
+        if (eta >= -1.566 && eta < -1.444) return   .833;
+        if (eta >= -1.444 && eta < -0.800) return   .888;
+        if (eta >= -0.800 && eta < 0 ) return   .883;
+        if (eta >= 0 && eta < 0.800 ) return  .882 ;
+        if (eta >= 0.800 && eta < 1.444 ) return   .884;
+        if (eta >= 1.444 && eta < 1.566 ) return  .808 ;
+        if (eta >= 1.566 && eta < 2 ) return   .833;
+        if (eta >= 2 && eta < 2.5 ) return   .853;
+    }
+    else if (pt >= 100 && pt < 120){
+        if (eta >= -2.5 && eta < -2 ) return  .919 ;
+        if (eta >= -2 && eta < -1.566 ) return  .871 ;
+        if (eta >= -1.566 && eta < -1.444) return   .894;
+        if (eta >= -1.444 && eta < -0.800) return   .908;
+        if (eta >= -0.800 && eta < 0 ) return  .902 ;
+        if (eta >= 0 && eta < 0.800 ) return  .924 ;
+        if (eta >= 0.800 && eta < 1.444 ) return  .927 ;
+        if (eta >= 1.444 && eta < 1.566 ) return  .728 ;
+        if (eta >= 1.566 && eta < 2 ) return  .87 ;
+        if (eta >= 2 && eta < 2.5 ) return  .867 ;
+    }
+    else if (pt >= 120 && pt < 180){
+        if (eta >= -2.5 && eta < -2 ) return  .955 ;
+        if (eta >= -2 && eta < -1.566 ) return   .986;
+        if (eta >= -1.566 && eta < -1.444) return  .887 ;
+        if (eta >= -1.444 && eta < -0.800) return  .924 ;
+        if (eta >= -0.800 && eta < 0 ) return  .941 ;
+        if (eta >= 0 && eta < 0.800 ) return   .934;
+        if (eta >= 0.800 && eta < 1.444 ) return  .956 ;
+        if (eta >= 1.444 && eta < 1.566 ) return  .81 ;
+        if (eta >= 1.566 && eta < 2 ) return  .977 ;
+        if (eta >= 2 && eta < 2.5 ) return  .948 ;
+    }
+    else if (pt >= 180 && pt < 250){
+        if (eta >= -2.5 && eta < -2 ) return  1 ;
+        if (eta >= -2 && eta < -1.566 ) return  .984 ;
+        if (eta >= -1.566 && eta < -1.444) return  .918 ;
+        if (eta >= -1.444 && eta < -0.800) return  .934 ;
+        if (eta >= -0.800 && eta < 0 ) return   .981;
+        if (eta >= 0 && eta < 0.800 ) return   .937;
+        if (eta >= 0.800 && eta < 1.444 ) return  .931 ;
+        if (eta >= 1.444 && eta < 1.566 ) return   .939;
+        if (eta >= 1.566 && eta < 2 ) return   .968;
+        if (eta >= 2 && eta < 2.5 ) return  .954 ;
+    }
+    else if (pt >= 250 ){
+        if (eta >= -2.5 && eta < -2 ) return  1 ;
+        if (eta >= -2 && eta < -1.566 ) return  1 ;
+        if (eta >= -1.566 && eta < -1.444) return 1  ;
+        if (eta >= -1.444 && eta < -0.800) return  .927 ;
+        if (eta >= -0.800 && eta < 0 ) return  .953 ;
+        if (eta >= 0 && eta < 0.800 ) return   .959;
+        if (eta >= 0.800 && eta < 1.444 ) return  .972 ;
+        if (eta >= 1.444 && eta < 1.566 ) return  1 ;
+        if (eta >= 1.566 && eta < 2 ) return  1 ;
+        if (eta >= 2 && eta < 2.5 ) return   1;
+    }
+    return 1;
     
-   // This function is called to calculate the weighted ID, Iso and Trigger SF's from the individual ones for run BCDEF and GH.
-   float CalcWeightedObj(float Obj_period1, float Obj_period2){
-        
-        float weighted_obj= (LumiBCDEF*Obj_period1+LumiGH*Obj_period2)/(LumiBCDEF+LumiGH);     
-        return weighted_obj;
-   }
+}
+
+//&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
+
+float Cor80X_Trg_Ele25(float pt,float eta,TGraphAsymmErrors **  Ele25Trg){
+    
+    float weight=1;
+    if (fabs (eta)< 1.4 ) weight = Ele25Trg[3]->Eval(pt) /Ele25Trg[0]->Eval(pt);
+    else if (fabs (eta)>= 1.4 &&  fabs (eta) < 2.1) weight = Ele25Trg[4]->Eval(pt) /Ele25Trg[1]->Eval(pt);
+    else if (fabs (eta)>= 2.1 ) weight = Ele25Trg[5]->Eval(pt) /Ele25Trg[2]->Eval(pt);
+    else weight =1;
+    
+    return weight;
+    
+}
+
+//&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
+//&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
+//&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
+//&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
+//&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
+//&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
+
+
+//This function is called to calculate the weighted ID, Iso and Trigger SF's from the individual ones for run BCDEF and GH.
+float CalcWeightedObj(float Obj_period1, float Obj_period2){
+    
+    float weighted_obj= (LumiBCDEF*Obj_period1+LumiGH*Obj_period2)/(LumiBCDEF+LumiGH);
+    return weighted_obj;
+}
+
+//&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
+//&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
+//&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
+//&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
+//&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
+//&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
+
+
 
 //   float getCorrFactorMuon80X(bool isData, float pt, float eta, TH2F ** HistoId, TH2F ** HistoIso,TH2F ** HistoTrg, TGraphAsymmErrors * graph) { // This for pt_eta-Trigger
-       float getCorrFactorMuon80X(bool isData, float pt, float eta, TH2F ** HistoId, TH2F ** HistoIso,TH1F ** HistoTrg, TGraphAsymmErrors * graph) {
-
-        if (isData)
-            return 1;
-        else{
-            float Weighted_IDSF=CalcWeightedObj(Cor80X_ID_Mu_BCDEF(pt,eta,HistoId[0]), Cor80X_ID_Mu_GH(pt,eta,HistoId[1]));
-            float Weighted_IsoSF=CalcWeightedObj(Cor80X_Iso_Mu_BCDEF(pt,eta,HistoIso[0]), Cor80X_Iso_Mu_GH(pt,eta,HistoIso[1]));
-//            float Weighted_TriggerSF=CalcWeightedObj(Cor80X_Trigger_Mu_BCDEF(pt,eta,HistoTrg[0]), Cor80X_Trigger_Mu_GH(pt,eta,HistoTrg[1]));
-            float Weighted_TriggerSF=CalcWeightedObj(Cor80X_Trigger_Mu_BCDEF_onlyEta(eta,HistoTrg[0]), Cor80X_Trigger_Mu_GH_onlyEta(eta,HistoTrg[1]));
-            float Tracking_SF=Cor80X_TRK_Mu_Full2016(eta, graph);
-            return (Weighted_IDSF * Weighted_IsoSF * Tracking_SF * Weighted_TriggerSF);
-        }
-
+float getCorrFactorMuon80X(bool isData, float pt, float eta, TH2F ** HistoId, TH2F ** HistoIso,TH1F ** HistoTrg, TGraphAsymmErrors * graph) {
+    
+    if (isData)
+        return 1;
+    else{
+        float Weighted_IDSF=CalcWeightedObj(Cor80X_ID_Mu_BCDEF(pt,eta,HistoId[0]), Cor80X_ID_Mu_GH(pt,eta,HistoId[1]));
+        float Weighted_IsoSF=CalcWeightedObj(Cor80X_Iso_Mu_BCDEF(pt,eta,HistoIso[0]), Cor80X_Iso_Mu_GH(pt,eta,HistoIso[1]));
+        //            float Weighted_TriggerSF=CalcWeightedObj(Cor80X_Trigger_Mu_BCDEF(pt,eta,HistoTrg[0]), Cor80X_Trigger_Mu_GH(pt,eta,HistoTrg[1]));
+        float Weighted_TriggerSF=CalcWeightedObj(Cor80X_Trigger_Mu_BCDEF_onlyEta(eta,HistoTrg[0]), Cor80X_Trigger_Mu_GH_onlyEta(eta,HistoTrg[1]));
+        float Tracking_SF=Cor80X_TRK_Mu_Full2016(eta, graph);
+        return (Weighted_IDSF * Weighted_IsoSF * Tracking_SF * Weighted_TriggerSF);
     }
+    
+}
 
 
 float getCorrFactorDiMuon80X(bool isData, float pt, float eta, TH2F ** HistoId, TH2F ** HistoIso,TH2F ** HistoTrg, TGraphAsymmErrors * graph) {
@@ -1735,7 +1765,7 @@ float getCorrFactorDiMuon80X(bool isData, float pt, float eta, TH2F ** HistoId, 
     else{
         float Weighted_IDSF=CalcWeightedObj(Cor80X_ID_Mu_BCDEF(pt,eta,HistoId[0]), Cor80X_ID_Mu_GH(pt,eta,HistoId[1]));
         float Weighted_IsoSF=CalcWeightedObj(Cor80X_Iso_Mu_BCDEF(pt,eta,HistoIso[0]), Cor80X_Iso_Mu_GH(pt,eta,HistoIso[1]));
-//        float Weighted_TriggerSF=CalcWeightedObj(Cor80X_Trigger_Mu_BCDEF(pt,eta,HistoTrg[0]), Cor80X_Trigger_Mu_GH(pt,eta,HistoTrg[1]));
+        //        float Weighted_TriggerSF=CalcWeightedObj(Cor80X_Trigger_Mu_BCDEF(pt,eta,HistoTrg[0]), Cor80X_Trigger_Mu_GH(pt,eta,HistoTrg[1]));
         float Weighted_TriggerSF=1;
         float Tracking_SF=Cor80X_TRK_Mu_Full2016(eta, graph);
         return (Weighted_IDSF * Weighted_IsoSF * Tracking_SF * Weighted_TriggerSF);
@@ -1748,46 +1778,46 @@ float getCorrFactorDiMuon80X(bool isData, float pt, float eta, TH2F ** HistoId, 
 
 
 float getCorrFactorMuon74X(bool isData, float pt, float eta, TH2F * HistoId, TH2F * HistoIso,TH2F * HistoTrg) {
+    
+    if (isData)
+        return 1;
+    else{
         
-        if (isData)
-            return 1;
-        else{
-            
-            //        cout << Cor74X_ID_Mu(pt,eta,HistoId) << "  "<< Cor74X_Iso_Mu(pt,eta,HistoIso) << "  "<< Cor74X_Trigger_Mu(pt,eta,HistoTrg) << "\n";
-            //        return (Cor74X_ID_Mu(pt,eta,HistoId) * Cor74X_Iso_Mu(pt,eta,HistoIso) * Cor74X_Trigger_Mu(pt,eta,HistoTrg) );
-            //        return (Cor74X_ID_Mu(pt,eta,HistoId) * Cor74X_Iso_Mu(pt,eta,HistoIso) * Cor74X_Trigger_Mu(pt,eta,HistoTrg) * Cor74X_TRK_Mu(eta)); //TMP for 80X
-//            return (Cor80X_ID_Mu(pt,eta,HistoId) * Cor80X_Iso_Mu(pt,eta,HistoIso) * Cor80X_Trigger_Mu(pt,eta,HistoTrg) * Cor80X_TRK_Mu(eta)); //TMP for 80X
-            
-   
-//            return (Cor80X_ID_Mu(pt,eta,HistoId) * Cor80X_Iso_Mu(pt,eta,HistoIso) * Cor80X_Trigger_Mu(pt,eta,HistoTrg) * Cor80X_Trigger_Mu_FIT(pt,eta,HistoTrg));
-            
-//            return (Cor80X_ID_Mu(pt,eta,HistoId) * Cor80X_Iso_Mu(pt,eta,HistoIso) * Cor80X_TRK_Mu(eta) * Cor80X_Trigger_Mu_FIT(pt,eta,HistoTrg));
-            return (Cor80X_ID_Mu(pt,eta,HistoId) * Cor80X_Iso_Mu(pt,eta,HistoIso) * Cor80X_TRK_Mu(eta) * Cor80X_Trigger_Mu(pt,eta,HistoTrg));
-        }
+        //        cout << Cor74X_ID_Mu(pt,eta,HistoId) << "  "<< Cor74X_Iso_Mu(pt,eta,HistoIso) << "  "<< Cor74X_Trigger_Mu(pt,eta,HistoTrg) << "\n";
+        //        return (Cor74X_ID_Mu(pt,eta,HistoId) * Cor74X_Iso_Mu(pt,eta,HistoIso) * Cor74X_Trigger_Mu(pt,eta,HistoTrg) );
+        //        return (Cor74X_ID_Mu(pt,eta,HistoId) * Cor74X_Iso_Mu(pt,eta,HistoIso) * Cor74X_Trigger_Mu(pt,eta,HistoTrg) * Cor74X_TRK_Mu(eta)); //TMP for 80X
+        //            return (Cor80X_ID_Mu(pt,eta,HistoId) * Cor80X_Iso_Mu(pt,eta,HistoIso) * Cor80X_Trigger_Mu(pt,eta,HistoTrg) * Cor80X_TRK_Mu(eta)); //TMP for 80X
         
+        
+        //            return (Cor80X_ID_Mu(pt,eta,HistoId) * Cor80X_Iso_Mu(pt,eta,HistoIso) * Cor80X_Trigger_Mu(pt,eta,HistoTrg) * Cor80X_Trigger_Mu_FIT(pt,eta,HistoTrg));
+        
+        //            return (Cor80X_ID_Mu(pt,eta,HistoId) * Cor80X_Iso_Mu(pt,eta,HistoIso) * Cor80X_TRK_Mu(eta) * Cor80X_Trigger_Mu_FIT(pt,eta,HistoTrg));
+        return (Cor80X_ID_Mu(pt,eta,HistoId) * Cor80X_Iso_Mu(pt,eta,HistoIso) * Cor80X_TRK_Mu(eta) * Cor80X_Trigger_Mu(pt,eta,HistoTrg));
     }
     
-    float getCorrFactorElectron74X(bool isData, float pt, float eta,    TH2F * HistoEleSF ){
-        if (isData)
-            return 1;
-        else
-            return Cor80X_IDIso_Ele(pt,eta,HistoEleSF)*Cor80X_Trg_Ele(pt,eta);
-    }
+}
 
-    // Loose WP of MVA Ele
-    float getCorrFactorMVA90WPElectron80X(bool isData, float pt, float eta,    TH2F * HistoEleSF ){
-        if (isData)
-            return 1;
-        else
-            return Cor80X_IDIso_Ele(pt,eta,HistoEleSF);
-    }
+float getCorrFactorElectron74X(bool isData, float pt, float eta,    TH2F * HistoEleSF ){
+    if (isData)
+        return 1;
+    else
+        return Cor80X_IDIso_Ele(pt,eta,HistoEleSF)*Cor80X_Trg_Ele(pt,eta);
+}
 
-    // Tight WP of MVA Ele
-    float getCorrFactorMVA80WPElectron80X(bool isData, float pt, float eta,    TH2F * HistoEleSF ){
+// Loose WP of MVA Ele
+float getCorrFactorMVA90WPElectron80X(bool isData, float pt, float eta,    TH2F * HistoEleSF ){
     if (isData)
         return 1;
     else
         return Cor80X_IDIso_Ele(pt,eta,HistoEleSF);
+}
+
+// Tight WP of MVA Ele
+float getCorrFactorMVA80WPElectron80X(bool isData, float pt, float eta,    TH2F * HistoEleSF , TGraphAsymmErrors ** Ele25Trg){
+    if (isData)
+        return 1;
+    else
+        return Cor80X_IDIso_Ele(pt,eta,HistoEleSF)*Cor80X_Trg_Ele25(pt,eta,Ele25Trg);
 }
 
 
@@ -1798,11 +1828,12 @@ float getEffVetoMVA90WPElectron80X(bool isData, float pt, float eta,    TH2F * H
     else
     {
         
-//        float SF=getCorrFactorMVA90WPElectron80X( isData,  pt,  eta, HistoEleSF );
-        float EffMC= 1 - Cor80X_Ele_EffVeto(pt,eta,HistoEleEffVetoMC);
-        float EffData= 1 - Cor80X_Ele_EffVeto(pt,eta,HistoEleEffVetoData);
-        float SFIneff=EffData/EffMC;
-        return (1- SFIneff * EffMC)/(1-EffMC);
+        //        float SF=getCorrFactorMVA90WPElectron80X( isData,  pt,  eta, HistoEleSF );
+        float InEffMC= 1 - Cor80X_Ele_EffVeto(pt,eta,HistoEleEffVetoMC);
+        float InEffData= 1 - Cor80X_Ele_EffVeto(pt,eta,HistoEleEffVetoData);
+        //        float SFIneff=EffData/EffMC;
+        //        return (1- SFIneff * EffMC)/(1-EffMC);
+        return InEffData/InEffMC;
     }
 }
 
@@ -1816,7 +1847,7 @@ float getCorrFactorMuon80X_TriMu(bool isData, float pt, float eta, TH2F ** Histo
         return 1;
     else{
         float Weighted_IDSF=CalcWeightedObj(Cor80X_ID_Mu_BCDEF(pt,eta,HistoId[0]), Cor80X_ID_Mu_GH(pt,eta,HistoId[1]));
-        float Weighted_IsoSF=CalcWeightedObj(Cor80X_Iso_Mu_BCDEF(pt,eta,HistoIso[0]), Cor80X_Iso_Mu_GH(pt,eta,HistoIso[1]));        
+        float Weighted_IsoSF=CalcWeightedObj(Cor80X_Iso_Mu_BCDEF(pt,eta,HistoIso[0]), Cor80X_Iso_Mu_GH(pt,eta,HistoIso[1]));
         float Tracking_SF=Cor80X_TRK_Mu_Full2016(eta, graph);
         return (Weighted_IDSF * Weighted_IsoSF * Tracking_SF);
     }

@@ -1,6 +1,6 @@
 ./Make.sh CodexAnalyzer_SystematicsPDF.cc
 
-
+cp CodexAnalyzer_SystematicsPDF.*   OutFiles_SignalPDF/.
 ./CodexAnalyzer_SystematicsPDF.exe OutFiles_SignalPDF/Codex_LQ1000_DM_400_X_440.root  ../ROOT80X/Official/DarkMatter_Codex_LQ1000_DM_400_X_440.root
 ./CodexAnalyzer_SystematicsPDF.exe OutFiles_SignalPDF/Codex_LQ1100_DM_450_X_495.root  ../ROOT80X/Official/DarkMatter_Codex_LQ1100_DM_450_X_495.root 
 ./CodexAnalyzer_SystematicsPDF.exe OutFiles_SignalPDF/Codex_LQ1200_DM_500_X_550.root  ../ROOT80X/Official/DarkMatter_Codex_LQ1200_DM_500_X_550.root 

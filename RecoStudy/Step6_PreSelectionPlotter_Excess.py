@@ -34,11 +34,15 @@ import os
 
 ROOT.gROOT.SetBatch(True)
 #ROOT.gROOT.ProcessLine('.x rootlogon.C')
-SubRootDir = 'OutFiles_Excess/'
-#SubRootDir = 'OutFiles_PreSelection_100to150/'  # changed October 23rd
-#SubRootDir = 'OutFiles_PreSelection_OldKFactor/'
-#SubRootDir = 'OutFiles_PreSelection_dPhiOverLapWithJetOnly/'
-#SubRootDir = 'OutFiles_PreSelection_OnlydPhiLeadJet/'
+#SubRootDir = 'OutFiles_Excess_Jet50MT300/'
+#SubRootDir = 'OutFiles_Excess/'
+#SubRootDir = 'OutFiles_Excess_Jet50MT300_AllLQMAss/'
+#SubRootDir = 'OutFiles_Excess_jetPt_100_200/'
+
+#SubRootDir = 'OutFiles_Excess_Total/'
+#SubRootDir = 'OutFiles_Excess_LQMore1100/'
+#SubRootDir = 'OutFiles_Excess_LQ1100_1400_Jet_100_200/'
+SubRootDir = 'OutFiles_Excess_LQ1100_1400/'
 
 
 verbos_ = True
@@ -115,11 +119,12 @@ def MakeTheHistogram(channel,NormMC,NormQCD,ShapeQCD,NormTTbar):
         NormFile= _FileReturn(Name, channel,NameCat, NormMC)
         NormHisto=NormFile.Get("HISTO")
         
-        if not NormHisto:
-            raise Exception('Not valid %s'%NameOut)
-        else:
-            RebinedHist= NormHisto.Rebin(RB_)
-            tDirectory.WriteObject(RebinedHist,NameOut)
+        if NormHisto:
+            if not NormHisto:
+                raise Exception('Not valid %s'%NameOut)
+            else:
+                RebinedHist= NormHisto.Rebin(RB_)
+                tDirectory.WriteObject(RebinedHist,NameOut)
         
         ################################################
         #  Filling VV
@@ -314,8 +319,7 @@ def MakeTheHistogram(channel,NormMC,NormQCD,ShapeQCD,NormTTbar):
 
 if __name__ == "__main__":
     
-    PlotName=["_tmass_MuMet","_tmass_LQMet","_LepEta","_LepPt","_JetPt","_JetEta","_MET","_LQMass","_dPhi_Jet_Met","_dPhi_Mu_Jet","_dPhi_Mu_Met","_NumJet","_NumBJet"]
-#    PlotName=["_LQMass"]
+    PlotName=["_tmass_MuMet","_LepEta","_LepPt","_JetPt","_JetEta","_MET","_LQMass","_dPhi_Jet_Met","_dPhi_Mu_Jet","_dPhi_Mu_Met","_NumJet","_NumBJet","_recoHT","_ST","_dR_Mu_Jet","_dEta_Mu_Jet"]
 
 
 
@@ -328,6 +332,7 @@ if __name__ == "__main__":
     JPT=[ "_HighDPhi"]
 
     region= [""]
+#    region= ["", "_ttbarCRDiLep","_ttbarCRSingleLep"]
 
     for Norm in PlotName:
         for iso in Isolation:
