@@ -73,8 +73,8 @@ def MakePlot(FileName,categoriy,HistName,Xaxis,MaxRange,sig,sigLeg,XSection, Sta
 
     Data=file.Get(categoriy).Get("data_obs")
     Data.Rebin(RB_)
-    QCD=file.Get(categoriy).Get("QCD")
-    QCD.Rebin(RB_)
+#    QCD=file.Get(categoriy).Get("QCD")
+#    QCD.Rebin(RB_)
 
     W=file.Get(categoriy).Get("W")
     W.Rebin(RB_)
@@ -121,7 +121,7 @@ def MakePlot(FileName,categoriy,HistName,Xaxis,MaxRange,sig,sigLeg,XSection, Sta
 
 
 ##### chnage binning content
-    ALLSample=[Data,QCD,W,TT,SingleT,Signal,VV,DYS]
+    ALLSample=[Data,W,TT,SingleT,Signal,VV,DYS]
     for sample in ALLSample:
         for ibin in range(sample.GetXaxis().GetNbins()):
 #            print ibin+1, sample.GetBinWidth(ibin+1)
@@ -148,7 +148,7 @@ def MakePlot(FileName,categoriy,HistName,Xaxis,MaxRange,sig,sigLeg,XSection, Sta
 
 
 
-    QCD.SetFillColor(ROOT.TColor.GetColor(408, 106, 154))
+#    QCD.SetFillColor(ROOT.TColor.GetColor(408, 106, 154))
     W.SetFillColor(ROOT.TColor.GetColor(200, 2, 285))
     TT.SetFillColor(ROOT.TColor.GetColor(208, 376, 124))
     SingleT.SetFillColor(ROOT.TColor.GetColor(150, 132, 232))
@@ -176,7 +176,7 @@ def MakePlot(FileName,categoriy,HistName,Xaxis,MaxRange,sig,sigLeg,XSection, Sta
 
     Data.SetMarkerStyle(20)
     Data.SetMarkerSize(1)
-    QCD.SetLineColor(ROOT.kBlack)
+#    QCD.SetLineColor(ROOT.kBlack)
     W.SetLineColor(ROOT.kBlack)
     TT.SetLineColor(ROOT.kBlack)
     DYS.SetLineColor(ROOT.kBlack)
@@ -186,7 +186,7 @@ def MakePlot(FileName,categoriy,HistName,Xaxis,MaxRange,sig,sigLeg,XSection, Sta
     Data.SetLineWidth(2)
 
     stack=ROOT.THStack("stack","stack")
-    stack.Add(QCD)
+#    stack.Add(QCD)
 
     stack.Add(VV)
     stack.Add(DYS)
@@ -195,8 +195,8 @@ def MakePlot(FileName,categoriy,HistName,Xaxis,MaxRange,sig,sigLeg,XSection, Sta
     stack.Add(W)
     stack.Add(Signal)
 
-    errorBand = QCD.Clone()
-    errorBand.Add(W)
+    errorBand=W.Clone()
+#    errorBand = Add(QCD)
     errorBand.Add(TT)
     errorBand.Add(VV)
     errorBand.Add(SingleT)
@@ -254,7 +254,7 @@ def MakePlot(FileName,categoriy,HistName,Xaxis,MaxRange,sig,sigLeg,XSection, Sta
     legende.AddEntry(DYS,"DY #rightarrowll ","f")
     legende.AddEntry(VV,"VV","f")
 
-    legende.AddEntry(QCD,"QCD multijet","f")
+#    legende.AddEntry(QCD,"QCD multijet","f")
     legende.AddEntry(errorBand,"Uncertainty","f")
 
     legende.Draw()
@@ -272,11 +272,11 @@ def MakePlot(FileName,categoriy,HistName,Xaxis,MaxRange,sig,sigLeg,XSection, Sta
     categ.SetBorderSize(   0 )
     categ.SetFillStyle(    0 )
     categ.SetTextAlign(   12 )
-    categ.SetTextSize ( 0.07 )
+    categ.SetTextSize ( 0.05 )
     categ.SetTextColor(    1 )
 #    categ.SetTextFont (   41 )
     #       if i==1 or i==3:
-#    categ.AddText('|#eta_{#mu} < 2.0|')
+    categ.AddText('Signal from muon channel')
     #       else :
     #        categ.AddText("SS")
     categ.Draw()
@@ -361,7 +361,7 @@ def MakePlot(FileName,categoriy,HistName,Xaxis,MaxRange,sig,sigLeg,XSection, Sta
 #    c.Modified()
     h1.GetYaxis().SetRangeUser(.01,2.99)
 #    c.Modified()
-    c.SaveAs("_Finalplot_Jet50_"+categoriy+Status+".pdf")
+    c.SaveAs("_Finalplot_Electron_Eta2p0"+categoriy+Status+".pdf")
 #    c.SaveAs("_Finalplot_"+categoriy+".pdf")
     #       c.SaveAs("mvis"+categoriy+".png")
 
@@ -375,22 +375,22 @@ def MakePlot(FileName,categoriy,HistName,Xaxis,MaxRange,sig,sigLeg,XSection, Sta
 
 
 #FileNamesInfo=[
-#               ["postfit_shapes_MuEta2.root","Codex__mj_1_13TeV_prefit","M_{#muj} [GeV]","#mu j ",2000,"Codex_","LQ 1200GeV (DM 500 GeV)",10],
-#               ["postfit_shapes_MuEta2.root","Codex__mj_1_13TeV_postfit","M_{#muj} [GeV]","#mu j ",2000,"Codex_","LQ 1200GeV (DM 500 GeV)",10],
+#               ["postfit_shapes_Electron.root","Codex__mj_1_13TeV_prefit","M_{ej} [GeV]","e j ",2000,"Codex_","LQ 1200GeV (DM 500 GeV)",10],
+#               ["postfit_shapes_Electron.root","Codex__mj_1_13TeV_postfit","M_{ej} [GeV]","e j ",2000,"Codex_","LQ 1200GeV (DM 500 GeV)",10],
 #               ]
+
+FileNamesInfo=[
+               ["postfit_shapes_EleEta2p0.root","Codex__mj_1_13TeV_prefit","M_{ej} [GeV]","e j ",2000,"Codex_","LQ 1200GeV (DM 500 GeV)",10],
+               ["postfit_shapes_EleEta2p0.root","Codex__mj_1_13TeV_postfit","M_{ej} [GeV]","e j ",2000,"Codex_","LQ 1200GeV (DM 500 GeV)",10],
+               ]
+
+
 
 
 #FileNamesInfo=[
 #               ["postfit_shapes.root","Codex__mj_1_13TeV_prefit","M_{#muj} [GeV]","#mu j ",2000,"Codex_","LQ 1200GeV (DM 500 GeV)",10],
 #               ["postfit_shapes.root","Codex__mj_1_13TeV_postfit","M_{#muj} [GeV]","#mu j ",2000,"Codex_","LQ 1200GeV (DM 500 GeV)",10],
 #               ]
-
-FileNamesInfo=[
-               ["postfit_shapes_Jet50.root","Codex__mj_1_13TeV_prefit","M_{#muj} [GeV]","#mu j ",2000,"Codex_","LQ 1200GeV (DM 500 GeV)",10],
-               ["postfit_shapes_Jet50.root","Codex__mj_1_13TeV_postfit","M_{#muj} [GeV]","#mu j ",2000,"Codex_","LQ 1200GeV (DM 500 GeV)",10],
-               ]
-
-
 
 
 #for ch in channelDirectory:

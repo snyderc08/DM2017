@@ -35,14 +35,21 @@ import os
 ROOT.gROOT.SetBatch(True)
 #ROOT.gROOT.ProcessLine('.x rootlogon.C')
 #SubRootDir = 'OutFiles_PreSelection/'
+#SubRootDir = 'OutFiles_PreSelection_MuEta2p0/'
+#SubRootDir = 'OutFiles_Excess_Jet50MT300/'
+#SubRootDir = 'OutFiles_Excess_Jet50MT300_LQBump/'
+#SubRootDir = 'OutFiles_Jet50_200/'
+#SubRootDir = 'OutFiles_Jet50_200_WMinus/'
+SubRootDir = 'OutFiles_Jet50_200_WPlus/'
 #SubRootDir = 'OutFiles_Excess_Jet50MT300_AllLQMAss/'
-SubRootDir = 'OutFiles_PreSelection_NewW_LQ1100_1400/'
+#SubRootDir = 'OutFiles_Excess_Jet50MT300_AllLQMAss/'
+#SubRootDir = 'OutFiles_PreSelection_NewW_LQ1100_1400/'
 #SubRootDir = 'OutFiles_PreSelection_OldKFactor/'
 #SubRootDir = 'OutFiles_PreSelection_dPhiOverLapWithJetOnly/'
 #SubRootDir = 'OutFiles_PreSelection_OnlydPhiLeadJet/'
 
 
-verbos_ = True
+verbos_ = False
 RB_=1
 includeSignal= True
 
@@ -76,7 +83,7 @@ def _FileReturn(Name, channel,cat,HistoName):
 ####################################################
 def MakeTheHistogram(channel,NormMC,NormQCD,ShapeQCD,NormTTbar):
     
-    OutFile = TFile("TotalRootForLimit_PreSelection_"+channel + NormMC+".root" , 'RECREATE') # Name Of the output file
+    OutFile = TFile(SubRootDir+"TotalRootForLimit_PreSelection_"+channel + NormMC+".root" , 'RECREATE') # Name Of the output file
 #    OutFile = TFile("TotalRootForLimit_Jet50_"+channel + NormMC+".root" , 'RECREATE') # Name Of the output file
 
     for NameCat in category:
@@ -316,23 +323,27 @@ def MakeTheHistogram(channel,NormMC,NormQCD,ShapeQCD,NormTTbar):
 
 if __name__ == "__main__":
     
-#    PlotName=["_tmass_MuMet","_tmass_LQMet","_LepEta","_LepPt","_JetPt","_JetEta","_MET","_LQMass","_dPhi_Jet_Met","_dPhi_Mu_Jet","_dPhi_Mu_Met","_NumJet","_NumBJet","_recoHT","_ST","_dR_Mu_Jet","_dEta_Mu_Jet"]
-    PlotName=["_tmass_MuMet","_tmass_LQMet","_LepEta","_LepPt","_JetPt","_JetEta","_MET","_LQMass","_dPhi_Jet_Met","_dPhi_Mu_Jet","_dPhi_Mu_Met","_NumJet","_NumBJet"]
-    
+    PlotName=["_tmass_MuMet","_tmass_LQMet","_LepEta","_LepPt","_JetPt","_JetEta","_MET","_LQMass","_dPhi_Jet_Met","_dPhi_Mu_Jet","_dPhi_Mu_Met","_NumJet","_NumBJet","_recoHT","_ST","_dR_Mu_Jet","_dEta_Mu_Jet"]
+#    PlotName=["_tmass_MuMet","_tmass_LQMet","_LepEta","_LepPt","_JetPt","_JetEta","_MET","_LQMass","_dPhi_Jet_Met","_dPhi_Mu_Jet","_dPhi_Mu_Met","_NumJet","_NumBJet","_dR_Mu_Jet","_dEta_Mu_Jet"]
+#    PlotName=["_tmass_MuMet","_tmass_LQMet","_LepEta","_LepPt","_JetPt","_JetEta","_MET","_LQMass","_dPhi_Jet_Met","_dPhi_Mu_Jet","_dPhi_Mu_Met","_NumJet","_NumBJet"]
+#    PlotName=["_recoHT","_ST","_dR_Mu_Jet","_dEta_Mu_Jet"]
+
     
 
 #    Isolation=["_Iso", "_AntiIso","_Total"]
     Isolation=["_Iso"]
     
     
-    MT= ["_NoMT","_HighMT","_MT50To150","_MT500"]
+    
+    MT= ["_NoMT","_HighMT","_MT300","_MT500"]
 #    MT= ["_NoMT","_HighMT","_MT50To150","_MT150to200","_MT200to250","_MT250to300","_MT300to350","_MT200","_MT300","_MT400"]
 #    MT= ["_NoMT","_HighMT"]
+#    MT= ["_MT500"]
 
     JPT=[ "_HighDPhi"]
 
-#    region= ["", "_ttbarCRDiLep","_ttbarCRSingleLep"]
-    region= [""]
+    region= ["", "_ttbarCRDiLep","_ttbarCRSingleLep"]
+#    region= [""]
 
     for Norm in PlotName:
         for iso in Isolation:

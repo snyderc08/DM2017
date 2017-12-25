@@ -105,10 +105,11 @@ int main(int argc, char** argv) {
     
     
     std::string ROOTLocHT= "/Users/abdollah1/GIT_abdollah110/DM2017/ROOT80X/SampleLQ2/";
-    std::string ROOTLocMass= "/Users/abdollah1/GIT_abdollah110/DM2017/ROOT80X/WMASS/";
+//    std::string ROOTLocHT= "/Users/abdollah1/GIT_abdollah110/DM2017/ROOT80X/SampleLQ2/";
+//    std::string ROOTLocMass= "/Users/abdollah1/GIT_abdollah110/DM2017/ROOT80X/WMASS/";
     //        vector<float> DY_Events = DY_HTBin(ROOTLoc);
     vector<float> W_HTBinROOTFiles = W_HTBin(ROOTLocHT);
-    vector<float> W_MassBinROOTFiles = W_MassBin(ROOTLocMass);
+    vector<float> W_MassBinROOTFiles = W_MassBin(ROOTLocHT);
     //        vector<float> W_EventsNLO = W_PTBinNLO(ROOTLoc); //This is for the NLO samples (as the stat is too low we do not use them)
     //        vector<float> W_EventsNLO = W_HTBin(ROOTLoc);
     
@@ -391,8 +392,8 @@ int main(int argc, char** argv) {
             
             if (!isData){
                 
-                //######################## Lumi Weight
-                //                if (HistoTot) LumiWeight = weightCalc(HistoTot, InputROOT, genHT,WBosonPt, W_Events, DY_Events,W_EventsNLO);
+            //######################## Lumi Weight
+//                if (HistoTot) LumiWeight = weightCalc(HistoTot, InputROOT,genHT,WBosonPt, W_Events, DY_Events,W_EventsNLO);
                 if (HistoTot) LumiWeight = weightCalc(HistoTot, InputROOT,genHT, W_HTBinROOTFiles, WBosonMass, W_MassBinROOTFiles);
                 
                 //######################## Gen Weight
@@ -571,7 +572,8 @@ int main(int argc, char** argv) {
                 if ( (muPFNeuIso->at(imu) + muPFPhoIso->at(imu) - 0.5* muPFPUIso->at(imu) )  > 0.0)
                     IsoMu= ( muPFChIso->at(imu)/muPt->at(imu) + muPFNeuIso->at(imu) + muPFPhoIso->at(imu) - 0.5* muPFPUIso->at(imu))/muPt->at(imu);
                 
-                bool MuPtCut = muPt->at(imu) > LeptonPtCut_ && fabs(muEta->at(imu)) < 2.4 ;
+//                bool MuPtCut = muPt->at(imu) > LeptonPtCut_ && fabs(muEta->at(imu)) < 2.4 ;
+                bool MuPtCut = muPt->at(imu) > LeptonPtCut_ && fabs(muEta->at(imu)) < 2.0 ;
                 bool MuIdIso=( (muIDbit->at(imu) >> 2 & 1)  && fabs(muD0->at(imu)) < 0.045 && fabs(muDz->at(imu)) < 0.2); //Tight Muon Id
 //                bool MuIdIso=( (muIDbit->at(imu) >> 2 & 1)); //Tight Muon Id
                 
@@ -654,7 +656,7 @@ int main(int argc, char** argv) {
                     
                     
 //                    const int size_mTCat = 11;
-                    const int size_mTCat = 4;
+                    const int size_mTCat = 5;
 //                    
 //                    bool NoMT = 1;
 //                    bool HighMT = (tmass_MuMet > 100);
@@ -676,15 +678,15 @@ int main(int argc, char** argv) {
 //                    bool MT250To300=(tmass_MuMet > 250 && tmass_MuMet <= 300);
 //                    bool MT300To350=(tmass_MuMet > 300 && tmass_MuMet <= 350);
 //                    bool MTMore200=tmass_MuMet > 200 ;
-//                    bool MTMore300=tmass_MuMet > 300 ;
+                    bool MTMore300=tmass_MuMet > 300 ;
 //                    bool MTMore400=tmass_MuMet > 400 ;
                     bool MTMore500=tmass_MuMet > 500 ;
                     
                     
 //                    bool MT_category[size_mTCat] = {NoMT,HighMT,MT50To150,MT150To200,MT200To250,MT250To300,MT300To350,MTMore200,MTMore300,MTMore400,MTMore500};
 //                    std::string MT_Cat[size_mTCat] = {"_NoMT","_HighMT","_MT50To150","_MT150to200","_MT200to250","_MT250to300","_MT300to350","_MT200","_MT300","_MT400","_MT500"};
-                    bool MT_category[size_mTCat] = {NoMT,HighMT,MT50To150,MTMore500};
-                    std::string MT_Cat[size_mTCat] = {"_NoMT","_HighMT","_MT50To150","_MT500"};
+                    bool MT_category[size_mTCat] = {NoMT,HighMT,MT50To150,MTMore300,MTMore500};
+                    std::string MT_Cat[size_mTCat] = {"_NoMT","_HighMT","_MT50To150","_MT300","_MT500"};
                     
                     //###############################################################################################
                     //  dPhi Jet_MET Categorization
@@ -760,8 +762,8 @@ int main(int argc, char** argv) {
                                                         if (!( std::find(HistNamesFilled.begin(), HistNamesFilled.end(), FullStringName) != HistNamesFilled.end())){
                                                             HistNamesFilled.push_back(FullStringName);
                                                             
-                                                            if (LQ4Momentum.M() > 1100 && LQ4Momentum.M() < 1400){
-//                                                                if (1){
+//                                                            if (LQ4Momentum.M() > 1100 && LQ4Momentum.M() < 1400){
+                                                                if (1){
                                                             
                                                             //##################
                                                             plotFill(CHL+"_ElectronEffVeto"+FullStringName,ElectronEffVeto,300,0,3);
@@ -793,7 +795,7 @@ int main(int argc, char** argv) {
                                                             plotFill(CHL+"_WBosonMass"+FullStringName,WBosonMass,200,0,2000,FullWeight);
                                                             plotFill(CHL+"_genHT"+FullStringName,genHT,200,0,2000,FullWeight);
                                                             plotFill(CHL+"_recoHT"+FullStringName,recoHT,300,0,3000,FullWeight);
-                                                            plotFill(CHL+"_ST"+FullStringName,ST,300,0,3000,FullWeight);
+                                                            plotFill(CHL+"_ST"+FullStringName,recoHT+muPt->at(imu),300,0,3000,FullWeight);
 //                                                            plotFill("_FinalBTagSF"+FullStringName, FinalBTagSF,200,0,2);
                                                             plotFill(CHL+"_dR_Mu_Jet"+FullStringName,Jet4Momentum.DeltaR(Mu4Momentum),500,0,5,FullWeight);
                                                             plotFill(CHL+"_dEta_Mu_Jet"+FullStringName,Jet4Momentum.Eta() - Mu4Momentum.Eta(),1000,-5,5,FullWeight);

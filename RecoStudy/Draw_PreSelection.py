@@ -3,7 +3,14 @@ import ROOT
 import re
 from array import array
 
-from Step5_TT_W_ScaleFactor import *
+#from Step5_TT_W_ScaleFactor import *
+from Step5_TT_W_ScaleFactor_ForJet50 import *
+#................................................................................................................................
+#................................................................................................................................
+#InputFilesLocation='OutFiles_Excess_Jet50MT300_LQBump/'
+InputFilesLocation='OutFiles_Jet50_200_WMinus/'
+#................................................................................................................................
+#................................................................................................................................
 
 RB_=20
 def add_lumi():
@@ -63,7 +70,7 @@ def MakePlot(FileName,categoriy,HistName,Xaxis,Info,RB_,channel,yMin,isLOG,ttbar
     c=ROOT.TCanvas("canvas","",0,0,600,600)
     c.cd()
 
-    file=ROOT.TFile(FileName,"r")
+    file=ROOT.TFile(InputFilesLocation+FileName,"r")
 
     adapt=ROOT.gROOT.GetColor(12)
     new_idx=ROOT.gROOT.GetListOfColors().GetSize() + 1
@@ -78,18 +85,18 @@ def MakePlot(FileName,categoriy,HistName,Xaxis,Info,RB_,channel,yMin,isLOG,ttbar
 
     W=file.Get(categoriy).Get("W")
     W.Rebin(RB_)
-    if ttbarCR=="" :  W.Scale(SF_W_SingleLep())
-    if ttbarCR=="_ttbarCRSingleLep" :  W.Scale(SF_W_SingleLep())
-    if ttbarCR=="_ttbarCRDiLep" :  W.Scale(SF_W_DiLep())
-#    W.Scale(1)
+#    if ttbarCR=="" :  W.Scale(SF_W_SingleLep())
+#    if ttbarCR=="_ttbarCRSingleLep" :  W.Scale(SF_W_SingleLep())
+#    if ttbarCR=="_ttbarCRDiLep" :  W.Scale(SF_W_DiLep())
+    W.Scale(1)
 
 
     TT=file.Get(categoriy).Get("TT")
     TT.Rebin(RB_)
-#    TT.Scale(1)
-    if ttbarCR=="" :  TT.Scale(SF_TT_SingleLep())
-    if ttbarCR=="_ttbarCRSingleLep" :  TT.Scale(SF_TT_SingleLep())
-    if ttbarCR=="_ttbarCRDiLep" :  TT.Scale(SF_TT_DiLep())
+    TT.Scale(1)
+#    if ttbarCR=="" :  TT.Scale(SF_TT_SingleLep())
+#    if ttbarCR=="_ttbarCRSingleLep" :  TT.Scale(SF_TT_SingleLep())
+#    if ttbarCR=="_ttbarCRDiLep" :  TT.Scale(SF_TT_DiLep())
 
     SingleT=file.Get(categoriy).Get("SingleTop")
     SingleT.Rebin(RB_)
@@ -257,10 +264,12 @@ def MakePlot(FileName,categoriy,HistName,Xaxis,Info,RB_,channel,yMin,isLOG,ttbar
     categ.SetTextColor(    1 )
 #    categ.SetTextFont (   41 )
     #       if i==1 or i==3:
-    if MTLegend=='_HighMT': categ.AddText("M_{T}(#mu,j) > 100 GeV")
+#    if MTLegend=='_HighMT': categ.AddText("M_{T}(#mu,j) > 100 GeV")
+    if MTLegend=='_MT300': categ.AddText("M_{T}(#mu,j) > 300 GeV")
     if MTLegend=='_MT500': categ.AddText("M_{T}(#mu,j) > 500 GeV")
 #    categ.AddText(ttbarCR)
-    categ.AddText('1100 < M_{LQ} < 1400 GeV')
+    categ.AddText('50 <Jet p_{T} < 200 GeV')
+    categ.AddText('q_{#mu} < 0')
 #    categ.AddText(MTLegend)
     #       else :
     #        categ.AddText("SS")
@@ -328,7 +337,7 @@ def MakePlot(FileName,categoriy,HistName,Xaxis,Info,RB_,channel,yMin,isLOG,ttbar
     ROOT.gPad.RedrawAxis()
 
     c.Modified()
-    c.SaveAs("_plot_NewW_LQ1100_1400"+FileName.replace('TotalRootForLimit_PreSelection_MuJet','').replace('.root','')+str(isLOG)+".pdf")
+    c.SaveAs(InputFilesLocation+"_plot_NewW_Eta2p0_jet50"+FileName.replace('TotalRootForLimit_PreSelection_MuJet','').replace('.root','')+str(isLOG)+".pdf")
 
 
 #FileNamesInfo=[
@@ -362,10 +371,11 @@ FileNamesInfo=[
                ##               ["_nVtx","# of vertex","",1,10],
                ##               ["_nVtx_NoPU","# of vertex before PU reweighting","",1,10],
                ["_MET","MET  (GeV)","",10,1],
-               ["_LQMass","M_{LQ}   (GeV)","",10,1],
+               ["_LQMass","M_{LQ}   (GeV)","",10,0.01],
                ["_tmass_MuMet","M_{T}(#mu,MET) (GeV)","",10,1],
                ["_dPhi_Jet_Met","#Delta#phi (jet,MET)","",10,1],
                ["_dPhi_Mu_Jet","#Delta#phi (#mu,jet)","",10,1],
+               ["_dPhi_Mu_MET","#Delta#phi (#mu,MET)","",10,1],
                ##               ["_LQEta","#eta_{LQ}","",10,10],
                ["_NumJet","Jet multiplicity","",1,1],
                ["_NumBJet","BJet multiplicity","",1,1],
@@ -383,7 +393,9 @@ FileNamesInfo=[
 
 Isolation=["_Iso"]
 #MT=["_MT500"]
-MT=["_HighMT","_MT500"]
+#MT=["_HighMT","_MT500"]
+#MT= ["_NoMT","_HighMT","_MT300","_MT500"]
+MT= ["_MT300","_MT500"]
 #MT= ["_NoMT","_HighMT","_MT50To150","_MT100","_MT150","_MT200","_MT300","_MT400","_MT500"]
 #MT= ["_MT100","_MT150"]
 #MT_legend= [" 50 < M_{T} < 100","100 < M_{T} < 150"]
@@ -399,6 +411,8 @@ region= [""]
 
 #logStat=[0]
 logStat=[1]
+
+
 
 
 for i in range(0,len(FileNamesInfo)):

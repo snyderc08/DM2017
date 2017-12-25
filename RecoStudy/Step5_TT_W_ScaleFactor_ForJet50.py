@@ -69,9 +69,9 @@ def returnSF_W(FileName,TTSF):
     return WScale
 
 #MTRange=["_NoMT","_HighMT","_MT50To150","_MT150to200","_MT200to250","_MT250to300","_MT300to350","_MT200","_MT300","_MT400"]
-MTRange=["_NoMT","_HighMT","_MT50To150","_MT500"]
+MTRange=["_NoMT","_HighMT","_MT300","_MT500"]
 
-InputRootFiles='FILESNEEDEDFORTT_W_SF/'
+InputRootFiles='OutFiles_Excess_Jet50MT300/'
 #InputRootFiles='./'
 
 
@@ -119,10 +119,10 @@ def SF_TT_DiLep():
 
 
 def SF_W_SingleLep():
-    return returnSF_W(InputRootFiles+'TotalRootForLimit_PreSelection_MuJet_LQMass_MT50To150_HighDPhi_Iso.root',SF_TT_SingleLep())
+    return returnSF_W(InputRootFiles+'TotalRootForLimit_PreSelection_MuJet_LQMass_HighMT_HighDPhi_Iso.root',SF_TT_SingleLep())
 
 
 def SF_W_DiLep():
-    return returnSF_W(InputRootFiles+'TotalRootForLimit_PreSelection_MuJet_LQMass_MT50To150_HighDPhi_Iso.root',SF_TT_DiLep())
+    return returnSF_W(InputRootFiles+'TotalRootForLimit_PreSelection_MuJet_LQMass_HighMT_HighDPhi_Iso.root',SF_TT_DiLep())
 
 

@@ -125,9 +125,11 @@ int main(int argc, char** argv) {
     TH1F * ZNLO_qcd= (TH1F *) KFactor->Get("DYJets_012j_NLO/nominal");
     
     
-    //        std::string ROOTLoc= "/Users/abdollah1/GIT_abdollah110/DM2016/ROOT80X/";
+    std::string ROOTLocHT= "/Users/abdollah1/GIT_abdollah110/DM2017/ROOT80X/SampleLQ1/";
+//    std::string ROOTLocMass= "/Users/abdollah1/GIT_abdollah110/DM2017/ROOT80X/SampleLQ1/";
     //        vector<float> DY_Events = DY_HTBin(ROOTLoc);
-    //        vector<float> W_Events = W_HTBin(ROOTLoc);
+    vector<float> W_HTBinROOTFiles = W_HTBin(ROOTLocHT);
+    vector<float> W_MassBinROOTFiles = W_MassBin(ROOTLocHT);
     //        vector<float> W_EventsNLO = W_PTBinNLO(ROOTLoc); //This is for the NLO samples (as the stat is too low we do not use them)
     //        vector<float> W_EventsNLO = W_HTBin(ROOTLoc);
     
@@ -334,6 +336,7 @@ int main(int argc, char** argv) {
             //  TOP pT Reweighting & W-Kfactor  & Z-Kfactor
             //###############################################################################################
             
+            
             float GenTopPt=0;
             float GenAntiTopPt=0;
             float TopPtReweighting = 1;
@@ -343,43 +346,61 @@ int main(int argc, char** argv) {
             float ZBosonKFactor=1;
             int modPDGId=-10;
             int AntimodPDGId=-10;
+            float WBosonMass=0;
             
-            TLorentzVector GenMu4Momentum,GenAntiMu4Momentum;
+            TLorentzVector GenMu4Momentum,GenAntiMu4Momentum, WGEN4Momentum, MUGEN4Momentum, NUGEN4Momentum;
             
             for (int igen=0;igen < nMC; igen++){
                 if (mcPID->at(igen) == 6 && mcStatus->at(igen) ==62) GenTopPt=mcPt->at(igen) ;
                 if (mcPID->at(igen) == -6 && mcStatus->at(igen) ==62) GenAntiTopPt=mcPt->at(igen);
-                if (fabs(mcPID->at(igen)) ==24   && mcStatus->at(igen) ==22)  WBosonPt= mcPt->at(igen); // In inclusive we have status 62||22||44 while in HTbins we have just 22
+                if (fabs(mcPID->at(igen)) ==24   && mcStatus->at(igen) ==22)  {WBosonPt= mcPt->at(igen); WBosonMass=mcMass->at(igen);} // In inclusive we have status 62||22||44 while in HTbins we have just 22
+                //                if (fabs(mcPID->at(igen)) ==24)  cout << mcStatus->at(igen)<< " mcStatus  & boson pt= " << mcPt->at(igen)<<"\n";
+                //                cout<< "id= "<<mcPID->at(igen) << "  stat= "<<mcStatus->at(igen) << " pt="<<mcPt->at(igen)<<"\n";
                 if (fabs(mcPID->at(igen)) ==23)  ZBosonPt= mcPt->at(igen); //FIXME somethime we do not have Z in the DY events
                 if ( mcPID->at(igen) ==11  )  {GenMu4Momentum.SetPtEtaPhiM(mcPt->at(igen),mcEta->at(igen),mcPhi->at(igen),mcMass->at(igen)); modPDGId=mcMomPID->at(igen);}
                 if ( mcPID->at(igen) ==-11  )  {GenAntiMu4Momentum.SetPtEtaPhiM(mcPt->at(igen),mcEta->at(igen),mcPhi->at(igen),mcMass->at(igen)); AntimodPDGId=mcMomPID->at(igen);}
                 
+                if ( fabs(mcPID->at(igen)) ==11 && mcStatus->at(igen) ==1 )  {MUGEN4Momentum.SetPtEtaPhiM(mcPt->at(igen),mcEta->at(igen),mcPhi->at(igen),mcMass->at(igen));}
+                if ( fabs(mcPID->at(igen)) ==12  && mcStatus->at(igen) ==1)  {NUGEN4Momentum.SetPtEtaPhiM(mcPt->at(igen),mcEta->at(igen),mcPhi->at(igen),mcMass->at(igen));}
+                
+                
+                
+                
+                
             }
+            WGEN4Momentum=MUGEN4Momentum+NUGEN4Momentum;
+            //            cout<<WGEN4Momentum.Pt()<<"\n";
             if (ZBosonPt ==0)
                 ZBosonPt=(GenMu4Momentum+GenAntiMu4Momentum).Pt();  //This is a temp solution to the above problem
+            
+            
             
             //######################## Top Pt Reweighting
             size_t isTTJets = InputROOT.find("TTJets");
             if (isTTJets!= string::npos) TopPtReweighting = compTopPtWeight(GenTopPt, GenAntiTopPt);
             
             //######################## W K-factor
+            size_t isWJetsToLNu_Inc = InputROOT.find("WJetsToLNu_Inc");
             size_t isWJets = InputROOT.find("WJets");
+            size_t isWToLNu = InputROOT.find("WToLNu");
             //            if (isWJets!= string::npos) WBosonKFactor=Get_W_Z_BosonKFactor(WBosonPt,WLO,WNLO_ewk);  //Swtch ON only for LO Madgraph sample
-            if (isWJets!= string::npos) WBosonKFactor= kf_W_1 + kf_W_2 * WBosonPt;
+            if ((isWJets!= string::npos || isWToLNu!= string::npos) &&  WBosonPt==0)  WBosonPt = WGEN4Momentum.Pt();
+            if (isWJets!= string::npos || isWToLNu!= string::npos ) WBosonKFactor= kf_W_1 + kf_W_2 * WBosonPt;
             
+            //            cout<<"WBosonPt= "<<WBosonPt<<"\n";
             //######################## Z K-factor
             size_t isDYJets = InputROOT.find("DYJets");
             //            if (isDYJets!= string::npos) ZBosonKFactor=Get_W_Z_BosonKFactor(ZBosonPt,ZLO,ZNLO_ewk);  //Swtch ON only for LO Madgraph sample
             if (isDYJets!= string::npos) ZBosonKFactor= kf_Z_1 + kf_Z_2 * ZBosonPt;
             
             
-            //................................................................................................................
-            //................................................................................................................
-//            if (isWJets!= string::npos && WBosonMass > 100) continue;
-//            if (isWJetsToLNu_Inc!= string::npos && genHT > 70.0) continue;
+//            ................................................................................................................
+//            ................................................................................................................
+            if (isWJets!= string::npos && WBosonMass > 100) continue;
+            if (isWJetsToLNu_Inc!= string::npos && genHT > 70.0) continue;
             
-            //................................................................................................................
-            //................................................................................................................
+//            ................................................................................................................
+//            ................................................................................................................
             
             
             //###############################################################################################
@@ -394,7 +415,7 @@ int main(int argc, char** argv) {
                 
                 //######################## Lumi Weight
                 //                if (HistoTot) LumiWeight = weightCalc(HistoTot, InputROOT, genHT,WBosonPt, W_Events, DY_Events,W_EventsNLO);
-                if (HistoTot) LumiWeight = weightCalc_NoWStitch(HistoTot, InputROOT,genHT);
+                if (HistoTot) LumiWeight = weightCalc(HistoTot, InputROOT,genHT, W_HTBinROOTFiles, WBosonMass, W_MassBinROOTFiles);
                 
                 //######################## Gen Weight
                 GetGenWeight=genWeight;
@@ -686,12 +707,14 @@ int main(int argc, char** argv) {
                     //###############################################################################################
                     //  dPhi Jet_MET Categorization
                     //###############################################################################################
-                    const int size_jetMetPhi = 2;
-                    bool lowDPhi = (deltaPhi(Jet4Momentum.Phi(),pfMETPhi) < 0.5 || deltaPhi(Ele4Momentum.Phi(),pfMETPhi) < 0.5 );
+                    const int size_jetMetPhi = 1;
+//                    bool lowDPhi = (deltaPhi(Jet4Momentum.Phi(),pfMETPhi) < 0.5 || deltaPhi(Ele4Momentum.Phi(),pfMETPhi) < 0.5 );
                     bool HighDPhi = (deltaPhi(Jet4Momentum.Phi(),pfMETPhi) >= 0.5 && deltaPhi(Ele4Momentum.Phi(),pfMETPhi) >= 0.5  );
                     
-                    bool jetMetPhi_category[size_jetMetPhi] = {lowDPhi,HighDPhi};
-                    std::string jetMetPhi_Cat[size_jetMetPhi] = {"_LowDPhi", "_HighDPhi"};
+//                    bool jetMetPhi_category[size_jetMetPhi] = {lowDPhi,HighDPhi};
+//                    std::string jetMetPhi_Cat[size_jetMetPhi] = {"_LowDPhi", "_HighDPhi"};
+                    bool jetMetPhi_category[size_jetMetPhi] = {HighDPhi};
+                    std::string jetMetPhi_Cat[size_jetMetPhi] = {"_HighDPhi"};
                     
                     //###############################################################################################
                     //  TTbar & DY control region Categorization
@@ -743,9 +766,9 @@ int main(int argc, char** argv) {
                                                         float FullWeight = TotalWeight[itopRW] * MuonCor *ElectronCor * FinalBTagSF;
                                                         std::string FullStringName = topPtRW[itopRW] + MT_Cat[imt] + jetMetPhi_Cat[jpt] +  region_Cat[iCR] + iso_Cat[iso]  ;
                                                         
-//                                                        if (LQ4Momentum.M() > 1100 ){
-                                                            if (1){
-                                                            
+                                                        if (LQ4Momentum.M() > 1100 && LQ4Momentum.M() < 1400 ){
+//                                                            if (1){
+                                                        
                                                             
                                                             //##################
                                                             //This check is used to make sure that each event is just filled once for any of the categories ==> No doube-counting of events  (this is specially important for ttbar events where we have many jets and leptons)

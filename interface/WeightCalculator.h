@@ -148,6 +148,7 @@ float XSection(std::string OutName) {
     
     else if (OutName.find("Codex") != string::npos ) return      1.0;
     
+    else if (OutName.find("EWK_DYToLL") != string::npos ) return      3.987;
     
     
     else if (OutName.find("QCD_Pt-20toInf_MuEnrichedPt15") != string::npos) return     720648000  * 0.00042 ;
@@ -212,7 +213,7 @@ vector <float> W_HTBin(std::string FileLoc){
 vector <float> W_MassBin(std::string FileLoc){
     
     const int WSize=5;
-    std::string W_ROOTFiles[WSize]={"WToMuNu_M-100.root","WToMuNu_M-200.root", "WToMuNu_M-500.root","WToMuNu_M-1000.root","WToMuNu_M-2000.root"};
+    std::string W_ROOTFiles[WSize]={"WToLNu_M-100.root","WToLNu_M-200.root", "WToLNu_M-500.root","WToLNu_M-1000.root","WToLNu_M-2000.root"};
     
     vector<float> W_events;
     W_events.clear();
@@ -350,14 +351,14 @@ float weightCalc(TH1F *Histo,std::string outputName, float genHT,vector<float> W
     
     
     size_t isWjet = outputName.find("WJets");
-    size_t isWToMuNu = outputName.find("WToMuNu");
+    size_t isWToLNu = outputName.find("WToLNu");
     
     
     
     //##################################################################
     //   Stitching for  W sample
     //##################################################################
-    if (isWjet != string::npos || isWToMuNu != string::npos) {
+    if (isWjet != string::npos || isWToLNu != string::npos) {
         
         if (WMass <= 100){
             if (genHT <= 70)  return  luminosity * XSection("WJetsToLNu_Inc") / W_HTbin[0];

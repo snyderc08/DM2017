@@ -271,10 +271,10 @@ def MakePlot(FileName,categoriy,HistName,Xaxis,Info,RB_,channel,yMin,isLOG,ttbar
 #    categ.AddText("Jet pt > 50 GeV ")
 #    categ.AddText(" M_{T}(#mu,MET)> 500 GeV ")
 
-    if MTLegend=='_NoMT': categ.AddText("M_{T}(#mu,MET) > 100 GeV")
-    if MTLegend=='_HighMT': categ.AddText("M_{T}(#mu,MET) > 500 GeV")
+    if MTLegend=='_HighMT': categ.AddText("M_{T}(#mu,MET) > 100 GeV")
+    if MTLegend=='_MT500': categ.AddText("M_{T}(#mu,MET) > 500 GeV")
     categ.AddText("1100 < M_{LQ} < 1400 GeV ")
-    categ.AddText("100 < Jet pt < 200 GeV ")
+#    categ.AddText("100 < Jet pt < 200 GeV ")
     #       else :
     #        categ.AddText("SS")
     categ.Draw()
@@ -341,7 +341,7 @@ def MakePlot(FileName,categoriy,HistName,Xaxis,Info,RB_,channel,yMin,isLOG,ttbar
     ROOT.gPad.RedrawAxis()
 
     c.Modified()
-    c.SaveAs("_plot_Excess_JePt50_"+FileName.replace('TotalRootForLimit_PreSelection_Excess_MuJet','').replace('.root','')+str(isLOG)+".pdf")
+    c.SaveAs("_plot_Excess_MLQ1100_1400_"+FileName.replace('TotalRootForLimit_PreSelection_Excess_MuJet','').replace('.root','')+str(isLOG)+".pdf")
 
 
 FileNamesInfo=[
@@ -356,6 +356,7 @@ FileNamesInfo=[
                ["_tmass_MuMet","M_{T}(#mu,MET) (GeV)","",10,1],
                ["_dPhi_Jet_Met","#Delta#phi (jet,MET)","",10,1],
                ["_dPhi_Mu_Jet","#Delta#phi (#mu,jet)","",10,1],
+               ["_dPhi_Mu_Met","#Delta#phi (#mu,MET)","",10,1],
                ["_NumJet","Jet multiplicity","",1,1],
                ["_NumBJet","BJet multiplicity","",1,1],
                ["_recoHT","Jet HT  (GeV)","",10,1],
@@ -369,7 +370,8 @@ FileNamesInfo=[
 #    Isolation=["_Iso", "_AntiIso","_Total"]
 
 Isolation=["_Iso"]
-MT= ["_NoMT","_HighMT"]
+#MT= ["_NoMT","_HighMT","_MT50To150","_MT500"]
+MT= ["_HighMT","_MT500"]
 
 JPT=[ "_HighDPhi"]
 
