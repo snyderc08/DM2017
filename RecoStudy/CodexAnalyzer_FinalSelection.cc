@@ -415,6 +415,7 @@ int main(int argc, char** argv) {
             size_t isWToMuNu = InputROOT.find("WToMuNu");
             //            if (isWJets!= string::npos) WBosonKFactor=Get_W_Z_BosonKFactor(WBosonPt,WLO,WNLO_ewk);  //Swtch ON only for LO Madgraph sample
             if ((isWJets!= string::npos || isWToMuNu!= string::npos) &&  WBosonPt==0)  WBosonPt = WGEN4Momentum.Pt();
+            cout<<"WBosonPt \n";
             if (isWJets!= string::npos || isWToMuNu!= string::npos ) WBosonKFactor= kf_W_1 + kf_W_2 * WBosonPt;
             if (isWJets!= string::npos) WBosonKFactor_ewkUp= (kf_W_1Up + kf_W_2Up * WBosonPt)/WBosonKFactor;
             if (isWJets!= string::npos) WBosonKFactor_ewkDown= (kf_W_1Down + kf_W_2Down * WBosonPt)/WBosonKFactor;

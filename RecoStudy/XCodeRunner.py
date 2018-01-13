@@ -7,6 +7,7 @@ import shutil
 import subprocess
 import sys
 import re
+import subprocess
 
 parser = argparse.ArgumentParser(description='Process some integers.')
 
@@ -24,10 +25,18 @@ parser.add_argument('-i','--in',dest='codex', default='CodexAnalyzer_Preselectio
 args = parser.parse_args()
 print args.codex
 
-if not os.path.exists('OutFiles_%s'%args.codex):
-    os.makedirs('OutFiles_%s'%args.codex)
+preName='NewOutFiles_'
+dirName='%s%s'%(preName,args.codex)
 
-os.system("cp %s.cc OutFiles_%s/."%(args.codex,args.codex))
+
+SingleMuLoc='/Users/abdollah1/GIT_abdollah110/DM2017/ROOT80X/SampleLQ2/'
+
+
+if not os.path.exists(dirName):
+    os.makedirs(dirName)
+
+#os.system("cp CodexAnalyzer_%s.cc %s/."%(args.codex,dirName))
+#os.system("./Make.sh CodexAnalyzer_%s.cc"%args.codex)
 
 
 
@@ -42,30 +51,36 @@ Input=[
 
 
 
-
-./CodexAnalyzer_Preselection.exe  OutFiles_PreSelection/DYJetsToLL.root ../ROOT80X/SampleLQ2/DYJetsToLL_M-50_HT*.root
-
-./CodexAnalyzer_Preselection.exe  OutFiles_PreSelection/WJetsToLNu.root ../ROOT80X/SampleLQ2/WJetsToLNu*.root  ../ROOT80X/WMASS/W*root
-
-./CodexAnalyzer_Preselection.exe  OutFiles_PreSelection/TTJets.root ../ROOT80X/SampleLQ2/TTJets.root
-
-./CodexAnalyzer_Preselection.exe  OutFiles_PreSelection/VV.root ../ROOT80X/SampleLQ2/ZZ*.root  ../ROOT80X/SampleLQ2/WW*.root  ../ROOT80X/SampleLQ2/WZ*.root
-
-./CodexAnalyzer_Preselection.exe  OutFiles_PreSelection/SingleTop.root ../ROOT80X/SampleLQ2/ST_*.root
-
-./CodexAnalyzer_Preselection.exe  OutFiles_PreSelection/Data.root ../ROOT80X/SampleLQ2/SingleMu.root
-
-./CodexAnalyzer_Preselection.exe  OutFiles_PreSelection/Codex_1200.root ../ROOT80X/PrivateSample/Codex_LQ1200_DM_500_X_550.root
+outF=open('out%s.txt'%dirName,'w')
 
 
+outF.write("\n ./Make.sh %s.cc"%args.codex)
+outF.write("\n cp %s.cc %s/."%(args.codex,dirName))
+outF.write("\n cp out%s.txt %s/."%(dirName,dirName))
 
 
+for sam in range(0,len(Input)):
+    
+    
+    
+
+    if len(Input[sam])==2: outF.write("\n./%s.exe   %s/%s      %s%s "%(args.codex,dirName,Input[sam][0],SingleMuLoc, Input[sam][1] ))
+    
+    if len(Input[sam])==3: outF.write("\n./%s.exe   %s/%s    %s%s %s%s"%(args.codex,dirName,Input[sam][0],SingleMuLoc, Input[sam][1], SingleMuLoc,Input[sam][2] ))
+
+    if len(Input[sam])==4: outF.write("\n./%s.exe   %s/%s  %s%s %s%s %s%s"%(args.codex,dirName,Input[sam][0],SingleMuLoc, Input[sam][1], SingleMuLoc,Input[sam][2], SingleMuLoc,Input[sam][3] ))
 
 
+outF.close()
+
+print "Run the following line\n"
+print "source out%s.txt"%dirName
+                
 #
-#cp CodexAnalyzer_Preselection.*   OutFiles_PreSelection/.
-
-
-
-
-
+#
+#os.system("cp out%s.txt %s/."%(dirName,dirName))
+##myscope = {}
+##execfile('Step1_JetToMuFR_Data.py')
+#subprocess.check_call('./CodexAnalyzer_Preselection.exe   NewOutFiles_Preselection/Data.root      /Users/abdollah1/GIT_abdollah110/DM2017/ROOT80X/SampleLQ2/SingleMu.root')
+##exec(open("outNewOutFiles_Preselection.txt").read(), globals())
+#
