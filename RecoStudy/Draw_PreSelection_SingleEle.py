@@ -4,6 +4,16 @@ import re
 from array import array
 
 from Step5_TT_W_ScaleFactor_Ele import *
+#................................................................................................................................
+#................................................................................................................................
+#InputFilesLocation='NewOutFiles_SingleEle_CodexAnalyzer_Preselection_SingleEle_EleEta2p1/'
+#InputFilesLocation='NewOutFiles_CodexAnalyzer_Preselection_SingleEle_MLQ_1100_1400/'
+#InputFilesLocation='NewOutFiles_CodexAnalyzer_Preselection_SingleEle_MLQ_1100_1400_METLess200/'
+#InputFilesLocation='NewOutFiles_CodexAnalyzer_Preselection_SingleEle_Lplus/'
+InputFilesLocation='NewOutFiles_CodexAnalyzer_Preselection_SingleEle_Lminus/'
+#................................................................................................................................
+#................................................................................................................................
+
 
 RB_=20
 def add_lumi():
@@ -56,6 +66,7 @@ def make_legend():
 
 
 def MakePlot(FileName,categoriy,HistName,Xaxis,Info,RB_,channel,yMin,isLOG,ttbarCR,MTLegend):
+    yMin=yMin*.1
     ROOT.gStyle.SetFrameLineWidth(3)
     ROOT.gStyle.SetLineWidth(3)
     ROOT.gStyle.SetOptStat(0)
@@ -63,7 +74,7 @@ def MakePlot(FileName,categoriy,HistName,Xaxis,Info,RB_,channel,yMin,isLOG,ttbar
     c=ROOT.TCanvas("canvas","",0,0,600,600)
     c.cd()
 
-    file=ROOT.TFile(FileName,"r")
+    file=ROOT.TFile(InputFilesLocation+FileName,"r")
 
     adapt=ROOT.gROOT.GetColor(12)
     new_idx=ROOT.gROOT.GetListOfColors().GetSize() + 1
@@ -78,20 +89,26 @@ def MakePlot(FileName,categoriy,HistName,Xaxis,Info,RB_,channel,yMin,isLOG,ttbar
 
     W=file.Get(categoriy).Get("W")
     W.Rebin(RB_)
-    if ttbarCR=="" :  W.Scale(SF_W_SingleLep())
-    if ttbarCR=="_ttbarCRSingleLep" :  W.Scale(SF_W_SingleLep())
-    if ttbarCR=="_ttbarCRDiLep" :  W.Scale(SF_W_DiLep())
     W.Scale(1)
+#    if ttbarCR=="" :  W.Scale(SF_W_SingleLep())
+#    if ttbarCR=="_ttbarCRSingleLep" :  W.Scale(SF_W_SingleLep())
+#    if ttbarCR=="_ttbarCRDiLep" :  W.Scale(SF_W_DiLep())
+
 
 
     TT=file.Get(categoriy).Get("TT")
     TT.Rebin(RB_)
     TT.Scale(1)
-    if ttbarCR=="" :  TT.Scale(SF_TT_SingleLep())
-    if ttbarCR=="_ttbarCRSingleLep" :  TT.Scale(SF_TT_SingleLep())
-    if ttbarCR=="_ttbarCRDiLep" :  TT.Scale(SF_TT_DiLep())
+#    if ttbarCR=="" :  TT.Scale(SF_TT_SingleLep())
+#    if ttbarCR=="_ttbarCRSingleLep" :  TT.Scale(SF_TT_SingleLep())
+#    if ttbarCR=="_ttbarCRDiLep" :  TT.Scale(SF_TT_DiLep())
 
     SingleT=file.Get(categoriy).Get("SingleTop")
+
+    if not SingleT:
+        SingleT=file.Get(categoriy).Get("VV")
+        SingleT.Scale(.0001)
+        print "\n\n\n\nn\######################### whatch out VV  instead of SingleT\n\n\n\n"
     SingleT.Rebin(RB_)
 
     VV=file.Get(categoriy).Get("VV")
@@ -260,7 +277,9 @@ def MakePlot(FileName,categoriy,HistName,Xaxis,Info,RB_,channel,yMin,isLOG,ttbar
     categ.AddText("electron channel")
     if MTLegend=='_HighMT': categ.AddText("M_{T}(e,Met) > 100 GeV")
     if MTLegend=='_MT500': categ.AddText("M_{T}(e,Met) > 500 GeV")
-    categ.AddText("1100<M_{LQ}<1400 GeV")
+#    categ.AddText("1100<M_{LQ}<1400 GeV")
+#    categ.AddText("MET < 200 GeV")
+    categ.AddText('q_{e} < 0')
     categ.Draw()
 
     c.cd()
@@ -278,7 +297,7 @@ def MakePlot(FileName,categoriy,HistName,Xaxis,Info,RB_,channel,yMin,isLOG,ttbar
     pad2.cd()
     
     h1=errorBand.Clone()
-    h1.SetMaximum(2)
+    h1.SetMaximum(3)
     h1.SetMinimum(0.01)
     h1.SetMarkerStyle(20)
 
@@ -325,27 +344,32 @@ def MakePlot(FileName,categoriy,HistName,Xaxis,Info,RB_,channel,yMin,isLOG,ttbar
     ROOT.gPad.RedrawAxis()
 
     c.Modified()
-    c.SaveAs("_plot_SingleEle_Excess_"+FileName.replace('ROOT_PreSelection_EleJet','').replace('.root','')+str(isLOG)+".pdf")
+    c.SaveAs(InputFilesLocation+'_EleJet'+FileName.replace('ROOT_PreSelection_SingleEleEleJet','').replace('_HighMT','_MT100').replace('.root','').replace('_HighDPhi_Iso','')+".pdf")
+
 
 
 FileNamesInfo=[
-##               ["_tmass_JetMet","M_{T}(jet,MET) (GeV)","",5,1],
+               ##               ["_tmass_JetMet","M_{T}(jet,MET) (GeV)","",5,1],
                ["_tmass_LQMet","M_{T}(LQ,MET)  (GeV)","",10,1],
-               ["_LepPt","lepton p_{T} (GeV)","",50,1],
-               ["_LepEta","lepton #eta ","",5,.1],
-               ["_JetPt","jet p_{T} (GeV)","",50,1],
-               ["_JetEta","jet #eta ","",5,.1],
-##               ["_nVtx","# of vertex","",1,10],
-##               ["_nVtx_NoPU","# of vertex before PU reweighting","",1,10],
-               ["_MET","MET  (GeV)","",5,1],
+               ["_LepPt","lepton p_{T} (GeV)","",100,1],
+               ["_LepEta","lepton #eta ","",10,.1],
+               ["_JetPt","jet p_{T} (GeV)","",50,.1],
+               ["_JetEta","jet #eta ","",10,.1],
+               ##               ["_nVtx","# of vertex","",1,10],
+               ##               ["_nVtx_NoPU","# of vertex before PU reweighting","",1,10],
+               ["_MET","MET  (GeV)","",10,.1],
                ["_LQMass","M_{LQ}   (GeV)","",10,1],
-               ["_tmass_EleMet","M_{T}(e,MET) (GeV)","",5,1],
-               ["_dPhi_Jet_Met","#Delta#phi (jet,MET)","",10,.1],
-               ["_dPhi_Ele_Jet","#Delta#phi (e,jet)","",10,.1],
-               ["_dPhi_Ele_Met","#Delta#phi (e,MET)","",10,.1],
-##               ["_LQEta","#eta_{LQ}","",10,10],
+               ["_tmass_EleMet","M_{T}(e,MET) (GeV)","",10,.1],
+               ["_dPhi_Jet_Met","#Delta#phi (jet,MET)","",10,1],
+               ["_dPhi_Ele_Jet","#Delta#phi (e,jet)","",10,1],
+               ["_dPhi_Ele_MET","#Delta#phi (e,MET)","",10,.1],
+               ##               ["_LQEta","#eta_{LQ}","",10,10],
                ["_NumJet","Jet multiplicity","",1,1],
                ["_NumBJet","BJet multiplicity","",1,1],
+               ["_recoHT","Jet HT  (GeV)","",10,1],
+               ["_ST"," ST  (GeV)","",10,.1],
+               ["_dR_Mu_Jet","#DeltaR (e,jet)","",20,1],
+               ["_dEta_Mu_Jet","#Delta#eta (e,jet)","",50,.1],
                ]
 
 
@@ -387,7 +411,7 @@ for i in range(0,len(FileNamesInfo)):
                         for isLOG in logStat:
                     
 #                            FileName="ROOT_PreSelection_SingleEle"+"EleJet"+NormMC+mt+jpt+etalq+reg+iso+".root"
-                            FileName="ROOT_PreSelection_Excess_SingleEle"+"EleJet"+NormMC+mt+jpt+etalq+reg+iso+".root"
+                            FileName="ROOT_PreSelection_SingleEleEleJet"+NormMC+mt+jpt+etalq+reg+iso+".root"
                             Info=NormMC+mt+jpt+etalq+reg+iso
                             print "---->", FileName
                             MakePlot(FileName,"EleJet","",axisName,Info,Bin,"",yMin,isLOG,reg,mt)

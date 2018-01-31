@@ -340,13 +340,13 @@ def Make_Mu_FakeRate(channelName,Parametrization):
 #        theFit.SetParameter(4, 96.6)
 
     
-    
+    theFit.Print("Quiet")
     HistoNum.Fit("theFit", "R0")
     HistoNum.Draw("E1")
-    theFit.Print("Quiet")
     theFit.SetLineWidth(3)
     theFit.SetLineColor(3)
     FitParam=theFit.GetParameters()
+    theFit.Print('Quiet')
     theFit.Draw("SAME")
 
 #    FitParamTot=FitParam[0],FitParam[1],FitParam[2],FitParam[3],FitParam[4]

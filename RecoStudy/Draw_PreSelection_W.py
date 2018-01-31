@@ -4,6 +4,14 @@ import re
 from array import array
 
 from Step5_TT_W_ScaleFactor import *
+#from Step5_TT_W_ScaleFactor_ForJet50 import *
+#................................................................................................................................
+#................................................................................................................................
+InputFilesLocation = 'NewOutFiles_Preselection_/'
+
+#................................................................................................................................
+#................................................................................................................................
+
 
 RB_=10
 def add_lumi():
@@ -63,7 +71,7 @@ def MakePlot(FileName,categoriy,HistName,Xaxis,Info,RB_,channel,yMin,isLOG,ttbar
     c=ROOT.TCanvas("canvas","",0,0,600,600)
     c.cd()
 
-    file=ROOT.TFile(FileName,"r")
+    file=ROOT.TFile(InputFilesLocation+FileName,"r")
 
     adapt=ROOT.gROOT.GetColor(12)
     new_idx=ROOT.gROOT.GetListOfColors().GetSize() + 1
@@ -230,12 +238,19 @@ def MakePlot(FileName,categoriy,HistName,Xaxis,Info,RB_,channel,yMin,isLOG,ttbar
 #    categ.SetTextFont (   41 )
     #       if i==1 or i==3:
     categ.AddText("W Control Region")
-#    categ.AddText(" 50 <m_{T} (#mu,MET) <150 GeV ")
-    categ.AddText(" 100 <jet pT <150 GeV ")
+    if mt== '_NoMT': categ.AddText(" m_{T} (#mu,MET) > 0 ")
+    if mt== '_HighMT': categ.AddText(" m_{T} (#mu,MET) > 100 GeV ")
+    if mt== '_MT50To150': categ.AddText(" 50 <m_{T} (#mu,MET) <150 GeV ")
+    if mt== '_MT300': categ.AddText(" m_{T} (#mu,MET) > 300 GeV ")
+    if mt== '_MT500': categ.AddText(" m_{T} (#mu,MET) > 500 GeV ")
+    
+#    categ.AddText(" 100 <jet pT <150 GeV ")
     #       else :
     #        categ.AddText("SS")
     categ.Draw()
 
+
+    
     c.cd()
     pad2 = ROOT.TPad("pad2","pad2",0,0,1,0.35);
     pad2.SetTopMargin(0.05);
@@ -251,8 +266,8 @@ def MakePlot(FileName,categoriy,HistName,Xaxis,Info,RB_,channel,yMin,isLOG,ttbar
     pad2.cd()
     
     h1=errorBand.Clone()
-    h1.SetMaximum(1.5)
-    h1.SetMinimum(0.5)
+    h1.SetMaximum(2)
+    h1.SetMinimum(0)
     h1.SetMarkerStyle(20)
 
     h3=Data.Clone()
@@ -298,7 +313,7 @@ def MakePlot(FileName,categoriy,HistName,Xaxis,Info,RB_,channel,yMin,isLOG,ttbar
     ROOT.gPad.RedrawAxis()
 
     c.Modified()
-    c.SaveAs("_plot_W_CR_50To150"+FileName.replace('TotalRootForLimit_PreSelection_MuJet','').replace('.root','')+str(isLOG)+".pdf")
+    c.SaveAs(InputFilesLocation+'_plot_W_CR_50To150'+FileName.replace('TotalRootForLimit_PreSelection_MuJet','').replace('.root','')+".pdf")
 
 
 FileNamesInfo=[
@@ -321,7 +336,8 @@ FileNamesInfo=[
 
 Isolation=["_Iso"]
 #MT=["_MT50To150"]
-MT= ["_NoMT","_HighMT","_MT50To150","_MT100to200","_MT200to300","_MT200","_MT300","_MT400"]
+#MT= ["_NoMT","_HighMT","_MT50To150","_MT100to200","_MT200to300","_MT200","_MT300","_MT400"]
+MT= ["_NoMT","_HighMT","_MT50To150","_MT300","_MT500"]
 JPT=[ "_HighDPhi"]
 lqEta= [""]
 region= [""]

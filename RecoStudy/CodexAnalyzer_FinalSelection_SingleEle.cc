@@ -130,6 +130,13 @@ std::string ROOTLocHT= "/Users/abdollah1/GIT_abdollah110/DM2017/ROOT80X/SampleLQ
     //        vector<float> W_EventsNLO = W_HTBin(ROOTLoc);
     
     
+    
+    
+    TFile * MassDepKFactor=TFile::Open("../interface/k_fakNNLO_use_Ele.root");
+    TH1F* HistMassDepKFactor= (TH1F*) MassDepKFactor->Get("k_fak_mean");
+    TH1F* HistMassDepKFactor_ewkUp= (TH1F*) MassDepKFactor->Get("k_fakp");
+    TH1F* HistMassDepKFactor_ewkDown= (TH1F*) MassDepKFactor->Get("k_fakm");
+    
     //########################################
     // W and DY K-factor files  (FIT-based K-factor)
     //########################################
@@ -407,33 +414,35 @@ std::string ROOTLocHT= "/Users/abdollah1/GIT_abdollah110/DM2017/ROOT80X/SampleLQ
             float ZBosonKFactor_ewkDown=1;
             
             TLorentzVector GenMu4Momentum,GenAntiMu4Momentum, WGEN4Momentum, MUGEN4Momentum, NUGEN4Momentum;
-            
+            vector <TLorentzVector> LepFromW;
+            vector <TLorentzVector> NuetrinoFromW;
             for (int igen=0;igen < nMC; igen++){
+                
+                //Top pt correction
                 if (mcPID->at(igen) == 6 && mcStatus->at(igen) ==62) GenTopPt=mcPt->at(igen) ;
                 if (mcPID->at(igen) == -6 && mcStatus->at(igen) ==62) GenAntiTopPt=mcPt->at(igen);
-                if (fabs(mcPID->at(igen)) ==24   && mcStatus->at(igen) ==22)  {WBosonPt= mcPt->at(igen); WBosonMass=mcMass->at(igen);} // In inclusive we have status 62||22||44 while in HTbins we have just 22
-                //                if (fabs(mcPID->at(igen)) ==24)  cout << mcStatus->at(igen)<< " mcStatus  & boson pt= " << mcPt->at(igen)<<"\n";
-                //                cout<< "id= "<<mcPID->at(igen) << "  stat= "<<mcStatus->at(igen) << " pt="<<mcPt->at(igen)<<"\n";
-                if (fabs(mcPID->at(igen)) ==23)  ZBosonPt= mcPt->at(igen); //FIXME somethime we do not have Z in the DY events
-                if ( mcPID->at(igen) ==11  )  {GenMu4Momentum.SetPtEtaPhiM(mcPt->at(igen),mcEta->at(igen),mcPhi->at(igen),mcMass->at(igen)); modPDGId=mcMomPID->at(igen);}
-                if ( mcPID->at(igen) ==-11  )  {GenAntiMu4Momentum.SetPtEtaPhiM(mcPt->at(igen),mcEta->at(igen),mcPhi->at(igen),mcMass->at(igen)); AntimodPDGId=mcMomPID->at(igen);}
                 
-                if ( fabs(mcPID->at(igen)) ==11 && mcStatus->at(igen) ==1 )  {MUGEN4Momentum.SetPtEtaPhiM(mcPt->at(igen),mcEta->at(igen),mcPhi->at(igen),mcMass->at(igen));}
-                if ( fabs(mcPID->at(igen)) ==12  && mcStatus->at(igen) ==1)  {NUGEN4Momentum.SetPtEtaPhiM(mcPt->at(igen),mcEta->at(igen),mcPhi->at(igen),mcMass->at(igen));}
-            
-            
-            
-            
-            
+                //W Mass
+                if (fabs(mcPID->at(igen)) ==24   && mcStatus->at(igen) ==22)  {WBosonPt= mcPt->at(igen); WBosonMass=mcMass->at(igen);}
+                if ( fabs(mcPID->at(igen)) ==11 && mcStatus->at(igen) ==1 )  {MUGEN4Momentum.SetPtEtaPhiM(mcPt->at(igen),mcEta->at(igen),mcPhi->at(igen),mcMass->at(igen));LepFromW.push_back(MUGEN4Momentum);}
+                if ( fabs(mcPID->at(igen)) ==12  && mcStatus->at(igen) ==1)  {NUGEN4Momentum.SetPtEtaPhiM(mcPt->at(igen),mcEta->at(igen),mcPhi->at(igen),mcMass->at(igen));NuetrinoFromW.push_back(NUGEN4Momentum);}
+                
+                //DY sample
+                if (fabs(mcPID->at(igen)) ==23)  ZBosonPt= mcPt->at(igen); //FIXME somethime we do not have Z in the DY events
+                if ( mcPID->at(igen) ==11  )  {GenMu4Momentum.SetPtEtaPhiM(mcPt->at(igen),mcEta->at(igen),mcPhi->at(igen),mcMass->at(igen));}
+                if ( mcPID->at(igen) ==-11  )  {GenAntiMu4Momentum.SetPtEtaPhiM(mcPt->at(igen),mcEta->at(igen),mcPhi->at(igen),mcMass->at(igen));}
+                
+                
             }
-            WGEN4Momentum=MUGEN4Momentum+NUGEN4Momentum;
-            //            cout<<WGEN4Momentum.Pt()<<"\n";
+            
+            if (LepFromW.size()> 0 && NuetrinoFromW.size()>0)
+                WGEN4Momentum=LepFromW[0]+NuetrinoFromW[0];
+            
             if (ZBosonPt ==0)
                 ZBosonPt=(GenMu4Momentum+GenAntiMu4Momentum).Pt();  //This is a temp solution to the above problem
             
-            
-            
-            
+            if (WBosonPt==0)
+                WBosonPt = WGEN4Momentum.Pt();
             
             
             //######################## Top Pt Reweighting
@@ -443,12 +452,13 @@ std::string ROOTLocHT= "/Users/abdollah1/GIT_abdollah110/DM2017/ROOT80X/SampleLQ
             //######################## W K-factor
             size_t isWJetsToLNu_Inc = InputROOT.find("WJetsToLNu_Inc");
             size_t isWJets = InputROOT.find("WJets");
-            size_t isWToMuNu = InputROOT.find("WToLNu");
-            //            if (isWJets!= string::npos) WBosonKFactor=Get_W_Z_BosonKFactor(WBosonPt,WLO,WNLO_ewk);  //Swtch ON only for LO Madgraph sample
-            if ((isWJets!= string::npos || isWToMuNu!= string::npos) &&  WBosonPt==0)  WBosonPt = WGEN4Momentum.Pt();
-            if (isWJets!= string::npos || isWToMuNu!= string::npos ) WBosonKFactor= kf_W_1 + kf_W_2 * WBosonPt;
-            if (isWJets!= string::npos) WBosonKFactor_ewkUp= (kf_W_1Up + kf_W_2Up * WBosonPt)/WBosonKFactor;
-            if (isWJets!= string::npos) WBosonKFactor_ewkDown= (kf_W_1Down + kf_W_2Down * WBosonPt)/WBosonKFactor;
+            size_t isWToLNu = InputROOT.find("WToLNu");
+            
+            
+            if (isWJets!= string::npos || isWToLNu!= string::npos )WBosonKFactor=HistMassDepKFactor->GetBinContent(int(WBosonMass)/10 +1); //Mass binned K-factor
+            if (isWJets!= string::npos || isWToLNu!= string::npos )WBosonKFactor_ewkUp=HistMassDepKFactor_ewkUp->GetBinContent(int(WBosonMass)/10 +1)/WBosonKFactor; //Mass binned K-factor
+            if (isWJets!= string::npos || isWToLNu!= string::npos )WBosonKFactor_ewkDown=HistMassDepKFactor_ewkDown->GetBinContent(int(WBosonMass)/10 +1)/WBosonKFactor; //Mass binned K-factor
+            
             
             //######################## Z K-factor
             size_t isDYJets = InputROOT.find("DYJets");
@@ -685,7 +695,7 @@ std::string ROOTLocHT= "/Users/abdollah1/GIT_abdollah110/DM2017/ROOT80X/SampleLQ
             for  (int jele=0 ; jele < nEle; jele++){
                 
 //                if ( elePt->at(jele) < 60 || fabs(eleEta->at(jele)) > 2.5) continue;
-                if ( elePt->at(jele) < 60 || fabs(eleEta->at(jele)) > 2.0) continue;
+                if ( elePt->at(jele) < 60 || fabs(eleEta->at(jele)) > 2.1) continue;
                 
                 //                cout <<elePt->at(jele)  << "     "  << eleIDMVA->at(jele)  <<"\n";
                 
@@ -863,10 +873,21 @@ std::string ROOTLocHT= "/Users/abdollah1/GIT_abdollah110/DM2017/ROOT80X/SampleLQ
                                                                     
                                                                     
                                                                     ////////   Systematic on K-factor for W and Z for  ewk correction
-                                                                    if (isWJets!= string::npos) plotFill(CHL+"_LQMass"+FullStringName+"_ewkKfactor_WUp",LQ.M(),300,0,3000,FullWeight*WBosonKFactor_ewkUp);
-                                                                    if (isWJets!= string::npos) plotFill(CHL+"_LQMass"+FullStringName+"_ewkKfactor_WDown",LQ.M(),300,0,3000,FullWeight*WBosonKFactor_ewkDown);
-                                                                    if (isDYJets!= string::npos) plotFill(CHL+"_LQMass"+FullStringName+"_ewkKfactor_ZUp",LQ.M(),300,0,3000,FullWeight*ZBosonKFactor_ewkUp);
-                                                                    if (isDYJets!= string::npos) plotFill(CHL+"_LQMass"+FullStringName+"_ewkKfactor_ZDown",LQ.M(),300,0,3000,FullWeight*ZBosonKFactor_ewkDown);
+                                                                    if (isWJets!= string::npos || isWToLNu!= string::npos)
+                                                                        
+                                                                    {
+                                                                        
+                                                                        plotFill(CHL+"_LQMass"+FullStringName+"_ewkKfactor_WUp",LQ.M(),300,0,3000,FullWeight*WBosonKFactor_ewkUp);
+                                                                        plotFill(CHL+"_LQMass"+FullStringName+"_ewkKfactor_WDown",LQ.M(),300,0,3000,FullWeight*WBosonKFactor_ewkDown);
+                                                                        
+                                                                    }
+                                                                    
+                                                                    
+                                                                    if (isDYJets!= string::npos) {
+                                                                        
+                                                                        plotFill(CHL+"_LQMass"+FullStringName+"_ewkKfactor_ZUp",LQ.M(),300,0,3000,FullWeight*ZBosonKFactor_ewkUp);
+                                                                        plotFill(CHL+"_LQMass"+FullStringName+"_ewkKfactor_ZDown",LQ.M(),300,0,3000,FullWeight*ZBosonKFactor_ewkDown);
+                                                                    }
                                                                     
                                                                     
                                                                     

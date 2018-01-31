@@ -40,7 +40,8 @@ ROOT.gROOT.SetBatch(True)
 #SubRootDir = 'OutFiles_FullSelection_MT_LQMET/'
 #SubRootDir = 'OutFiles_FullSelection_MuEta2/'
 #SubRootDir = 'OutFiles_FinalSelection_SampleLQ1/'
-SubRootDir = 'OutFiles_FinalSelection_SampleLQ1_EtaEle2p0/'
+#SubRootDir = 'OutFiles_FinalSelection_SampleLQ1_EtaEle2p0/'
+SubRootDir = 'NewOutFiles_FinalSelection_SingleEle_final/'
 
 
 verbos_ = True
@@ -191,7 +192,7 @@ def MakeTheHistogram(channel,NormMC,NormQCD,ShapeQCD,NormMCTT,chl,Binning):
                     
                     
                     NormHistoShape.Scale(NormHisto.Integral()*1.0/NormHistoShape.Integral())
-                    NormHistoShape.Scale(SF_TT_SingleLep())
+#                    NormHistoShape.Scale(SF_TT_SingleLep())
                     RebinedHist= NormHistoShape.Rebin(len(Binning)-1,"",Binning)
                     tDirectory.WriteObject(RebinedHist,NameOut)
                     
@@ -290,7 +291,7 @@ def MakeTheHistogram(channel,NormMC,NormQCD,ShapeQCD,NormMCTT,chl,Binning):
                     NormHisto=NormFile.Get("XXX")
                     
                     NormHisto.Scale(WNoCorNormaliztaion/NormHisto.Integral())
-                    NormHisto.Scale(SF_W_SingleLep())
+#                    NormHisto.Scale(SF_W_SingleLep())
                     RebinedHist= NormHisto.Rebin(len(Binning)-1,"",Binning)
                     tDirectory.WriteObject(RebinedHist,NameOut)
                     
@@ -328,7 +329,7 @@ def MakeTheHistogram(channel,NormMC,NormQCD,ShapeQCD,NormMCTT,chl,Binning):
                             NormHistoShape=NormFileShape.Get("XXX")
                             
                             NormHistoShape.Scale(NormHisto.Integral()*1.0/NormHistoShape.Integral())
-                            NormHistoShape.Scale(SF_W_SingleLep())
+#                            NormHistoShape.Scale(SF_W_SingleLep())
                             RebinedHist= NormHistoShape.Rebin(len(Binning)-1,"",Binning)
                             tDirectory.WriteObject(RebinedHist,NameOut)
                     

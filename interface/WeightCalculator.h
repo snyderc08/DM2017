@@ -345,9 +345,10 @@ float weightCalc(TH1F *Histo,std::string outputName, float genHT,vector<float> W
     
     size_t isSingleMu = outputName.find("SingleMu");
     size_t isSingleEle = outputName.find("SingleEle");
+    size_t isData = outputName.find("Data");
     
     
-    if (isSingleMu != string::npos || isSingleEle!= string::npos)   return 1;
+    if (isSingleMu != string::npos || isSingleEle!= string::npos || isData !=string::npos)   return 1;
     
     
     size_t isWjet = outputName.find("WJets");

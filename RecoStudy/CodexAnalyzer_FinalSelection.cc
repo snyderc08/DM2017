@@ -96,7 +96,7 @@ int main(int argc, char** argv) {
     
     
     std::string ROOTLocHT= "/Users/abdollah1/GIT_abdollah110/DM2017/ROOT80X/SampleLQ2/";
-//    std::string ROOTLocMass= "/Users/abdollah1/GIT_abdollah110/DM2017/ROOT80X/WMASS/";
+    //    std::string ROOTLocMass= "/Users/abdollah1/GIT_abdollah110/DM2017/ROOT80X/WMASS/";
     //        vector<float> DY_Events = DY_HTBin(ROOTLoc);
     vector<float> W_HTBinROOTFiles = W_HTBin(ROOTLocHT);
     vector<float> W_MassBinROOTFiles = W_MassBin(ROOTLocHT);
@@ -141,6 +141,15 @@ int main(int argc, char** argv) {
     float kf_Z_1Down=HistkfactorZDown->GetBinContent(1);
     float kf_Z_2Down=HistkfactorZDown->GetBinContent(2);
     
+    
+    
+    TFile * MassDepKFactor=TFile::Open("../interface/k_fakNNLO_use.root");
+    TH1F* HistMassDepKFactor= (TH1F*) MassDepKFactor->Get("k_fak_mean");
+    TH1F* HistMassDepKFactor_ewkUp= (TH1F*) MassDepKFactor->Get("k_fakp");
+    TH1F* HistMassDepKFactor_ewkDown= (TH1F*) MassDepKFactor->Get("k_fakm");
+    
+    
+    
     //########################################
     // Btagging scale factor and uncertainties
     //########################################
@@ -168,8 +177,8 @@ int main(int argc, char** argv) {
     float eleMass= 0.000511;
     float LeptonPtCut_=60;
     float TauPtCut_=20;
-//    float JetPtCut=100;
-    float JetPtCut=50;
+    float JetPtCut=100;
+    //    float JetPtCut=50;
     float BJetPtCut=30;
     float SimpleJetPtCut=30;
     float ElectronPtCut_=15;
@@ -379,29 +388,35 @@ int main(int argc, char** argv) {
             float WBosonMass=0;
             
             TLorentzVector GenMu4Momentum,GenAntiMu4Momentum, WGEN4Momentum, MUGEN4Momentum, NUGEN4Momentum;
-            
+            vector <TLorentzVector> LepFromW;
+            vector <TLorentzVector> NuetrinoFromW;
             for (int igen=0;igen < nMC; igen++){
+                
+                //Top pt correction
                 if (mcPID->at(igen) == 6 && mcStatus->at(igen) ==62) GenTopPt=mcPt->at(igen) ;
                 if (mcPID->at(igen) == -6 && mcStatus->at(igen) ==62) GenAntiTopPt=mcPt->at(igen);
-                if (fabs(mcPID->at(igen)) ==24   && mcStatus->at(igen) ==22)  {WBosonPt= mcPt->at(igen); WBosonMass=mcMass->at(igen);} // In inclusive we have status 62||22||44 while in HTbins we have just 22
-                //                if (fabs(mcPID->at(igen)) ==24)  cout << mcStatus->at(igen)<< " mcStatus  & boson pt= " << mcPt->at(igen)<<"\n";
-                //                cout<< "id= "<<mcPID->at(igen) << "  stat= "<<mcStatus->at(igen) << " pt="<<mcPt->at(igen)<<"\n";
+                
+                //W Mass
+                if (fabs(mcPID->at(igen)) ==24   && mcStatus->at(igen) ==22)  {WBosonPt= mcPt->at(igen); WBosonMass=mcMass->at(igen);}
+                if ( fabs(mcPID->at(igen)) ==13 && mcStatus->at(igen) ==1 )  {MUGEN4Momentum.SetPtEtaPhiM(mcPt->at(igen),mcEta->at(igen),mcPhi->at(igen),mcMass->at(igen));LepFromW.push_back(MUGEN4Momentum);}
+                if ( fabs(mcPID->at(igen)) ==14  && mcStatus->at(igen) ==1)  {NUGEN4Momentum.SetPtEtaPhiM(mcPt->at(igen),mcEta->at(igen),mcPhi->at(igen),mcMass->at(igen));NuetrinoFromW.push_back(NUGEN4Momentum);}
+                
+                //DY sample
                 if (fabs(mcPID->at(igen)) ==23)  ZBosonPt= mcPt->at(igen); //FIXME somethime we do not have Z in the DY events
-                if ( mcPID->at(igen) ==13  )  {GenMu4Momentum.SetPtEtaPhiM(mcPt->at(igen),mcEta->at(igen),mcPhi->at(igen),mcMass->at(igen)); modPDGId=mcMomPID->at(igen);}
-                if ( mcPID->at(igen) ==-13  )  {GenAntiMu4Momentum.SetPtEtaPhiM(mcPt->at(igen),mcEta->at(igen),mcPhi->at(igen),mcMass->at(igen)); AntimodPDGId=mcMomPID->at(igen);}
-                
-                if ( fabs(mcPID->at(igen)) ==13 && mcStatus->at(igen) ==1 )  {MUGEN4Momentum.SetPtEtaPhiM(mcPt->at(igen),mcEta->at(igen),mcPhi->at(igen),mcMass->at(igen));}
-                if ( fabs(mcPID->at(igen)) ==14  && mcStatus->at(igen) ==1)  {NUGEN4Momentum.SetPtEtaPhiM(mcPt->at(igen),mcEta->at(igen),mcPhi->at(igen),mcMass->at(igen));}
-                
-                
-                
+                if ( mcPID->at(igen) ==13  )  {GenMu4Momentum.SetPtEtaPhiM(mcPt->at(igen),mcEta->at(igen),mcPhi->at(igen),mcMass->at(igen));}
+                if ( mcPID->at(igen) ==-13  )  {GenAntiMu4Momentum.SetPtEtaPhiM(mcPt->at(igen),mcEta->at(igen),mcPhi->at(igen),mcMass->at(igen));}
                 
                 
             }
-            WGEN4Momentum=MUGEN4Momentum+NUGEN4Momentum;
-            //            cout<<WGEN4Momentum.Pt()<<"\n";
+            
+            if (LepFromW.size()> 0 && NuetrinoFromW.size()>0)
+                WGEN4Momentum=LepFromW[0]+NuetrinoFromW[0];
+            
             if (ZBosonPt ==0)
                 ZBosonPt=(GenMu4Momentum+GenAntiMu4Momentum).Pt();  //This is a temp solution to the above problem
+            
+            if (WBosonPt==0)
+                WBosonPt = WGEN4Momentum.Pt();
             
             
             
@@ -410,14 +425,28 @@ int main(int argc, char** argv) {
             if (isTTJets!= string::npos) TopPtReweighting = compTopPtWeight(GenTopPt, GenAntiTopPt);
             
             //######################## W K-factor
+            //######################## W K-factor
             size_t isWJetsToLNu_Inc = InputROOT.find("WJetsToLNu_Inc");
             size_t isWJets = InputROOT.find("WJets");
-            size_t isWToMuNu = InputROOT.find("WToMuNu");
-            //            if (isWJets!= string::npos) WBosonKFactor=Get_W_Z_BosonKFactor(WBosonPt,WLO,WNLO_ewk);  //Swtch ON only for LO Madgraph sample
-            if ((isWJets!= string::npos || isWToMuNu!= string::npos) &&  WBosonPt==0)  WBosonPt = WGEN4Momentum.Pt();
-            if (isWJets!= string::npos || isWToMuNu!= string::npos ) WBosonKFactor= kf_W_1 + kf_W_2 * WBosonPt;
-            if (isWJets!= string::npos) WBosonKFactor_ewkUp= (kf_W_1Up + kf_W_2Up * WBosonPt)/WBosonKFactor;
-            if (isWJets!= string::npos) WBosonKFactor_ewkDown= (kf_W_1Down + kf_W_2Down * WBosonPt)/WBosonKFactor;
+            size_t isWToLNu = InputROOT.find("WToLNu");
+            
+            //   if (isWJets!= string::npos) WBosonKFactor=Get_W_Z_BosonKFactor(WBosonPt,WLO,WNLO_ewk);  //Swtch ON only for LO Madgraph sample
+            //            if (isWJets!= string::npos || isWToLNu!= string::npos ) WBosonKFactor= kf_W_1 + kf_W_2 * WBosonPt;
+            
+            if (isWJets!= string::npos || isWToLNu!= string::npos )WBosonKFactor=HistMassDepKFactor->GetBinContent(int(WBosonMass)/10 +1); //Mass binned K-factor
+            if (isWJets!= string::npos || isWToLNu!= string::npos )WBosonKFactor_ewkUp=HistMassDepKFactor_ewkUp->GetBinContent(int(WBosonMass)/10 +1)/WBosonKFactor; //Mass binned K-factor
+            if (isWJets!= string::npos || isWToLNu!= string::npos )WBosonKFactor_ewkDown=HistMassDepKFactor_ewkDown->GetBinContent(int(WBosonMass)/10 +1)/WBosonKFactor; //Mass binned K-factor
+            
+            
+            
+            //            size_t isWJetsToLNu_Inc = InputROOT.find("WJetsToLNu_Inc");
+            //            size_t isWJets = InputROOT.find("WJets");
+            //            size_t isWToLNu = InputROOT.find("WToMuNu");
+            //            //            if (isWJets!= string::npos) WBosonKFactor=Get_W_Z_BosonKFactor(WBosonPt,WLO,WNLO_ewk);  //Swtch ON only for LO Madgraph sample
+            //            if ((isWJets!= string::npos || isWToLNu!= string::npos) &&  WBosonPt==0)  WBosonPt = WGEN4Momentum.Pt();
+            //            if (isWJets!= string::npos || isWToLNu!= string::npos ) WBosonKFactor= kf_W_1 + kf_W_2 * WBosonPt;
+            //            if (isWJets!= string::npos) WBosonKFactor_ewkUp= (kf_W_1Up + kf_W_2Up * WBosonPt)/WBosonKFactor;
+            //            if (isWJets!= string::npos) WBosonKFactor_ewkDown= (kf_W_1Down + kf_W_2Down * WBosonPt)/WBosonKFactor;
             
             //######################## Z K-factor
             size_t isDYJets = InputROOT.find("DYJets");
@@ -570,25 +599,26 @@ int main(int argc, char** argv) {
             
             //###########       Z boson Veto   ###########################################################
             int numZboson=0;
-            if (nMu > 1){
-                TLorentzVector Mu4Momentum_0,Mu4Momentum_1,Z4Momentum;
-                Mu4Momentum_0.SetPtEtaPhiM(muPt->at(0),muEta->at(0),muPhi->at(0),MuMass);
-                Mu4Momentum_1.SetPtEtaPhiM(muPt->at(1),muEta->at(1),muPhi->at(1),MuMass);
-                Z4Momentum=Mu4Momentum_1+Mu4Momentum_0;
-                
-                float IsoMu1=muPFChIso->at(0)/muPt->at(0);
-                if ( (muPFNeuIso->at(0) + muPFPhoIso->at(0) - 0.5* muPFPUIso->at(0) )  > 0.0)
-                    IsoMu1= ( muPFChIso->at(0)/muPt->at(0) + muPFNeuIso->at(0) + muPFPhoIso->at(0) - 0.5* muPFPUIso->at(0))/muPt->at(0);
-                
-                float IsoMu2=muPFChIso->at(1)/muPt->at(1);
-                if ( (muPFNeuIso->at(1) + muPFPhoIso->at(1) - 0.5* muPFPUIso->at(1) )  > 0.0)
-                    IsoMu2= ( muPFChIso->at(1)/muPt->at(1) + muPFNeuIso->at(1) + muPFPhoIso->at(1) - 0.5* muPFPUIso->at(1))/muPt->at(1);
-                
-                if (  muPt->at(0) > 60 && muPt->at(1) > 15 && IsoMu1 < 0.25  && IsoMu2 < 0.25 && Z4Momentum.M() > 80 && Z4Momentum.M()< 100 ) numZboson++;
+            for (int xmu=0; xmu< nMu; xmu++){
+                for (int ymu=xmu+1; ymu< nMu; ymu++){
+                    
+                    TLorentzVector Mu4Momentum_0,Mu4Momentum_1,Z4Momentum;
+                    Mu4Momentum_0.SetPtEtaPhiM(muPt->at(xmu),muEta->at(xmu),muPhi->at(xmu),MuMass);
+                    Mu4Momentum_1.SetPtEtaPhiM(muPt->at(ymu),muEta->at(ymu),muPhi->at(ymu),MuMass);
+                    Z4Momentum=Mu4Momentum_1+Mu4Momentum_0;
+                    
+                    float IsoMu1=muPFChIso->at(xmu)/muPt->at(xmu);
+                    if ( (muPFNeuIso->at(xmu) + muPFPhoIso->at(xmu) - 0.5* muPFPUIso->at(xmu) )  > 0.0)
+                        IsoMu1= ( muPFChIso->at(xmu)/muPt->at(xmu) + muPFNeuIso->at(xmu) + muPFPhoIso->at(xmu) - 0.5* muPFPUIso->at(xmu))/muPt->at(xmu);
+                    
+                    float IsoMu2=muPFChIso->at(ymu)/muPt->at(ymu);
+                    if ( (muPFNeuIso->at(ymu) + muPFPhoIso->at(ymu) - 0.5* muPFPUIso->at(ymu) )  > 0.0)
+                        IsoMu2= ( muPFChIso->at(ymu)/muPt->at(ymu) + muPFNeuIso->at(ymu) + muPFPhoIso->at(ymu) - 0.5* muPFPUIso->at(ymu))/muPt->at(ymu);
+                    
+                    if ( muPt->at(xmu) > 60 && muPt->at(ymu) > 15 &&  (muIDbit->at(xmu) >> 1 & 1) & (muIDbit->at(ymu) >> 1 & 1) & IsoMu1 < 0.25  && IsoMu2 < 0.25 && Z4Momentum.M() > 80 && Z4Momentum.M()< 100  && (muCharge->at(xmu) * muCharge->at(ymu) < 0))
+                        numZboson++;
+                }
             }
-            
-            
-            
             
             
             //###############################################################################################
@@ -621,8 +651,8 @@ int main(int argc, char** argv) {
                 if ( (muPFNeuIso->at(imu) + muPFPhoIso->at(imu) - 0.5* muPFPUIso->at(imu) )  > 0.0)
                     IsoMu= ( muPFChIso->at(imu)/muPt->at(imu) + muPFNeuIso->at(imu) + muPFPhoIso->at(imu) - 0.5* muPFPUIso->at(imu))/muPt->at(imu);
                 
-//                bool MuPtCut = muPt->at(imu) > LeptonPtCut_ && fabs(muEta->at(imu)) < 2.4 ;
-                bool MuPtCut = muPt->at(imu) > LeptonPtCut_ && fabs(muEta->at(imu)) < 2.0 ;
+                bool MuPtCut = muPt->at(imu) > LeptonPtCut_ && fabs(muEta->at(imu)) < 2.4 ;
+                
                 bool MuIdIso=( (muIDbit->at(imu) >> 2 & 1)  && fabs(muD0->at(imu)) < 0.045 && fabs(muDz->at(imu)) < 0.2); //Tight Muon Id
                 
                 if (! MuPtCut || !MuIdIso ) continue;
@@ -633,34 +663,6 @@ int main(int argc, char** argv) {
                 
                 TLorentzVector Mu4Momentum,Jet4MomentumNonSmear, Jet4Momentum,KJet4Momentum,NewJet4Collection,LQ;
                 Mu4Momentum.SetPtEtaPhiM(muPt->at(imu),muEta->at(imu),muPhi->at(imu),MuMass);
-                
-                
-                
-                
-                //###########      Finding the close jet near mu   ###########################################################
-                
-                float CLoseJetMuPt=muPt->at(imu);
-                float CLoseJetMuEta=muEta->at(imu);
-                
-                if (MuPtCut && MuIdIso ){
-                    
-                    double Refer_R_jetmu = 5;
-                    
-                    for (int kjet= 0 ; kjet < nJet ; kjet++){
-                        KJet4Momentum.SetPtEtaPhiE(jetPt->at(kjet),jetEta->at(kjet),jetPhi->at(kjet),jetEn->at(kjet));
-                        
-                        
-                        if (KJet4Momentum.DeltaR(Mu4Momentum) < Refer_R_jetmu) {
-                            Refer_R_jetmu = KJet4Momentum.DeltaR(Mu4Momentum);
-                            if (Refer_R_jetmu < 0.5 && jetPt->at(kjet)  >= muPt->at(imu)) {
-                                CLoseJetMuPt = jetPt->at(kjet);
-                                CLoseJetMuEta = jetEta->at(kjet);
-                                
-                            }
-                        }
-                    }
-                }
-                
                 
                 
                 
@@ -811,16 +813,27 @@ int main(int argc, char** argv) {
                                                                     plotFill(CHL+"_tmass_MuMet"+FullStringName,tmass_MuMet,200,0,2000,FullWeight);
                                                                     plotFill(CHL+"_MET"+FullStringName,UESMET[metUE],200,0,2000,FullWeight);
                                                                     
-                                                                    plotFill(CHL+"_CloseJetLepPt"+FullStringName,CLoseJetMuPt,2000,0,2000,FullWeight);
+                                                                    //                                                                    plotFill(CHL+"_CloseJetLepPt"+FullStringName,CLoseJetMuPt,2000,0,2000,FullWeight);
                                                                     plotFill(CHL+"_LQMass"+FullStringName,LQ.M(),300,0,3000,FullWeight);
                                                                     plotFill(CHL+"_tmass_LQMet"+FullStringName,tmass_LQMet,300,0,3000,FullWeight);
                                                                     
                                                                     
                                                                     ////////   Systematic on K-factor for W and Z for  ewk correction
-                                                                    if (isWJets!= string::npos) plotFill(CHL+"_LQMass"+FullStringName+"_ewkKfactor_WUp",LQ.M(),300,0,3000,FullWeight*WBosonKFactor_ewkUp);
-                                                                    if (isWJets!= string::npos) plotFill(CHL+"_LQMass"+FullStringName+"_ewkKfactor_WDown",LQ.M(),300,0,3000,FullWeight*WBosonKFactor_ewkDown);
-                                                                    if (isDYJets!= string::npos) plotFill(CHL+"_LQMass"+FullStringName+"_ewkKfactor_ZUp",LQ.M(),300,0,3000,FullWeight*ZBosonKFactor_ewkUp);
-                                                                    if (isDYJets!= string::npos) plotFill(CHL+"_LQMass"+FullStringName+"_ewkKfactor_ZDown",LQ.M(),300,0,3000,FullWeight*ZBosonKFactor_ewkDown);
+                                                                    if (isWJets!= string::npos || isWToLNu!= string::npos)
+                                                                        
+                                                                    {
+                                                                        
+                                                                        plotFill(CHL+"_LQMass"+FullStringName+"_ewkKfactor_WUp",LQ.M(),300,0,3000,FullWeight*WBosonKFactor_ewkUp);
+                                                                        plotFill(CHL+"_LQMass"+FullStringName+"_ewkKfactor_WDown",LQ.M(),300,0,3000,FullWeight*WBosonKFactor_ewkDown);
+                                                                        
+                                                                    }
+                                                                    
+                                                                    
+                                                                    if (isDYJets!= string::npos) {
+                                                                        
+                                                                        plotFill(CHL+"_LQMass"+FullStringName+"_ewkKfactor_ZUp",LQ.M(),300,0,3000,FullWeight*ZBosonKFactor_ewkUp);
+                                                                        plotFill(CHL+"_LQMass"+FullStringName+"_ewkKfactor_ZDown",LQ.M(),300,0,3000,FullWeight*ZBosonKFactor_ewkDown);
+                                                                    }
                                                                     
                                                                     
                                                                     
@@ -835,8 +848,8 @@ int main(int argc, char** argv) {
                                                                     //##############################################################################
                                                                     //  QCD Scale Uncertainty for TTbar and W+Jets
                                                                     //##############################################################################
-//                                                                    if (isTTJets== string::npos &&  isWJets== string::npos &&  isDYJets== string::npos)
-                                                                    if (isTTJets== string::npos &&  isWJets== string::npos)
+                                                                    //                                                                    if (isTTJets== string::npos &&  isWJets== string::npos &&  isDYJets== string::npos)
+                                                                    if (isTTJets== string::npos &&  isWJets== string::npos&&  isWToLNu== string::npos)
                                                                         continue; //scale factor only for W and TT
                                                                     
                                                                     int counterscale=0;

@@ -40,7 +40,9 @@ ROOT.gROOT.SetBatch(True)
 #SubRootDir = 'OutFiles_FullSelection_MT_LQMET/'
 #SubRootDir = 'OutFiles_FullSelection_MuEta2/'
 #SubRootDir = 'OutFiles_FinalSelection_SampleLQ1/'
-SubRootDir = 'OutFiles_FullSelection_Jet50/'
+#SubRootDir = 'OutFiles_FullSelection_Jet50/'
+#SubRootDir = 'NewOutFiles_FinalSelection_SingleMu/'
+SubRootDir = 'NewOutFiles_FinalSelection_/'
 
 
 verbos_ = True
@@ -49,7 +51,7 @@ JetResol = ["JetERDown", "", "JetERUp"]
 #JetResol = [""]
 METScale = ["METUESDown", "", "METUESUp","METJESDown","METJESUp"]
 SystematicTopPtReWeight = ["TopPtRWUp","TopPtRWDown"]
-FinalName = ["_mj_TM"]
+FinalName = ["_mj"]
 
 ############################################################################################################
 def _FileReturn(Name, channel,cat,HistoName,PostFixJet,PostFixJetRes,PostFixMET):
@@ -291,6 +293,7 @@ def MakeTheHistogram(channel,NormMC,NormQCD,ShapeQCD,NormMCTT,chl,Binning):
                     
                     NormHisto.Scale(WNoCorNormaliztaion/NormHisto.Integral())
                     NormHisto.Scale(SF_W_SingleLep())
+                    print "--------------->    NormHisto with NO correction", NormHisto.Integral()
                     RebinedHist= NormHisto.Rebin(len(Binning)-1,"",Binning)
                     tDirectory.WriteObject(RebinedHist,NameOut)
                     
@@ -323,12 +326,14 @@ def MakeTheHistogram(channel,NormMC,NormQCD,ShapeQCD,NormMCTT,chl,Binning):
                             
                             NormFile= _FileReturn(Name, channel,NameCat, HistogramNorm, JetScale[jscale] , JetResol[jres] , METScale[mscale] )
                             NormHisto=NormFile.Get("XXX")
+                            print "--------------->    NormHisto XXXXXX correction", NormHisto.Integral()
                             
                             NormFileShape= _FileReturn(Name, channel,NameCat, HistogramNorm, JetScale[jscale] , JetResol[jres] , METScale[mscale] )
                             NormHistoShape=NormFileShape.Get("XXX")
                             
                             NormHistoShape.Scale(NormHisto.Integral()*1.0/NormHistoShape.Integral())
                             NormHistoShape.Scale(SF_W_SingleLep())
+                            print "--------------->    NormHisto with correction", NormHistoShape.Integral()
                             RebinedHist= NormHistoShape.Rebin(len(Binning)-1,"",Binning)
                             tDirectory.WriteObject(RebinedHist,NameOut)
                     

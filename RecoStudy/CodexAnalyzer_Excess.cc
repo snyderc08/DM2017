@@ -590,8 +590,9 @@ int main(int argc, char** argv) {
                 float recoHT=0;
                 
                 for (int ijet= 0 ; ijet < nJet ; ijet++){
-                    if (jetPFLooseId->at(ijet) > 0.5 && jetPt->at(ijet) > 30 && fabs(jetEta->at(ijet)) < 2.4 && Jet4Momentum.DeltaR(Mu4Momentum) > 0.5)
-                        recoHT += jetPt->at(ijet);
+//                    if (jetPFLooseId->at(ijet) > 0.5 && jetPt->at(ijet) > 30 && fabs(jetEta->at(ijet)) < 2.4 && Jet4Momentum.DeltaR(Mu4Momentum) > 0.5)
+                    if (jetPFLooseId->at(ijet) > 0.5 && jetPt->at(ijet) > 30 && fabs(jetEta->at(ijet)) < 2.4)
+                        recoHT = recoHT+ jetPt->at(ijet);
                 }
                 float ST=recoHT+muPt->at(imu);
                 
@@ -608,6 +609,7 @@ int main(int argc, char** argv) {
                     LQ4Momentum=Jet4Momentum + Mu4Momentum;
                     
                     bool isThisJetElectron= Jet4Momentum.DeltaR(Ele4Momentum) < 0.5;
+                    if (recoHT==0) cout<<recoHT<<" jet pt="<<jetPFLooseId->at(ijet)  << (jetPt->at(ijet) > 30) << (fabs(jetEta->at(ijet)) < 2.4) << (Jet4Momentum.DeltaR(Mu4Momentum) > 0.5)<<"   pt is"<<jetPt->at(ijet)<<"\n";
                     //###############################################################################################
                     //  Isolation Categorization
                     //###############################################################################################

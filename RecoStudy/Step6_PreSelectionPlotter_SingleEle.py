@@ -35,7 +35,12 @@ import os
 ROOT.gROOT.SetBatch(True)
 #ROOT.gROOT.ProcessLine('.x rootlogon.C')
 #SubRootDir = 'OutFiles_PreSelection_SampleLQ1/'
-SubRootDir = 'OutFiles_PreSelection_SampleLQ1_Excess/'
+#SubRootDir = 'OutFiles_PreSelection_SampleLQ1_Excess/'
+#SubRootDir = 'NewOutFiles_SingleEle_CodexAnalyzer_Preselection_SingleEle_EleEta2p1/'
+#SubRootDir = 'NewOutFiles_CodexAnalyzer_Preselection_SingleEle_MLQ_1100_1400/'
+#SubRootDir = 'NewOutFiles_CodexAnalyzer_Preselection_SingleEle_MLQ_1100_1400_METLess200/'
+#SubRootDir = 'NewOutFiles_CodexAnalyzer_Preselection_SingleEle_Lplus/'
+SubRootDir = 'NewOutFiles_CodexAnalyzer_Preselection_SingleEle_Lminus/'
 
 
 verbos_ = True
@@ -72,7 +77,7 @@ def _FileReturn(Name, channel,cat,HistoName):
 ####################################################
 def MakeTheHistogram(channel,NormMC,NormQCD,ShapeQCD,NormTTbar):
     
-    OutFile = TFile("ROOT_PreSelection_Excess_SingleEle"+channel + NormMC+".root" , 'RECREATE') # Name Of the output file
+    OutFile = TFile(SubRootDir+"ROOT_PreSelection_SingleEle"+channel + NormMC+".root" , 'RECREATE') # Name Of the output file
 
     for NameCat in category:
         print "\nstarting NameCat and channel and HistoName ", NameCat, channel, NormMC
@@ -112,11 +117,12 @@ def MakeTheHistogram(channel,NormMC,NormQCD,ShapeQCD,NormTTbar):
         NormFile= _FileReturn(Name, channel,NameCat, NormMC)
         NormHisto=NormFile.Get("HISTO")
         
-        if not NormHisto:
-            raise Exception('Not valid %s'%NameOut)
-        else:
-            RebinedHist= NormHisto.Rebin(RB_)
-            tDirectory.WriteObject(RebinedHist,NameOut)
+        if NormHisto:
+            if not NormHisto:
+                raise Exception('Not valid %s'%NameOut)
+            else:
+                RebinedHist= NormHisto.Rebin(RB_)
+                tDirectory.WriteObject(RebinedHist,NameOut)
         
         ################################################
         #  Filling VV
@@ -174,11 +180,12 @@ def MakeTheHistogram(channel,NormMC,NormQCD,ShapeQCD,NormTTbar):
         NormFile= _FileReturn(Name, channel,NameCat, NormMC)
         NormHisto=NormFile.Get("HISTO")
 
-        if not NormHisto:
-            raise Exception('Not valid %s'%NameOut)
-        else:
-            RebinedHist= NormHisto.Rebin(RB_)
-            tDirectory.WriteObject(RebinedHist,NameOut)
+        if NormHisto:
+            if not NormHisto:
+                raise Exception('Not valid %s'%NameOut)
+            else:
+                RebinedHist= NormHisto.Rebin(RB_)
+                tDirectory.WriteObject(RebinedHist,NameOut)
 
 
 
@@ -311,8 +318,8 @@ def MakeTheHistogram(channel,NormMC,NormQCD,ShapeQCD,NormTTbar):
 
 if __name__ == "__main__":
     
-    PlotName=["_tmass_EleMet","_tmass_LQMet","_LepEta","_LepPt","_JetPt","_JetEta","_MET","_LQMass","_dPhi_Jet_Met","_dPhi_Ele_Jet","_dPhi_Ele_Met","_NumJet","_NumBJet"]
-#    PlotName=["_LQMass"]
+    PlotName=["_tmass_EleMet","_tmass_LQMet","_LepEta","_LepPt","_JetPt","_JetEta","_MET","_LQMass","_dPhi_Jet_Met","_dPhi_Ele_Jet","_dPhi_Ele_Met","_NumJet","_NumBJet","_recoHT","_ST","_dR_Mu_Jet","_dEta_Mu_Jet"]
+    #
 
 
 
@@ -320,7 +327,8 @@ if __name__ == "__main__":
     Isolation=["_Iso"]
     
     
-    MT= ["_NoMT","_HighMT","_MT50To150","_MT150to200","_MT200to250","_MT250to300","_MT300to350","_MT200","_MT300","_MT400","_MT500"]
+#    MT= ["_NoMT","_HighMT","_MT50To150","_MT300","_MT500"]
+    MT= ["_HighMT","_MT500"]
 
     JPT=[ "_HighDPhi"]
 

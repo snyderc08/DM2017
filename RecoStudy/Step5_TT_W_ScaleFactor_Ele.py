@@ -71,9 +71,9 @@ def returnSF_W(FileName,TTSF):
     return WScale
 
 #MTRange=["_NoMT","_HighMT","_MT50To150","_MT150to200","_MT200to250","_MT250to300","_MT300to350","_MT200","_MT300","_MT400"]
-MTRange=["_NoMT","_HighMT","_MT50To150","_MT500"]
+MTRange=["_NoMT","_HighMT","_MT50To150","_MT300","_MT500"]
 
-
+InputRootFiles='NewOutFiles_SingleEle_CodexAnalyzer_Preselection_SingleEle_EleEta2p1/'
 
 
 def SF_TT(Name):
@@ -82,13 +82,13 @@ def SF_TT(Name):
 
 print "\n\n\n\n\n\n######### TT Scale factor  DiLepton #########"
 for mt in MTRange:
-    NameTT='FILESNEEDEDFORTT_W_SF_Ele/ROOT_PreSelection_SingleEleEleJet_LQMass%s_HighDPhi_ttbarCRDiLep_Iso.root'%mt
+    NameTT=InputRootFiles+'ROOT_PreSelection_SingleEleEleJet_LQMass%s_HighDPhi_ttbarCRDiLep_Iso.root'%mt
     print "######### ",mt, " #########"
     SF_TT(NameTT)
 
 print "\n\n\n\n\n\n######### TT Scale factor  SingleLepton #########"
 for mt in MTRange:
-    NameTT='FILESNEEDEDFORTT_W_SF_Ele/ROOT_PreSelection_SingleEleEleJet_LQMass%s_HighDPhi_ttbarCRSingleLep_Iso.root'%mt
+    NameTT=InputRootFiles+'ROOT_PreSelection_SingleEleEleJet_LQMass%s_HighDPhi_ttbarCRSingleLep_Iso.root'%mt
     print "######### ",mt, " #########"
     SF_TT(NameTT)
 
@@ -96,34 +96,34 @@ for mt in MTRange:
 
 print "\n\n\n\n\n\n######### W Scale factor  DiLepton #########"
 for mt in MTRange:
-    NameW= 'FILESNEEDEDFORTT_W_SF_Ele/ROOT_PreSelection_SingleEleEleJet_LQMass%s_HighDPhi_Iso.root'%mt
-    NameTT='FILESNEEDEDFORTT_W_SF_Ele/ROOT_PreSelection_SingleEleEleJet_LQMass%s_HighDPhi_ttbarCRDiLep_Iso.root'%mt
+    NameW= InputRootFiles+'ROOT_PreSelection_SingleEleEleJet_LQMass%s_HighDPhi_Iso.root'%mt
+    NameTT=InputRootFiles+'ROOT_PreSelection_SingleEleEleJet_LQMass%s_HighDPhi_ttbarCRDiLep_Iso.root'%mt
     print "######### ",mt, " #########"
     returnSF_W(NameW,SF_TT(NameTT))
 
 
 print "\n\n\n\n\n\n######### W Scale factor  SingleLepton #########"
 for mt in MTRange:
-    NameW= 'FILESNEEDEDFORTT_W_SF_Ele/ROOT_PreSelection_SingleEleEleJet_LQMass%s_HighDPhi_Iso.root'%mt
-    NameTT='FILESNEEDEDFORTT_W_SF_Ele/ROOT_PreSelection_SingleEleEleJet_LQMass%s_HighDPhi_ttbarCRSingleLep_Iso.root'%mt
+    NameW= InputRootFiles+'ROOT_PreSelection_SingleEleEleJet_LQMass%s_HighDPhi_Iso.root'%mt
+    NameTT=InputRootFiles+'ROOT_PreSelection_SingleEleEleJet_LQMass%s_HighDPhi_ttbarCRSingleLep_Iso.root'%mt
     print "######### ",mt, " #########"
     returnSF_W(NameW,SF_TT(NameTT))
 
 
 
 def SF_TT_SingleLep():
-    return returnSF_TT('FILESNEEDEDFORTT_W_SF_Ele/ROOT_PreSelection_SingleEleEleJet_LQMass_HighMT_HighDPhi_ttbarCRSingleLep_Iso.root')
+    return returnSF_TT(InputRootFiles+'ROOT_PreSelection_SingleEleEleJet_LQMass_HighMT_HighDPhi_ttbarCRSingleLep_Iso.root')
 
 
 def SF_TT_DiLep():
-    return returnSF_TT('FILESNEEDEDFORTT_W_SF_Ele/ROOT_PreSelection_SingleEleEleJet_LQMass_HighMT_HighDPhi_ttbarCRDiLep_Iso.root')
+    return returnSF_TT(InputRootFiles+'ROOT_PreSelection_SingleEleEleJet_LQMass_HighMT_HighDPhi_ttbarCRDiLep_Iso.root')
 
 
 def SF_W_SingleLep():
-    return returnSF_W('FILESNEEDEDFORTT_W_SF_Ele/ROOT_PreSelection_SingleEleEleJet_LQMass_MT50To150_HighDPhi_Iso.root',SF_TT_SingleLep())
+    return returnSF_W(InputRootFiles+'ROOT_PreSelection_SingleEleEleJet_LQMass_MT50To150_HighDPhi_Iso.root',SF_TT_SingleLep())
 
 
 def SF_W_DiLep():
-    return returnSF_W('FILESNEEDEDFORTT_W_SF_Ele/ROOT_PreSelection_SingleEleEleJet_LQMass_MT50To150_HighDPhi_Iso.root',SF_TT_DiLep())
+    return returnSF_W(InputRootFiles+'ROOT_PreSelection_SingleEleEleJet_LQMass_MT50To150_HighDPhi_Iso.root',SF_TT_DiLep())
 
 

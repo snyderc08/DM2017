@@ -71,8 +71,9 @@ def returnSF_W(FileName,TTSF):
 #MTRange=["_NoMT","_HighMT","_MT50To150","_MT150to200","_MT200to250","_MT250to300","_MT300to350","_MT200","_MT300","_MT400"]
 MTRange=["_NoMT","_HighMT","_MT50To150","_MT500"]
 
-InputRootFiles='FILESNEEDEDFORTT_W_SF/'
-#InputRootFiles='./'
+#InputRootFiles='FILESNEEDEDFORTT_W_SF/'
+#InputRootFiles='NewOutFiles_CodexAnalyzer_Preselection_MuEta2p1/'
+InputRootFiles='NewOutFiles_Preselection_/'
 
 
 def SF_TT(Name):
