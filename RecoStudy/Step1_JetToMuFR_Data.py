@@ -360,7 +360,7 @@ def Make_Mu_FakeRate(channelName,Parametrization):
 
     legende=make_legend()
     legende.AddEntry(HistoNum,"Jet#rightarrow#mu fake rate","lp")
-    legende.AddEntry(theFit,"Fit (Landau+Pol1)","l")
+    legende.AddEntry(theFit,"Fit (Landau+Pol0)","l")
     
     legende.Draw()
     

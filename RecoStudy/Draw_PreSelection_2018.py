@@ -25,12 +25,13 @@ from Step5_TT_W_ScaleFactor import *
 #InputFilesLocation = 'NewOutFiles_Preselection_JetPt50_200_Lplus_MLQPlus1100/'
 
 
-#InputFilesLocation = 'NewOutFiles_Preselection_/'
-#InputFilesLocation = 'NewOutFiles_Preselection_addPhi/'
-InputFilesLocation = 'NewOutFiles_Preselection_jetinfo/'
+InputFilesLocation = 'NewOutFiles_Preselection_2017Data/'
 
 #................................................................................................................................
 #................................................................................................................................
+
+Data2018=38240./35867.;
+
 
 RB_=20
 def add_lumi():
@@ -43,7 +44,7 @@ def add_lumi():
     lumi.SetTextColor(    1 )
     lumi.SetTextSize(0.06)
     lumi.SetTextFont (   42 )
-    lumi.AddText("35.9 fb^{-1} (13 TeV)")
+    lumi.AddText("38.2 fb^{-1} (13 TeV 2017)")
     return lumi
 
 def add_CMS():
@@ -107,7 +108,8 @@ def MakePlot(FileName,categoriy,HistName,Xaxis,Info,RB_,channel,yMin,isLOG,ttbar
         QCD.Scale(.0001)
         print "\n\n\n\nn\######################### whatch out VV  instead of QCD\n\n\n\n"
     QCD.Rebin(RB_)
-    
+    QCD.Scale(Data2018)
+
 
 
 
@@ -119,6 +121,7 @@ def MakePlot(FileName,categoriy,HistName,Xaxis,Info,RB_,channel,yMin,isLOG,ttbar
     if ttbarCR=="" :  W.Scale(SF_W_SingleLep())
     if ttbarCR=="_ttbarCRSingleLep" :  W.Scale(SF_W_SingleLep())
     if ttbarCR=="_ttbarCRDiLep" :  W.Scale(SF_W_DiLep())
+    W.Scale(Data2018)
 
 
 
@@ -135,6 +138,7 @@ def MakePlot(FileName,categoriy,HistName,Xaxis,Info,RB_,channel,yMin,isLOG,ttbar
     if ttbarCR=="" :  TT.Scale(SF_TT_SingleLep())
     if ttbarCR=="_ttbarCRSingleLep" :  TT.Scale(SF_TT_SingleLep())
     if ttbarCR=="_ttbarCRDiLep" :  TT.Scale(SF_TT_DiLep())
+    TT.Scale(Data2018)
 
 
 
@@ -146,6 +150,7 @@ def MakePlot(FileName,categoriy,HistName,Xaxis,Info,RB_,channel,yMin,isLOG,ttbar
         SingleT.Scale(.0001)
         print "\n\n\n\nn\######################### whatch out VV  instead of SingleT\n\n\n\n"
     SingleT.Rebin(RB_)
+    SingleT.Scale(Data2018)
 
 
 
@@ -153,6 +158,7 @@ def MakePlot(FileName,categoriy,HistName,Xaxis,Info,RB_,channel,yMin,isLOG,ttbar
 
     VV=file.Get(categoriy).Get("VV")
     VV.Rebin(RB_)
+    VV.Scale(Data2018)
 
 
 
@@ -165,6 +171,7 @@ def MakePlot(FileName,categoriy,HistName,Xaxis,Info,RB_,channel,yMin,isLOG,ttbar
         DYS.Scale(.0001)
         print "\n\n\n\nn\######################### whatch out VV  instead of DYS\n\n\n\n"
     DYS.Rebin(RB_)
+    DYS.Scale(Data2018)
 
     Data.GetXaxis().SetTitle("")
     Data.GetXaxis().SetTitleSize(0)
@@ -224,22 +231,22 @@ def MakePlot(FileName,categoriy,HistName,Xaxis,Info,RB_,channel,yMin,isLOG,ttbar
     Data.SetLineWidth(2)
 
 
-#    #Making the plot blind
-#    if FileName.find("LQMass") > 0 :
-#        print "##################################\n", FileName
-#        for i in range(Data.GetNbinsX()):
-##            if i > 15 : Data.SetBinContent(i+1,0)
-#            if i > 6 : Data.SetBinContent(i+1,0)
-#
-#    if FileName.find("MET") > 0 :
-#        print "##################################\n", FileName
-#        for i in range(Data.GetNbinsX()):
-#            if i > 9 : Data.SetBinContent(i+1,0)
-#
-#    if FileName.find("tmass_MuMet") > 0 :
-#        print "##################################\n", FileName
-#        for i in range(Data.GetNbinsX()):
-#                if i > 9 : Data.SetBinContent(i+1,0)
+    #Making the plot blind
+    if FileName.find("LQMass") > 0 :
+        print "##################################\n", FileName
+        for i in range(Data.GetNbinsX()):
+#            if i > 15 : Data.SetBinContent(i+1,0)
+            if i > 6 : Data.SetBinContent(i+1,0)
+
+    if FileName.find("MET") > 0 :
+        print "##################################\n", FileName
+        for i in range(Data.GetNbinsX()):
+            if i > 9 : Data.SetBinContent(i+1,0)
+
+    if FileName.find("tmass_MuMet") > 0 :
+        print "##################################\n", FileName
+        for i in range(Data.GetNbinsX()):
+                if i > 9 : Data.SetBinContent(i+1,0)
 
 
 
@@ -424,46 +431,29 @@ def MakePlot(FileName,categoriy,HistName,Xaxis,Info,RB_,channel,yMin,isLOG,ttbar
 
 
 
-
-
-#FileNamesInfo=[
-#               ["_JetPhi","jet #phi","",20,1],
-#               ["_LepPhi","lepton #phi","",20,1],
-#               ["_METPhi","MET #phi","",20,1],
-
 FileNamesInfo=[
-                  ["_jetCHF","jetCHF","",5,1],
-                  ["_jetNHF","jetNHF","",5,1],
-                  ["_jetCEF","jetCEF","",5,1],
-                  ["_jetNEF","jetNEF","",5,1]
-               
+               ##               ["_tmass_JetMet","M_{T}(jet,MET) (GeV)","",5,1],
+               ["_tmass_LQMet","M_{T}(LQ,MET)  (GeV)","",10,1],
+               ["_LepPt","lepton p_{T} (GeV)","",100,1],
+               ["_LepEta","lepton #eta ","",10,.1],
+               ["_JetPt","jet p_{T} (GeV)","",50,.1],
+               ["_JetEta","jet #eta ","",10,1],
+               ##               ["_nVtx","# of vertex","",1,10],
+               ##               ["_nVtx_NoPU","# of vertex before PU reweighting","",1,10],
+               ["_MET","MET  (GeV)","",10,.1],
+               ["_LQMass","M_{LQ}   (GeV)","",10,1],
+               ["_tmass_MuMet","M_{T}(#mu,MET) (GeV)","",10,1],
+               ["_dPhi_Jet_Met","#Delta#phi (jet,MET)","",10,1],
+               ["_dPhi_Mu_Jet","#Delta#phi (#mu,jet)","",10,1],
+               ["_dPhi_Mu_MET","#Delta#phi (#mu,MET)","",10,1],
+               ##               ["_LQEta","#eta_{LQ}","",10,10],
+               ["_NumJet","Jet multiplicity","",1,1],
+               ["_NumBJet","BJet multiplicity","",1,1],
+               ["_recoHT","Jet HT  (GeV)","",10,1],
+               ["_ST"," ST  (GeV)","",10,.1],
+               ["_dR_Mu_Jet","#DeltaR (#mu,jet)","",20,1],
+               ["_dEta_Mu_Jet","#Delta#eta (#mu,jet)","",50,1],
                ]
-               
-            
-
-               
-#               ##               ["_tmass_JetMet","M_{T}(jet,MET) (GeV)","",5,1],
-#               ["_tmass_LQMet","M_{T}(LQ,MET)  (GeV)","",10,1],
-#               ["_LepPt","lepton p_{T} (GeV)","",100,1],
-#               ["_LepEta","lepton #eta ","",10,.1],
-#               ["_JetPt","jet p_{T} (GeV)","",50,.1],
-#               ["_JetEta","jet #eta ","",10,1],
-#               ##               ["_nVtx","# of vertex","",1,10],
-#               ##               ["_nVtx_NoPU","# of vertex before PU reweighting","",1,10],
-#               ["_MET","MET  (GeV)","",10,.1],
-#               ["_LQMass","M_{LQ}   (GeV)","",10,1],
-#               ["_tmass_MuMet","M_{T}(#mu,MET) (GeV)","",10,1],
-#               ["_dPhi_Jet_Met","#Delta#phi (jet,MET)","",10,1],
-#               ["_dPhi_Mu_Jet","#Delta#phi (#mu,jet)","",10,1],
-#               ["_dPhi_Mu_MET","#Delta#phi (#mu,MET)","",10,1],
-#               ##               ["_LQEta","#eta_{LQ}","",10,10],
-#               ["_NumJet","Jet multiplicity","",1,1],
-#               ["_NumBJet","BJet multiplicity","",1,1],
-#               ["_recoHT","Jet HT  (GeV)","",10,1],
-#               ["_ST"," ST  (GeV)","",10,.1],
-#               ["_dR_Mu_Jet","#DeltaR (#mu,jet)","",20,1],
-#               ["_dEta_Mu_Jet","#Delta#eta (#mu,jet)","",50,1],
-#               ]
 
 
 
@@ -472,10 +462,10 @@ FileNamesInfo=[
 #    Isolation=["_Iso", "_AntiIso","_Total"]
 
 Isolation=["_Iso"]
-#MT=["_HighMT"]
+MT=["_NoMT"]
 #MT=["_HighMT","_MT500"]
 #MT= ["_NoMT","_HighMT","_MT300","_MT500"]
-MT= ["_HighMT","_MT500"]
+#MT= ["_HighMT","_MT500"]
 #MT= ["_NoMT","_HighMT","_MT50To150","_MT100","_MT150","_MT200","_MT300","_MT400","_MT500"]
 #MT= ["_MT100","_MT150"]
 #MT_legend= [" 50 < M_{T} < 100","100 < M_{T} < 150"]
@@ -496,6 +486,8 @@ logStat=[1]
 
 
 for i in range(0,len(FileNamesInfo)):
+    
+    print "Data2018=========    ", Data2018
     
     NormMC=FileNamesInfo[i][0]
     axisName=FileNamesInfo[i][1]

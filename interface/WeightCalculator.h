@@ -110,6 +110,8 @@ float XSection(std::string OutName) {
     else if (OutName.find("ST_t-channel_top") != string::npos) return 136.02;
     else if (OutName.find("ST_tW_antitop_5f") != string::npos) return 35.6;
     else if (OutName.find("ST_tW_top_5f") != string::npos) return 35.6;
+    else if (OutName.find("ST_s-channel") != string::npos) return 3.36 ;
+    
     
     
     else if (OutName.find("TTJets") != string::npos) return (831.76);
@@ -172,6 +174,18 @@ float XSection(std::string OutName) {
     else if (OutName.find("DYJetsToLL_Pt-650ToInf_FXFX") != string::npos) return   0.03636 ;
     
     else if (OutName.find("LQ") != string::npos ) return      1.0;
+    
+    
+    
+    else if (OutName.find("ZJetsToNuNu_HT-100To200") != string::npos) return    280.35  * 1.23       ;
+    else if (OutName.find("ZJetsToNuNu_HT-200To400") != string::npos) return     77.67  * 1.23     ;
+    else if (OutName.find("ZJetsToNuNu_HT-400To600") != string::npos) return      10.73 * 1.23     ;
+    else if (OutName.find("ZJetsToNuNu_HT-600To800") != string::npos) return      2.559  * 1.23     ;
+    else if (OutName.find("ZJetsToNuNu_HT-800To1200") != string::npos) return     1.1796   * 1.23    ;
+    else if (OutName.find("ZJetsToNuNu_HT-1200To2500") != string::npos) return     0.28833   * 1.23    ;
+    else if (OutName.find("ZJetsToNuNu_HT-2500ToInf") != string::npos) return      0.006945    * 1.23     ;
+    
+    
     
     
     

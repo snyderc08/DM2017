@@ -159,12 +159,12 @@ cp mlfit.root mlfit_et.root
 
 
 
-Dataset: /DM_Codex_1000_400_440/abdollah-GEN-SIM-8ecf21deb7c86694de43d2ad8e8e2292/USER
-Dataset: /DM_Codex_1200_500_550/abdollah-GEN-SIM-8ecf21deb7c86694de43d2ad8e8e2292/USER
-Dataset: /DM_Codex_1400_600_660/abdollah-GEN-SIM-8ecf21deb7c86694de43d2ad8e8e2292/USER
-Dataset: /DM_Codex_1600_700_770/abdollah-GEN-SIM-8ecf21deb7c86694de43d2ad8e8e2292/USER
-Dataset: /DM_Codex_1800_800_880/abdollah-GEN-SIM-8ecf21deb7c86694de43d2ad8e8e2292/USER
-Dataset: /DM_Codex_2000_900_990/abdollah-GEN-SIM-8ecf21deb7c86694de43d2ad8e8e2292/USER
+config.Data.inputDataset = "/DM_Codex_1000_400_440/abdollah-GEN-SIM-8ecf21deb7c86694de43d2ad8e8e2292/USER
+config.Data.inputDataset = "/DM_Codex_1200_500_550/abdollah-GEN-SIM-8ecf21deb7c86694de43d2ad8e8e2292/USER
+config.Data.inputDataset = "/DM_Codex_1400_600_660/abdollah-GEN-SIM-8ecf21deb7c86694de43d2ad8e8e2292/USER
+config.Data.inputDataset = "/DM_Codex_1600_700_770/abdollah-GEN-SIM-8ecf21deb7c86694de43d2ad8e8e2292/USER
+config.Data.inputDataset = "/DM_Codex_1800_800_880/abdollah-GEN-SIM-8ecf21deb7c86694de43d2ad8e8e2292/USER
+config.Data.inputDataset = "/DM_Codex_2000_900_990/abdollah-GEN-SIM-8ecf21deb7c86694de43d2ad8e8e2292/USER
 
 
 
@@ -177,4 +177,73 @@ hadd DM_Codex_2000.root   crab_DM_Codex_2000*.root
 
 
 
+
+config.General.requestName = "ZJetsToNuNu_HT-100To200_"
+config.Data.inputDataset = "/ZJetsToNuNu_HT-100To200_13TeV-madgraph/RunIISpring15DR74-Asympt25ns_MCRUN2_74_V9-v1/MINIAODSIM""
+submit(config)
+
+config.General.requestName = "ZJetsToNuNu_HT-100To200__ext"
+config.Data.inputDataset = "/ZJetsToNuNu_HT-100To200_13TeV-madgraph/RunIISpring15DR74-Asympt25ns_MCRUN2_74_V9_ext1-v2/MINIAODSIM""
+submit(config)
+
+config.General.requestName = "ZJetsToNuNu_HT-200To400"
+config.Data.inputDataset = "/ZJetsToNuNu_HT-200To400_13TeV-madgraph/RunIISpring15DR74-Asympt25ns_MCRUN2_74_V9-v1/MINIAODSIM""
+submit(config)
+
+config.General.requestName = "ZJetsToNuNu_HT-200To400_ext"
+config.Data.inputDataset = "/ZJetsToNuNu_HT-200To400_13TeV-madgraph/RunIISpring15DR74-Asympt25ns_MCRUN2_74_V9_ext1-v1/MINIAODSIM""
+submit(config)
+
+config.General.requestName = "ZJetsToNuNu_HT-400To600"
+config.Data.inputDataset = "/ZJetsToNuNu_HT-400To600_13TeV-madgraph/RunIISpring15DR74-Asympt25ns_MCRUN2_74_V9-v1/MINIAODSIM""
+submit(config)
+
+
+config.General.requestName = "ZJetsToNuNu_HT-400To600_ext"
+config.Data.inputDataset = "/ZJetsToNuNu_HT-400To600_13TeV-madgraph/RunIISpring15DR74-Asympt25ns_MCRUN2_74_V9_ext1-v2/MINIAODSIM""
+submit(config)
+
+config.General.requestName = "ZJetsToNuNu_HT-600ToInf"
+config.Data.inputDataset = "/ZJetsToNuNu_HT-600ToInf_13TeV-madgraph/RunIISpring15DR74-Asympt25ns_MCRUN2_74_V9-v1/MINIAODSIM""
+submit(config)
+
+config.General.requestName = "ZJetsToNuNu_HT-600ToInf_ext"
+config.Data.inputDataset = "/ZJetsToNuNu_HT-600ToInf_13TeV-madgraph/RunIISpring15DR74-Asympt25ns_MCRUN2_74_V9_ext1-v2/MINIAODSIM""
+submit(config)
+
+
+
+
+
+
+
+config.General.requestName = "ZJetsToNuNu_HT-100To200_13TeV-madgraph"
+config.Data.inputDataset = "ZJetsToNuNu_HT-100To200_13TeV-madgraph/RunIISummer16MiniAODv2-PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6_ext1-v1/MINIAODSIM"
+submit(config)
+
+config.General.requestName = "ZJetsToNuNu_HT-200To400_13TeV-madgraph"
+config.Data.inputDataset = "ZJetsToNuNu_HT-200To400_13TeV-madgraph/RunIISummer16MiniAODv2-PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6_ext1-v1/MINIAODSIM"
+submit(config)
+
+config.General.requestName = "ZJetsToNuNu_HT-400To600_13TeV-madgraph"
+config.Data.inputDataset = "ZJetsToNuNu_HT-400To600_13TeV-madgraph/RunIISummer16MiniAODv2-PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6_ext1-v1/MINIAODSIM"
+submit(config)
+
+
+config.General.requestName = "ZJetsToNuNu_HT-600To800_13TeV-madgraph"
+config.Data.inputDataset = "ZJetsToNuNu_HT-600To800_13TeV-madgraph/RunIISummer16MiniAODv2-PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/MINIAODSIM"
+submit(config)
+
+config.General.requestName = "ZJetsToNuNu_HT-800To1200_13TeV-madgraph"
+config.Data.inputDataset = "ZJetsToNuNu_HT-800To1200_13TeV-madgraph/RunIISummer16MiniAODv2-PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/MINIAODSIM"
+submit(config)
+
+
+config.General.requestName = "ZJetsToNuNu_HT-1200To2500_13TeV-madgraph"
+config.Data.inputDataset = "ZJetsToNuNu_HT-1200To2500_13TeV-madgraph/RunIISummer16MiniAODv2-PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6_ext1-v1/MINIAODSIM"
+submit(config)
+
+config.General.requestName = "ZJetsToNuNu_HT-2500ToInf_13TeV-madgraph"
+config.Data.inputDataset = "ZJetsToNuNu_HT-2500ToInf_13TeV-madgraph/RunIISummer16MiniAODv2-PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/MINIAODSIM"
+submit(config)
 

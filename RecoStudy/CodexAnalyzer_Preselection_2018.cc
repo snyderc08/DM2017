@@ -37,7 +37,8 @@ int main(int argc, char** argv) {
     //########################################
     // Pileup files
     //########################################
-    TFile * PUData= TFile::Open("../interface/pileup-hists/dataMoriondPU.root");
+//    TFile * PUData= TFile::Open("../interface/pileup-hists/dataMoriondPU.root");
+    TFile * PUData= TFile::Open("../../DM2018/interface/pileup-hists/Data_nPU_new.root");
     TH1F * HistoPUData= (TH1F *) PUData->Get("pileup");
     HistoPUData->Scale(1.0/HistoPUData->Integral());
     
@@ -188,7 +189,7 @@ int main(int argc, char** argv) {
         TFile * myFile = TFile::Open(f_Double->GetName());
         TH1F * HistoTot = (TH1F*) myFile->Get("hcount");
         
-//                TTree *Run_Tree = (TTree*) f_Double->Get("ggNtuplizer/EventTree");
+        //        TTree *Run_Tree = (TTree*) f_Double->Get("ggNtuplizer/EventTree");
         TTree *Run_Tree = (TTree*) f_Double->Get("EventTree");
         
         cout.setf(ios::fixed, ios::floatfield);
@@ -282,13 +283,6 @@ int main(int argc, char** argv) {
         Run_Tree->SetBranchAddress("jetJECUnc",&jetJECUnc);
         Run_Tree->SetBranchAddress("jetRawEn",&jetRawEn);
         Run_Tree->SetBranchAddress("jetHadFlvr",&jetHadFlvr);
-        Run_Tree->SetBranchAddress("jetCHF",&jetCHF);
-        Run_Tree->SetBranchAddress("jetNHF",&jetNHF);
-        Run_Tree->SetBranchAddress("jetCEF",&jetCEF);
-        Run_Tree->SetBranchAddress("jetNEF",&jetNEF);
-        Run_Tree->SetBranchAddress("jetNCH",&jetNCH);
-        Run_Tree->SetBranchAddress("jetNNP",&jetNNP);
-        
         
         //########################################   MET Info
         Run_Tree->SetBranchAddress("pfMET",&pfMET);
@@ -848,20 +842,11 @@ int main(int argc, char** argv) {
                                                                 plotFill(CHL+"_dR_Mu_Jet"+FullStringName,Jet4Momentum.DeltaR(Mu4Momentum),500,0,5,FullWeight);
                                                                 plotFill(CHL+"_dEta_Mu_Jet"+FullStringName,Jet4Momentum.Eta() - Mu4Momentum.Eta(),1000,-5,5,FullWeight);
                                                                 
-//                                                                plotFill(CHL+"_numMuon"+FullStringName,numMuon,10,0,10);
-//                                                                
-//                                                                plotFill(CHL+"_JetPhi"+FullStringName,jetPhi->at(ijet) ,640,-3.2,3.2,FullWeight);
-//                                                                plotFill(CHL+"_LepPhi"+FullStringName,muPhi->at(imu) ,640,-3.2,3.2,FullWeight);
-//                                                                plotFill(CHL+"_METPhi"+FullStringName,pfMETPhi ,640,-3.2,3.2,FullWeight);
+                                                                plotFill(CHL+"_numMuon"+FullStringName,numMuon,10,0,10);
                                                                 
-                                                                plotFill(CHL+"_jetCHF"+FullStringName, jetCHF->at(ijet),100,0,1,FullWeight);
-                                                                plotFill(CHL+"_jetNHF"+FullStringName, jetNHF->at(ijet),100,0,1,FullWeight);
-                                                                plotFill(CHL+"_jetCEF"+FullStringName, jetCEF->at(ijet),100,0,1,FullWeight);
-                                                                plotFill(CHL+"_jetNEF"+FullStringName, jetNEF->at(ijet),100,0,1,FullWeight);
-                                                                plotFill(CHL+"_jetNCH"+FullStringName, jetNCH->at(ijet),100,0,1,FullWeight);
-                                                                plotFill(CHL+"_jetNNP"+FullStringName, jetNNP->at(ijet),100,0,1,FullWeight);
-                                                                
-                                                                
+                                                                plotFill(CHL+"_JetPhi"+FullStringName,jetPhi->at(ijet) ,640,-3.2,3.2,FullWeight);
+                                                                plotFill(CHL+"_LepPhi"+FullStringName,muPhi->at(imu) ,640,-3.2,3.2,FullWeight);
+                                                                plotFill(CHL+"_METPhi"+FullStringName,pfMETPhi ,640,-3.2,3.2,FullWeight);
                                                                 
                                                                 
                                                             }

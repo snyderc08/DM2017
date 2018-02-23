@@ -101,7 +101,7 @@ def MakeTheHistogram(channel,NormMC,NormQCD,ShapeQCD,NormMCTT,chl,Binning):
     METScaleOut = ["_CMS_scale_met_UES"+"Down", "", "_CMS_scale_met_UES"+"Up","_CMS_scale_met_JES"+"Down", "_CMS_scale_met_JES"+"Up"]
     Signal_Unc_TopPTRW = ["_CMS_top_pt_Reweighting"+"Up","_CMS_top_pt_Reweighting"+"Down"]
 
-    myOut = TFile(FinalName[chl]+NormMC+".root" , 'RECREATE') # Name Of the output file
+    myOut = TFile(FinalName[chl]+NormMC+"_MT100.root" , 'RECREATE') # Name Of the output file
 
 
     for NameCat in category:
@@ -464,7 +464,8 @@ if __name__ == "__main__":
 #    MT_Cat = ["_MT100", "_MT150","_MT200", "_MT250","_MT300", "_MT350","_MT400", "_MT450","_MT500"]
 
     Met_Cat= [ "_MET100"]
-    MT_Cat = ["_MT500"]
+#    MT_Cat = ["_MT500"]
+    MT_Cat = ["_MT100"]
 
     for met in Met_Cat:
         for mt in MT_Cat:

@@ -58,7 +58,10 @@ ROOT.gROOT.SetBatch(True)
 #SubRootDir = 'NewOutFiles_Preselection_JetPt50_200_Lplus_MLQPlus1100/'
 
 
-SubRootDir = 'NewOutFiles_Preselection_/'
+#SubRootDir = 'NewOutFiles_Preselection_/'
+#SubRootDir = 'NewOutFiles_Preselection_2017Data/'
+#SubRootDir = 'NewOutFiles_Preselection_addPhi/'
+SubRootDir = 'NewOutFiles_Preselection_jetinfo/'
 
 #SubRootDir = 'OutFiles_Excess_Jet50MT300_AllLQMAss/'
 #SubRootDir = 'OutFiles_Excess_Jet50MT300_AllLQMAss/'
@@ -348,22 +351,23 @@ def MakeTheHistogram(channel,NormMC,NormQCD,ShapeQCD,NormTTbar):
 
 if __name__ == "__main__":
     
-    PlotName=["_tmass_MuMet","_tmass_LQMet","_LepEta","_LepPt","_JetPt","_JetEta","_MET","_LQMass","_dPhi_Jet_Met","_dPhi_Mu_Jet","_dPhi_Mu_Met","_NumJet","_NumBJet","_recoHT","_ST","_dR_Mu_Jet","_dEta_Mu_Jet"]
+#    PlotName=["_tmass_MuMet","_tmass_LQMet","_LepEta","_LepPt","_JetPt","_JetEta","_MET","_LQMass","_dPhi_Jet_Met","_dPhi_Mu_Jet","_dPhi_Mu_Met","_NumJet","_NumBJet","_recoHT","_ST","_dR_Mu_Jet","_dEta_Mu_Jet"]
 #    PlotName=["_tmass_MuMet","_tmass_LQMet","_LepEta","_LepPt","_JetPt","_JetEta","_MET","_LQMass","_dPhi_Jet_Met","_dPhi_Mu_Jet","_dPhi_Mu_Met","_NumJet","_NumBJet","_dR_Mu_Jet","_dEta_Mu_Jet"]
 #    PlotName=["_tmass_MuMet","_tmass_LQMet","_LepEta","_LepPt","_JetPt","_JetEta","_MET","_LQMass","_dPhi_Jet_Met","_dPhi_Mu_Jet","_dPhi_Mu_Met","_NumJet","_NumBJet"]
-#    PlotName=["_recoHT","_ST","_dR_Mu_Jet","_dEta_Mu_Jet"]
+#    PlotName=["_JetPhi","_LepPhi","_METPhi"]
+    PlotName=["_jetCHF","_jetNHF","_jetCEF","_jetNEF"]
 
-    
+
 
 #    Isolation=["_Iso", "_AntiIso","_Total"]
     Isolation=["_Iso"]
     
     
     
-    MT= ["_NoMT","_HighMT","_MT50To150","_MT300","_MT500"]
+#    MT= ["_NoMT","_HighMT","_MT50To150","_MT300","_MT500"]
 #    MT= ["_NoMT","_HighMT","_MT50To150","_MT150to200","_MT200to250","_MT250to300","_MT300to350","_MT200","_MT300","_MT400"]
 #    MT= ["_NoMT","_HighMT"]
-#    MT= ["_HighMT","_MT500"]
+    MT= ["_HighMT","_MT500"]
 #    MT= ["_MT300","_MT500"]
 
     JPT=[ "_HighDPhi"]

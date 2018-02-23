@@ -75,7 +75,7 @@ def MakeCompare(r1,hist1,r2,hist2,name,RB_,XTit,name2):
 #    leg.AddEntry(Histo3,hist3.replace("_CMS_scale",""),'l')
 #    leg.Draw()
 
-    categ  = ROOT.TPaveText(0.60, 0.45+0.013, 0.83, 0.60+0.155, "NDC")
+    categ  = ROOT.TPaveText(0.30, 0.45+0.013, 0.83, 0.60+0.155, "NDC")
     categ.SetBorderSize(   0 )
     categ.SetFillStyle(    0 )
     categ.SetTextAlign(   12 )
@@ -86,7 +86,7 @@ def MakeCompare(r1,hist1,r2,hist2,name,RB_,XTit,name2):
     
     
     Xname= r1.replace('ScaleCorretion/','').replace('.root','')
-    Can.SaveAs('_compare_MuScaleDifference_%s_Normal.pdf'%(Xname))
+    Can.SaveAs('_compare_MuScaleDifference_%s%s_Normal.pdf'%(Xname,name))
 
 
 #F1='OutFiles_PreSelection/Data.root'
@@ -124,7 +124,14 @@ def MakeCompare(r1,hist1,r2,hist2,name,RB_,XTit,name2):
 #MakeCompare('ScaleCorretion/WJet.root','MuJet_LQMassCorrMuScale_MT500_HighDPhi_Iso','ScaleCorretion/WJet.root','MuJet_LQMass_MT500_HighDPhi_Iso','HighMTMLQ',10,'M_{LQ} GeV','M_{T} > 500 GeV')
 #MakeCompare('ScaleCorretion/Data.root','MuJet_LQMassCorrMuScale_MT500_HighDPhi_Iso','ScaleCorretion/Data.root','MuJet_LQMass_MT500_HighDPhi_Iso','HighMTMLQ',10,'M_{LQ} GeV','M_{T} > 500 GeV')
 
-MakeCompare('ScaleCorretion/__Codex1200_CheckMuCorrection.root','MuJet_LQMassDifference_MT500_HighDPhi_Iso','ScaleCorretion/__Codex1200_CheckMuCorrection.root','MuJet_LQMassDifference_MT500_HighDPhi_Iso','HighMTMLQ',10,'M_{LQ}_{cor} - M_{LQ}_{uncor} / M_{LQ}_{uncor}','M_{T} > 500 GeV')
+MakeCompare('ScaleCorretion/__Codex1200_CheckMuCorrection.root','MuJet_LQMassDifference_MT500_HighDPhi_Iso','ScaleCorretion/__Codex1200_CheckMuCorrection.root','MuJet_LQMassDifference_MT500_HighDPhi_Iso','allEta',10,'M_{LQ}_{cor} - M_{LQ}_{uncor} / M_{LQ}_{uncor}','M_{T} > 500 GeV')
+
+MakeCompare('ScaleCorretion/Codex_EtaCheckMuCor.root','MuJet_LQMassDifference_Barrel_MT500_HighDPhi_Iso','ScaleCorretion/Codex_EtaCheckMuCor.root','MuJet_LQMassDifference_Barrel_MT500_HighDPhi_Iso','Barrel',10,'M_{LQ}_{cor} - M_{LQ}_{uncor} / M_{LQ}_{uncor}','M_{T} > 500 GeV, |#eta| < 1.5')
+
+MakeCompare('ScaleCorretion/Codex_EtaCheckMuCor.root','MuJet_LQMassDifference_EndCap_MT500_HighDPhi_Iso','ScaleCorretion/Codex_EtaCheckMuCor.root','MuJet_LQMassDifference_EndCap_MT500_HighDPhi_Iso','Endcap',10,'M_{LQ}_{cor} - M_{LQ}_{uncor} / M_{LQ}_{uncor}','M_{T} > 500 GeV, |#eta > 1.5|')
+
+
+
 
 
 #MakeCompare('test_W_oldkfactor_ChangeMutoL.root','MuJet_LQMass_MT500_HighDPhi_Iso','test_W_NewmassDep_Kfactor.root','MuJet_LQMass_MT500_HighDPhi_Iso','MT500MLQ',10,'M_{LQ} GeV','M_{T} > 500 GeV')
