@@ -50,16 +50,20 @@ float XSection(std::string OutName) {
     else if (OutName.find("WJetsToLNu_HT-2500toInf") != string::npos) return 0.03216;
     
     //http://cms.cern.ch/iCMS/jsp/db_notes/noteInfo.jsp?cmsnoteid=CMS%20AN-2016/204
-    else if (OutName.find("WMass_100_") != string::npos) return 163.15;
-    else if (OutName.find("WMass_200_") != string::npos) return 6.236;
-    else if (OutName.find("WMass_500_") != string::npos) return 0.2138;
-    else if (OutName.find("WMass_1000_") != string::npos) return 0.01281;
-    else if (OutName.find("WMass_2000_") != string::npos) return 5.56e-04;
-//    else if (OutName.find("WMass_3000_") != string::npos) return 2.904e-05;
+    else if (OutName.find("WToLNu_M-100_") != string::npos) return 163.15;
+    else if (OutName.find("WToLNu_M-200_") != string::npos) return 6.236;
+    else if (OutName.find("WToLNu_M-500_") != string::npos) return 0.2138;
+    else if (OutName.find("WToLNu_M-1000_") != string::npos) return 0.01281;
+    else if (OutName.find("WToLNu_M-2000_") != string::npos) return 5.56e-04;
+    //    else if (OutName.find("WToLNu_M-3000_") != string::npos) return 2.904e-05;
     
     
     
-    
+    else if (OutName.find("WToTauNu_M-100_") != string::npos) return 163.15;
+    else if (OutName.find("WToTauNu_M-200_") != string::npos) return 6.236;
+    else if (OutName.find("WToTauNu_M-500_") != string::npos) return 0.2138;
+    else if (OutName.find("WToTauNu_M-1000_") != string::npos) return 0.01281;
+    else if (OutName.find("WToTauNu_M-2000_") != string::npos) return 5.56e-04;
     
     
     
@@ -201,6 +205,8 @@ float XSection(std::string OutName) {
 //##################################################################
 
 
+
+
 vector <float> W_HTBin(std::string FileLoc){
     
     const int WSize=9;
@@ -227,7 +233,7 @@ vector <float> W_HTBin(std::string FileLoc){
 vector <float> W_MassBin(std::string FileLoc){
     
     const int WSize=5;
-    std::string W_ROOTFiles[WSize]={"WToLNu_M-100.root","WToLNu_M-200.root", "WToLNu_M-500.root","WToLNu_M-1000.root","WToLNu_M-2000.root"};
+    std::string W_ROOTFiles[WSize]={"WToLNu_M-100_.root","WToLNu_M-200_.root", "WToLNu_M-500_.root","WToLNu_M-1000_.root","WToLNu_M-2000_.root"};
     
     vector<float> W_events;
     W_events.clear();
@@ -243,6 +249,30 @@ vector <float> W_MassBin(std::string FileLoc){
     return W_events ;
     
 }
+
+
+
+vector <float> WTauNu_MassBin(std::string FileLoc){
+    
+    const int WSize=5;
+    std::string W_ROOTFiles[WSize]={"WToTauNu_M-100_.root","WToTauNu_M-200_.root", "WToTauNu_M-500_.root","WToTauNu_M-1000_.root","WToTauNu_M-2000_.root"};
+    
+    vector<float> WTauNu_events;
+    WTauNu_events.clear();
+    
+    for (int i=0; i <WSize;i++){
+        
+        TFile * File_W = new TFile((FileLoc+W_ROOTFiles[i]).c_str());
+        TH1F * Histo_W = (TH1F*) File_W->Get("hcount");
+        WTauNu_events.push_back(Histo_W->GetBinContent(2));
+        cout<<"Number of proccessed evenets for "<<W_ROOTFiles[i]<<" = "<<Histo_W->GetBinContent(2)<<"\n";
+    }
+    
+    return WTauNu_events ;
+    
+}
+
+
 
 
 //vector <float> DY_HTBin(std::string FileLoc){
@@ -334,7 +364,7 @@ vector <float> Z_PTBinNLO(std::string FileLoc){
 //####################################################################################################################################
 
 
-float weightCalc(TH1F *Histo,std::string outputName, float genHT,vector<float> W_HTbin, float WMass, vector<float> W_Massbin) {
+float weightCalc(TH1F *Histo,std::string outputName, float genHT,vector<float> W_HTbin, float WMass, vector<float> W_Massbin, vector<float> WTauNu_Massbin) {
     
     
     stringstream ss(outputName);
@@ -367,51 +397,50 @@ float weightCalc(TH1F *Histo,std::string outputName, float genHT,vector<float> W
     
     size_t isWjet = outputName.find("WJets");
     size_t isWToLNu = outputName.find("WToLNu");
+    size_t isWToTauNu = outputName.find("WToTauNu");
     
     
     
     //##################################################################
     //   Stitching for  W sample
     //##################################################################
-    if (isWjet != string::npos || isWToLNu != string::npos) {
-        
-        if (WMass <= 100){
-            if (genHT <= 70)  return  luminosity * XSection("WJetsToLNu_Inc") / W_HTbin[0];
-            else if (genHT > 70 && genHT <= 100)  return   luminosity * XSection("WJetsToLNu_HT-70to100") / W_HTbin[1];
-            else if (genHT > 100 && genHT <= 200)  return   luminosity * XSection("WJetsToLNu_HT-100to200") / W_HTbin[2];
-            else if (genHT > 200 && genHT <= 400)  return   luminosity * XSection("WJetsToLNu_HT-200to400") / W_HTbin[3];
-            else if (genHT > 400 && genHT <= 600)  return   luminosity * XSection("WJetsToLNu_HT-400to600") / W_HTbin[4];
-            else if (genHT > 600 && genHT <= 800)  return   luminosity * XSection("WJetsToLNu_HT-600to800") / W_HTbin[5];
-            else if (genHT > 800 && genHT <= 1200)  return   luminosity * XSection("WJetsToLNu_HT-800to1200") / W_HTbin[6];
-            else if (genHT > 1200 && genHT <= 2500)  return   luminosity * XSection("WJetsToLNu_HT-1200to2500") / W_HTbin[7];
-            else if (genHT > 2500 )  return   luminosity * XSection("WJetsToLNu_HT-2500toInf") / W_HTbin[8];
-            else   {cout<<"**********   wooow  ********* There is a problem here\n";return 0;}
-        }
-        
-        else if  (WMass > 100 && WMass <= 200)  return   luminosity /  (W_Massbin[0] /XSection("WMass_100_"));
-        else if  (WMass > 200 && WMass <= 500)  return   luminosity /  (W_Massbin[0] /XSection("WMass_100_") +  W_Massbin[1]/ XSection("WMass_200_")) ;
-        else if  (WMass > 500 && WMass <= 1000)  return   luminosity /  (W_Massbin[0] /XSection("WMass_100_") +  W_Massbin[1]/ XSection("WMass_200_") +  W_Massbin[2]/ XSection("WMass_500_")) ;
-        
-        else if  (WMass > 1000 && WMass <= 2000)  return   luminosity /  (W_Massbin[0] /XSection("WMass_100_") +  W_Massbin[1]/ XSection("WMass_200_") +  W_Massbin[2]/ XSection("WMass_500_") + W_Massbin[3]/ XSection("WMass_1000_")) ;
-        
-        else if  (WMass > 2000 )  return   luminosity / (W_Massbin[0] /XSection("WMass_100_") +  W_Massbin[1]/ XSection("WMass_200_") +  W_Massbin[2]/ XSection("WMass_500_") + W_Massbin[3]/ XSection("WMass_1000_") + W_Massbin[4]/ XSection("WMass_2000_")) ;
-        
+    
+    if (isWjet != string::npos && WMass <= 100){
+        if (genHT <= 70)  return  luminosity * XSection("WJetsToLNu_Inc") / W_HTbin[0];
+        else if (genHT > 70 && genHT <= 100)  return   luminosity * XSection("WJetsToLNu_HT-70to100") / W_HTbin[1];
+        else if (genHT > 100 && genHT <= 200)  return   luminosity * XSection("WJetsToLNu_HT-100to200") / W_HTbin[2];
+        else if (genHT > 200 && genHT <= 400)  return   luminosity * XSection("WJetsToLNu_HT-200to400") / W_HTbin[3];
+        else if (genHT > 400 && genHT <= 600)  return   luminosity * XSection("WJetsToLNu_HT-400to600") / W_HTbin[4];
+        else if (genHT > 600 && genHT <= 800)  return   luminosity * XSection("WJetsToLNu_HT-600to800") / W_HTbin[5];
+        else if (genHT > 800 && genHT <= 1200)  return   luminosity * XSection("WJetsToLNu_HT-800to1200") / W_HTbin[6];
+        else if (genHT > 1200 && genHT <= 2500)  return   luminosity * XSection("WJetsToLNu_HT-1200to2500") / W_HTbin[7];
+        else if (genHT > 2500 )  return   luminosity * XSection("WJetsToLNu_HT-2500toInf") / W_HTbin[8];
+        else   {cout<<"**********   wooow  ********* There is a problem here\n";return 0;}
+    }
+    
+    
+    else if (isWToLNu != string::npos){
+        if  (WMass > 100 && WMass <= 200)  return   luminosity /  (W_Massbin[0] /XSection("WToLNu_M-100_"));
+        else if  (WMass > 200 && WMass <= 500)  return   luminosity /  (W_Massbin[0] /XSection("WToLNu_M-100_") +  W_Massbin[1]/ XSection("WToLNu_M-200_")) ;
+        else if  (WMass > 500 && WMass <= 1000)  return   luminosity /  (W_Massbin[0] /XSection("WToLNu_M-100_") +  W_Massbin[1]/ XSection("WToLNu_M-200_") +  W_Massbin[2]/ XSection("WToLNu_M-500_")) ;
+        else if  (WMass > 1000 && WMass <= 2000)  return   luminosity /  (W_Massbin[0] /XSection("WToLNu_M-100_") +  W_Massbin[1]/ XSection("WToLNu_M-200_") +  W_Massbin[2]/ XSection("WToLNu_M-500_") + W_Massbin[3]/ XSection("WToLNu_M-1000_")) ;
+        else if  (WMass > 2000 )  return   luminosity / (W_Massbin[0] /XSection("WToLNu_M-100_") +  W_Massbin[1]/ XSection("WToLNu_M-200_") +  W_Massbin[2]/ XSection("WToLNu_M-500_") + W_Massbin[3]/ XSection("WToLNu_M-1000_") + W_Massbin[4]/ XSection("WToLNu_M-2000_")) ;
+        else   {cout<<"**********   wooow  ********* There is a problem here\n";return 0;}
+    }
+    
+    else if (isWToTauNu != string::npos){
+        if  (WMass > 100 && WMass <= 200)  return   luminosity /  (WTauNu_Massbin[0] /XSection("WToLNu_M-100_"));
+        else if  (WMass > 200 && WMass <= 500)  return   luminosity /  (WTauNu_Massbin[0] /XSection("WToLNu_M-100_") +  WTauNu_Massbin[1]/ XSection("WToLNu_M-200_")) ;
+        else if  (WMass > 500 && WMass <= 1000)  return   luminosity /  (WTauNu_Massbin[0] /XSection("WToLNu_M-100_") +  WTauNu_Massbin[1]/ XSection("WToLNu_M-200_") +  WTauNu_Massbin[2]/ XSection("WToLNu_M-500_")) ;
+        else if  (WMass > 1000 && WMass <= 2000)  return   luminosity /  (WTauNu_Massbin[0] /XSection("WToLNu_M-100_") +  WTauNu_Massbin[1]/ XSection("WToLNu_M-200_") +  WTauNu_Massbin[2]/ XSection("WToLNu_M-500_") + WTauNu_Massbin[3]/ XSection("WToLNu_M-1000_")) ;
+        else if  (WMass > 2000 )  return   luminosity / (WTauNu_Massbin[0] /XSection("WToLNu_M-100_") +  WTauNu_Massbin[1]/ XSection("WToLNu_M-200_") +  WTauNu_Massbin[2]/ XSection("WToLNu_M-500_") + WTauNu_Massbin[3]/ XSection("WToLNu_M-1000_") + WTauNu_Massbin[4]/ XSection("WToLNu_M-2000_")) ;
         else   {cout<<"**********   wooow  ********* There is a problem here\n";return 0;}
     }
     
     
     
-    
-    
-    
-    
-    
-    
-    
     else
         return luminosity * XSection(newOut)*1.0 / Histo->GetBinContent(2);
-    
-    
 }
 
 

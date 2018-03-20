@@ -508,7 +508,7 @@ int main(int argc, char** argv) {
             
             
             //###########       Trigger Requirement ###########################################################
-            bool PassTrigger = (HLTEleMuX >> 21 & 1) == 1; //   else if (name.find("HLT_Mu50_v") != string::npos) bitEleMuX = 21;
+                        bool PassTrigger = ((HLTEleMuX >> 21 & 1) == 1 || (HLTEleMuX >> 41 & 1) == 1); //   else if (name.find("HLT_Mu50_v") != string::npos) bitEleMuX = 21;
             if (! PassTrigger) continue;
             
             
@@ -725,6 +725,7 @@ int main(int argc, char** argv) {
                                     
                                     LQ=NewJet4Collection + Mu4Momentum;
                                     if ((numTau+numElectron +numZboson + numBJet) > 0) continue;
+//                                    if ((numTau+numElectron +numZboson) > 0) continue;
                                     //                                if ((numTau+numElectron +numZboson) > 0 || fabs(LQ.Eta()) > 1.5) continue;// FIXME
                                     bool HighDPhi = deltaPhi(NewJet4Collection.Phi(),jetMETPhi) > 0.5 && deltaPhi(Mu4Momentum.Phi(),jetMETPhi) > 0.5;
                                     if (!HighDPhi) continue;
