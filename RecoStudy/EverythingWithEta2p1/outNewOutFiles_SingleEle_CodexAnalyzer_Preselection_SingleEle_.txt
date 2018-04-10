@@ -1,0 +1,11 @@
+
+ ./Make.sh CodexAnalyzer_Preselection_SingleEle.cc
+ cp CodexAnalyzer_Preselection_SingleEle.cc NewOutFiles_SingleEle_CodexAnalyzer_Preselection_SingleEle_/.
+ cp outNewOutFiles_SingleEle_CodexAnalyzer_Preselection_SingleEle_.txt NewOutFiles_SingleEle_CodexAnalyzer_Preselection_SingleEle_/.
+./CodexAnalyzer_Preselection_SingleEle.exe   NewOutFiles_SingleEle_CodexAnalyzer_Preselection_SingleEle_/DYJetsToLL.root      /Users/abdollah1/GIT_abdollah110/DM2017/ROOT80X/SampleLQ1/DYJetsToLL_M-50_HT*.root 
+./CodexAnalyzer_Preselection_SingleEle.exe   NewOutFiles_SingleEle_CodexAnalyzer_Preselection_SingleEle_/WJetsToLNu.root    /Users/abdollah1/GIT_abdollah110/DM2017/ROOT80X/SampleLQ1/WJetsToLNu*.root /Users/abdollah1/GIT_abdollah110/DM2017/ROOT80X/SampleLQ1/WTo*root
+./CodexAnalyzer_Preselection_SingleEle.exe   NewOutFiles_SingleEle_CodexAnalyzer_Preselection_SingleEle_/TTJets.root      /Users/abdollah1/GIT_abdollah110/DM2017/ROOT80X/SampleLQ1/TTJets.root 
+./CodexAnalyzer_Preselection_SingleEle.exe   NewOutFiles_SingleEle_CodexAnalyzer_Preselection_SingleEle_/VV.root  /Users/abdollah1/GIT_abdollah110/DM2017/ROOT80X/SampleLQ1/ZZ*.root /Users/abdollah1/GIT_abdollah110/DM2017/ROOT80X/SampleLQ1/WZ*.root /Users/abdollah1/GIT_abdollah110/DM2017/ROOT80X/SampleLQ1/WW*.root
+./CodexAnalyzer_Preselection_SingleEle.exe   NewOutFiles_SingleEle_CodexAnalyzer_Preselection_SingleEle_/SingleTop.root      /Users/abdollah1/GIT_abdollah110/DM2017/ROOT80X/SampleLQ1/ST_*.root 
+./CodexAnalyzer_Preselection_SingleEle.exe   NewOutFiles_SingleEle_CodexAnalyzer_Preselection_SingleEle_/Data.root      /Users/abdollah1/GIT_abdollah110/DM2017/ROOT80X/SampleLQ1/Data.root 
+./CodexAnalyzer_Preselection_SingleEle.exe   NewOutFiles_SingleEle_CodexAnalyzer_Preselection_SingleEle_/Codex_1200.root      /Users/abdollah1/GIT_abdollah110/DM2017/ROOT80X/PrivateSample/Codex_LQ1200_DM_500_X_550.root 

@@ -361,7 +361,7 @@ def MakePlot(FileName,categoriy,HistName,Xaxis,MaxRange,sig,sigLeg,XSection, Sta
 #    c.Modified()
     h1.GetYaxis().SetRangeUser(.01,2.99)
 #    c.Modified()
-    c.SaveAs("_Finalplot_Electron_Eta2p0"+categoriy+Status+".pdf")
+    c.SaveAs("_Finalplot_Electron_New"+categoriy+Status+".pdf")
 #    c.SaveAs("_Finalplot_"+categoriy+".pdf")
     #       c.SaveAs("mvis"+categoriy+".png")
 
@@ -379,9 +379,14 @@ def MakePlot(FileName,categoriy,HistName,Xaxis,MaxRange,sig,sigLeg,XSection, Sta
 #               ["postfit_shapes_Electron.root","Codex__mj_1_13TeV_postfit","M_{ej} [GeV]","e j ",2000,"Codex_","LQ 1200GeV (DM 500 GeV)",10],
 #               ]
 
+#FileNamesInfo=[
+#               ["postfit_shapes_EleEta2p0.root","Codex__mj_1_13TeV_prefit","M_{ej} [GeV]","e j ",2000,"Codex_","LQ 1200GeV (DM 500 GeV)",10],
+#               ["postfit_shapes_EleEta2p0.root","Codex__mj_1_13TeV_postfit","M_{ej} [GeV]","e j ",2000,"Codex_","LQ 1200GeV (DM 500 GeV)",10],
+#               ]
+
 FileNamesInfo=[
-               ["postfit_shapes_EleEta2p0.root","Codex__mj_1_13TeV_prefit","M_{ej} [GeV]","e j ",2000,"Codex_","LQ 1200GeV (DM 500 GeV)",10],
-               ["postfit_shapes_EleEta2p0.root","Codex__mj_1_13TeV_postfit","M_{ej} [GeV]","e j ",2000,"Codex_","LQ 1200GeV (DM 500 GeV)",10],
+               ["postfit_shapes_NewElectron.root","Codex__mj_1_13TeV_prefit","M_{ej} [GeV]","e j ",2000,"Codex_","LQ 1200GeV (DM 500 GeV)",10],
+               ["postfit_shapes_NewElectron.root","Codex__mj_1_13TeV_postfit","M_{ej} [GeV]","e j ",2000,"Codex_","LQ 1200GeV (DM 500 GeV)",10],
                ]
 
 

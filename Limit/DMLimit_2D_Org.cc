@@ -241,52 +241,54 @@ void DMLimit_2D_Org(){
     can2->SetFrameBorderMode(0);
     can2->SetLogz();
     
-
+    
+    
+    
     TH2D *hlimitxsec2 = new TH2D("hlimitxsec2","hlimitxsec2",8,750,1550,9,275,725);
-    hlimitxsec2->SetBinContent(3,1,0.455768); // Bin_1_LQ_1000_DM_300_X_330
-    hlimitxsec2->SetBinContent(3,2,0.561257); // Bin_2_LQ_1000_DM_350_X_385
-    hlimitxsec2->SetBinContent(3,3,0.901368); // Bin_3_LQ_1000_DM_400_X_440
-    hlimitxsec2->SetBinContent(3,4,3.074375); // Bin_4_LQ_1000_DM_450_X_495
-    hlimitxsec2->SetBinContent(4,1,0.706327); // Bin_5_LQ_1100_DM_300_X_330
-    hlimitxsec2->SetBinContent(4,2,0.828546); // Bin_6_LQ_1100_DM_350_X_385
-    hlimitxsec2->SetBinContent(4,3,1.032697); // Bin_7_LQ_1100_DM_400_X_440
-    hlimitxsec2->SetBinContent(4,4,1.745866); // Bin_8_LQ_1100_DM_450_X_495
-    hlimitxsec2->SetBinContent(4,5,6.656249); // Bin_9_LQ_1100_DM_500_X_550
-    hlimitxsec2->SetBinContent(5,1,1.131463); // Bin_10_LQ_1200_DM_300_X_330
-    hlimitxsec2->SetBinContent(5,2,1.194525); // Bin_11_LQ_1200_DM_350_X_385
-    hlimitxsec2->SetBinContent(5,3,1.351003); // Bin_12_LQ_1200_DM_400_X_440
-    hlimitxsec2->SetBinContent(5,4,1.788160); // Bin_13_LQ_1200_DM_450_X_495
-    hlimitxsec2->SetBinContent(5,5,3.146435); // Bin_14_LQ_1200_DM_500_X_550
-    hlimitxsec2->SetBinContent(5,6,15.009930); // Bin_15_LQ_1200_DM_550_X_595
-    hlimitxsec2->SetBinContent(6,1,1.692904); // Bin_16_LQ_1300_DM_300_X_330
-    hlimitxsec2->SetBinContent(6,2,1.787432); // Bin_17_LQ_1300_DM_350_X_385
-    hlimitxsec2->SetBinContent(6,3,1.943497); // Bin_18_LQ_1300_DM_400_X_440
-    hlimitxsec2->SetBinContent(6,4,2.294152); // Bin_19_LQ_1300_DM_450_X_495
-    hlimitxsec2->SetBinContent(6,5,2.864236); // Bin_20_LQ_1300_DM_500_X_550
-    hlimitxsec2->SetBinContent(6,6,5.551548); // Bin_21_LQ_1300_DM_550_X_605
-    hlimitxsec2->SetBinContent(6,7,29.637882); // Bin_22_LQ_1300_DM_600_X_660
-    hlimitxsec2->SetBinContent(7,1,2.701655); // Bin_23_LQ_1400_DM_300_X_330
-    hlimitxsec2->SetBinContent(7,2,2.934933); // Bin_24_LQ_1400_DM_350_X_385
-    hlimitxsec2->SetBinContent(7,3,2.830149); // Bin_25_LQ_1400_DM_400_X_440
-    hlimitxsec2->SetBinContent(7,4,3.321285); // Bin_26_LQ_1400_DM_450_X_495
-    hlimitxsec2->SetBinContent(7,5,3.616290); // Bin_27_LQ_1400_DM_500_X_550
-    hlimitxsec2->SetBinContent(7,6,5.070032); // Bin_28_LQ_1400_DM_550_X_605
-    hlimitxsec2->SetBinContent(7,7,9.969797); // Bin_29_LQ_1400_DM_600_X_660
-    hlimitxsec2->SetBinContent(7,8,60.783466); // Bin_30_LQ_1400_DM_650_X_715
-    hlimitxsec2->SetBinContent(8,1,4.771025); // Bin_31_LQ_1500_DM_300_X_330
-    hlimitxsec2->SetBinContent(8,2,4.804488); // Bin_32_LQ_1500_DM_350_X_385
-    hlimitxsec2->SetBinContent(8,3,4.807234); // Bin_33_LQ_1500_DM_400_X_440
-    hlimitxsec2->SetBinContent(8,4,5.301879); // Bin_34_LQ_1500_DM_450_X_495
-    hlimitxsec2->SetBinContent(8,5,5.760897); // Bin_35_LQ_1500_DM_500_X_550
-    hlimitxsec2->SetBinContent(8,6,6.789513); // Bin_36_LQ_1500_DM_550_X_605
-    hlimitxsec2->SetBinContent(8,7,9.221587); // Bin_37_LQ_1500_DM_600_X_660
-    hlimitxsec2->SetBinContent(8,8,19.606445); // Bin_38_LQ_1500_DM_650_X_715
-    hlimitxsec2->SetBinContent(8,9,146.498830); // Bin_39_LQ_1500_DM_700_X_770
-    hlimitxsec2->SetBinContent(1,1,0.265416); // Bin_40_LQ_800_DM_300_X_330
-    hlimitxsec2->SetBinContent(1,2,0.668540); // Bin_41_LQ_800_DM_350_X_385
-    hlimitxsec2->SetBinContent(2,1,0.309223); // Bin_42_LQ_900_DM_300_X_330
-    hlimitxsec2->SetBinContent(2,2,0.500481); // Bin_43_LQ_900_DM_350_X_385
-    hlimitxsec2->SetBinContent(2,3,1.447583); // Bin_44_LQ_900_DM_400_X_440
+    hlimitxsec2->SetBinContent(3,1,0.434284); // Bin_1_LQ_1000_DM_300_X_330
+    hlimitxsec2->SetBinContent(3,2,0.537334); // Bin_2_LQ_1000_DM_350_X_385
+    hlimitxsec2->SetBinContent(3,3,0.862056); // Bin_3_LQ_1000_DM_400_X_440
+    hlimitxsec2->SetBinContent(3,4,2.951808); // Bin_4_LQ_1000_DM_450_X_495
+    hlimitxsec2->SetBinContent(4,1,0.665296); // Bin_5_LQ_1100_DM_300_X_330
+    hlimitxsec2->SetBinContent(4,2,0.776559); // Bin_6_LQ_1100_DM_350_X_385
+    hlimitxsec2->SetBinContent(4,3,0.968404); // Bin_7_LQ_1100_DM_400_X_440
+    hlimitxsec2->SetBinContent(4,4,1.636347); // Bin_8_LQ_1100_DM_450_X_495
+    hlimitxsec2->SetBinContent(4,5,6.228538); // Bin_9_LQ_1100_DM_500_X_550
+    hlimitxsec2->SetBinContent(5,1,1.084549); // Bin_10_LQ_1200_DM_300_X_330
+    hlimitxsec2->SetBinContent(5,2,1.144508); // Bin_11_LQ_1200_DM_350_X_385
+    hlimitxsec2->SetBinContent(5,3,1.294434); // Bin_12_LQ_1200_DM_400_X_440
+    hlimitxsec2->SetBinContent(5,4,1.720363); // Bin_13_LQ_1200_DM_450_X_495
+    hlimitxsec2->SetBinContent(5,5,3.032537); // Bin_14_LQ_1200_DM_500_X_550
+    hlimitxsec2->SetBinContent(5,6,14.466584); // Bin_15_LQ_1200_DM_550_X_595
+    hlimitxsec2->SetBinContent(6,1,1.651988); // Bin_16_LQ_1300_DM_300_X_330
+    hlimitxsec2->SetBinContent(6,2,1.744747); // Bin_17_LQ_1300_DM_350_X_385
+    hlimitxsec2->SetBinContent(6,3,1.897361); // Bin_18_LQ_1300_DM_400_X_440
+    hlimitxsec2->SetBinContent(6,4,2.227655); // Bin_19_LQ_1300_DM_450_X_495
+    hlimitxsec2->SetBinContent(6,5,2.794589); // Bin_20_LQ_1300_DM_500_X_550
+    hlimitxsec2->SetBinContent(6,6,5.398612); // Bin_21_LQ_1300_DM_550_X_605
+    hlimitxsec2->SetBinContent(6,7,28.958503); // Bin_22_LQ_1300_DM_600_X_660
+    hlimitxsec2->SetBinContent(7,1,2.590247); // Bin_23_LQ_1400_DM_300_X_330
+    hlimitxsec2->SetBinContent(7,2,2.801092); // Bin_24_LQ_1400_DM_350_X_385
+    hlimitxsec2->SetBinContent(7,3,2.689145); // Bin_25_LQ_1400_DM_400_X_440
+    hlimitxsec2->SetBinContent(7,4,3.188875); // Bin_26_LQ_1400_DM_450_X_495
+    hlimitxsec2->SetBinContent(7,5,3.486674); // Bin_27_LQ_1400_DM_500_X_550
+    hlimitxsec2->SetBinContent(7,6,4.826113); // Bin_28_LQ_1400_DM_550_X_605
+    hlimitxsec2->SetBinContent(7,7,9.554389); // Bin_29_LQ_1400_DM_600_X_660
+    hlimitxsec2->SetBinContent(7,8,58.469909); // Bin_30_LQ_1400_DM_650_X_715
+    hlimitxsec2->SetBinContent(8,1,4.505045); // Bin_31_LQ_1500_DM_300_X_330
+    hlimitxsec2->SetBinContent(8,2,4.498902); // Bin_32_LQ_1500_DM_350_X_385
+    hlimitxsec2->SetBinContent(8,3,4.490273); // Bin_33_LQ_1500_DM_400_X_440
+    hlimitxsec2->SetBinContent(8,4,5.002126); // Bin_34_LQ_1500_DM_450_X_495
+    hlimitxsec2->SetBinContent(8,5,5.428138); // Bin_35_LQ_1500_DM_500_X_550
+    hlimitxsec2->SetBinContent(8,6,6.391593); // Bin_36_LQ_1500_DM_550_X_605
+    hlimitxsec2->SetBinContent(8,7,8.673092); // Bin_37_LQ_1500_DM_600_X_660
+    hlimitxsec2->SetBinContent(8,8,18.426124); // Bin_38_LQ_1500_DM_650_X_715
+    hlimitxsec2->SetBinContent(8,9,138.097463); // Bin_39_LQ_1500_DM_700_X_770
+    hlimitxsec2->SetBinContent(1,1,0.231890); // Bin_40_LQ_800_DM_300_X_330
+    hlimitxsec2->SetBinContent(1,2,0.584645); // Bin_41_LQ_800_DM_350_X_385
+    hlimitxsec2->SetBinContent(2,1,0.294614); // Bin_42_LQ_900_DM_300_X_330
+    hlimitxsec2->SetBinContent(2,2,0.472285); // Bin_43_LQ_900_DM_350_X_385
+    hlimitxsec2->SetBinContent(2,3,1.379904); // Bin_44_LQ_900_DM_400_X_440
     
     
     
@@ -296,50 +298,50 @@ void DMLimit_2D_Org(){
     
     
     TH2D *ExpctedExclusionLimit = new TH2D("ExpctedExclusionLimit","ExpctedExclusionLimit",6,1250,4250,12,875,3875);
-    ExpctedExclusionLimit->SetBinContent(3,1,0.455768); // Bin_1_LQ_1000_DM_300_X_330
-    ExpctedExclusionLimit->SetBinContent(3,2,0.561257); // Bin_2_LQ_1000_DM_350_X_385
-    ExpctedExclusionLimit->SetBinContent(3,3,0.901368); // Bin_3_LQ_1000_DM_400_X_440
-    ExpctedExclusionLimit->SetBinContent(3,4,3.074375); // Bin_4_LQ_1000_DM_450_X_495
-    ExpctedExclusionLimit->SetBinContent(4,1,0.706327); // Bin_5_LQ_1100_DM_300_X_330
-    ExpctedExclusionLimit->SetBinContent(4,2,0.828546); // Bin_6_LQ_1100_DM_350_X_385
-    ExpctedExclusionLimit->SetBinContent(4,3,1.032697); // Bin_7_LQ_1100_DM_400_X_440
-    ExpctedExclusionLimit->SetBinContent(4,4,1.745866); // Bin_8_LQ_1100_DM_450_X_495
-    ExpctedExclusionLimit->SetBinContent(4,5,6.656249); // Bin_9_LQ_1100_DM_500_X_550
-    ExpctedExclusionLimit->SetBinContent(5,1,1.131463); // Bin_10_LQ_1200_DM_300_X_330
-    ExpctedExclusionLimit->SetBinContent(5,2,1.194525); // Bin_11_LQ_1200_DM_350_X_385
-    ExpctedExclusionLimit->SetBinContent(5,3,1.351003); // Bin_12_LQ_1200_DM_400_X_440
-    ExpctedExclusionLimit->SetBinContent(5,4,1.788160); // Bin_13_LQ_1200_DM_450_X_495
-    ExpctedExclusionLimit->SetBinContent(5,5,3.146435); // Bin_14_LQ_1200_DM_500_X_550
-    ExpctedExclusionLimit->SetBinContent(5,6,15.009930); // Bin_15_LQ_1200_DM_550_X_595
-    ExpctedExclusionLimit->SetBinContent(6,1,1.692904); // Bin_16_LQ_1300_DM_300_X_330
-    ExpctedExclusionLimit->SetBinContent(6,2,1.787432); // Bin_17_LQ_1300_DM_350_X_385
-    ExpctedExclusionLimit->SetBinContent(6,3,1.943497); // Bin_18_LQ_1300_DM_400_X_440
-    ExpctedExclusionLimit->SetBinContent(6,4,2.294152); // Bin_19_LQ_1300_DM_450_X_495
-    ExpctedExclusionLimit->SetBinContent(6,5,2.864236); // Bin_20_LQ_1300_DM_500_X_550
-    ExpctedExclusionLimit->SetBinContent(6,6,5.551548); // Bin_21_LQ_1300_DM_550_X_605
-    ExpctedExclusionLimit->SetBinContent(6,7,29.637882); // Bin_22_LQ_1300_DM_600_X_660
-    ExpctedExclusionLimit->SetBinContent(7,1,2.701655); // Bin_23_LQ_1400_DM_300_X_330
-    ExpctedExclusionLimit->SetBinContent(7,2,2.934933); // Bin_24_LQ_1400_DM_350_X_385
-    ExpctedExclusionLimit->SetBinContent(7,3,2.830149); // Bin_25_LQ_1400_DM_400_X_440
-    ExpctedExclusionLimit->SetBinContent(7,4,3.321285); // Bin_26_LQ_1400_DM_450_X_495
-    ExpctedExclusionLimit->SetBinContent(7,5,3.616290); // Bin_27_LQ_1400_DM_500_X_550
-    ExpctedExclusionLimit->SetBinContent(7,6,5.070032); // Bin_28_LQ_1400_DM_550_X_605
-    ExpctedExclusionLimit->SetBinContent(7,7,9.969797); // Bin_29_LQ_1400_DM_600_X_660
-    ExpctedExclusionLimit->SetBinContent(7,8,60.783466); // Bin_30_LQ_1400_DM_650_X_715
-    ExpctedExclusionLimit->SetBinContent(8,1,4.771025); // Bin_31_LQ_1500_DM_300_X_330
-    ExpctedExclusionLimit->SetBinContent(8,2,4.804488); // Bin_32_LQ_1500_DM_350_X_385
-    ExpctedExclusionLimit->SetBinContent(8,3,4.807234); // Bin_33_LQ_1500_DM_400_X_440
-    ExpctedExclusionLimit->SetBinContent(8,4,5.301879); // Bin_34_LQ_1500_DM_450_X_495
-    ExpctedExclusionLimit->SetBinContent(8,5,5.760897); // Bin_35_LQ_1500_DM_500_X_550
-    ExpctedExclusionLimit->SetBinContent(8,6,6.789513); // Bin_36_LQ_1500_DM_550_X_605
-    ExpctedExclusionLimit->SetBinContent(8,7,9.221587); // Bin_37_LQ_1500_DM_600_X_660
-    ExpctedExclusionLimit->SetBinContent(8,8,19.606445); // Bin_38_LQ_1500_DM_650_X_715
-    ExpctedExclusionLimit->SetBinContent(8,9,146.498830); // Bin_39_LQ_1500_DM_700_X_770
-    ExpctedExclusionLimit->SetBinContent(1,1,0.265416); // Bin_40_LQ_800_DM_300_X_330
-    ExpctedExclusionLimit->SetBinContent(1,2,0.668540); // Bin_41_LQ_800_DM_350_X_385
-    ExpctedExclusionLimit->SetBinContent(2,1,0.309223); // Bin_42_LQ_900_DM_300_X_330
-    ExpctedExclusionLimit->SetBinContent(2,2,0.500481); // Bin_43_LQ_900_DM_350_X_385
-    ExpctedExclusionLimit->SetBinContent(2,3,1.447583); // Bin_44_LQ_900_DM_400_X_440
+    ExpctedExclusionLimit->SetBinContent(3,1,0.434284); // Bin_1_LQ_1000_DM_300_X_330
+    ExpctedExclusionLimit->SetBinContent(3,2,0.537334); // Bin_2_LQ_1000_DM_350_X_385
+    ExpctedExclusionLimit->SetBinContent(3,3,0.862056); // Bin_3_LQ_1000_DM_400_X_440
+    ExpctedExclusionLimit->SetBinContent(3,4,2.951808); // Bin_4_LQ_1000_DM_450_X_495
+    ExpctedExclusionLimit->SetBinContent(4,1,0.665296); // Bin_5_LQ_1100_DM_300_X_330
+    ExpctedExclusionLimit->SetBinContent(4,2,0.776559); // Bin_6_LQ_1100_DM_350_X_385
+    ExpctedExclusionLimit->SetBinContent(4,3,0.968404); // Bin_7_LQ_1100_DM_400_X_440
+    ExpctedExclusionLimit->SetBinContent(4,4,1.636347); // Bin_8_LQ_1100_DM_450_X_495
+    ExpctedExclusionLimit->SetBinContent(4,5,6.228538); // Bin_9_LQ_1100_DM_500_X_550
+    ExpctedExclusionLimit->SetBinContent(5,1,1.084549); // Bin_10_LQ_1200_DM_300_X_330
+    ExpctedExclusionLimit->SetBinContent(5,2,1.144508); // Bin_11_LQ_1200_DM_350_X_385
+    ExpctedExclusionLimit->SetBinContent(5,3,1.294434); // Bin_12_LQ_1200_DM_400_X_440
+    ExpctedExclusionLimit->SetBinContent(5,4,1.720363); // Bin_13_LQ_1200_DM_450_X_495
+    ExpctedExclusionLimit->SetBinContent(5,5,3.032537); // Bin_14_LQ_1200_DM_500_X_550
+    ExpctedExclusionLimit->SetBinContent(5,6,14.466584); // Bin_15_LQ_1200_DM_550_X_595
+    ExpctedExclusionLimit->SetBinContent(6,1,1.651988); // Bin_16_LQ_1300_DM_300_X_330
+    ExpctedExclusionLimit->SetBinContent(6,2,1.744747); // Bin_17_LQ_1300_DM_350_X_385
+    ExpctedExclusionLimit->SetBinContent(6,3,1.897361); // Bin_18_LQ_1300_DM_400_X_440
+    ExpctedExclusionLimit->SetBinContent(6,4,2.227655); // Bin_19_LQ_1300_DM_450_X_495
+    ExpctedExclusionLimit->SetBinContent(6,5,2.794589); // Bin_20_LQ_1300_DM_500_X_550
+    ExpctedExclusionLimit->SetBinContent(6,6,5.398612); // Bin_21_LQ_1300_DM_550_X_605
+    ExpctedExclusionLimit->SetBinContent(6,7,28.958503); // Bin_22_LQ_1300_DM_600_X_660
+    ExpctedExclusionLimit->SetBinContent(7,1,2.590247); // Bin_23_LQ_1400_DM_300_X_330
+    ExpctedExclusionLimit->SetBinContent(7,2,2.801092); // Bin_24_LQ_1400_DM_350_X_385
+    ExpctedExclusionLimit->SetBinContent(7,3,2.689145); // Bin_25_LQ_1400_DM_400_X_440
+    ExpctedExclusionLimit->SetBinContent(7,4,3.188875); // Bin_26_LQ_1400_DM_450_X_495
+    ExpctedExclusionLimit->SetBinContent(7,5,3.486674); // Bin_27_LQ_1400_DM_500_X_550
+    ExpctedExclusionLimit->SetBinContent(7,6,4.826113); // Bin_28_LQ_1400_DM_550_X_605
+    ExpctedExclusionLimit->SetBinContent(7,7,9.554389); // Bin_29_LQ_1400_DM_600_X_660
+    ExpctedExclusionLimit->SetBinContent(7,8,58.469909); // Bin_30_LQ_1400_DM_650_X_715
+    ExpctedExclusionLimit->SetBinContent(8,1,4.505045); // Bin_31_LQ_1500_DM_300_X_330
+    ExpctedExclusionLimit->SetBinContent(8,2,4.498902); // Bin_32_LQ_1500_DM_350_X_385
+    ExpctedExclusionLimit->SetBinContent(8,3,4.490273); // Bin_33_LQ_1500_DM_400_X_440
+    ExpctedExclusionLimit->SetBinContent(8,4,5.002126); // Bin_34_LQ_1500_DM_450_X_495
+    ExpctedExclusionLimit->SetBinContent(8,5,5.428138); // Bin_35_LQ_1500_DM_500_X_550
+    ExpctedExclusionLimit->SetBinContent(8,6,6.391593); // Bin_36_LQ_1500_DM_550_X_605
+    ExpctedExclusionLimit->SetBinContent(8,7,8.673092); // Bin_37_LQ_1500_DM_600_X_660
+    ExpctedExclusionLimit->SetBinContent(8,8,18.426124); // Bin_38_LQ_1500_DM_650_X_715
+    ExpctedExclusionLimit->SetBinContent(8,9,138.097463); // Bin_39_LQ_1500_DM_700_X_770
+    ExpctedExclusionLimit->SetBinContent(1,1,0.231890); // Bin_40_LQ_800_DM_300_X_330
+    ExpctedExclusionLimit->SetBinContent(1,2,0.584645); // Bin_41_LQ_800_DM_350_X_385
+    ExpctedExclusionLimit->SetBinContent(2,1,0.294614); // Bin_42_LQ_900_DM_300_X_330
+    ExpctedExclusionLimit->SetBinContent(2,2,0.472285); // Bin_43_LQ_900_DM_350_X_385
+    ExpctedExclusionLimit->SetBinContent(2,3,1.379904); // Bin_44_LQ_900_DM_400_X_440
     
     
     
@@ -349,50 +351,51 @@ void DMLimit_2D_Org(){
     
     
     TH2D *ObservedExclusionLimit = new TH2D("ObservedExclusionLimit","ObservedExclusionLimit",6,1250,4250,12,875,3875);
-    ObservedExclusionLimit->SetBinContent(3,1,0.627694); // Bin_1_LQ_1000_DM_300_X_330
-    ObservedExclusionLimit->SetBinContent(3,2,0.812876); // Bin_2_LQ_1000_DM_350_X_385
-    ObservedExclusionLimit->SetBinContent(3,3,1.261352); // Bin_3_LQ_1000_DM_400_X_440
-    ObservedExclusionLimit->SetBinContent(3,4,4.311174); // Bin_4_LQ_1000_DM_450_X_495
-    ObservedExclusionLimit->SetBinContent(4,1,1.447804); // Bin_5_LQ_1100_DM_300_X_330
-    ObservedExclusionLimit->SetBinContent(4,2,1.682118); // Bin_6_LQ_1100_DM_350_X_385
-    ObservedExclusionLimit->SetBinContent(4,3,2.146287); // Bin_7_LQ_1100_DM_400_X_440
-    ObservedExclusionLimit->SetBinContent(4,4,3.562252); // Bin_8_LQ_1100_DM_450_X_495
-    ObservedExclusionLimit->SetBinContent(4,5,13.676567); // Bin_9_LQ_1100_DM_500_X_550
-    ObservedExclusionLimit->SetBinContent(5,1,2.663917); // Bin_10_LQ_1200_DM_300_X_330
-    ObservedExclusionLimit->SetBinContent(5,2,2.774754); // Bin_11_LQ_1200_DM_350_X_385
-    ObservedExclusionLimit->SetBinContent(5,3,3.233928); // Bin_12_LQ_1200_DM_400_X_440
-    ObservedExclusionLimit->SetBinContent(5,4,4.259983); // Bin_13_LQ_1200_DM_450_X_495
-    ObservedExclusionLimit->SetBinContent(5,5,7.463413); // Bin_14_LQ_1200_DM_500_X_550
-    ObservedExclusionLimit->SetBinContent(5,6,35.603887); // Bin_15_LQ_1200_DM_550_X_595
-    ObservedExclusionLimit->SetBinContent(6,1,4.135331); // Bin_16_LQ_1300_DM_300_X_330
-    ObservedExclusionLimit->SetBinContent(6,2,4.439102); // Bin_17_LQ_1300_DM_350_X_385
-    ObservedExclusionLimit->SetBinContent(6,3,4.714419); // Bin_18_LQ_1300_DM_400_X_440
-    ObservedExclusionLimit->SetBinContent(6,4,5.545396); // Bin_19_LQ_1300_DM_450_X_495
-    ObservedExclusionLimit->SetBinContent(6,5,6.945842); // Bin_20_LQ_1300_DM_500_X_550
-    ObservedExclusionLimit->SetBinContent(6,6,13.527641); // Bin_21_LQ_1300_DM_550_X_605
-    ObservedExclusionLimit->SetBinContent(6,7,71.284506); // Bin_22_LQ_1300_DM_600_X_660
-    ObservedExclusionLimit->SetBinContent(7,1,5.022571); // Bin_23_LQ_1400_DM_300_X_330
-    ObservedExclusionLimit->SetBinContent(7,2,5.704358); // Bin_24_LQ_1400_DM_350_X_385
-    ObservedExclusionLimit->SetBinContent(7,3,5.441522); // Bin_25_LQ_1400_DM_400_X_440
-    ObservedExclusionLimit->SetBinContent(7,4,6.563731); // Bin_26_LQ_1400_DM_450_X_495
-    ObservedExclusionLimit->SetBinContent(7,5,6.834740); // Bin_27_LQ_1400_DM_500_X_550
-    ObservedExclusionLimit->SetBinContent(7,6,9.890691); // Bin_28_LQ_1400_DM_550_X_605
-    ObservedExclusionLimit->SetBinContent(7,7,19.491144); // Bin_29_LQ_1400_DM_600_X_660
-    ObservedExclusionLimit->SetBinContent(7,8,118.557737); // Bin_30_LQ_1400_DM_650_X_715
-    ObservedExclusionLimit->SetBinContent(8,1,6.307447); // Bin_31_LQ_1500_DM_300_X_330
-    ObservedExclusionLimit->SetBinContent(8,2,6.374525); // Bin_32_LQ_1500_DM_350_X_385
-    ObservedExclusionLimit->SetBinContent(8,3,6.267375); // Bin_33_LQ_1500_DM_400_X_440
-    ObservedExclusionLimit->SetBinContent(8,4,7.273345); // Bin_34_LQ_1500_DM_450_X_495
-    ObservedExclusionLimit->SetBinContent(8,5,7.957724); // Bin_35_LQ_1500_DM_500_X_550
-    ObservedExclusionLimit->SetBinContent(8,6,8.868176); // Bin_36_LQ_1500_DM_550_X_605
-    ObservedExclusionLimit->SetBinContent(8,7,11.556570); // Bin_37_LQ_1500_DM_600_X_660
-    ObservedExclusionLimit->SetBinContent(8,8,25.823450); // Bin_38_LQ_1500_DM_650_X_715
-    ObservedExclusionLimit->SetBinContent(8,9,191.675692); // Bin_39_LQ_1500_DM_700_X_770
-    ObservedExclusionLimit->SetBinContent(1,1,0.257720); // Bin_40_LQ_800_DM_300_X_330
-    ObservedExclusionLimit->SetBinContent(1,2,0.647283); // Bin_41_LQ_800_DM_350_X_385
-    ObservedExclusionLimit->SetBinContent(2,1,0.289174); // Bin_42_LQ_900_DM_300_X_330
-    ObservedExclusionLimit->SetBinContent(2,2,0.455181); // Bin_43_LQ_900_DM_350_X_385
-    ObservedExclusionLimit->SetBinContent(2,3,1.336313); // Bin_44_LQ_900_DM_400_X_440
+    ObservedExclusionLimit->SetBinContent(3,1,0.552094); // Bin_1_LQ_1000_DM_300_X_330
+    ObservedExclusionLimit->SetBinContent(3,2,0.718636); // Bin_2_LQ_1000_DM_350_X_385
+    ObservedExclusionLimit->SetBinContent(3,3,1.110597); // Bin_3_LQ_1000_DM_400_X_440
+    ObservedExclusionLimit->SetBinContent(3,4,3.776610); // Bin_4_LQ_1000_DM_450_X_495
+    ObservedExclusionLimit->SetBinContent(4,1,1.336637); // Bin_5_LQ_1100_DM_300_X_330
+    ObservedExclusionLimit->SetBinContent(4,2,1.559345); // Bin_6_LQ_1100_DM_350_X_385
+    ObservedExclusionLimit->SetBinContent(4,3,1.968400); // Bin_7_LQ_1100_DM_400_X_440
+    ObservedExclusionLimit->SetBinContent(4,4,3.285631); // Bin_8_LQ_1100_DM_450_X_495
+    ObservedExclusionLimit->SetBinContent(4,5,12.643247); // Bin_9_LQ_1100_DM_500_X_550
+    ObservedExclusionLimit->SetBinContent(5,1,2.479740); // Bin_10_LQ_1200_DM_300_X_330
+    ObservedExclusionLimit->SetBinContent(5,2,2.591089); // Bin_11_LQ_1200_DM_350_X_385
+    ObservedExclusionLimit->SetBinContent(5,3,2.990071); // Bin_12_LQ_1200_DM_400_X_440
+    ObservedExclusionLimit->SetBinContent(5,4,3.949281); // Bin_13_LQ_1200_DM_450_X_495
+    ObservedExclusionLimit->SetBinContent(5,5,6.940822); // Bin_14_LQ_1200_DM_500_X_550
+    ObservedExclusionLimit->SetBinContent(5,6,33.110888); // Bin_15_LQ_1200_DM_550_X_595
+    ObservedExclusionLimit->SetBinContent(6,1,3.574614); // Bin_16_LQ_1300_DM_300_X_330
+    ObservedExclusionLimit->SetBinContent(6,2,3.843645); // Bin_17_LQ_1300_DM_350_X_385
+    ObservedExclusionLimit->SetBinContent(6,3,4.088958); // Bin_18_LQ_1300_DM_400_X_440
+    ObservedExclusionLimit->SetBinContent(6,4,4.774066); // Bin_19_LQ_1300_DM_450_X_495
+    ObservedExclusionLimit->SetBinContent(6,5,6.021385); // Bin_20_LQ_1300_DM_500_X_550
+    ObservedExclusionLimit->SetBinContent(6,6,11.693348); // Bin_21_LQ_1300_DM_550_X_605
+    ObservedExclusionLimit->SetBinContent(6,7,61.572774); // Bin_22_LQ_1300_DM_600_X_660
+    ObservedExclusionLimit->SetBinContent(7,1,3.810474); // Bin_23_LQ_1400_DM_300_X_330
+    ObservedExclusionLimit->SetBinContent(7,2,4.330965); // Bin_24_LQ_1400_DM_350_X_385
+    ObservedExclusionLimit->SetBinContent(7,3,4.105321); // Bin_25_LQ_1400_DM_400_X_440
+    ObservedExclusionLimit->SetBinContent(7,4,4.995419); // Bin_26_LQ_1400_DM_450_X_495
+    ObservedExclusionLimit->SetBinContent(7,5,5.185592); // Bin_27_LQ_1400_DM_500_X_550
+    ObservedExclusionLimit->SetBinContent(7,6,7.491728); // Bin_28_LQ_1400_DM_550_X_605
+    ObservedExclusionLimit->SetBinContent(7,7,14.849519); // Bin_29_LQ_1400_DM_600_X_660
+    ObservedExclusionLimit->SetBinContent(7,8,89.974360); // Bin_30_LQ_1400_DM_650_X_715
+    ObservedExclusionLimit->SetBinContent(8,1,4.651245); // Bin_31_LQ_1500_DM_300_X_330
+    ObservedExclusionLimit->SetBinContent(8,2,4.712511); // Bin_32_LQ_1500_DM_350_X_385
+    ObservedExclusionLimit->SetBinContent(8,3,4.629320); // Bin_33_LQ_1500_DM_400_X_440
+    ObservedExclusionLimit->SetBinContent(8,4,5.394464); // Bin_34_LQ_1500_DM_450_X_495
+    ObservedExclusionLimit->SetBinContent(8,5,5.839716); // Bin_35_LQ_1500_DM_500_X_550
+    ObservedExclusionLimit->SetBinContent(8,6,6.588724); // Bin_36_LQ_1500_DM_550_X_605
+    ObservedExclusionLimit->SetBinContent(8,7,8.708378); // Bin_37_LQ_1500_DM_600_X_660
+    ObservedExclusionLimit->SetBinContent(8,8,19.116751); // Bin_38_LQ_1500_DM_650_X_715
+    ObservedExclusionLimit->SetBinContent(8,9,142.769800); // Bin_39_LQ_1500_DM_700_X_770
+    ObservedExclusionLimit->SetBinContent(1,1,0.254274); // Bin_40_LQ_800_DM_300_X_330
+    ObservedExclusionLimit->SetBinContent(1,2,0.644440); // Bin_41_LQ_800_DM_350_X_385
+    ObservedExclusionLimit->SetBinContent(2,1,0.242451); // Bin_42_LQ_900_DM_300_X_330
+    ObservedExclusionLimit->SetBinContent(2,2,0.384750); // Bin_43_LQ_900_DM_350_X_385
+    ObservedExclusionLimit->SetBinContent(2,3,1.134268); // Bin_44_LQ_900_DM_400_X_440
+    
     
     
     
@@ -401,50 +404,50 @@ void DMLimit_2D_Org(){
     
     
     TH2D *ExpctedExclusionLimit2sigmaPlus = new TH2D("ExpctedExclusionLimit2sigmaPlus","ExpctedExclusionLimit2sigmaPlus",6,1250,4250,12,875,3875);
-    ExpctedExclusionLimit2sigmaPlus->SetBinContent(3,1,0.916381); // Bin_1_LQ_1000_DM_300_X_330
-    ExpctedExclusionLimit2sigmaPlus->SetBinContent(3,2,1.131365); // Bin_2_LQ_1000_DM_350_X_385
-    ExpctedExclusionLimit2sigmaPlus->SetBinContent(3,3,1.812320); // Bin_3_LQ_1000_DM_400_X_440
-    ExpctedExclusionLimit2sigmaPlus->SetBinContent(3,4,6.181440); // Bin_4_LQ_1000_DM_450_X_495
-    ExpctedExclusionLimit2sigmaPlus->SetBinContent(4,1,1.432570); // Bin_5_LQ_1100_DM_300_X_330
-    ExpctedExclusionLimit2sigmaPlus->SetBinContent(4,2,1.680455); // Bin_6_LQ_1100_DM_350_X_385
-    ExpctedExclusionLimit2sigmaPlus->SetBinContent(4,3,2.089270); // Bin_7_LQ_1100_DM_400_X_440
-    ExpctedExclusionLimit2sigmaPlus->SetBinContent(4,4,3.540960); // Bin_8_LQ_1100_DM_450_X_495
-    ExpctedExclusionLimit2sigmaPlus->SetBinContent(4,5,13.500182); // Bin_9_LQ_1100_DM_500_X_550
-    ExpctedExclusionLimit2sigmaPlus->SetBinContent(5,1,2.328549); // Bin_10_LQ_1200_DM_300_X_330
-    ExpctedExclusionLimit2sigmaPlus->SetBinContent(5,2,2.458331); // Bin_11_LQ_1200_DM_350_X_385
-    ExpctedExclusionLimit2sigmaPlus->SetBinContent(5,3,2.780363); // Bin_12_LQ_1200_DM_400_X_440
-    ExpctedExclusionLimit2sigmaPlus->SetBinContent(5,4,3.680031); // Bin_13_LQ_1200_DM_450_X_495
-    ExpctedExclusionLimit2sigmaPlus->SetBinContent(5,5,6.475358); // Bin_14_LQ_1200_DM_500_X_550
-    ExpctedExclusionLimit2sigmaPlus->SetBinContent(5,6,30.890412); // Bin_15_LQ_1200_DM_550_X_595
-    ExpctedExclusionLimit2sigmaPlus->SetBinContent(6,1,3.562914); // Bin_16_LQ_1300_DM_300_X_330
-    ExpctedExclusionLimit2sigmaPlus->SetBinContent(6,2,3.761858); // Bin_17_LQ_1300_DM_350_X_385
-    ExpctedExclusionLimit2sigmaPlus->SetBinContent(6,3,4.081056); // Bin_18_LQ_1300_DM_400_X_440
-    ExpctedExclusionLimit2sigmaPlus->SetBinContent(6,4,4.817380); // Bin_19_LQ_1300_DM_450_X_495
-    ExpctedExclusionLimit2sigmaPlus->SetBinContent(6,5,6.028118); // Bin_20_LQ_1300_DM_500_X_550
-    ExpctedExclusionLimit2sigmaPlus->SetBinContent(6,6,11.683879); // Bin_21_LQ_1300_DM_550_X_605
-    ExpctedExclusionLimit2sigmaPlus->SetBinContent(6,7,62.376376); // Bin_22_LQ_1300_DM_600_X_660
-    ExpctedExclusionLimit2sigmaPlus->SetBinContent(7,1,5.748164); // Bin_23_LQ_1400_DM_300_X_330
-    ExpctedExclusionLimit2sigmaPlus->SetBinContent(7,2,6.212827); // Bin_24_LQ_1400_DM_350_X_385
-    ExpctedExclusionLimit2sigmaPlus->SetBinContent(7,3,6.004324); // Bin_25_LQ_1400_DM_400_X_440
-    ExpctedExclusionLimit2sigmaPlus->SetBinContent(7,4,7.046296); // Bin_26_LQ_1400_DM_450_X_495
-    ExpctedExclusionLimit2sigmaPlus->SetBinContent(7,5,7.716198); // Bin_27_LQ_1400_DM_500_X_550
-    ExpctedExclusionLimit2sigmaPlus->SetBinContent(7,6,10.756364); // Bin_28_LQ_1400_DM_550_X_605
-    ExpctedExclusionLimit2sigmaPlus->SetBinContent(7,7,21.272888); // Bin_29_LQ_1400_DM_600_X_660
-    ExpctedExclusionLimit2sigmaPlus->SetBinContent(7,8,129.695706); // Bin_30_LQ_1400_DM_650_X_715
-    ExpctedExclusionLimit2sigmaPlus->SetBinContent(8,1,10.122003); // Bin_31_LQ_1500_DM_300_X_330
-    ExpctedExclusionLimit2sigmaPlus->SetBinContent(8,2,10.170403); // Bin_32_LQ_1500_DM_350_X_385
-    ExpctedExclusionLimit2sigmaPlus->SetBinContent(8,3,10.198822); // Bin_33_LQ_1500_DM_400_X_440
-    ExpctedExclusionLimit2sigmaPlus->SetBinContent(8,4,11.158423); // Bin_34_LQ_1500_DM_450_X_495
-    ExpctedExclusionLimit2sigmaPlus->SetBinContent(8,5,12.151928); // Bin_35_LQ_1500_DM_500_X_550
-    ExpctedExclusionLimit2sigmaPlus->SetBinContent(8,6,14.289321); // Bin_36_LQ_1500_DM_550_X_605
-    ExpctedExclusionLimit2sigmaPlus->SetBinContent(8,7,19.520762); // Bin_37_LQ_1500_DM_600_X_660
-    ExpctedExclusionLimit2sigmaPlus->SetBinContent(8,8,41.504001); // Bin_38_LQ_1500_DM_650_X_715
-    ExpctedExclusionLimit2sigmaPlus->SetBinContent(8,9,310.805663); // Bin_39_LQ_1500_DM_700_X_770
-    ExpctedExclusionLimit2sigmaPlus->SetBinContent(1,1,0.519471); // Bin_40_LQ_800_DM_300_X_330
-    ExpctedExclusionLimit2sigmaPlus->SetBinContent(1,2,1.308464); // Bin_41_LQ_800_DM_350_X_385
-    ExpctedExclusionLimit2sigmaPlus->SetBinContent(2,1,0.612383); // Bin_42_LQ_900_DM_300_X_330
-    ExpctedExclusionLimit2sigmaPlus->SetBinContent(2,2,0.988516); // Bin_43_LQ_900_DM_350_X_385
-    ExpctedExclusionLimit2sigmaPlus->SetBinContent(2,3,2.884954); // Bin_44_LQ_900_DM_400_X_440
+    ExpctedExclusionLimit2sigmaPlus->SetBinContent(3,1,0.886209); // Bin_1_LQ_1000_DM_300_X_330
+    ExpctedExclusionLimit2sigmaPlus->SetBinContent(3,2,1.089820); // Bin_2_LQ_1000_DM_350_X_385
+    ExpctedExclusionLimit2sigmaPlus->SetBinContent(3,3,1.748419); // Bin_3_LQ_1000_DM_400_X_440
+    ExpctedExclusionLimit2sigmaPlus->SetBinContent(3,4,5.979356); // Bin_4_LQ_1000_DM_450_X_495
+    ExpctedExclusionLimit2sigmaPlus->SetBinContent(4,1,1.369177); // Bin_5_LQ_1100_DM_300_X_330
+    ExpctedExclusionLimit2sigmaPlus->SetBinContent(4,2,1.598158); // Bin_6_LQ_1100_DM_350_X_385
+    ExpctedExclusionLimit2sigmaPlus->SetBinContent(4,3,1.981003); // Bin_7_LQ_1100_DM_400_X_440
+    ExpctedExclusionLimit2sigmaPlus->SetBinContent(4,4,3.357485); // Bin_8_LQ_1100_DM_450_X_495
+    ExpctedExclusionLimit2sigmaPlus->SetBinContent(4,5,12.818323); // Bin_9_LQ_1100_DM_500_X_550
+    ExpctedExclusionLimit2sigmaPlus->SetBinContent(5,1,2.250710); // Bin_10_LQ_1200_DM_300_X_330
+    ExpctedExclusionLimit2sigmaPlus->SetBinContent(5,2,2.394744); // Bin_11_LQ_1200_DM_350_X_385
+    ExpctedExclusionLimit2sigmaPlus->SetBinContent(5,3,2.702197); // Bin_12_LQ_1200_DM_400_X_440
+    ExpctedExclusionLimit2sigmaPlus->SetBinContent(5,4,3.591345); // Bin_13_LQ_1200_DM_450_X_495
+    ExpctedExclusionLimit2sigmaPlus->SetBinContent(5,5,6.293274); // Bin_14_LQ_1200_DM_500_X_550
+    ExpctedExclusionLimit2sigmaPlus->SetBinContent(5,6,30.021787); // Bin_15_LQ_1200_DM_550_X_595
+    ExpctedExclusionLimit2sigmaPlus->SetBinContent(6,1,3.504787); // Bin_16_LQ_1300_DM_300_X_330
+    ExpctedExclusionLimit2sigmaPlus->SetBinContent(6,2,3.701580); // Bin_17_LQ_1300_DM_350_X_385
+    ExpctedExclusionLimit2sigmaPlus->SetBinContent(6,3,4.016437); // Bin_18_LQ_1300_DM_400_X_440
+    ExpctedExclusionLimit2sigmaPlus->SetBinContent(6,4,4.726097); // Bin_19_LQ_1300_DM_450_X_495
+    ExpctedExclusionLimit2sigmaPlus->SetBinContent(6,5,5.962907); // Bin_20_LQ_1300_DM_500_X_550
+    ExpctedExclusionLimit2sigmaPlus->SetBinContent(6,6,11.453465); // Bin_21_LQ_1300_DM_550_X_605
+    ExpctedExclusionLimit2sigmaPlus->SetBinContent(6,7,61.437120); // Bin_22_LQ_1300_DM_600_X_660
+    ExpctedExclusionLimit2sigmaPlus->SetBinContent(7,1,5.601670); // Bin_23_LQ_1400_DM_300_X_330
+    ExpctedExclusionLimit2sigmaPlus->SetBinContent(7,2,6.023713); // Bin_24_LQ_1400_DM_350_X_385
+    ExpctedExclusionLimit2sigmaPlus->SetBinContent(7,3,5.827691); // Bin_25_LQ_1400_DM_400_X_440
+    ExpctedExclusionLimit2sigmaPlus->SetBinContent(7,4,6.857634); // Bin_26_LQ_1400_DM_450_X_495
+    ExpctedExclusionLimit2sigmaPlus->SetBinContent(7,5,7.498048); // Bin_27_LQ_1400_DM_500_X_550
+    ExpctedExclusionLimit2sigmaPlus->SetBinContent(7,6,10.458749); // Bin_28_LQ_1400_DM_550_X_605
+    ExpctedExclusionLimit2sigmaPlus->SetBinContent(7,7,20.590329); // Bin_29_LQ_1400_DM_600_X_660
+    ExpctedExclusionLimit2sigmaPlus->SetBinContent(7,8,126.447080); // Bin_30_LQ_1400_DM_650_X_715
+    ExpctedExclusionLimit2sigmaPlus->SetBinContent(8,1,9.688042); // Bin_31_LQ_1500_DM_300_X_330
+    ExpctedExclusionLimit2sigmaPlus->SetBinContent(8,2,9.749644); // Bin_32_LQ_1500_DM_350_X_385
+    ExpctedExclusionLimit2sigmaPlus->SetBinContent(8,3,9.730945); // Bin_33_LQ_1500_DM_400_X_440
+    ExpctedExclusionLimit2sigmaPlus->SetBinContent(8,4,10.757008); // Bin_34_LQ_1500_DM_450_X_495
+    ExpctedExclusionLimit2sigmaPlus->SetBinContent(8,5,11.673141); // Bin_35_LQ_1500_DM_500_X_550
+    ExpctedExclusionLimit2sigmaPlus->SetBinContent(8,6,13.745039); // Bin_36_LQ_1500_DM_550_X_605
+    ExpctedExclusionLimit2sigmaPlus->SetBinContent(8,7,18.795599); // Bin_37_LQ_1500_DM_600_X_660
+    ExpctedExclusionLimit2sigmaPlus->SetBinContent(8,8,39.848352); // Bin_38_LQ_1500_DM_650_X_715
+    ExpctedExclusionLimit2sigmaPlus->SetBinContent(8,9,298.441158); // Bin_39_LQ_1500_DM_700_X_770
+    ExpctedExclusionLimit2sigmaPlus->SetBinContent(1,1,0.462144); // Bin_40_LQ_800_DM_300_X_330
+    ExpctedExclusionLimit2sigmaPlus->SetBinContent(1,2,1.168206); // Bin_41_LQ_800_DM_350_X_385
+    ExpctedExclusionLimit2sigmaPlus->SetBinContent(2,1,0.587149); // Bin_42_LQ_900_DM_300_X_330
+    ExpctedExclusionLimit2sigmaPlus->SetBinContent(2,2,0.943694); // Bin_43_LQ_900_DM_350_X_385
+    ExpctedExclusionLimit2sigmaPlus->SetBinContent(2,3,2.750072); // Bin_44_LQ_900_DM_400_X_440
     
     
     
@@ -454,50 +457,311 @@ void DMLimit_2D_Org(){
     
     
     TH2D *ExpctedExclusionLimit2sigmaMinus = new TH2D("ExpctedExclusionLimit2sigmaMinus","ExpctedExclusionLimit2sigmaMinus",6,1250,4250,12,875,3875);
-    ExpctedExclusionLimit2sigmaMinus->SetBinContent(3,1,0.237676); // Bin_1_LQ_1000_DM_300_X_330
-    ExpctedExclusionLimit2sigmaMinus->SetBinContent(3,2,0.292687); // Bin_2_LQ_1000_DM_350_X_385
-    ExpctedExclusionLimit2sigmaMinus->SetBinContent(3,3,0.470049); // Bin_3_LQ_1000_DM_400_X_440
-    ExpctedExclusionLimit2sigmaMinus->SetBinContent(3,4,1.603238); // Bin_4_LQ_1000_DM_450_X_495
-    ExpctedExclusionLimit2sigmaMinus->SetBinContent(4,1,0.366959); // Bin_5_LQ_1100_DM_300_X_330
-    ExpctedExclusionLimit2sigmaMinus->SetBinContent(4,2,0.428837); // Bin_6_LQ_1100_DM_350_X_385
-    ExpctedExclusionLimit2sigmaMinus->SetBinContent(4,3,0.534501); // Bin_7_LQ_1100_DM_400_X_440
-    ExpctedExclusionLimit2sigmaMinus->SetBinContent(4,4,0.907032); // Bin_8_LQ_1100_DM_450_X_495
-    ExpctedExclusionLimit2sigmaMinus->SetBinContent(4,5,3.445129); // Bin_9_LQ_1100_DM_500_X_550
-    ExpctedExclusionLimit2sigmaMinus->SetBinContent(5,1,0.581201); // Bin_10_LQ_1200_DM_300_X_330
-    ExpctedExclusionLimit2sigmaMinus->SetBinContent(5,2,0.611261); // Bin_11_LQ_1200_DM_350_X_385
-    ExpctedExclusionLimit2sigmaMinus->SetBinContent(5,3,0.693972); // Bin_12_LQ_1200_DM_400_X_440
-    ExpctedExclusionLimit2sigmaMinus->SetBinContent(5,4,0.918528); // Bin_13_LQ_1200_DM_450_X_495
-    ExpctedExclusionLimit2sigmaMinus->SetBinContent(5,5,1.616235); // Bin_14_LQ_1200_DM_500_X_550
-    ExpctedExclusionLimit2sigmaMinus->SetBinContent(5,6,7.710179); // Bin_15_LQ_1200_DM_550_X_595
-    ExpctedExclusionLimit2sigmaMinus->SetBinContent(6,1,0.862984); // Bin_16_LQ_1300_DM_300_X_330
-    ExpctedExclusionLimit2sigmaMinus->SetBinContent(6,2,0.904189); // Bin_17_LQ_1300_DM_350_X_385
-    ExpctedExclusionLimit2sigmaMinus->SetBinContent(6,3,0.983136); // Bin_18_LQ_1300_DM_400_X_440
-    ExpctedExclusionLimit2sigmaMinus->SetBinContent(6,4,1.160518); // Bin_19_LQ_1300_DM_450_X_495
-    ExpctedExclusionLimit2sigmaMinus->SetBinContent(6,5,1.448900); // Bin_20_LQ_1300_DM_500_X_550
-    ExpctedExclusionLimit2sigmaMinus->SetBinContent(6,6,2.819145); // Bin_21_LQ_1300_DM_550_X_605
-    ExpctedExclusionLimit2sigmaMinus->SetBinContent(6,7,15.108373); // Bin_22_LQ_1300_DM_600_X_660
-    ExpctedExclusionLimit2sigmaMinus->SetBinContent(7,1,1.356104); // Bin_23_LQ_1400_DM_300_X_330
-    ExpctedExclusionLimit2sigmaMinus->SetBinContent(7,2,1.473199); // Bin_24_LQ_1400_DM_350_X_385
-    ExpctedExclusionLimit2sigmaMinus->SetBinContent(7,3,1.420602); // Bin_25_LQ_1400_DM_400_X_440
-    ExpctedExclusionLimit2sigmaMinus->SetBinContent(7,4,1.667129); // Bin_26_LQ_1400_DM_450_X_495
-    ExpctedExclusionLimit2sigmaMinus->SetBinContent(7,5,1.815208); // Bin_27_LQ_1400_DM_500_X_550
-    ExpctedExclusionLimit2sigmaMinus->SetBinContent(7,6,2.544918); // Bin_28_LQ_1400_DM_550_X_605
-    ExpctedExclusionLimit2sigmaMinus->SetBinContent(7,7,5.004371); // Bin_29_LQ_1400_DM_600_X_660
-    ExpctedExclusionLimit2sigmaMinus->SetBinContent(7,8,30.629168); // Bin_30_LQ_1400_DM_650_X_715
-    ExpctedExclusionLimit2sigmaMinus->SetBinContent(8,1,2.413468); // Bin_31_LQ_1500_DM_300_X_330
-    ExpctedExclusionLimit2sigmaMinus->SetBinContent(8,2,2.430395); // Bin_32_LQ_1500_DM_350_X_385
-    ExpctedExclusionLimit2sigmaMinus->SetBinContent(8,3,2.431784); // Bin_33_LQ_1500_DM_400_X_440
-    ExpctedExclusionLimit2sigmaMinus->SetBinContent(8,4,2.682005); // Bin_34_LQ_1500_DM_450_X_495
-    ExpctedExclusionLimit2sigmaMinus->SetBinContent(8,5,2.936707); // Bin_35_LQ_1500_DM_500_X_550
-    ExpctedExclusionLimit2sigmaMinus->SetBinContent(8,6,3.434539); // Bin_36_LQ_1500_DM_550_X_605
-    ExpctedExclusionLimit2sigmaMinus->SetBinContent(8,7,4.664826); // Bin_37_LQ_1500_DM_600_X_660
-    ExpctedExclusionLimit2sigmaMinus->SetBinContent(8,8,9.918104); // Bin_38_LQ_1500_DM_650_X_715
-    ExpctedExclusionLimit2sigmaMinus->SetBinContent(8,9,74.107806); // Bin_39_LQ_1500_DM_700_X_770
-    ExpctedExclusionLimit2sigmaMinus->SetBinContent(1,1,0.140484); // Bin_40_LQ_800_DM_300_X_330
-    ExpctedExclusionLimit2sigmaMinus->SetBinContent(1,2,0.353856); // Bin_41_LQ_800_DM_350_X_385
-    ExpctedExclusionLimit2sigmaMinus->SetBinContent(2,1,0.162463); // Bin_42_LQ_900_DM_300_X_330
-    ExpctedExclusionLimit2sigmaMinus->SetBinContent(2,2,0.261970); // Bin_43_LQ_900_DM_350_X_385
-    ExpctedExclusionLimit2sigmaMinus->SetBinContent(2,3,0.760547); // Bin_44_LQ_900_DM_400_X_440
+    ExpctedExclusionLimit2sigmaMinus->SetBinContent(3,1,0.224776); // Bin_1_LQ_1000_DM_300_X_330
+    ExpctedExclusionLimit2sigmaMinus->SetBinContent(3,2,0.278112); // Bin_2_LQ_1000_DM_350_X_385
+    ExpctedExclusionLimit2sigmaMinus->SetBinContent(3,3,0.446181); // Bin_3_LQ_1000_DM_400_X_440
+    ExpctedExclusionLimit2sigmaMinus->SetBinContent(3,4,1.527791); // Bin_4_LQ_1000_DM_450_X_495
+    ExpctedExclusionLimit2sigmaMinus->SetBinContent(4,1,0.341744); // Bin_5_LQ_1100_DM_300_X_330
+    ExpctedExclusionLimit2sigmaMinus->SetBinContent(4,2,0.400413); // Bin_6_LQ_1100_DM_350_X_385
+    ExpctedExclusionLimit2sigmaMinus->SetBinContent(4,3,0.497442); // Bin_7_LQ_1100_DM_400_X_440
+    ExpctedExclusionLimit2sigmaMinus->SetBinContent(4,4,0.840545); // Bin_8_LQ_1100_DM_450_X_495
+    ExpctedExclusionLimit2sigmaMinus->SetBinContent(4,5,3.199425); // Bin_9_LQ_1100_DM_500_X_550
+    ExpctedExclusionLimit2sigmaMinus->SetBinContent(5,1,0.552866); // Bin_10_LQ_1200_DM_300_X_330
+    ExpctedExclusionLimit2sigmaMinus->SetBinContent(5,2,0.583431); // Bin_11_LQ_1200_DM_350_X_385
+    ExpctedExclusionLimit2sigmaMinus->SetBinContent(5,3,0.659858); // Bin_12_LQ_1200_DM_400_X_440
+    ExpctedExclusionLimit2sigmaMinus->SetBinContent(5,4,0.876982); // Bin_13_LQ_1200_DM_450_X_495
+    ExpctedExclusionLimit2sigmaMinus->SetBinContent(5,5,1.545883); // Bin_14_LQ_1200_DM_500_X_550
+    ExpctedExclusionLimit2sigmaMinus->SetBinContent(5,6,7.374567); // Bin_15_LQ_1200_DM_550_X_595
+    ExpctedExclusionLimit2sigmaMinus->SetBinContent(6,1,0.835674); // Bin_16_LQ_1300_DM_300_X_330
+    ExpctedExclusionLimit2sigmaMinus->SetBinContent(6,2,0.875781); // Bin_17_LQ_1300_DM_350_X_385
+    ExpctedExclusionLimit2sigmaMinus->SetBinContent(6,3,0.952386); // Bin_18_LQ_1300_DM_400_X_440
+    ExpctedExclusionLimit2sigmaMinus->SetBinContent(6,4,1.122529); // Bin_19_LQ_1300_DM_450_X_495
+    ExpctedExclusionLimit2sigmaMinus->SetBinContent(6,5,1.413669); // Bin_20_LQ_1300_DM_500_X_550
+    ExpctedExclusionLimit2sigmaMinus->SetBinContent(6,6,2.730939); // Bin_21_LQ_1300_DM_550_X_605
+    ExpctedExclusionLimit2sigmaMinus->SetBinContent(6,7,14.535811); // Bin_22_LQ_1300_DM_600_X_660
+    ExpctedExclusionLimit2sigmaMinus->SetBinContent(7,1,1.290064); // Bin_23_LQ_1400_DM_300_X_330
+    ExpctedExclusionLimit2sigmaMinus->SetBinContent(7,2,1.395075); // Bin_24_LQ_1400_DM_350_X_385
+    ExpctedExclusionLimit2sigmaMinus->SetBinContent(7,3,1.339320); // Bin_25_LQ_1400_DM_400_X_440
+    ExpctedExclusionLimit2sigmaMinus->SetBinContent(7,4,1.588209); // Bin_26_LQ_1400_DM_450_X_495
+    ExpctedExclusionLimit2sigmaMinus->SetBinContent(7,5,1.729717); // Bin_27_LQ_1400_DM_500_X_550
+    ExpctedExclusionLimit2sigmaMinus->SetBinContent(7,6,2.413057); // Bin_28_LQ_1400_DM_550_X_605
+    ExpctedExclusionLimit2sigmaMinus->SetBinContent(7,7,4.758533); // Bin_29_LQ_1400_DM_600_X_660
+    ExpctedExclusionLimit2sigmaMinus->SetBinContent(7,8,29.120755); // Bin_30_LQ_1400_DM_650_X_715
+    ExpctedExclusionLimit2sigmaMinus->SetBinContent(8,1,2.226126); // Bin_31_LQ_1500_DM_300_X_330
+    ExpctedExclusionLimit2sigmaMinus->SetBinContent(8,2,2.240664); // Bin_32_LQ_1500_DM_350_X_385
+    ExpctedExclusionLimit2sigmaMinus->SetBinContent(8,3,2.236367); // Bin_33_LQ_1500_DM_400_X_440
+    ExpctedExclusionLimit2sigmaMinus->SetBinContent(8,4,2.491293); // Bin_34_LQ_1500_DM_450_X_495
+    ExpctedExclusionLimit2sigmaMinus->SetBinContent(8,5,2.714069); // Bin_35_LQ_1500_DM_500_X_550
+    ExpctedExclusionLimit2sigmaMinus->SetBinContent(8,6,3.183313); // Bin_36_LQ_1500_DM_550_X_605
+    ExpctedExclusionLimit2sigmaMinus->SetBinContent(8,7,4.319606); // Bin_37_LQ_1500_DM_600_X_660
+    ExpctedExclusionLimit2sigmaMinus->SetBinContent(8,8,9.177073); // Bin_38_LQ_1500_DM_650_X_715
+    ExpctedExclusionLimit2sigmaMinus->SetBinContent(8,9,68.779010); // Bin_39_LQ_1500_DM_700_X_770
+    ExpctedExclusionLimit2sigmaMinus->SetBinContent(1,1,0.121380); // Bin_40_LQ_800_DM_300_X_330
+    ExpctedExclusionLimit2sigmaMinus->SetBinContent(1,2,0.307167); // Bin_41_LQ_800_DM_350_X_385
+    ExpctedExclusionLimit2sigmaMinus->SetBinContent(2,1,0.153636); // Bin_42_LQ_900_DM_300_X_330
+    ExpctedExclusionLimit2sigmaMinus->SetBinContent(2,2,0.246289); // Bin_43_LQ_900_DM_350_X_385
+    ExpctedExclusionLimit2sigmaMinus->SetBinContent(2,3,0.719598); // Bin_44_LQ_900_DM_400_X_440
+    
+    
+    
+//    
+//
+//    TH2D *hlimitxsec2 = new TH2D("hlimitxsec2","hlimitxsec2",8,750,1550,9,275,725);
+//    hlimitxsec2->SetBinContent(3,1,0.455768); // Bin_1_LQ_1000_DM_300_X_330
+//    hlimitxsec2->SetBinContent(3,2,0.561257); // Bin_2_LQ_1000_DM_350_X_385
+//    hlimitxsec2->SetBinContent(3,3,0.901368); // Bin_3_LQ_1000_DM_400_X_440
+//    hlimitxsec2->SetBinContent(3,4,3.074375); // Bin_4_LQ_1000_DM_450_X_495
+//    hlimitxsec2->SetBinContent(4,1,0.706327); // Bin_5_LQ_1100_DM_300_X_330
+//    hlimitxsec2->SetBinContent(4,2,0.828546); // Bin_6_LQ_1100_DM_350_X_385
+//    hlimitxsec2->SetBinContent(4,3,1.032697); // Bin_7_LQ_1100_DM_400_X_440
+//    hlimitxsec2->SetBinContent(4,4,1.745866); // Bin_8_LQ_1100_DM_450_X_495
+//    hlimitxsec2->SetBinContent(4,5,6.656249); // Bin_9_LQ_1100_DM_500_X_550
+//    hlimitxsec2->SetBinContent(5,1,1.131463); // Bin_10_LQ_1200_DM_300_X_330
+//    hlimitxsec2->SetBinContent(5,2,1.194525); // Bin_11_LQ_1200_DM_350_X_385
+//    hlimitxsec2->SetBinContent(5,3,1.351003); // Bin_12_LQ_1200_DM_400_X_440
+//    hlimitxsec2->SetBinContent(5,4,1.788160); // Bin_13_LQ_1200_DM_450_X_495
+//    hlimitxsec2->SetBinContent(5,5,3.146435); // Bin_14_LQ_1200_DM_500_X_550
+//    hlimitxsec2->SetBinContent(5,6,15.009930); // Bin_15_LQ_1200_DM_550_X_595
+//    hlimitxsec2->SetBinContent(6,1,1.692904); // Bin_16_LQ_1300_DM_300_X_330
+//    hlimitxsec2->SetBinContent(6,2,1.787432); // Bin_17_LQ_1300_DM_350_X_385
+//    hlimitxsec2->SetBinContent(6,3,1.943497); // Bin_18_LQ_1300_DM_400_X_440
+//    hlimitxsec2->SetBinContent(6,4,2.294152); // Bin_19_LQ_1300_DM_450_X_495
+//    hlimitxsec2->SetBinContent(6,5,2.864236); // Bin_20_LQ_1300_DM_500_X_550
+//    hlimitxsec2->SetBinContent(6,6,5.551548); // Bin_21_LQ_1300_DM_550_X_605
+//    hlimitxsec2->SetBinContent(6,7,29.637882); // Bin_22_LQ_1300_DM_600_X_660
+//    hlimitxsec2->SetBinContent(7,1,2.701655); // Bin_23_LQ_1400_DM_300_X_330
+//    hlimitxsec2->SetBinContent(7,2,2.934933); // Bin_24_LQ_1400_DM_350_X_385
+//    hlimitxsec2->SetBinContent(7,3,2.830149); // Bin_25_LQ_1400_DM_400_X_440
+//    hlimitxsec2->SetBinContent(7,4,3.321285); // Bin_26_LQ_1400_DM_450_X_495
+//    hlimitxsec2->SetBinContent(7,5,3.616290); // Bin_27_LQ_1400_DM_500_X_550
+//    hlimitxsec2->SetBinContent(7,6,5.070032); // Bin_28_LQ_1400_DM_550_X_605
+//    hlimitxsec2->SetBinContent(7,7,9.969797); // Bin_29_LQ_1400_DM_600_X_660
+//    hlimitxsec2->SetBinContent(7,8,60.783466); // Bin_30_LQ_1400_DM_650_X_715
+//    hlimitxsec2->SetBinContent(8,1,4.771025); // Bin_31_LQ_1500_DM_300_X_330
+//    hlimitxsec2->SetBinContent(8,2,4.804488); // Bin_32_LQ_1500_DM_350_X_385
+//    hlimitxsec2->SetBinContent(8,3,4.807234); // Bin_33_LQ_1500_DM_400_X_440
+//    hlimitxsec2->SetBinContent(8,4,5.301879); // Bin_34_LQ_1500_DM_450_X_495
+//    hlimitxsec2->SetBinContent(8,5,5.760897); // Bin_35_LQ_1500_DM_500_X_550
+//    hlimitxsec2->SetBinContent(8,6,6.789513); // Bin_36_LQ_1500_DM_550_X_605
+//    hlimitxsec2->SetBinContent(8,7,9.221587); // Bin_37_LQ_1500_DM_600_X_660
+//    hlimitxsec2->SetBinContent(8,8,19.606445); // Bin_38_LQ_1500_DM_650_X_715
+//    hlimitxsec2->SetBinContent(8,9,146.498830); // Bin_39_LQ_1500_DM_700_X_770
+//    hlimitxsec2->SetBinContent(1,1,0.265416); // Bin_40_LQ_800_DM_300_X_330
+//    hlimitxsec2->SetBinContent(1,2,0.668540); // Bin_41_LQ_800_DM_350_X_385
+//    hlimitxsec2->SetBinContent(2,1,0.309223); // Bin_42_LQ_900_DM_300_X_330
+//    hlimitxsec2->SetBinContent(2,2,0.500481); // Bin_43_LQ_900_DM_350_X_385
+//    hlimitxsec2->SetBinContent(2,3,1.447583); // Bin_44_LQ_900_DM_400_X_440
+//    
+//    
+//    
+//    
+//    
+//    
+//    
+//    
+//    TH2D *ExpctedExclusionLimit = new TH2D("ExpctedExclusionLimit","ExpctedExclusionLimit",6,1250,4250,12,875,3875);
+//    ExpctedExclusionLimit->SetBinContent(3,1,0.455768); // Bin_1_LQ_1000_DM_300_X_330
+//    ExpctedExclusionLimit->SetBinContent(3,2,0.561257); // Bin_2_LQ_1000_DM_350_X_385
+//    ExpctedExclusionLimit->SetBinContent(3,3,0.901368); // Bin_3_LQ_1000_DM_400_X_440
+//    ExpctedExclusionLimit->SetBinContent(3,4,3.074375); // Bin_4_LQ_1000_DM_450_X_495
+//    ExpctedExclusionLimit->SetBinContent(4,1,0.706327); // Bin_5_LQ_1100_DM_300_X_330
+//    ExpctedExclusionLimit->SetBinContent(4,2,0.828546); // Bin_6_LQ_1100_DM_350_X_385
+//    ExpctedExclusionLimit->SetBinContent(4,3,1.032697); // Bin_7_LQ_1100_DM_400_X_440
+//    ExpctedExclusionLimit->SetBinContent(4,4,1.745866); // Bin_8_LQ_1100_DM_450_X_495
+//    ExpctedExclusionLimit->SetBinContent(4,5,6.656249); // Bin_9_LQ_1100_DM_500_X_550
+//    ExpctedExclusionLimit->SetBinContent(5,1,1.131463); // Bin_10_LQ_1200_DM_300_X_330
+//    ExpctedExclusionLimit->SetBinContent(5,2,1.194525); // Bin_11_LQ_1200_DM_350_X_385
+//    ExpctedExclusionLimit->SetBinContent(5,3,1.351003); // Bin_12_LQ_1200_DM_400_X_440
+//    ExpctedExclusionLimit->SetBinContent(5,4,1.788160); // Bin_13_LQ_1200_DM_450_X_495
+//    ExpctedExclusionLimit->SetBinContent(5,5,3.146435); // Bin_14_LQ_1200_DM_500_X_550
+//    ExpctedExclusionLimit->SetBinContent(5,6,15.009930); // Bin_15_LQ_1200_DM_550_X_595
+//    ExpctedExclusionLimit->SetBinContent(6,1,1.692904); // Bin_16_LQ_1300_DM_300_X_330
+//    ExpctedExclusionLimit->SetBinContent(6,2,1.787432); // Bin_17_LQ_1300_DM_350_X_385
+//    ExpctedExclusionLimit->SetBinContent(6,3,1.943497); // Bin_18_LQ_1300_DM_400_X_440
+//    ExpctedExclusionLimit->SetBinContent(6,4,2.294152); // Bin_19_LQ_1300_DM_450_X_495
+//    ExpctedExclusionLimit->SetBinContent(6,5,2.864236); // Bin_20_LQ_1300_DM_500_X_550
+//    ExpctedExclusionLimit->SetBinContent(6,6,5.551548); // Bin_21_LQ_1300_DM_550_X_605
+//    ExpctedExclusionLimit->SetBinContent(6,7,29.637882); // Bin_22_LQ_1300_DM_600_X_660
+//    ExpctedExclusionLimit->SetBinContent(7,1,2.701655); // Bin_23_LQ_1400_DM_300_X_330
+//    ExpctedExclusionLimit->SetBinContent(7,2,2.934933); // Bin_24_LQ_1400_DM_350_X_385
+//    ExpctedExclusionLimit->SetBinContent(7,3,2.830149); // Bin_25_LQ_1400_DM_400_X_440
+//    ExpctedExclusionLimit->SetBinContent(7,4,3.321285); // Bin_26_LQ_1400_DM_450_X_495
+//    ExpctedExclusionLimit->SetBinContent(7,5,3.616290); // Bin_27_LQ_1400_DM_500_X_550
+//    ExpctedExclusionLimit->SetBinContent(7,6,5.070032); // Bin_28_LQ_1400_DM_550_X_605
+//    ExpctedExclusionLimit->SetBinContent(7,7,9.969797); // Bin_29_LQ_1400_DM_600_X_660
+//    ExpctedExclusionLimit->SetBinContent(7,8,60.783466); // Bin_30_LQ_1400_DM_650_X_715
+//    ExpctedExclusionLimit->SetBinContent(8,1,4.771025); // Bin_31_LQ_1500_DM_300_X_330
+//    ExpctedExclusionLimit->SetBinContent(8,2,4.804488); // Bin_32_LQ_1500_DM_350_X_385
+//    ExpctedExclusionLimit->SetBinContent(8,3,4.807234); // Bin_33_LQ_1500_DM_400_X_440
+//    ExpctedExclusionLimit->SetBinContent(8,4,5.301879); // Bin_34_LQ_1500_DM_450_X_495
+//    ExpctedExclusionLimit->SetBinContent(8,5,5.760897); // Bin_35_LQ_1500_DM_500_X_550
+//    ExpctedExclusionLimit->SetBinContent(8,6,6.789513); // Bin_36_LQ_1500_DM_550_X_605
+//    ExpctedExclusionLimit->SetBinContent(8,7,9.221587); // Bin_37_LQ_1500_DM_600_X_660
+//    ExpctedExclusionLimit->SetBinContent(8,8,19.606445); // Bin_38_LQ_1500_DM_650_X_715
+//    ExpctedExclusionLimit->SetBinContent(8,9,146.498830); // Bin_39_LQ_1500_DM_700_X_770
+//    ExpctedExclusionLimit->SetBinContent(1,1,0.265416); // Bin_40_LQ_800_DM_300_X_330
+//    ExpctedExclusionLimit->SetBinContent(1,2,0.668540); // Bin_41_LQ_800_DM_350_X_385
+//    ExpctedExclusionLimit->SetBinContent(2,1,0.309223); // Bin_42_LQ_900_DM_300_X_330
+//    ExpctedExclusionLimit->SetBinContent(2,2,0.500481); // Bin_43_LQ_900_DM_350_X_385
+//    ExpctedExclusionLimit->SetBinContent(2,3,1.447583); // Bin_44_LQ_900_DM_400_X_440
+//    
+//    
+//    
+//    
+//    
+//    
+//    
+//    
+//    TH2D *ObservedExclusionLimit = new TH2D("ObservedExclusionLimit","ObservedExclusionLimit",6,1250,4250,12,875,3875);
+//    ObservedExclusionLimit->SetBinContent(3,1,0.627694); // Bin_1_LQ_1000_DM_300_X_330
+//    ObservedExclusionLimit->SetBinContent(3,2,0.812876); // Bin_2_LQ_1000_DM_350_X_385
+//    ObservedExclusionLimit->SetBinContent(3,3,1.261352); // Bin_3_LQ_1000_DM_400_X_440
+//    ObservedExclusionLimit->SetBinContent(3,4,4.311174); // Bin_4_LQ_1000_DM_450_X_495
+//    ObservedExclusionLimit->SetBinContent(4,1,1.447804); // Bin_5_LQ_1100_DM_300_X_330
+//    ObservedExclusionLimit->SetBinContent(4,2,1.682118); // Bin_6_LQ_1100_DM_350_X_385
+//    ObservedExclusionLimit->SetBinContent(4,3,2.146287); // Bin_7_LQ_1100_DM_400_X_440
+//    ObservedExclusionLimit->SetBinContent(4,4,3.562252); // Bin_8_LQ_1100_DM_450_X_495
+//    ObservedExclusionLimit->SetBinContent(4,5,13.676567); // Bin_9_LQ_1100_DM_500_X_550
+//    ObservedExclusionLimit->SetBinContent(5,1,2.663917); // Bin_10_LQ_1200_DM_300_X_330
+//    ObservedExclusionLimit->SetBinContent(5,2,2.774754); // Bin_11_LQ_1200_DM_350_X_385
+//    ObservedExclusionLimit->SetBinContent(5,3,3.233928); // Bin_12_LQ_1200_DM_400_X_440
+//    ObservedExclusionLimit->SetBinContent(5,4,4.259983); // Bin_13_LQ_1200_DM_450_X_495
+//    ObservedExclusionLimit->SetBinContent(5,5,7.463413); // Bin_14_LQ_1200_DM_500_X_550
+//    ObservedExclusionLimit->SetBinContent(5,6,35.603887); // Bin_15_LQ_1200_DM_550_X_595
+//    ObservedExclusionLimit->SetBinContent(6,1,4.135331); // Bin_16_LQ_1300_DM_300_X_330
+//    ObservedExclusionLimit->SetBinContent(6,2,4.439102); // Bin_17_LQ_1300_DM_350_X_385
+//    ObservedExclusionLimit->SetBinContent(6,3,4.714419); // Bin_18_LQ_1300_DM_400_X_440
+//    ObservedExclusionLimit->SetBinContent(6,4,5.545396); // Bin_19_LQ_1300_DM_450_X_495
+//    ObservedExclusionLimit->SetBinContent(6,5,6.945842); // Bin_20_LQ_1300_DM_500_X_550
+//    ObservedExclusionLimit->SetBinContent(6,6,13.527641); // Bin_21_LQ_1300_DM_550_X_605
+//    ObservedExclusionLimit->SetBinContent(6,7,71.284506); // Bin_22_LQ_1300_DM_600_X_660
+//    ObservedExclusionLimit->SetBinContent(7,1,5.022571); // Bin_23_LQ_1400_DM_300_X_330
+//    ObservedExclusionLimit->SetBinContent(7,2,5.704358); // Bin_24_LQ_1400_DM_350_X_385
+//    ObservedExclusionLimit->SetBinContent(7,3,5.441522); // Bin_25_LQ_1400_DM_400_X_440
+//    ObservedExclusionLimit->SetBinContent(7,4,6.563731); // Bin_26_LQ_1400_DM_450_X_495
+//    ObservedExclusionLimit->SetBinContent(7,5,6.834740); // Bin_27_LQ_1400_DM_500_X_550
+//    ObservedExclusionLimit->SetBinContent(7,6,9.890691); // Bin_28_LQ_1400_DM_550_X_605
+//    ObservedExclusionLimit->SetBinContent(7,7,19.491144); // Bin_29_LQ_1400_DM_600_X_660
+//    ObservedExclusionLimit->SetBinContent(7,8,118.557737); // Bin_30_LQ_1400_DM_650_X_715
+//    ObservedExclusionLimit->SetBinContent(8,1,6.307447); // Bin_31_LQ_1500_DM_300_X_330
+//    ObservedExclusionLimit->SetBinContent(8,2,6.374525); // Bin_32_LQ_1500_DM_350_X_385
+//    ObservedExclusionLimit->SetBinContent(8,3,6.267375); // Bin_33_LQ_1500_DM_400_X_440
+//    ObservedExclusionLimit->SetBinContent(8,4,7.273345); // Bin_34_LQ_1500_DM_450_X_495
+//    ObservedExclusionLimit->SetBinContent(8,5,7.957724); // Bin_35_LQ_1500_DM_500_X_550
+//    ObservedExclusionLimit->SetBinContent(8,6,8.868176); // Bin_36_LQ_1500_DM_550_X_605
+//    ObservedExclusionLimit->SetBinContent(8,7,11.556570); // Bin_37_LQ_1500_DM_600_X_660
+//    ObservedExclusionLimit->SetBinContent(8,8,25.823450); // Bin_38_LQ_1500_DM_650_X_715
+//    ObservedExclusionLimit->SetBinContent(8,9,191.675692); // Bin_39_LQ_1500_DM_700_X_770
+//    ObservedExclusionLimit->SetBinContent(1,1,0.257720); // Bin_40_LQ_800_DM_300_X_330
+//    ObservedExclusionLimit->SetBinContent(1,2,0.647283); // Bin_41_LQ_800_DM_350_X_385
+//    ObservedExclusionLimit->SetBinContent(2,1,0.289174); // Bin_42_LQ_900_DM_300_X_330
+//    ObservedExclusionLimit->SetBinContent(2,2,0.455181); // Bin_43_LQ_900_DM_350_X_385
+//    ObservedExclusionLimit->SetBinContent(2,3,1.336313); // Bin_44_LQ_900_DM_400_X_440
+//    
+//    
+//    
+//    
+//    
+//    
+//    
+//    TH2D *ExpctedExclusionLimit2sigmaPlus = new TH2D("ExpctedExclusionLimit2sigmaPlus","ExpctedExclusionLimit2sigmaPlus",6,1250,4250,12,875,3875);
+//    ExpctedExclusionLimit2sigmaPlus->SetBinContent(3,1,0.916381); // Bin_1_LQ_1000_DM_300_X_330
+//    ExpctedExclusionLimit2sigmaPlus->SetBinContent(3,2,1.131365); // Bin_2_LQ_1000_DM_350_X_385
+//    ExpctedExclusionLimit2sigmaPlus->SetBinContent(3,3,1.812320); // Bin_3_LQ_1000_DM_400_X_440
+//    ExpctedExclusionLimit2sigmaPlus->SetBinContent(3,4,6.181440); // Bin_4_LQ_1000_DM_450_X_495
+//    ExpctedExclusionLimit2sigmaPlus->SetBinContent(4,1,1.432570); // Bin_5_LQ_1100_DM_300_X_330
+//    ExpctedExclusionLimit2sigmaPlus->SetBinContent(4,2,1.680455); // Bin_6_LQ_1100_DM_350_X_385
+//    ExpctedExclusionLimit2sigmaPlus->SetBinContent(4,3,2.089270); // Bin_7_LQ_1100_DM_400_X_440
+//    ExpctedExclusionLimit2sigmaPlus->SetBinContent(4,4,3.540960); // Bin_8_LQ_1100_DM_450_X_495
+//    ExpctedExclusionLimit2sigmaPlus->SetBinContent(4,5,13.500182); // Bin_9_LQ_1100_DM_500_X_550
+//    ExpctedExclusionLimit2sigmaPlus->SetBinContent(5,1,2.328549); // Bin_10_LQ_1200_DM_300_X_330
+//    ExpctedExclusionLimit2sigmaPlus->SetBinContent(5,2,2.458331); // Bin_11_LQ_1200_DM_350_X_385
+//    ExpctedExclusionLimit2sigmaPlus->SetBinContent(5,3,2.780363); // Bin_12_LQ_1200_DM_400_X_440
+//    ExpctedExclusionLimit2sigmaPlus->SetBinContent(5,4,3.680031); // Bin_13_LQ_1200_DM_450_X_495
+//    ExpctedExclusionLimit2sigmaPlus->SetBinContent(5,5,6.475358); // Bin_14_LQ_1200_DM_500_X_550
+//    ExpctedExclusionLimit2sigmaPlus->SetBinContent(5,6,30.890412); // Bin_15_LQ_1200_DM_550_X_595
+//    ExpctedExclusionLimit2sigmaPlus->SetBinContent(6,1,3.562914); // Bin_16_LQ_1300_DM_300_X_330
+//    ExpctedExclusionLimit2sigmaPlus->SetBinContent(6,2,3.761858); // Bin_17_LQ_1300_DM_350_X_385
+//    ExpctedExclusionLimit2sigmaPlus->SetBinContent(6,3,4.081056); // Bin_18_LQ_1300_DM_400_X_440
+//    ExpctedExclusionLimit2sigmaPlus->SetBinContent(6,4,4.817380); // Bin_19_LQ_1300_DM_450_X_495
+//    ExpctedExclusionLimit2sigmaPlus->SetBinContent(6,5,6.028118); // Bin_20_LQ_1300_DM_500_X_550
+//    ExpctedExclusionLimit2sigmaPlus->SetBinContent(6,6,11.683879); // Bin_21_LQ_1300_DM_550_X_605
+//    ExpctedExclusionLimit2sigmaPlus->SetBinContent(6,7,62.376376); // Bin_22_LQ_1300_DM_600_X_660
+//    ExpctedExclusionLimit2sigmaPlus->SetBinContent(7,1,5.748164); // Bin_23_LQ_1400_DM_300_X_330
+//    ExpctedExclusionLimit2sigmaPlus->SetBinContent(7,2,6.212827); // Bin_24_LQ_1400_DM_350_X_385
+//    ExpctedExclusionLimit2sigmaPlus->SetBinContent(7,3,6.004324); // Bin_25_LQ_1400_DM_400_X_440
+//    ExpctedExclusionLimit2sigmaPlus->SetBinContent(7,4,7.046296); // Bin_26_LQ_1400_DM_450_X_495
+//    ExpctedExclusionLimit2sigmaPlus->SetBinContent(7,5,7.716198); // Bin_27_LQ_1400_DM_500_X_550
+//    ExpctedExclusionLimit2sigmaPlus->SetBinContent(7,6,10.756364); // Bin_28_LQ_1400_DM_550_X_605
+//    ExpctedExclusionLimit2sigmaPlus->SetBinContent(7,7,21.272888); // Bin_29_LQ_1400_DM_600_X_660
+//    ExpctedExclusionLimit2sigmaPlus->SetBinContent(7,8,129.695706); // Bin_30_LQ_1400_DM_650_X_715
+//    ExpctedExclusionLimit2sigmaPlus->SetBinContent(8,1,10.122003); // Bin_31_LQ_1500_DM_300_X_330
+//    ExpctedExclusionLimit2sigmaPlus->SetBinContent(8,2,10.170403); // Bin_32_LQ_1500_DM_350_X_385
+//    ExpctedExclusionLimit2sigmaPlus->SetBinContent(8,3,10.198822); // Bin_33_LQ_1500_DM_400_X_440
+//    ExpctedExclusionLimit2sigmaPlus->SetBinContent(8,4,11.158423); // Bin_34_LQ_1500_DM_450_X_495
+//    ExpctedExclusionLimit2sigmaPlus->SetBinContent(8,5,12.151928); // Bin_35_LQ_1500_DM_500_X_550
+//    ExpctedExclusionLimit2sigmaPlus->SetBinContent(8,6,14.289321); // Bin_36_LQ_1500_DM_550_X_605
+//    ExpctedExclusionLimit2sigmaPlus->SetBinContent(8,7,19.520762); // Bin_37_LQ_1500_DM_600_X_660
+//    ExpctedExclusionLimit2sigmaPlus->SetBinContent(8,8,41.504001); // Bin_38_LQ_1500_DM_650_X_715
+//    ExpctedExclusionLimit2sigmaPlus->SetBinContent(8,9,310.805663); // Bin_39_LQ_1500_DM_700_X_770
+//    ExpctedExclusionLimit2sigmaPlus->SetBinContent(1,1,0.519471); // Bin_40_LQ_800_DM_300_X_330
+//    ExpctedExclusionLimit2sigmaPlus->SetBinContent(1,2,1.308464); // Bin_41_LQ_800_DM_350_X_385
+//    ExpctedExclusionLimit2sigmaPlus->SetBinContent(2,1,0.612383); // Bin_42_LQ_900_DM_300_X_330
+//    ExpctedExclusionLimit2sigmaPlus->SetBinContent(2,2,0.988516); // Bin_43_LQ_900_DM_350_X_385
+//    ExpctedExclusionLimit2sigmaPlus->SetBinContent(2,3,2.884954); // Bin_44_LQ_900_DM_400_X_440
+//    
+//    
+//    
+//    
+//    
+//    
+//    
+//    
+//    TH2D *ExpctedExclusionLimit2sigmaMinus = new TH2D("ExpctedExclusionLimit2sigmaMinus","ExpctedExclusionLimit2sigmaMinus",6,1250,4250,12,875,3875);
+//    ExpctedExclusionLimit2sigmaMinus->SetBinContent(3,1,0.237676); // Bin_1_LQ_1000_DM_300_X_330
+//    ExpctedExclusionLimit2sigmaMinus->SetBinContent(3,2,0.292687); // Bin_2_LQ_1000_DM_350_X_385
+//    ExpctedExclusionLimit2sigmaMinus->SetBinContent(3,3,0.470049); // Bin_3_LQ_1000_DM_400_X_440
+//    ExpctedExclusionLimit2sigmaMinus->SetBinContent(3,4,1.603238); // Bin_4_LQ_1000_DM_450_X_495
+//    ExpctedExclusionLimit2sigmaMinus->SetBinContent(4,1,0.366959); // Bin_5_LQ_1100_DM_300_X_330
+//    ExpctedExclusionLimit2sigmaMinus->SetBinContent(4,2,0.428837); // Bin_6_LQ_1100_DM_350_X_385
+//    ExpctedExclusionLimit2sigmaMinus->SetBinContent(4,3,0.534501); // Bin_7_LQ_1100_DM_400_X_440
+//    ExpctedExclusionLimit2sigmaMinus->SetBinContent(4,4,0.907032); // Bin_8_LQ_1100_DM_450_X_495
+//    ExpctedExclusionLimit2sigmaMinus->SetBinContent(4,5,3.445129); // Bin_9_LQ_1100_DM_500_X_550
+//    ExpctedExclusionLimit2sigmaMinus->SetBinContent(5,1,0.581201); // Bin_10_LQ_1200_DM_300_X_330
+//    ExpctedExclusionLimit2sigmaMinus->SetBinContent(5,2,0.611261); // Bin_11_LQ_1200_DM_350_X_385
+//    ExpctedExclusionLimit2sigmaMinus->SetBinContent(5,3,0.693972); // Bin_12_LQ_1200_DM_400_X_440
+//    ExpctedExclusionLimit2sigmaMinus->SetBinContent(5,4,0.918528); // Bin_13_LQ_1200_DM_450_X_495
+//    ExpctedExclusionLimit2sigmaMinus->SetBinContent(5,5,1.616235); // Bin_14_LQ_1200_DM_500_X_550
+//    ExpctedExclusionLimit2sigmaMinus->SetBinContent(5,6,7.710179); // Bin_15_LQ_1200_DM_550_X_595
+//    ExpctedExclusionLimit2sigmaMinus->SetBinContent(6,1,0.862984); // Bin_16_LQ_1300_DM_300_X_330
+//    ExpctedExclusionLimit2sigmaMinus->SetBinContent(6,2,0.904189); // Bin_17_LQ_1300_DM_350_X_385
+//    ExpctedExclusionLimit2sigmaMinus->SetBinContent(6,3,0.983136); // Bin_18_LQ_1300_DM_400_X_440
+//    ExpctedExclusionLimit2sigmaMinus->SetBinContent(6,4,1.160518); // Bin_19_LQ_1300_DM_450_X_495
+//    ExpctedExclusionLimit2sigmaMinus->SetBinContent(6,5,1.448900); // Bin_20_LQ_1300_DM_500_X_550
+//    ExpctedExclusionLimit2sigmaMinus->SetBinContent(6,6,2.819145); // Bin_21_LQ_1300_DM_550_X_605
+//    ExpctedExclusionLimit2sigmaMinus->SetBinContent(6,7,15.108373); // Bin_22_LQ_1300_DM_600_X_660
+//    ExpctedExclusionLimit2sigmaMinus->SetBinContent(7,1,1.356104); // Bin_23_LQ_1400_DM_300_X_330
+//    ExpctedExclusionLimit2sigmaMinus->SetBinContent(7,2,1.473199); // Bin_24_LQ_1400_DM_350_X_385
+//    ExpctedExclusionLimit2sigmaMinus->SetBinContent(7,3,1.420602); // Bin_25_LQ_1400_DM_400_X_440
+//    ExpctedExclusionLimit2sigmaMinus->SetBinContent(7,4,1.667129); // Bin_26_LQ_1400_DM_450_X_495
+//    ExpctedExclusionLimit2sigmaMinus->SetBinContent(7,5,1.815208); // Bin_27_LQ_1400_DM_500_X_550
+//    ExpctedExclusionLimit2sigmaMinus->SetBinContent(7,6,2.544918); // Bin_28_LQ_1400_DM_550_X_605
+//    ExpctedExclusionLimit2sigmaMinus->SetBinContent(7,7,5.004371); // Bin_29_LQ_1400_DM_600_X_660
+//    ExpctedExclusionLimit2sigmaMinus->SetBinContent(7,8,30.629168); // Bin_30_LQ_1400_DM_650_X_715
+//    ExpctedExclusionLimit2sigmaMinus->SetBinContent(8,1,2.413468); // Bin_31_LQ_1500_DM_300_X_330
+//    ExpctedExclusionLimit2sigmaMinus->SetBinContent(8,2,2.430395); // Bin_32_LQ_1500_DM_350_X_385
+//    ExpctedExclusionLimit2sigmaMinus->SetBinContent(8,3,2.431784); // Bin_33_LQ_1500_DM_400_X_440
+//    ExpctedExclusionLimit2sigmaMinus->SetBinContent(8,4,2.682005); // Bin_34_LQ_1500_DM_450_X_495
+//    ExpctedExclusionLimit2sigmaMinus->SetBinContent(8,5,2.936707); // Bin_35_LQ_1500_DM_500_X_550
+//    ExpctedExclusionLimit2sigmaMinus->SetBinContent(8,6,3.434539); // Bin_36_LQ_1500_DM_550_X_605
+//    ExpctedExclusionLimit2sigmaMinus->SetBinContent(8,7,4.664826); // Bin_37_LQ_1500_DM_600_X_660
+//    ExpctedExclusionLimit2sigmaMinus->SetBinContent(8,8,9.918104); // Bin_38_LQ_1500_DM_650_X_715
+//    ExpctedExclusionLimit2sigmaMinus->SetBinContent(8,9,74.107806); // Bin_39_LQ_1500_DM_700_X_770
+//    ExpctedExclusionLimit2sigmaMinus->SetBinContent(1,1,0.140484); // Bin_40_LQ_800_DM_300_X_330
+//    ExpctedExclusionLimit2sigmaMinus->SetBinContent(1,2,0.353856); // Bin_41_LQ_800_DM_350_X_385
+//    ExpctedExclusionLimit2sigmaMinus->SetBinContent(2,1,0.162463); // Bin_42_LQ_900_DM_300_X_330
+//    ExpctedExclusionLimit2sigmaMinus->SetBinContent(2,2,0.261970); // Bin_43_LQ_900_DM_350_X_385
+//    ExpctedExclusionLimit2sigmaMinus->SetBinContent(2,3,0.760547); // Bin_44_LQ_900_DM_400_X_440
     
     
     
@@ -1127,24 +1391,28 @@ void DMLimit_2D_Org(){
     
     
 //    
-    TPaveText *pt = new TPaveText(0.1072864,0.9618663,0.4080402,0.9820056,"brNDC");
+    TPaveText *pt = new TPaveText(0.172864,0.9618663,0.2080402,0.9820056,"brNDC");
     
     pt->SetBorderSize(0);
-    
     pt->SetFillColor(0);
-    
     pt->SetLineColor(0);
     pt->SetTextSize(0.05);
-    
-    
-    TText *textL = pt->AddText("CMS Preliminary");
+//    TText *textL = pt->AddText("CMS Preliminary");
+    TText *textL = pt->AddText("CMS");
 //    textL->SetTextFont(42);
     pt->Draw();
+
     
-    TText *textL2 = pt->AddText("                                                                                           35.9 fb^{-1} (13 TeV)");
-    pt->SetTextSize(0.04);
-    pt->Draw("samep");
     
+    TPaveText *pt2 = new TPaveText(0.6072864,0.9618663,0.780402,0.9820056,"brNDC");
+    
+    pt2->SetBorderSize(0);
+    pt2->SetFillColor(0);
+    pt2->SetLineColor(0);
+    pt2->SetTextSize(0.04);
+    TText *textL3 = pt2->AddText("35.9 fb^{-1} (13 TeV)");
+    pt2->SetTextSize(0.04);
+    pt2->Draw();
     
     
     

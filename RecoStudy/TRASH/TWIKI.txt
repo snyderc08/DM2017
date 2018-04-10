@@ -1,0 +1,208 @@
+---+!! Search for Dark Matter in the Coannihilation Codex at 13 TeV in the CMS experiment
+
+
+%TOC%
+
+---++ Logistics
+   * Contact person: Abdollah Mohammadi
+   * Link to Cadi: [[http://cms.cern.ch/iCMS/analysisadmin/cadilines?line=EXO-16-XXX&tp=an&id=1668&ancode=EXO-16-XXX][EXO-17-XXX]].
+   * Link to PAS: [[http://cms.cern.ch/iCMS/analysisadmin/versions?analysis=EXO-16-XXX][PAS-EXO-17-XXX]].
+   * Link to Analysis Note: [[http://cms.cern.ch:80/iCMS/jsp/openfile.jsp?tp=draft&files=AN2016_362_v3.pdf][AN2016_362_v3]].
+
+
+---++ Questions and answers
+
+*Throughout the Q&A, the following color coding is used:*
+   * Black color for questions
+   * %BLUE%Blue color for answers that resulted in some changes in the documentation/analysis %ENDCOLOR%
+   * %GREEN% Green color for answers when no action is needed %ENDCOLOR%
+
+---+++ Comments from Phil Harris (Jul 2, 2017)
+
+
+What is the lifetime for X? Are these decays taken into account
+
+Figure 7 : What uncertainty is used on the background subtraction for the EWK backgrounds?
+ => What is the difference in the observed fake rate between data and simulation
+
+L231 : What are the two parameterizations can you clarify?
+L232-243 : Can you please rewrite this paragraph. It is not clear what you are doing.
+
+Figure 9. : Whats the origin of the disagreement in the MC closure?
+L273 : Whats the uncertainty on the subtraction of the backgrounds? Given you have performed this, it needs an uncertainty as well
+L279 : Where does this 10% come from. How do you deal with the additional pT dependent uncertainty? Do you have one?
+
+L294 : Where is this 20% from?
+Table 6 : A large jump is present at the high mT? Is this expected? Do have any uncertainty that can address the mT dependence? (this region can often be where higher order effects are critical)
+
+Figure 15 It appears that a trend is prsent in the mLQ. This trend is not presen in the W control region. How do you reconcile this difference. Additionally? Are you applying the MET+X NLO corrections, they shoudl enforce better agreement in most phase space condidtions
+
+What is the diboson uncertainy? What would the impact of diboson shape uncertainties be in the analysis
+
+
+---+++ Comments from Adish Vartak (Jul 2, 2017)
+
+Line 78 : What is the motivation for this choice of coupling value ?
+
+ %BLUE%   To be done  %ENDCOLOR%
+
+Fig. 3 : Why does the blue distribution for transverse mass (bottom
+right) have a double peaking structure?
+
+ %BLUE% The second peak structure in the bottom plots for X(460) at the left and X(750) at the right  as well the shoulder on the top plots are for the cases that there is one muon from the off-shell decay of the LQ from the X decay which pass the muons requirements instead of the leading muon from the on-shell decays. As this muon has much softer pt than the high-pt muon from on-shell decay of LQ, the MT peaks at lower values and as shoulder at smaller values of the mass of LQ distribution appears. These information have been added to the note%ENDCOLOR%
+
+Also add the muon pT distribution to Fig. 3
+
+ %BLUE%   To be done  %ENDCOLOR%
+
+Line 194 : Why is the dPhi cut only applied to the leading jet? Why do
+you not consider other jets in the event?
+
+
+
+Section 5.1 : Given the low purity of the QCD in the numerator of the
+fake ratio, I do not see how a 30% uncertainty on the QCD is adequate.
+You subtract 80% of events in the numerator from prompt sources, mainly
+W+jets. What if the W+jets MC prediction is off by 20%? It is not
+obvious to me that simply relying on a closure test on QCD MC is
+sufficient to get a measure of the QCD uncertainty.
+
+Section 5.2 : It is not obvious to me that a scale factor derived from
+an inclusive ttbar control region would work for the signal region (high
+values of m_lq). The motivation for the 10% uncertainty on this
+background seems rather weak.
+
+ %BLUE%   we have shown the dependency of the M_LQ to the SF, and it is well within 10% of the inclusive. The SF is 0.91 for MT greater than 300 GeV while for inclusive it is 0.95    %ENDCOLOR%
+
+Fig. 11 : As far as I understand these are plots of the ttbar control
+region, where you would not expect any signal. Is that correct? If so,
+is there a reason why you seem to have blinded the data in the tails? If
+anything, it would be good to see how well data agrees with MC in these
+tails.
+
+ %BLUE%  Yes, there is no signal there. I was just using the same script as making the signal and MT and MLQ, where these distributions had  been blinded. I have reran the script unblinding these two plots. Now the plots have been updated   %ENDCOLOR%
+
+Section 5.3 : Same comment about W+jets SF and uncertainty estimate as
+for ttbar
+
+Section 5.3.1 : What is the DY MC used for comparison? Do you apply the
+NLO QCD, EWK k-factors?
+
+Line 304 : Why |eta| < 2.1 and not 2.4?
+
+Can you add a plot for the m_lq distribution wihtout the 80/91 scaling
+(the way you show in Fig. 14)?
+
+Now, that you have a Z control region you need to connect it to your
+signal region. Several MET+X analyses do this by making use of transfer
+factors (in your case it would be Z->W transfer factors). Simply
+slapping a 20% uncertainty may not be adequate for several reasons :
+
+- Even though the data-MC agreement in Fig. 15 is at the level of 20%
+there seems to be a trend v/s m_lq.
+
+- A flat 20% uncertainty will not acccount for this shape difference,
+and may get constrained by the low m_lq bins.
+
+Instead what you could do is to tie the Z CR to the signal region using
+the Z->W transfer factors in bins of m_lq, and fit the two regions
+simultaneously.
+
+Btw, you could define similar transfer factors between your top CRs and
+the signal region as well. If you define these transfer factors as a
+function of m_lq there would not be the concern of relying on scale
+factors and uncertainties derived from an inclusive selection.
+
+---+++ Comments from Adish Vartak (May 29, 2017)
+
+
+What is the spin/parity of X?
+
+%GREEN%  Based on our specific case in coannihilation codex, X is  a Dirac fermion with the representative of (3,2,7/3) where the numbers in the parenthesis shows how the field transform under the  standard model SU(3)C × SU(2)L × U(1)Y gauge group. We have added that to the AN  %ENDCOLOR%
+
+What is the spin/parity of M?
+
+%GREEN%  Based on our specific case in coannihilation codex, M is  a scalar with the representative of (3,2,7/3) where the numbers in the parenthesis shows how the field transform under the standard model SU(3)C × SU(2)L × U(1)Y gauge group. We have added that to the AN  %ENDCOLOR%
+
+
+Line 68 : What is the chosen value of the mass splitting ? I am guessing this is kept constant?
+
+%GREEN% mass splitting is a free parameter in the model, but in order to satisfy the DM relic density requirement, it is found to be less  than 0.2. For  the current results we have assumed Delta=0.1 %ENDCOLOR%
+
+
+Line 69 : I am assuming this is the coupling between the mediator M and X, DM.  You say this is a Yukawa coupling, so I assume M has spin-0?  Can you write down the Lagrangian for this model in an equation? 
+
+    %GREEN%  That's true. That is the Yukawa coupling of the mediator to the dark sector particles (Dark Yukawa) which is denoted by $y_{D}$ is set to 0.1. Mediator which is LQ is a scalar. The Lagrangian is added to the note   %ENDCOLOR%
+
+
+
+Line 70 : What is the value of the coupling yQl2x2? 
+
+
+%GREEN% this is 1.414000e-01 which is equal to sqrt(2)/10 %ENDCOLOR%
+
+Table 2 : Some of the background cross sections are listed as X. Please fill in the appropriate values.
+
+%BLUE%  Done %ENDCOLOR%
+
+Table 3 : Have you done any validation of these cross sections ? Can these be compared to any pheno sources?
+
+%GREEN% These cross-sections are the ones used for search for pair production of the LQ that we use in the LQ analysis. I have added two references to the text %ENDCOLOR%
+
+Fig. 3 caption : Is this really the caption for this figure? Please add figures showing the MT and MET distributions for these signal points.
+
+%BLUE% Sorry the caption was wrong. We have added the MT and MET distributions and updated the caption. %ENDCOLOR%
+
+
+
+
+
+
+Line 199 : What does "reversing of the MT cut" mean? Is this reversing done in the QCD control region in data?
+
+ %GREEN%  It mean MT less thna 40 GeV. And yes, this reversing is done in QCD control region in Data   %ENDCOLOR%
+
+As I have mentioned several times before, I would like to see the plot of this fake rate (and also the corresponding QCD estimate) using the muon pT.
+
+ %BLUE%  We have added the muon fake rate in terms of the pt of the muon in the note. The estimation of the QCD is found to be within 5% of each other.   %ENDCOLOR%
+
+Please show the data-MC comparison of the QCD enriched control region you use in order to estimate the muon fake rate. I would like to see what is the fraction of the prompt muon backgrounds. What is the uncertainty on the muon fake rate due to the prompt muon background that you subtract from MC?
+
+%GREEN% Done. We have added both numerator and denumerator distributions to the note. As it is seen the purity in numerator is not  large due to the   presence of the real muon from W+jet, but in the denumerator the purity is much higher. We have assigned 50% uncertainty to the QCD estimation. The large fraction of the this uncertainty is due to the low purity of the QCD in the numerator i.e. if there is ~ 10% uncertainty on W + jet background normalization, this would lead to ~ 40% decrease/increase in muon fake rate which directly affected the QCD estimation %ENDCOLOR%
+
+Line 223 : What is the signal contamination in the tt control region with one or more b jets. Your leptoquark decays to a charm quark which can get misidentified as a b jet.
+
+ %BLUE%  It is almost negligible in dilepton channel and in single lepton channel it is less than 1 per mile of the whole background %ENDCOLOR%
+
+Lines 242 : Why use the inclusive scale factor, when you have computed the scale factors for different ranges of MT? You should simply apply the scale factor corresponding to the MT of an event.
+
+%BLUE%  The point is that the signal region is defined as the range with MT > 500 GeV. (this is found later on in the optimization chapter). One simple way is to find the Data to MC scale factor from inclusive MT regions. What I have tried to show  is the dependency of the data-to-MC scale factor with MT cut and in different MT regions. The conclusion is that the scale factor is more or less the same in different slices of the MT control region and agrees well with the inclusive SF i.e. no specific trend in terms of the MT. If we want to get the scale factor in the very high MT region (MT > 500 GeV where we define our signal region), then the statistics is so low that the SF would get very large uncertainty and non-conclusive%ENDCOLOR%
+
+
+Line 243 : Also, I don't understand where the 10% uncertainty comes from. For a given MT bin you measure a certain scale factor and you apply it to MC. The uncertainty depends on close this data-MC scale factor in the control region is to the signal region. You have to consider all possible reasons for why this scale factor would be different  between the control region and the signal region. To give you one example - btagging uncertainty. In your control region you require b-jets, in your signal region you veto bjets. The uncertainty due to btagging efficiency will be different between signal and control regions. There could be other sources of systematics as well.
+
+%BLUE%  As it was discussed above, the 10% is coming from 2 different major sources. these are the difference between 2 methods of estimating the data-to-MC scale factor for different ttbar control regions, as well as the effect of MT in the scale factor. The btagging efficiency would play a marginal role. Please note that in one of these control region, btagging is applied (CR 1) while in the other it is not applied (CR 2) and we have seen consistent SF in both control regions within 10% uncertainty%ENDCOLOR%
+
+Line 254 : Isn't MT > 100 your signal region ? How is it then a W+jets enriched "control" region? Again, taking the difference between the data-MC scale factors as a systematic makes no sense. There needs to be a physical motivation for this uncertainty. Here is a possible suggestion : Take Z(mumu) events (which you veto in your event selection and should therefore  be orthogonal to your signal region). Ignore one of the muons from the event (which also means adding it to the MET, so it becomes a neutrino effectively). Would this be a good proxy for the W+jets background? There will be some residual differences due to the 10 GeV mass difference between W and Z. But this can be examined in MC by doing a closure test, and can be assigned as a systematic uncertainty.
+
+%BLUE%  Our final signal region is MT > 500 GeV, so we can define W_Jet control region in lower MT bins. The method that you described is well-known in Higgs to tautau analysis and we call it Ersatz. This test is done and added to the analysis note. Comparing the distribution of the mass of LQ for data and simulation demonstrates that they agree withing 20%%ENDCOLOR%
+
+Line 287 : What is the source for the 5% trigger uncertainty ? Seems a bit too large (naively).  Also, to be sure you are applying the data-MC efficiency scale factors for muon selection provided by the POGs, right ? To be sure your muon selection is completely consistent with the standard POG IDs, correct?
+
+%BLUE%  This 5% is a rather conservative uncertainty. We know that there is mild deficit in the uncertainty for high pt muons and it was discussed in the context of my previous analysis and we agreed with ARCs and conveners to assign 5% uncertainty for rather high-pt muons.   we have got all the 4 scale factors from MUON POG: Tracker, Id,Iso and trigger. The muon selection is completely consistent with the standard POG IDs, ...%ENDCOLOR%
+
+
+Lines 338-339 : You have not shown (correct me if I have missed them) the MT, MET distributions for the signal points. So it is hard to judge how sensible these cuts are, particularly because you stop at relatively low value of MET, MT. As of now, you are taking the background prediction essentially from MC. So how does the number of events in data after applying MET, MT cuts affect you? Do you also run out of events in MC?
+
+%BLUE%  They are now shown in figure 3. If we apply very tight cuts on MT and MET we run out of statistics for both MC simulation and  data. i.e. if we apply 600 GeV cut on both MT and MET we are left with about 20 events in the entire LQ mass. So the optimum working point which is chosen (MT > 500 GeV and MET > 100 GeV) is a kind of compromise  between having enough statistics to be able to constrain the LQ mass distribution of backgrounds at low mass values as well as being efficient in terms of signal over background at high LQ Mass region %ENDCOLOR%
+
+
+Sorry if I overlook this information in the text, but what exactly are the cuts on MT, MET that you eventually use? 
+
+%BLUE%  MT > 500 GeV and MET > 100 GeV %ENDCOLOR%
+
+
+
+
+
+-- Main.AbdollahMohammadi - 2017-06-01

@@ -1,0 +1,11 @@
+
+ ./Make.sh CodexAnalyzer_Preselection.cc
+ cp CodexAnalyzer_Preselection.cc NewOutFiles_Preselection_JetPt50_200_Lminus/.
+ cp outNewOutFiles_Preselection_JetPt50_200_Lminus.txt NewOutFiles_Preselection_JetPt50_200_Lminus/.
+./CodexAnalyzer_Preselection.exe   NewOutFiles_Preselection_JetPt50_200_Lminus/DYJetsToLL.root      /Users/abdollah1/GIT_abdollah110/DM2017/ROOT80X/lqsamples2_jetPt50_MT200/DYJetsToLL_M-50_HT*.root 
+./CodexAnalyzer_Preselection.exe   NewOutFiles_Preselection_JetPt50_200_Lminus/WJetsToLNu.root    /Users/abdollah1/GIT_abdollah110/DM2017/ROOT80X/lqsamples2_jetPt50_MT200/WJetsToLNu*.root /Users/abdollah1/GIT_abdollah110/DM2017/ROOT80X/lqsamples2_jetPt50_MT200/WTo*root
+./CodexAnalyzer_Preselection.exe   NewOutFiles_Preselection_JetPt50_200_Lminus/TTJets.root      /Users/abdollah1/GIT_abdollah110/DM2017/ROOT80X/lqsamples2_jetPt50_MT200/TTJets.root 
+./CodexAnalyzer_Preselection.exe   NewOutFiles_Preselection_JetPt50_200_Lminus/VV.root  /Users/abdollah1/GIT_abdollah110/DM2017/ROOT80X/lqsamples2_jetPt50_MT200/ZZ*.root /Users/abdollah1/GIT_abdollah110/DM2017/ROOT80X/lqsamples2_jetPt50_MT200/WZ*.root /Users/abdollah1/GIT_abdollah110/DM2017/ROOT80X/lqsamples2_jetPt50_MT200/WW*.root
+./CodexAnalyzer_Preselection.exe   NewOutFiles_Preselection_JetPt50_200_Lminus/SingleTop.root      /Users/abdollah1/GIT_abdollah110/DM2017/ROOT80X/lqsamples2_jetPt50_MT200/ST_*.root 
+./CodexAnalyzer_Preselection.exe   NewOutFiles_Preselection_JetPt50_200_Lminus/Data.root      /Users/abdollah1/GIT_abdollah110/DM2017/ROOT80X/lqsamples2_jetPt50_MT200/Data.root 
+./CodexAnalyzer_Preselection.exe   NewOutFiles_Preselection_JetPt50_200_Lminus/Codex_1200.root      /Users/abdollah1/GIT_abdollah110/DM2017/ROOT80X/PrivateSample/Codex_LQ1200_DM_500_X_550.root 

@@ -1,0 +1,55 @@
+
+ ./Make.sh CodexAnalyzer_FinalSelection.cc
+ cp CodexAnalyzer_FinalSelection.cc NewOutFiles_FinalSelection_SingleMu/.
+ cp outNewOutFiles_FinalSelection_SingleMu.txt NewOutFiles_FinalSelection_SingleMu/.
+./CodexAnalyzer_FinalSelection.exe   NewOutFiles_FinalSelection_SingleMu/DYJetsToLL.root      /Users/abdollah1/GIT_abdollah110/DM2017/ROOT80X/SampleLQ2/DYJetsToLL_M-50_HT*.root 
+./CodexAnalyzer_FinalSelection.exe   NewOutFiles_FinalSelection_SingleMu/WJetsToLNu.root    /Users/abdollah1/GIT_abdollah110/DM2017/ROOT80X/SampleLQ2/WJetsToLNu*.root /Users/abdollah1/GIT_abdollah110/DM2017/ROOT80X/SampleLQ2/WTo*root
+./CodexAnalyzer_FinalSelection.exe   NewOutFiles_FinalSelection_SingleMu/TTJets.root      /Users/abdollah1/GIT_abdollah110/DM2017/ROOT80X/SampleLQ2/TTJets.root 
+./CodexAnalyzer_FinalSelection.exe   NewOutFiles_FinalSelection_SingleMu/VV.root  /Users/abdollah1/GIT_abdollah110/DM2017/ROOT80X/SampleLQ2/ZZ*.root /Users/abdollah1/GIT_abdollah110/DM2017/ROOT80X/SampleLQ2/WZ*.root /Users/abdollah1/GIT_abdollah110/DM2017/ROOT80X/SampleLQ2/WW*.root
+./CodexAnalyzer_FinalSelection.exe   NewOutFiles_FinalSelection_SingleMu/SingleTop.root      /Users/abdollah1/GIT_abdollah110/DM2017/ROOT80X/SampleLQ2/ST_*.root 
+./CodexAnalyzer_FinalSelection.exe   NewOutFiles_FinalSelection_SingleMu/Data.root      /Users/abdollah1/GIT_abdollah110/DM2017/ROOT80X/SampleLQ2/Data.root 
+./CodexAnalyzer_FinalSelection.exe   NewOutFiles_FinalSelection_SingleMu/Codex_1200      /Users/abdollah1/GIT_abdollah110/DM2017/ROOT80X/PrivateSample/Codex_LQ1200_DM_500_X_550.root 
+./CodexAnalyzer_FinalSelection.exe   NewOutFiles_FinalSelection_SingleMu/Codex_1.root      /Users/abdollah1/GIT_abdollah110/DM2017/ROOT80X/PrivateSample/Codex_LQ1000_DM_300_X_330.root 
+./CodexAnalyzer_FinalSelection.exe   NewOutFiles_FinalSelection_SingleMu/Codex_2.root      /Users/abdollah1/GIT_abdollah110/DM2017/ROOT80X/PrivateSample/Codex_LQ1000_DM_350_X_385.root 
+./CodexAnalyzer_FinalSelection.exe   NewOutFiles_FinalSelection_SingleMu/Codex_3.root      /Users/abdollah1/GIT_abdollah110/DM2017/ROOT80X/PrivateSample/Codex_LQ1000_DM_400_X_440.root 
+./CodexAnalyzer_FinalSelection.exe   NewOutFiles_FinalSelection_SingleMu/Codex_4.root      /Users/abdollah1/GIT_abdollah110/DM2017/ROOT80X/PrivateSample/Codex_LQ1000_DM_450_X_495.root 
+./CodexAnalyzer_FinalSelection.exe   NewOutFiles_FinalSelection_SingleMu/Codex_5.root      /Users/abdollah1/GIT_abdollah110/DM2017/ROOT80X/PrivateSample/Codex_LQ1100_DM_300_X_330.root 
+./CodexAnalyzer_FinalSelection.exe   NewOutFiles_FinalSelection_SingleMu/Codex_6.root      /Users/abdollah1/GIT_abdollah110/DM2017/ROOT80X/PrivateSample/Codex_LQ1100_DM_350_X_385.root 
+./CodexAnalyzer_FinalSelection.exe   NewOutFiles_FinalSelection_SingleMu/Codex_7.root      /Users/abdollah1/GIT_abdollah110/DM2017/ROOT80X/PrivateSample/Codex_LQ1100_DM_400_X_440.root 
+./CodexAnalyzer_FinalSelection.exe   NewOutFiles_FinalSelection_SingleMu/Codex_8.root      /Users/abdollah1/GIT_abdollah110/DM2017/ROOT80X/PrivateSample/Codex_LQ1100_DM_450_X_495.root 
+./CodexAnalyzer_FinalSelection.exe   NewOutFiles_FinalSelection_SingleMu/Codex_9.root      /Users/abdollah1/GIT_abdollah110/DM2017/ROOT80X/PrivateSample/Codex_LQ1100_DM_500_X_550.root 
+./CodexAnalyzer_FinalSelection.exe   NewOutFiles_FinalSelection_SingleMu/Codex_10.root      /Users/abdollah1/GIT_abdollah110/DM2017/ROOT80X/PrivateSample/Codex_LQ1200_DM_300_X_330.root 
+./CodexAnalyzer_FinalSelection.exe   NewOutFiles_FinalSelection_SingleMu/Codex_11.root      /Users/abdollah1/GIT_abdollah110/DM2017/ROOT80X/PrivateSample/Codex_LQ1200_DM_350_X_385.root 
+./CodexAnalyzer_FinalSelection.exe   NewOutFiles_FinalSelection_SingleMu/Codex_12.root      /Users/abdollah1/GIT_abdollah110/DM2017/ROOT80X/PrivateSample/Codex_LQ1200_DM_400_X_440.root 
+./CodexAnalyzer_FinalSelection.exe   NewOutFiles_FinalSelection_SingleMu/Codex_13.root      /Users/abdollah1/GIT_abdollah110/DM2017/ROOT80X/PrivateSample/Codex_LQ1200_DM_450_X_495.root 
+./CodexAnalyzer_FinalSelection.exe   NewOutFiles_FinalSelection_SingleMu/Codex_14.root      /Users/abdollah1/GIT_abdollah110/DM2017/ROOT80X/PrivateSample/Codex_LQ1200_DM_500_X_550.root 
+./CodexAnalyzer_FinalSelection.exe   NewOutFiles_FinalSelection_SingleMu/Codex_15.root      /Users/abdollah1/GIT_abdollah110/DM2017/ROOT80X/PrivateSample/Codex_LQ1200_DM_550_X_595.root 
+./CodexAnalyzer_FinalSelection.exe   NewOutFiles_FinalSelection_SingleMu/Codex_16.root      /Users/abdollah1/GIT_abdollah110/DM2017/ROOT80X/PrivateSample/Codex_LQ1300_DM_300_X_330.root 
+./CodexAnalyzer_FinalSelection.exe   NewOutFiles_FinalSelection_SingleMu/Codex_17.root      /Users/abdollah1/GIT_abdollah110/DM2017/ROOT80X/PrivateSample/Codex_LQ1300_DM_350_X_385.root 
+./CodexAnalyzer_FinalSelection.exe   NewOutFiles_FinalSelection_SingleMu/Codex_18.root      /Users/abdollah1/GIT_abdollah110/DM2017/ROOT80X/PrivateSample/Codex_LQ1300_DM_400_X_440.root 
+./CodexAnalyzer_FinalSelection.exe   NewOutFiles_FinalSelection_SingleMu/Codex_19.root      /Users/abdollah1/GIT_abdollah110/DM2017/ROOT80X/PrivateSample/Codex_LQ1300_DM_450_X_495.root 
+./CodexAnalyzer_FinalSelection.exe   NewOutFiles_FinalSelection_SingleMu/Codex_20.root      /Users/abdollah1/GIT_abdollah110/DM2017/ROOT80X/PrivateSample/Codex_LQ1300_DM_500_X_550.root 
+./CodexAnalyzer_FinalSelection.exe   NewOutFiles_FinalSelection_SingleMu/Codex_21.root      /Users/abdollah1/GIT_abdollah110/DM2017/ROOT80X/PrivateSample/Codex_LQ1300_DM_550_X_605.root 
+./CodexAnalyzer_FinalSelection.exe   NewOutFiles_FinalSelection_SingleMu/Codex_22.root      /Users/abdollah1/GIT_abdollah110/DM2017/ROOT80X/PrivateSample/Codex_LQ1300_DM_600_X_660.root 
+./CodexAnalyzer_FinalSelection.exe   NewOutFiles_FinalSelection_SingleMu/Codex_23.root      /Users/abdollah1/GIT_abdollah110/DM2017/ROOT80X/PrivateSample/Codex_LQ1400_DM_300_X_330.root 
+./CodexAnalyzer_FinalSelection.exe   NewOutFiles_FinalSelection_SingleMu/Codex_24.root      /Users/abdollah1/GIT_abdollah110/DM2017/ROOT80X/PrivateSample/Codex_LQ1400_DM_350_X_385.root 
+./CodexAnalyzer_FinalSelection.exe   NewOutFiles_FinalSelection_SingleMu/Codex_25.root      /Users/abdollah1/GIT_abdollah110/DM2017/ROOT80X/PrivateSample/Codex_LQ1400_DM_400_X_440.root 
+./CodexAnalyzer_FinalSelection.exe   NewOutFiles_FinalSelection_SingleMu/Codex_26.root      /Users/abdollah1/GIT_abdollah110/DM2017/ROOT80X/PrivateSample/Codex_LQ1400_DM_450_X_495.root 
+./CodexAnalyzer_FinalSelection.exe   NewOutFiles_FinalSelection_SingleMu/Codex_27.root      /Users/abdollah1/GIT_abdollah110/DM2017/ROOT80X/PrivateSample/Codex_LQ1400_DM_500_X_550.root 
+./CodexAnalyzer_FinalSelection.exe   NewOutFiles_FinalSelection_SingleMu/Codex_28.root      /Users/abdollah1/GIT_abdollah110/DM2017/ROOT80X/PrivateSample/Codex_LQ1400_DM_550_X_605.root 
+./CodexAnalyzer_FinalSelection.exe   NewOutFiles_FinalSelection_SingleMu/Codex_29.root      /Users/abdollah1/GIT_abdollah110/DM2017/ROOT80X/PrivateSample/Codex_LQ1400_DM_600_X_660.root 
+./CodexAnalyzer_FinalSelection.exe   NewOutFiles_FinalSelection_SingleMu/Codex_30.root      /Users/abdollah1/GIT_abdollah110/DM2017/ROOT80X/PrivateSample/Codex_LQ1400_DM_650_X_715.root 
+./CodexAnalyzer_FinalSelection.exe   NewOutFiles_FinalSelection_SingleMu/Codex_31.root      /Users/abdollah1/GIT_abdollah110/DM2017/ROOT80X/PrivateSample/Codex_LQ1500_DM_300_X_330.root 
+./CodexAnalyzer_FinalSelection.exe   NewOutFiles_FinalSelection_SingleMu/Codex_32.root      /Users/abdollah1/GIT_abdollah110/DM2017/ROOT80X/PrivateSample/Codex_LQ1500_DM_350_X_385.root 
+./CodexAnalyzer_FinalSelection.exe   NewOutFiles_FinalSelection_SingleMu/Codex_33.root      /Users/abdollah1/GIT_abdollah110/DM2017/ROOT80X/PrivateSample/Codex_LQ1500_DM_400_X_440.root 
+./CodexAnalyzer_FinalSelection.exe   NewOutFiles_FinalSelection_SingleMu/Codex_34.root      /Users/abdollah1/GIT_abdollah110/DM2017/ROOT80X/PrivateSample/Codex_LQ1500_DM_450_X_495.root 
+./CodexAnalyzer_FinalSelection.exe   NewOutFiles_FinalSelection_SingleMu/Codex_35.root      /Users/abdollah1/GIT_abdollah110/DM2017/ROOT80X/PrivateSample/Codex_LQ1500_DM_500_X_550.root 
+./CodexAnalyzer_FinalSelection.exe   NewOutFiles_FinalSelection_SingleMu/Codex_36.root      /Users/abdollah1/GIT_abdollah110/DM2017/ROOT80X/PrivateSample/Codex_LQ1500_DM_550_X_605.root 
+./CodexAnalyzer_FinalSelection.exe   NewOutFiles_FinalSelection_SingleMu/Codex_37.root      /Users/abdollah1/GIT_abdollah110/DM2017/ROOT80X/PrivateSample/Codex_LQ1500_DM_600_X_660.root 
+./CodexAnalyzer_FinalSelection.exe   NewOutFiles_FinalSelection_SingleMu/Codex_38.root      /Users/abdollah1/GIT_abdollah110/DM2017/ROOT80X/PrivateSample/Codex_LQ1500_DM_650_X_715.root 
+./CodexAnalyzer_FinalSelection.exe   NewOutFiles_FinalSelection_SingleMu/Codex_39.root      /Users/abdollah1/GIT_abdollah110/DM2017/ROOT80X/PrivateSample/Codex_LQ1500_DM_700_X_770.root 
+./CodexAnalyzer_FinalSelection.exe   NewOutFiles_FinalSelection_SingleMu/Codex_40.root      /Users/abdollah1/GIT_abdollah110/DM2017/ROOT80X/PrivateSample/Codex_LQ800_DM_300_X_330.root 
+./CodexAnalyzer_FinalSelection.exe   NewOutFiles_FinalSelection_SingleMu/Codex_41.root      /Users/abdollah1/GIT_abdollah110/DM2017/ROOT80X/PrivateSample/Codex_LQ800_DM_350_X_385.root 
+./CodexAnalyzer_FinalSelection.exe   NewOutFiles_FinalSelection_SingleMu/Codex_42.root      /Users/abdollah1/GIT_abdollah110/DM2017/ROOT80X/PrivateSample/Codex_LQ900_DM_300_X_330.root 
+./CodexAnalyzer_FinalSelection.exe   NewOutFiles_FinalSelection_SingleMu/Codex_43.root      /Users/abdollah1/GIT_abdollah110/DM2017/ROOT80X/PrivateSample/Codex_LQ900_DM_350_X_385.root 
+./CodexAnalyzer_FinalSelection.exe   NewOutFiles_FinalSelection_SingleMu/Codex_44.root      /Users/abdollah1/GIT_abdollah110/DM2017/ROOT80X/PrivateSample/Codex_LQ900_DM_400_X_440.root 
