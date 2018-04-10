@@ -194,8 +194,8 @@ int main(int argc, char** argv) {
         TFile * myFile = TFile::Open(f_Double->GetName());
         TH1F * HistoTot = (TH1F*) myFile->Get("hcount");
         
-//                TTree *Run_Tree = (TTree*) f_Double->Get("ggNtuplizer/EventTree");
-        TTree *Run_Tree = (TTree*) f_Double->Get("EventTree");
+                TTree *Run_Tree = (TTree*) f_Double->Get("ggNtuplizer/EventTree");
+//        TTree *Run_Tree = (TTree*) f_Double->Get("EventTree");
         
         cout.setf(ios::fixed, ios::floatfield);
         cout.precision(6);
@@ -455,6 +455,7 @@ int main(int argc, char** argv) {
             bool PassTrigger = 1;
 //            bool PassTrigger = ((HLTEleMuX >> 21 & 1) == 1 || (HLTEleMuX >> 41 & 1) == 1); //   else if (name.find("HLT_Mu50_v") != string::npos) bitEleMuX = 21;
             if (! PassTrigger) continue;
+            if (pfMET < 100) continue;
             
 //            //###########       tau Veto   ###########################################################
 //            int numTau=0;
@@ -598,11 +599,28 @@ int main(int argc, char** argv) {
 //            }
 //            
             
+            vector <TLorentzVector> muCollection;
+            muCollection.clear();
+            TLorentzVector XMu4Momentum;
+            
+            for  (int xmu=0 ; xmu < nMu; xmu++){
+                
+                float IsoMu=muPFChIso->at(xmu)/muPt->at(xmu);
+                if ( (muPFNeuIso->at(xmu) + muPFPhoIso->at(xmu) - 0.5* muPFPUIso->at(xmu) )  > 0.0)
+                    IsoMu= ( muPFChIso->at(xmu)/muPt->at(xmu) + muPFNeuIso->at(xmu) + muPFPhoIso->at(xmu) - 0.5* muPFPUIso->at(xmu))/muPt->at(xmu);
+                
+                bool MuPtCutX = muPt->at(xmu) > LeptonPtCut_ && fabs(muEta->at(xmu)) < 2.4 && (muIDbit->at(xmu) >> 2 & 1) &&  IsoMu < 0.15 ;
+            
+                XMu4Momentum.SetPtEtaPhiM(muPt->at(xmu),muEta->at(xmu),muPhi->at(xmu),MuMass);
+                if (MuPtCutX) muCollection.push_back(XMu4Momentum);
+
+            }
+            
                     
                     
                 
             TLorentzVector Mu4Momentum, Jet4Momentum,KJet4Momentum,LQ4Momentum,Mu24Momentum, MuScaleCorr4Momentum;
-            
+            bool hasonemuon=1;
             for  (int imu=0 ; imu < nMu; imu++){
                 
                 float IsoMu=muPFChIso->at(imu)/muPt->at(imu);
@@ -611,8 +629,8 @@ int main(int argc, char** argv) {
                 
                 bool MuPtCut = muPt->at(imu) > LeptonPtCut_ && fabs(muEta->at(imu)) < 2.4 ;
 //                bool MuPtCut = muPt->at(imu) > LeptonPtCut_ && fabs(muEta->at(imu)) < 2.1 ;
-//                bool MuIdIso=( (muIDbit->at(imu) >> 2 & 1)  && fabs(muD0->at(imu)) < 0.045 && fabs(muDz->at(imu)) < 0.2); //Tight Muon Id
-                                bool MuIdIso=( (muIDbit->at(imu) >> 2 & 1)); //Tight Muon Id
+                bool MuIdIso=( (muIDbit->at(imu) >> 2 & 1)  && fabs(muD0->at(imu)) < 0.045 && fabs(muDz->at(imu)) < 0.2); //Tight Muon Id
+//                                bool MuIdIso=( (muIDbit->at(imu) >> 2 & 1)); //Tight Muon Id
                 
                 
                 if (! MuPtCut || !MuIdIso ) continue;
@@ -660,9 +678,14 @@ int main(int argc, char** argv) {
                 
 //                //###########    Compute recoHT and ST  ###########################################################
 //                float recoHT=0;
-//                
+//
+//                for  (int qmu=0 ; qmu < nMu; qmu++){
+//                   if (event==9261)  cout<<"Evt: "<<event <<", MuPt: "<<muPt->at(qmu) <<", MuEta: "<<muEta->at(qmu)<<"\n";
+//                }
 //                for (int kjet= 0 ; kjet < nJet ; kjet++){
-//                    
+//                    if (event==9261) cout <<", jetPt: "<<jetPt->at(kjet) <<", jetEta: "<<jetEta->at(kjet) <<"\n";
+//                }
+//
 //                    KJet4Momentum.SetPtEtaPhiE(jetPt->at(kjet),jetEta->at(kjet),jetPhi->at(kjet),jetEn->at(kjet));
 //                    if (jetPFLooseId->at(kjet) > 0.5 && jetPt->at(kjet) > 30 && fabs(jetEta->at(kjet)) < 2.4 && KJet4Momentum.DeltaR(Mu4Momentum) > 0.5)
 //                        recoHT += jetPt->at(kjet);
@@ -674,9 +697,18 @@ int main(int argc, char** argv) {
                     
                     Jet4Momentum.SetPtEtaPhiE(jetPt->at(ijet),jetEta->at(ijet),jetPhi->at(ijet),jetEn->at(ijet));
                     
-                    bool goodJet = (jetPt->at(ijet) > JetPtCut && fabs(jetEta->at(ijet)) < 3.0 && Jet4Momentum.DeltaR(Mu4Momentum) > 0.5);
+                    bool goodJet = (jetPFLooseId->at(ijet) > 0.5 && jetPt->at(ijet) > JetPtCut && fabs(jetEta->at(ijet)) < 3.0 && Jet4Momentum.DeltaR(Mu4Momentum) > 0.5);
 //                    bool goodJet = (jetPFLooseId->at(ijet) > 0.5 && jetPt->at(ijet) > JetPtCut && fabs(jetEta->at(ijet)) < 2.4 && Jet4Momentum.DeltaR(Mu4Momentum) > 0.5);
+                    
+//                    for (int numMux=0; numMux < muCollection.size(); numMux++){
+//                        if (muCollection[numMux].DeltaR(Jet4Momentum) < 0.3)
+//                            goodJet=false;
+//                            }
+                    
+                    
                     if (! goodJet) continue;
+                    
+                    
                     
                     ///////////////////////////***************** Temp
                     //                    if  (jetPt->at(ijet) > 200) break;
@@ -738,6 +770,16 @@ int main(int argc, char** argv) {
                     bool MT_category[size_mTCat] = {NoMT,HighMT,MT50To150,MTMore300,MTMore500};
                     std::string MT_Cat[size_mTCat] = {"_NoMT","_HighMT","_MT50To150","_MT300","_MT500"};
                     
+                    
+                    
+                    
+                    if (hasonemuon && MTMore500) cout<<"Evt: "<<event <<", MuPt: "<<muPt->at(imu) <<", MuEta: "<<muEta->at(imu) <<", Met: "<<pfMET <<", jetPt: "<<jetPt->at(ijet) <<", jetEta: "<<jetEta->at(ijet) <<", DR: "<<Jet4Momentum.DeltaR(Mu4Momentum) <<"\n";
+                    
+                    hasonemuon=0;
+                    break;
+                    
+                    
+                    
                     //###############################################################################################
                     //  dPhi Jet_MET Categorization
                     //###############################################################################################
@@ -782,7 +824,7 @@ int main(int argc, char** argv) {
                     if (isTTJets == string::npos) size_topPtRW = 1; // If the sample in not ttbar, don't care about new category
                     
                     //###############################################################################################
-                    
+//                    cout<<"Event: "<<event <<", Lumi: "<<lumis <<", Run: "<<run <<"\n";
                     std::string CHL="MuJet";
                     
 //                    plotFill("Weight_Mu", MuonCor,200,0,2);
@@ -810,6 +852,7 @@ int main(int argc, char** argv) {
                                                         
                                                         
                                                         
+                                                        
                                                         //##################
                                                         //This check is used to make sure that each event is just filled once for any of the categories ==> No doube-counting of events  (this is specially important for ttbar events where we have many jets and leptons)
                                                         if (!( std::find(HistNamesFilled.begin(), HistNamesFilled.end(), FullStringName) != HistNamesFilled.end())){
@@ -819,7 +862,7 @@ int main(int argc, char** argv) {
                                                             //                                                                if (LQ4Momentum.M() > 1100 && muPt->at(imu) < 300){
                                                             //                                                                    if ( pfMET < 300){
                                                             if (1){
-                                                                
+//                                                                cout<<"Event: "<<event <<", Lumi: "<<lumis <<", Run: "<<run <<"\n";
                                                                 //##################
                                                                 //                                                            plotFill(CHL+"_ElectronEffVeto"+FullStringName,ElectronEffVeto,300,0,3);
 //                                                                plotFill(CHL+"_tmass_MuMet"+FullStringName,tmass_MuMet,200,0,2000,FullWeight);

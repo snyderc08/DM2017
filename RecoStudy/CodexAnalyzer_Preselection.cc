@@ -595,8 +595,25 @@ int main(int argc, char** argv) {
                 if ( muPt->at(xmu) > 60 ) numMuon++;
 //                if ( muPt->at(xmu) > 50 && (muIDbit->at(xmu) >> 0 & 1)) numMuon++;
             }
+            // For XCleaning jet from muon
+            vector <TLorentzVector> muCollection;
+            muCollection.clear();
+            TLorentzVector XMu4Momentum;
             
-                    
+            for  (int xmu=0 ; xmu < nMu; xmu++){
+                
+                float IsoMu=muPFChIso->at(xmu)/muPt->at(xmu);
+                if ( (muPFNeuIso->at(xmu) + muPFPhoIso->at(xmu) - 0.5* muPFPUIso->at(xmu) )  > 0.0)
+                    IsoMu= ( muPFChIso->at(xmu)/muPt->at(xmu) + muPFNeuIso->at(xmu) + muPFPhoIso->at(xmu) - 0.5* muPFPUIso->at(xmu))/muPt->at(xmu);
+                
+                bool MuPtCutX = muPt->at(xmu) > LeptonPtCut_ && fabs(muEta->at(xmu)) < 2.4 && (muIDbit->at(xmu) >> 2 & 1) &&  IsoMu < 0.15 ;
+                
+                XMu4Momentum.SetPtEtaPhiM(muPt->at(xmu),muEta->at(xmu),muPhi->at(xmu),MuMass);
+                if (MuPtCutX) muCollection.push_back(XMu4Momentum);
+                
+            }
+            
+            
                     
                     
                 
@@ -685,6 +702,12 @@ int main(int argc, char** argv) {
                     
                     
                     bool goodJet = (jetPFLooseId->at(ijet) > 0.5 && jetPt->at(ijet) > JetPtCut && fabs(jetEta->at(ijet)) < 2.4 && Jet4Momentum.DeltaR(Mu4Momentum) > 0.5);
+                    // For XCleaning jet from muon
+//                    for (int numMux=0; numMux < muCollection.size(); numMux++){
+//                        if (muCollection[numMux].DeltaR(Jet4Momentum) < 0.3)
+//                            goodJet=false;
+//                    }
+                    
                     if (! goodJet) continue;
                     
                     ///////////////////////////***************** Temp
