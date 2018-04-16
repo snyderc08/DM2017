@@ -114,10 +114,10 @@ int main(int argc, char** argv) {
             //###############################################################################################
             //  MET Filters (only on Data)
             //###############################################################################################
-            if (isData && (metFilters!=1536)) continue;
+//            if (isData && (metFilters!=1536)) continue;
             
             //###########       Trigger Requirement ###########################################################
-            bool PassTrigger =((HLTEleMuX >> 21 & 1) == 1 || (HLTEleMuX >> 41 & 1) == 1); //   else if (name.find("HLT_Mu50_v") != string::npos) bitEleMuX = 21;
+//            bool PassTrigger =((HLTEleMuX >> 21 & 1) == 1 || (HLTEleMuX >> 41 & 1) == 1); //   else if (name.find("HLT_Mu50_v") != string::npos) bitEleMuX = 21;
             if (! PassTrigger) continue;
             
             //###############################################################################################
@@ -152,9 +152,6 @@ int main(int argc, char** argv) {
             
             if (WBosonMass > 100 && (isWToLNu!= string::npos || isWToTauNu!=string::npos)) WBosonKFactor=HistMassDepKFactor->GetBinContent(int(WBosonMass)/10 +1); //Mass binned K-factor
             if (WBosonMass <= 100 && isWJets!= string::npos  )WBosonKFactor= FuncBosonKFactor("W1") + FuncBosonKFactor("W2") * WBosonPt; //HT binned & inclusive K-factor
-            
-//            if (isWJets!= string::npos || isWToLNu!= string::npos || isWToTauNu!=string::npos) WBosonKFactor=HistMassDepKFactor->GetBinContent(int(WBosonMass)/10 +1); //Mass binned K-factor
-//            if (WBosonMass <= 100 && isWJets!= string::npos  )WBosonKFactor= FuncBosonKFactor("W1") + FuncBosonKFactor("W2") * WBosonPt; //HT binned & inclusive K-factor
             
             //................................................................................................................
             //................................................................................................................
@@ -210,35 +207,35 @@ int main(int argc, char** argv) {
             int numTau= getNumTau();
             
             //###########       Ele Veto   ###########################################################
-            //            https://twiki.cern.ch/twiki/bin/view/CMS/MultivariateElectronIdentificationRun2#Recommended_MVA_recipes_for_2016
-            int numElectron=0;
-            float ElectronCor=1;
-            TLorentzVector Ele4Momentum;
-            float ElectronEffVeto=1;
-            Ele4Momentum.SetPtEtaPhiM(0,0,0,0);
-            for  (int jele=0 ; jele < nEle; jele++){
-                
-                if ( elePt->at(jele) < 15 || fabs(eleEta->at(jele)) > 2.5) continue;
-                
-                bool eleMVAIdExtra= false;
-                if (fabs (eleSCEta->at(jele)) <= 0.8 && eleIDMVA->at(jele) >   0.837  ) eleMVAIdExtra= true;
-                else if (fabs (eleSCEta->at(jele)) >  0.8 &&fabs (eleSCEta->at(jele)) <=  1.5 && eleIDMVA->at(jele) >   0.715  ) eleMVAIdExtra= true;
-                else if ( fabs (eleSCEta->at(jele)) >=  1.5 && eleIDMVA->at(jele) >  0.357  ) eleMVAIdExtra= true;
-                else eleMVAIdExtra= false;
-                
-                
-                
-                if (!(eleMVAIdExtra )) {
-                    ElectronEffVeto= ElectronEffVeto * getEffVetoMVA90WPElectron80X(isData,  elePt->at(jele),eleSCEta->at(jele),    HistoEleMVAIdIso90 , HistoEleMVAIdIso90_EffMC,HistoEleMVAIdIso90_EffData);
-                    continue;
-                }
-                
-                ElectronCor=getCorrFactorMVA90WPElectron80X(isData,  elePt->at(jele),eleSCEta->at(jele),    HistoEleMVAIdIso90 );
-                Ele4Momentum.SetPtEtaPhiM(elePt->at(jele),eleEta->at(jele),elePhi->at(jele),eleMass);
-                numElectron++;
-                
-                break;
-            }
+//            //            https://twiki.cern.ch/twiki/bin/view/CMS/MultivariateElectronIdentificationRun2#Recommended_MVA_recipes_for_2016
+//            int numElectron=0;
+//            float ElectronCor=1;
+//            TLorentzVector Ele4Momentum;
+//            float ElectronEffVeto=1;
+//            Ele4Momentum.SetPtEtaPhiM(0,0,0,0);
+//            for  (int jele=0 ; jele < nEle; jele++){
+//                
+//                if ( elePt->at(jele) < 15 || fabs(eleEta->at(jele)) > 2.5) continue;
+//                
+//                bool eleMVAIdExtra= false;
+//                if (fabs (eleSCEta->at(jele)) <= 0.8 && eleIDMVA->at(jele) >   0.837  ) eleMVAIdExtra= true;
+//                else if (fabs (eleSCEta->at(jele)) >  0.8 &&fabs (eleSCEta->at(jele)) <=  1.5 && eleIDMVA->at(jele) >   0.715  ) eleMVAIdExtra= true;
+//                else if ( fabs (eleSCEta->at(jele)) >=  1.5 && eleIDMVA->at(jele) >  0.357  ) eleMVAIdExtra= true;
+//                else eleMVAIdExtra= false;
+//                
+//                
+//                
+//                if (!(eleMVAIdExtra )) {
+//                    ElectronEffVeto= ElectronEffVeto * getEffVetoMVA90WPElectron80X(isData,  elePt->at(jele),eleSCEta->at(jele),    HistoEleMVAIdIso90 , HistoEleMVAIdIso90_EffMC,HistoEleMVAIdIso90_EffData);
+//                    continue;
+//                }
+//                
+//                ElectronCor=getCorrFactorMVA90WPElectron80X(isData,  elePt->at(jele),eleSCEta->at(jele),    HistoEleMVAIdIso90 );
+//                Ele4Momentum.SetPtEtaPhiM(elePt->at(jele),eleEta->at(jele),elePhi->at(jele),eleMass);
+//                numElectron++;
+//                
+//                break;
+//            }
             //###########       BTag SF   ###########################################################
             float FinalBTagSF=FuncFinalBTagSF(isData,Btagg_TT);
             
@@ -278,13 +275,11 @@ int main(int argc, char** argv) {
             for  (int imu=0 ; imu < nMu; imu++){
                 
                 float IsoMu=muPFChIso->at(imu)/muPt->at(imu);
-                if ( (muPFNeuIso->at(imu) + muPFPhoIso->at(imu) - 0.5* muPFPUIso->at(imu) )  > 0.0){
-                    IsoMu= ( muPFChIso->at(imu) + muPFNeuIso->at(imu) + muPFPhoIso->at(imu) - 0.5* muPFPUIso->at(imu))/muPt->at(imu);
-//                IsoMu= ( muPFChIso->at(imu)/muPt->at(imu) + muPFNeuIso->at(imu) + muPFPhoIso->at(imu) - 0.5* muPFPUIso->at(imu))/muPt->at(imu);//BUGGGGGGGG
-                }
+                if ( (muPFNeuIso->at(imu) + muPFPhoIso->at(imu) - 0.5* muPFPUIso->at(imu) )  > 0.0)
+                    IsoMu= ( muPFChIso->at(imu)/muPt->at(imu) + muPFNeuIso->at(imu) + muPFPhoIso->at(imu) - 0.5* muPFPUIso->at(imu))/muPt->at(imu);
                 
                 bool MuPtCut = muPt->at(imu) > LeptonPtCut_ && fabs(muEta->at(imu)) < 2.4 ;
-                bool MuIdIso=( (muIDbit->at(imu) >> 2 & 1)  && fabs(muD0->at(imu)) < 0.045 && fabs(muDz->at(imu)) < 0.2); //Tight Muon Id
+                bool MuIdIso=( (muIDbit->at(imu) >> 2 & 1)  && fabs(muD0->at(imu)) < 0.045 && fabs(muDz->at(imu)) < 0.2 && IsoMu < 0.15) ; //Tight Muon Id
                 
                 
                 if (! MuPtCut || !MuIdIso ) continue;
@@ -363,7 +358,6 @@ int main(int argc, char** argv) {
                     const int size_CR = 3;
                     
                     bool signalRegion = numTau+numZboson + numElectron  < 1  && numBJet < 1;
-//                    bool signalRegion = numTau+numZboson + numElectron  < 1;
 //                    bool TTcontrolRegion_DiLep = (numTau <1 && numZboson < 1 && numElectron > 0 && !isThisJetElectron );
                     bool TTcontrolRegion_DiLep = (numTau <1 && numZboson < 1 && numElectron > 0 );
                     if (TTcontrolRegion_DiLep) FinalBTagSF=1;

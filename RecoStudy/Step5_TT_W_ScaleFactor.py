@@ -73,7 +73,12 @@ MTRange=["_NoMT","_HighMT","_MT50To150","_MT500"]
 
 #InputRootFiles='FILESNEEDEDFORTT_W_SF/'
 #InputRootFiles='NewOutFiles_CodexAnalyzer_Preselection_MuEta2p1/'
-InputRootFiles='NewOutFiles_Preselection_/'
+#InputRootFiles='NewOutFiles_Preselection_/'
+#InputRootFiles='NewOutFiles_Preselection_newCheckAddTkMu50/'
+#InputRootFiles='NewOutFiles_Preselection_fixIsoBug/'
+#InputRootFiles='NewOutFiles_Preselection_IncludeIsoBug/'
+InputRootFiles = 'NewOutFiles_Preselection_FixBugNoBVetoREmove/'
+
 
 
 def SF_TT(Name):

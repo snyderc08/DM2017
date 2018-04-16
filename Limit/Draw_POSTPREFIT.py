@@ -361,7 +361,7 @@ def MakePlot(FileName,categoriy,HistName,Xaxis,MaxRange,sig,sigLeg,XSection, Sta
 #    c.Modified()
     h1.GetYaxis().SetRangeUser(.01,2.99)
 #    c.Modified()
-    c.SaveAs("_Finalplot_NoBtagVeto"+categoriy+Status+".pdf")
+    c.SaveAs("_Finalplot_BugFixNoEWKUnc"+categoriy+Status+".pdf")
 #    c.SaveAs("_Finalplot_"+categoriy+".pdf")
     #       c.SaveAs("mvis"+categoriy+".png")
 
@@ -380,10 +380,10 @@ def MakePlot(FileName,categoriy,HistName,Xaxis,MaxRange,sig,sigLeg,XSection, Sta
 #               ]
 
 
-#FileNamesInfo=[
-#               ["postfit_shapes.root","Codex__mj_1_13TeV_prefit","M_{#muj} [GeV]","#mu j ",2000,"Codex_","LQ 1200GeV (DM 500 GeV)",10],
-#               ["postfit_shapes.root","Codex__mj_1_13TeV_postfit","M_{#muj} [GeV]","#mu j ",2000,"Codex_","LQ 1200GeV (DM 500 GeV)",10],
-#               ]
+FileNamesInfo=[
+               ["postfit_shapes_BugFixNoEWKUnc.root","Codex__mj_1_13TeV_prefit","M_{#muj} [GeV]","#mu j ",2000,"Codex_","LQ 1200GeV (DM 500 GeV)",10],
+               ["postfit_shapes_BugFixNoEWKUnc.root","Codex__mj_1_13TeV_postfit","M_{#muj} [GeV]","#mu j ",2000,"Codex_","LQ 1200GeV (DM 500 GeV)",10],
+               ]
 
 #FileNamesInfo=[
 #               ["postfit_shapes_Jet50.root","Codex__mj_1_13TeV_prefit","M_{#muj} [GeV]","#mu j ",2000,"Codex_","LQ 1200GeV (DM 500 GeV)",10],
@@ -401,10 +401,14 @@ def MakePlot(FileName,categoriy,HistName,Xaxis,MaxRange,sig,sigLeg,XSection, Sta
 #               ["postfit_shapes_TkMu50.root","Codex__mj_1_13TeV_postfit","M_{#muj} [GeV]","#mu j ",2000,"Codex_","LQ 1200GeV (DM 500 GeV)",10],
 #               ]
 
-FileNamesInfo=[
-               ["postfit_shapes_NoBtagveto.root","Codex__mj_1_13TeV_prefit","M_{#muj} [GeV]","#mu j ",2000,"Codex_","LQ 1200GeV (DM 500 GeV)",10],
-               ["postfit_shapes_NoBtagveto.root","Codex__mj_1_13TeV_postfit","M_{#muj} [GeV]","#mu j ",2000,"Codex_","LQ 1200GeV (DM 500 GeV)",10],
-               ]
+#FileNamesInfo=[
+#               ["postfit_shapes_NoBtagveto.root","Codex__mj_1_13TeV_prefit","M_{#muj} [GeV]","#mu j ",2000,"Codex_","LQ 1200GeV (DM 500 GeV)",10],
+#               ["postfit_shapes_NoBtagveto.root","Codex__mj_1_13TeV_postfit","M_{#muj} [GeV]","#mu j ",2000,"Codex_","LQ 1200GeV (DM 500 GeV)",10],
+#               ]
+
+
+
+
 
 
 

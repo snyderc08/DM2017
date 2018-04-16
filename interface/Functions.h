@@ -64,8 +64,8 @@ float dR_(float ieta, float iphi, float jeta, float jphi){
 
 TTree *  Xttree( TFile * f_Double){
     
-    //        TTree *Run_Tree = (TTree*) f_Double->Get("ggNtuplizer/EventTree");
-    TTree *Run_Tree = (TTree*) f_Double->Get("EventTree");
+            TTree *Run_Tree = (TTree*) f_Double->Get("ggNtuplizer/EventTree");
+//    TTree *Run_Tree = (TTree*) f_Double->Get("EventTree");
     
     cout.setf(ios::fixed, ios::floatfield);
     cout.precision(6);
@@ -158,12 +158,30 @@ TTree *  Xttree( TFile * f_Double){
     Run_Tree->SetBranchAddress("jetJECUnc",&jetJECUnc);
     Run_Tree->SetBranchAddress("jetRawEn",&jetRawEn);
     Run_Tree->SetBranchAddress("jetHadFlvr",&jetHadFlvr);
+    Run_Tree->SetBranchAddress("jetP4Smear",&jetP4Smear);
+    Run_Tree->SetBranchAddress("jetP4SmearUp",&jetP4SmearUp);
+    Run_Tree->SetBranchAddress("jetP4SmearDo",&jetP4SmearDo);
+    
     
     //########################################   MET Info
     Run_Tree->SetBranchAddress("pfMET",&pfMET);
+    Run_Tree->SetBranchAddress("pfMET_T1UESUp",&pfMET_T1UESUp);
+    Run_Tree->SetBranchAddress("pfMET_T1UESDo",&pfMET_T1UESDo);
+    Run_Tree->SetBranchAddress("pfMET_T1JESUp",&pfMET_T1JESUp);
+    Run_Tree->SetBranchAddress("pfMET_T1JESDo",&pfMET_T1JESDo);
+    
     Run_Tree->SetBranchAddress("pfMETPhi",&pfMETPhi);
+    Run_Tree->SetBranchAddress("pfMETPhi_T1UESUp",&pfMETPhi_T1UESUp);
+    Run_Tree->SetBranchAddress("pfMETPhi_T1UESDo",&pfMETPhi_T1UESDo);
+    Run_Tree->SetBranchAddress("pfMETPhi_T1JESUp",&pfMETPhi_T1JESUp);
+    Run_Tree->SetBranchAddress("pfMETPhi_T1JESDo",&pfMETPhi_T1JESDo);
+    
     Run_Tree->SetBranchAddress("metFilters",&metFilters);
     Run_Tree->SetBranchAddress("genHT",&genHT);
+    
+    Run_Tree->SetBranchAddress("pdfSystWeight",&pdfSystWeight);
+    Run_Tree->SetBranchAddress("pdfSystWeightId",&pdfSystWeightId);
+    Run_Tree->SetBranchAddress("pdfWeight",&pdfWeight);
     
     
     return Run_Tree;
@@ -327,10 +345,36 @@ TH1F* HistkfactorW= (TH1F*) kfactorW->Get("KFcator");
 float kf_W_1=HistkfactorW->GetBinContent(1);
 float kf_W_2=HistkfactorW->GetBinContent(2);
 
+
+TFile * kfactorWUp=TFile::Open("../interface/kfactor_monoJet_WUp.root");
+TH1F* HistkfactorWUp= (TH1F*) kfactorWUp->Get("KFcator");
+float kf_W_1Up=HistkfactorWUp->GetBinContent(1);
+float kf_W_2Up=HistkfactorWUp->GetBinContent(2);
+
+TFile * kfactorWDown=TFile::Open("../interface/kfactor_monoJet_WDown.root");
+TH1F* HistkfactorWDown= (TH1F*) kfactorWDown->Get("KFcator");
+float kf_W_1Down=HistkfactorWDown->GetBinContent(1);
+float kf_W_2Down=HistkfactorWDown->GetBinContent(2);
+
+
+
 TFile * kfactorZ=TFile::Open("../interface/kfactor_Z.root");
 TH1F* HistkfactorZ= (TH1F*) kfactorZ->Get("KFcator");
 float kf_Z_1=HistkfactorZ->GetBinContent(1);
 float kf_Z_2=HistkfactorZ->GetBinContent(2);
+
+
+TFile * kfactorZUp=TFile::Open("../interface/kfactor_monoJet_ZUp.root");
+TH1F* HistkfactorZUp= (TH1F*) kfactorZUp->Get("KFcator");
+float kf_Z_1Up=HistkfactorZUp->GetBinContent(1);
+float kf_Z_2Up=HistkfactorZUp->GetBinContent(2);
+
+TFile * kfactorZDown=TFile::Open("../interface/kfactor_monoJet_ZDown.root");
+TH1F* HistkfactorZDown= (TH1F*) kfactorZDown->Get("KFcator");
+float kf_Z_1Down=HistkfactorZDown->GetBinContent(1);
+float kf_Z_2Down=HistkfactorZDown->GetBinContent(2);
+
+
 
 float FuncBosonKFactor(std::string X){
     
@@ -338,13 +382,51 @@ float FuncBosonKFactor(std::string X){
         return kf_W_1;
     else if (X.find("W2") != string::npos)
         return kf_W_2;
+    else if (X.find("W1Up") != string::npos)
+        return kf_W_1Up;
+    else if (X.find("W2Up") != string::npos)
+        return kf_W_2Up;
+    else if (X.find("W1Down") != string::npos)
+        return kf_W_1Down;
+    else if (X.find("W2Down") != string::npos)
+        return kf_W_2Down;
+    
     else if (X.find("Z1") != string::npos)
         return kf_Z_1;
     else if (X.find("Z2") != string::npos)
         return kf_Z_2;
+    else if (X.find("Z1Up") != string::npos)
+        return kf_Z_1Up;
+    else if (X.find("Z2Up") != string::npos)
+        return kf_Z_2Up;
+    else if (X.find("Z1Down") != string::npos)
+        return kf_Z_1Down;
+    else if (X.find("Z2Down") != string::npos)
+        return kf_Z_2Down;
+    
+    
     else
         return 0;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -377,30 +459,31 @@ int getNumZBoson(){
     
     
     
-    
     int numZboson=0;
-    if (nMu > 1){
-        TLorentzVector Mu4Momentum_0,Mu4Momentum_1,Z4Momentum;
-        Mu4Momentum_0.SetPtEtaPhiM(muPt->at(0),muEta->at(0),muPhi->at(0),MuMass);
-        Mu4Momentum_1.SetPtEtaPhiM(muPt->at(1),muEta->at(1),muPhi->at(1),MuMass);
-        Z4Momentum=Mu4Momentum_1+Mu4Momentum_0;
-        
-        float IsoMu1=muPFChIso->at(0)/muPt->at(0);
-        if ( (muPFNeuIso->at(0) + muPFPhoIso->at(0) - 0.5* muPFPUIso->at(0) )  > 0.0)
-            IsoMu1= ( muPFChIso->at(0)/muPt->at(0) + muPFNeuIso->at(0) + muPFPhoIso->at(0) - 0.5* muPFPUIso->at(0))/muPt->at(0);
-        
-        float IsoMu2=muPFChIso->at(1)/muPt->at(1);
-        if ( (muPFNeuIso->at(1) + muPFPhoIso->at(1) - 0.5* muPFPUIso->at(1) )  > 0.0)
-            IsoMu2= ( muPFChIso->at(1)/muPt->at(1) + muPFNeuIso->at(1) + muPFPhoIso->at(1) - 0.5* muPFPUIso->at(1))/muPt->at(1);
-        
-        if ( muPt->at(0) > 60 && muPt->at(1) > 15 &&  IsoMu1 < 0.25  && IsoMu2 < 0.25 && Z4Momentum.M() > 80 && Z4Momentum.M()< 100 ) numZboson++;
+    for (int xmu=0; xmu< nMu; xmu++){
+        for (int ymu=xmu+1; ymu< nMu; ymu++){
+            
+            TLorentzVector Mu4Momentum_0,Mu4Momentum_1,Z4Momentum;
+            Mu4Momentum_0.SetPtEtaPhiM(muPt->at(xmu),muEta->at(xmu),muPhi->at(xmu),MuMass);
+            Mu4Momentum_1.SetPtEtaPhiM(muPt->at(ymu),muEta->at(ymu),muPhi->at(ymu),MuMass);
+            Z4Momentum=Mu4Momentum_1+Mu4Momentum_0;
+            
+            float IsoMu1=muPFChIso->at(xmu)/muPt->at(xmu);
+            if ( (muPFNeuIso->at(xmu) + muPFPhoIso->at(xmu) - 0.5* muPFPUIso->at(xmu) )  > 0.0)
+                IsoMu1= ( muPFChIso->at(xmu)/muPt->at(xmu) + muPFNeuIso->at(xmu) + muPFPhoIso->at(xmu) - 0.5* muPFPUIso->at(xmu))/muPt->at(xmu);
+            
+            float IsoMu2=muPFChIso->at(ymu)/muPt->at(ymu);
+            if ( (muPFNeuIso->at(ymu) + muPFPhoIso->at(ymu) - 0.5* muPFPUIso->at(ymu) )  > 0.0)
+                IsoMu2= ( muPFChIso->at(ymu)/muPt->at(ymu) + muPFNeuIso->at(ymu) + muPFPhoIso->at(ymu) - 0.5* muPFPUIso->at(ymu))/muPt->at(ymu);
+            
+            if ( muPt->at(xmu) > 60 && muPt->at(ymu) > 15 &&  (muIDbit->at(xmu) >> 1 & 1) & (muIDbit->at(ymu) >> 1 & 1) & IsoMu1 < 0.25  && IsoMu2 < 0.25 && Z4Momentum.M() > 80 && Z4Momentum.M()< 100  && (muCharge->at(xmu) * muCharge->at(ymu) < 0))
+                numZboson++;
+        }
     }
+    
     return numZboson;
     
 }
-
-
-
 
 
 

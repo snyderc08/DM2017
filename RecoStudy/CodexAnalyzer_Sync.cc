@@ -6,11 +6,11 @@
 // To run this on all data and MC samples run the following:
 // source RunFullSamples_PreSelection.sh
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-#include "../interface/CodexAnalyzer.h"
-#include "../interface/WeightCalculator.h"
-#include "../interface/Corrector.h"
+//#include "../interface/CodexAnalyzer.h"
+//#include "../interface/WeightCalculator.h"
+//#include "../interface/Corrector.h"
 #include "../interface/Functions.h"
-#include "../interface/makeHisto.h"
+//#include "../interface/makeHisto.h"
 #include <string>
 #include <ostream>
 #include <vector>
@@ -34,130 +34,42 @@ int main(int argc, char** argv) {
         cout <<"INPUT NAME IS:   " << input[f - 2] << "\n";
     }
     
+    
     //########################################
     // Pileup files
     //########################################
-    TFile * PUData= TFile::Open("../interface/pileup-hists/dataMoriondPU.root");
-//    TFile * PUData= TFile::Open("../interface/pileup-hists/2016PU/Data_nPU_2016_Up.root");
-//    TFile * PUData= TFile::Open("../interface/pileup-hists/2016PU/Data_nPU_2016_Down.root");
-//    TFile * PUData= TFile::Open("../interface/pileup-hists/2016PU/Data_nPU_2016.root");
-    
-    
-    TH1F * HistoPUData= (TH1F *) PUData->Get("pileup");
-    HistoPUData->Scale(1.0/HistoPUData->Integral());
-    
-    TFile * PUMC= TFile::Open("../interface/pileup-hists/mcMoriondPU.root");
-    TH1F * HistoPUMC= (TH1F *) PUMC->Get("pileup");
-    HistoPUMC->Scale(1.0/HistoPUMC->Integral());
+    TH1F *  HistoPUData =HistPUData();
+    TH1F * HistoPUMC=HistPUMC();
     
     //########################################
     // Muon Id, Iso, Trigger and Tracker Eff files
     //########################################
-    TFile * MuCorrId_BCDEF= TFile::Open(("../interface/pileup-hists/ID_EfficienciesAndSF_BCDEF.root"));
-    TH2F * HistoMuId_BCDEF= (TH2F *) MuCorrId_BCDEF->Get("MC_NUM_TightID_DEN_genTracks_PAR_pt_eta/pt_abseta_ratio");
-    
-    TFile * MuCorrId_GH= TFile::Open(("../interface/pileup-hists/ID_EfficienciesAndSF_GH.root"));
-    TH2F * HistoMuId_GH= (TH2F *) MuCorrId_GH->Get("MC_NUM_TightID_DEN_genTracks_PAR_pt_eta/pt_abseta_ratio");
-    
-    TFile * MuCorrIso_BCDEF= TFile::Open(("../interface/pileup-hists/Iso_EfficienciesAndSF_BCDEF.root"));
-    TH2F * HistoMuIso_BCDEF= (TH2F *) MuCorrIso_BCDEF->Get("TightISO_TightID_pt_eta/pt_abseta_ratio");
-    
-    TFile * MuCorrIso_GH= TFile::Open(("../interface/pileup-hists/Iso_EfficienciesAndSF_GH.root"));
-    TH2F * HistoMuIso_GH= (TH2F *) MuCorrIso_GH->Get("TightISO_TightID_pt_eta/pt_abseta_ratio");
-    
-    TFile * MuCorrTrg_BCDEF= TFile::Open(("../interface/pileup-hists/Trigger_EfficienciesAndSF_RunBtoF.root"));
-    //    TH2F * HistoMuTrg_BCDEF= (TH2F *) MuCorrTrg_BCDEF->Get("Mu50_OR_TkMu50_PtEtaBins/pt_abseta_ratio");
-    TH1F * HistoMuTrg_BCDEF= (TH1F *) MuCorrTrg_BCDEF->Get("Mu50_OR_TkMu50_EtaBins/eta_ratio");
-    
-    TFile * MuCorrTrg_GH= TFile::Open(("../interface/pileup-hists/Trigger_EfficienciesAndSF_Period4.root"));
-    //    TH2F * HistoMuTrg_GH= (TH2F *) MuCorrTrg_GH->Get("Mu50_OR_TkMu50_PtEtaBins/pt_abseta_ratio");
-    TH1F * HistoMuTrg_GH= (TH1F *) MuCorrTrg_GH->Get("Mu50_OR_TkMu50_EtaBins/eta_ratio");
-    
-    TFile * MuCorrTrack= TFile::Open(("../interface/pileup-hists/Tracking_EfficienciesAndSF_BCDEFGH.root"));
-    TGraphAsymmErrors * HistoMuTrack= (TGraphAsymmErrors *) MuCorrTrack->Get("ratio_eff_eta3_dr030e030_corr");
-    
-    TH2F* HistoMuId[2]={HistoMuId_BCDEF, HistoMuId_GH};
-    TH2F* HistoMuIso[2]={HistoMuIso_BCDEF,HistoMuIso_GH};
-    TH1F* HistoMuTrg[2]={HistoMuTrg_BCDEF, HistoMuTrg_GH};
+    TH2F** HistoMuId=FuncHistMuId();
+    TH2F** HistoMuIso=FuncHistMuIso();
+    TH1F** HistoMuTrg=FuncHistMuTrigger();
+    TGraphAsymmErrors * HistoMuTrack=FuncHistMuTrack();
     
     //########################################
     // Electron MVA IdIso files
     //########################################
-    TFile * EleCorrMVAIdIso90= TFile::Open(("../interface/pileup-hists/egammaEffi.txt_EGM2D.root"));
-    TH2F * HistoEleMVAIdIso90= (TH2F *) EleCorrMVAIdIso90->Get("EGamma_SF2D");
-    TH2F * HistoEleMVAIdIso90_EffMC= (TH2F *) EleCorrMVAIdIso90->Get("EGamma_EffMC2D");
-    TH2F * HistoEleMVAIdIso90_EffData= (TH2F *) EleCorrMVAIdIso90->Get("EGamma_EffData2D");
+    TH2F * HistoEleMVAIdIso90= FuncHistEleMVAId("Tot");
+    TH2F * HistoEleMVAIdIso90_EffMC= FuncHistEleMVAId("MC");
+    TH2F * HistoEleMVAIdIso90_EffData= FuncHistEleMVAId("Data");
     
     //########################################
     // W and DY K-factor files  (Bin-based K-factor)
     //########################################
-    //    TFile * KFactor= TFile::Open("../interface/pileup-hists/kfactors.root");
-    //    TH1F * WLO= (TH1F *) KFactor->Get("WJets_LO/inv_pt");
-    //    TH1F * WNLO_ewk= (TH1F *) KFactor->Get("EWKcorr/W");
-    //    TH1F * ZLO= (TH1F *) KFactor->Get("ZJets_LO/inv_pt");
-    //    TH1F * ZNLO_ewk= (TH1F *) KFactor->Get("EWKcorr/Z");
-    //  The above root is the old one from MonoJet   (it is similar to the following ones)
-    
-    
-    TFile * KFactor= TFile::Open("../interface/NewKFactor/kfactor_vjet_qcd/kfactor_24bins.root");
-    
-    TH1F * WLO= (TH1F *) KFactor->Get("WJets_LO/inv_pt");
-    TH1F * WNLO_ewk= (TH1F *) KFactor->Get("EWKcorr/W");
-    TH1F * WNLO_qcd= (TH1F *) KFactor->Get("WJets_012j_NLO/nominal");
-    
-    TH1F * ZLO= (TH1F *) KFactor->Get("DYJets_LO/inv_pt");
-    TH1F * ZNLO_ewk= (TH1F *) KFactor->Get("EWKcorr/DY");
-    TH1F * ZNLO_qcd= (TH1F *) KFactor->Get("DYJets_012j_NLO/nominal");
-    
-    
     std::string ROOTLocHT= "/Users/abdollah1/GIT_abdollah110/DM2017/ROOT80X/SampleLQ2/";
-    //    std::string ROOTLocHT= "/Users/abdollah1/GIT_abdollah110/DM2017/ROOT80X/SampleLQ2/";
-    //    std::string ROOTLocMass= "/Users/abdollah1/GIT_abdollah110/DM2017/ROOT80X/WMASS/";
-    //        vector<float> DY_Events = DY_HTBin(ROOTLoc);
     vector<float> W_HTBinROOTFiles = W_HTBin(ROOTLocHT);
     vector<float> W_MassBinROOTFiles = W_MassBin(ROOTLocHT);
     vector<float> WTauNu_MassBinROOTFiles = WTauNu_MassBin(ROOTLocHT);
-    //        vector<float> W_EventsNLO = W_PTBinNLO(ROOTLoc); //This is for the NLO samples (as the stat is too low we do not use them)
-    //        vector<float> W_EventsNLO = W_HTBin(ROOTLoc);
-    
-    
-    //########################################
-    // W and DY K-factor files  (FIT-based K-factor)
-    //########################################
-    
-    TFile * kfactorW=TFile::Open("../interface/kfactor_W.root");
-    TH1F* HistkfactorW= (TH1F*) kfactorW->Get("KFcator");
-    float kf_W_1=HistkfactorW->GetBinContent(1);
-    float kf_W_2=HistkfactorW->GetBinContent(2);
-    
-    TFile * kfactorZ=TFile::Open("../interface/kfactor_Z.root");
-    TH1F* HistkfactorZ= (TH1F*) kfactorZ->Get("KFcator");
-    float kf_Z_1=HistkfactorZ->GetBinContent(1);
-    float kf_Z_2=HistkfactorZ->GetBinContent(2);
-    
-    
     TFile * MassDepKFactor=TFile::Open("../interface/k_fakNNLO_use.root");
     TH1F* HistMassDepKFactor= (TH1F*) MassDepKFactor->Get("k_fak_mean");
     
     //########################################
     // Btagging scale factor and uncertainties
     //########################################
-    
-    TFile * TTEff= TFile::Open(("OutFiles_BTagSF/TTJets.root"));
-    TH2F * TTSF0_btagged= (TH2F *) TTEff->Get("BSF_FLV0_Btagged");
-    TH2F * TTSF0_total= (TH2F *) TTEff->Get("BSF_FLV0_Total");
-    TH2F * TTSF5_btagged= (TH2F *) TTEff->Get("BSF_FLV5_Btagged");
-    TH2F * TTSF5_total= (TH2F*) TTEff->Get("BSF_FLV5_Total");
-    
-    TH2F * Btagg_TT[4]={TTSF0_btagged,TTSF0_total,TTSF5_btagged,TTSF5_total};
-    
-    //        TFile * DataEff= TFile::Open(("OutFiles_BTagSF/Data.root"));
-    //        TH2F * DataSF0_btagged= (TH2F *) DataEff->Get("BSF_FLV0_Btagged");
-    //        TH2F * DataSF0_total= (TH2F *) DataEff->Get("BSF_FLV0_Total");
-    //        TH2F * DataSF5_btagged= (TH2F *) DataEff->Get("BSF_FLV5_Btagged");
-    //        TH2F * DataSF5_total= (TH2F *) DataEff->Get("BSF_FLV5_Total");
-    
-    
+    TH2F ** Btagg_TT=FuncHistBTagSF();
     
     //###############################################################################################
     //  Fix Parameters
@@ -167,12 +79,13 @@ int main(int argc, char** argv) {
     float LeptonPtCut_=60;
     float TauPtCut_=20;
     float JetPtCut=100;
-    //    float JetPtCut=50;
     float BJetPtCut=30;
     float SimpleJetPtCut=30;
     float ElectronPtCut_=15;
     float CSVCut=   0.9535   ;                  //  https://twiki.cern.ch/twiki/bin/viewauth/CMS/BtagRecommendation80XReReco
     float LeptonIsoCut=0.15;
+    
+
     
     //########################################################################################################################################################
     //########################################################################################################################################################
@@ -194,113 +107,110 @@ int main(int argc, char** argv) {
         TFile * myFile = TFile::Open(f_Double->GetName());
         TH1F * HistoTot = (TH1F*) myFile->Get("hcount");
         
-                TTree *Run_Tree = (TTree*) f_Double->Get("ggNtuplizer/EventTree");
-//        TTree *Run_Tree = (TTree*) f_Double->Get("EventTree");
+        TTree *  Run_Tree;
+        Run_Tree= Xttree(f_Double);
         
-        cout.setf(ios::fixed, ios::floatfield);
-        cout.precision(6);
-        
-        //########################################   General Info
-        Run_Tree->SetBranchAddress("isData", &isData);
-        Run_Tree->SetBranchAddress("run", &run);
-        Run_Tree->SetBranchAddress("lumis", &lumis);
-        Run_Tree->SetBranchAddress("event", &event);
-        Run_Tree->SetBranchAddress("genWeight",&genWeight);
-        Run_Tree->SetBranchAddress("HLTEleMuX", &HLTEleMuX);
-        Run_Tree->SetBranchAddress("puTrue", &puTrue);
-        Run_Tree->SetBranchAddress("nVtx",&nVtx);
-        
-        //########################################   MC Info
-        Run_Tree->SetBranchAddress("nMC", &nMC);
-        Run_Tree->SetBranchAddress("mcPID", &mcPID);
-        Run_Tree->SetBranchAddress("mcStatus", &mcStatus);
-        Run_Tree->SetBranchAddress("mcPt", &mcPt );
-        Run_Tree->SetBranchAddress("mcEta", &mcEta );
-        Run_Tree->SetBranchAddress("mcPhi", &mcPhi );
-        Run_Tree->SetBranchAddress("mcE", &mcE );
-        Run_Tree->SetBranchAddress("mcMass", &mcMass );
-        Run_Tree->SetBranchAddress("mcMomPID", &mcMomPID );
-        Run_Tree->SetBranchAddress("mcGMomPID", &mcGMomPID );
-        
-        //########################################   Tau Info
-        Run_Tree->SetBranchAddress("nTau", &nTau);
-        Run_Tree->SetBranchAddress("tauPt"  ,&tauPt);
-        Run_Tree->SetBranchAddress("tauEta"  ,&tauEta);
-        Run_Tree->SetBranchAddress("tauPhi"  ,&tauPhi);
-        Run_Tree->SetBranchAddress("tauMass"  ,&tauMass);
-        Run_Tree->SetBranchAddress("tauCharge"  ,&tauCharge);
-        Run_Tree->SetBranchAddress("taupfTausDiscriminationByDecayModeFinding", &taupfTausDiscriminationByDecayModeFinding);
-        Run_Tree->SetBranchAddress("tauByTightMuonRejection3", &tauByTightMuonRejection3);
-        Run_Tree->SetBranchAddress("tauByLooseMuonRejection3", &tauByLooseMuonRejection3);
-        Run_Tree->SetBranchAddress("tauByMVA6MediumElectronRejection"  ,&tauByMVA6MediumElectronRejection);
-        Run_Tree->SetBranchAddress("tauByLooseCombinedIsolationDeltaBetaCorr3Hits",&tauByLooseCombinedIsolationDeltaBetaCorr3Hits);
-        Run_Tree->SetBranchAddress("tauByMediumCombinedIsolationDeltaBetaCorr3Hits",&tauByMediumCombinedIsolationDeltaBetaCorr3Hits);
-        Run_Tree->SetBranchAddress("tauByMVA6LooseElectronRejection", &tauByMVA6LooseElectronRejection);
-        Run_Tree->SetBranchAddress("tauDxy",&tauDxy);
-        Run_Tree->SetBranchAddress("tauDecayMode",&tauDecayMode);
-        Run_Tree->SetBranchAddress("tauByLooseIsolationMVArun2v1DBoldDMwLT",&tauByLooseIsolationMVArun2v1DBoldDMwLT);
-        Run_Tree->SetBranchAddress("tauByVLooseIsolationMVArun2v1DBoldDMwLT",&tauByVLooseIsolationMVArun2v1DBoldDMwLT);
-        
-        //########################################   Mu Info
-        Run_Tree->SetBranchAddress("nMu", &nMu);
-        Run_Tree->SetBranchAddress("muPt"  ,&muPt);
-        Run_Tree->SetBranchAddress("muEta"  ,&muEta);
-        Run_Tree->SetBranchAddress("muPhi"  ,&muPhi);
-        Run_Tree->SetBranchAddress("muIsoTrk", &muIsoTrk);
-        Run_Tree->SetBranchAddress("muCharge",&muCharge);
-        Run_Tree->SetBranchAddress("muIDbit",&muIDbit);//NEW
-        Run_Tree->SetBranchAddress("muPFChIso", &muPFChIso);
-        Run_Tree->SetBranchAddress("muPFPhoIso", &muPFPhoIso);
-        Run_Tree->SetBranchAddress("muPFNeuIso", &muPFNeuIso);
-        Run_Tree->SetBranchAddress("muPFPUIso", &muPFPUIso);
-        Run_Tree->SetBranchAddress("muD0",&muD0);
-        Run_Tree->SetBranchAddress("muDz",&muDz);
-        
-        //########################################   Ele Info
-        Run_Tree->SetBranchAddress("nEle", &nEle);
-        Run_Tree->SetBranchAddress("elePt"  ,&elePt);
-        Run_Tree->SetBranchAddress("eleEta"  ,&eleEta);
-        Run_Tree->SetBranchAddress("elePhi"  ,&elePhi);
-        Run_Tree->SetBranchAddress("elePFChIso", &elePFChIso);
-        Run_Tree->SetBranchAddress("eleIDMVA", &eleIDMVA);//NEW
-        Run_Tree->SetBranchAddress("eleCharge",&eleCharge);
-        Run_Tree->SetBranchAddress("eleSCEta",&eleSCEta);
-        Run_Tree->SetBranchAddress("elePFChIso", &elePFChIso);
-        Run_Tree->SetBranchAddress("elePFPhoIso", &elePFPhoIso);
-        Run_Tree->SetBranchAddress("elePFNeuIso", &elePFNeuIso);
-        Run_Tree->SetBranchAddress("elePFPUIso", &elePFPUIso);
-        Run_Tree->SetBranchAddress("eleD0",&eleD0);
-        Run_Tree->SetBranchAddress("eleDz",&eleDz);
-        Run_Tree->SetBranchAddress("eleMissHits", &eleMissHits);
-        Run_Tree->SetBranchAddress("eleConvVeto", &eleConvVeto);
-        Run_Tree->SetBranchAddress("eleSCEta", &eleSCEta );
-        
-        //########################################   Jet Info
-        Run_Tree->SetBranchAddress("nJet",&nJet);
-        Run_Tree->SetBranchAddress("jetPt",&jetPt);
-        Run_Tree->SetBranchAddress("jetEta",&jetEta);
-        Run_Tree->SetBranchAddress("jetPhi",&jetPhi);
-        Run_Tree->SetBranchAddress("jetEn",&jetEn);
-        Run_Tree->SetBranchAddress("jetCSV2BJetTags",&jetCSV2BJetTags);
-        Run_Tree->SetBranchAddress("jetPFLooseId",&jetPFLooseId);
-        Run_Tree->SetBranchAddress("jetPUID",&jetPUID);
-        Run_Tree->SetBranchAddress("jetRawPt",&jetRawPt);
-        Run_Tree->SetBranchAddress("jetJECUnc",&jetJECUnc);
-        Run_Tree->SetBranchAddress("jetRawEn",&jetRawEn);
-        Run_Tree->SetBranchAddress("jetHadFlvr",&jetHadFlvr);
-        Run_Tree->SetBranchAddress("jetCHF",&jetCHF);
-        Run_Tree->SetBranchAddress("jetNHF",&jetNHF);
-        Run_Tree->SetBranchAddress("jetCEF",&jetCEF);
-        Run_Tree->SetBranchAddress("jetNEF",&jetNEF);
-        Run_Tree->SetBranchAddress("jetNCH",&jetNCH);
-        Run_Tree->SetBranchAddress("jetNNP",&jetNNP);
-        
-        
-        //########################################   MET Info
-        Run_Tree->SetBranchAddress("pfMET",&pfMET);
-        Run_Tree->SetBranchAddress("pfMETPhi",&pfMETPhi);
-        Run_Tree->SetBranchAddress("metFilters",&metFilters);
-        Run_Tree->SetBranchAddress("genHT",&genHT);
+//        //########################################   General Info
+//        Run_Tree->SetBranchAddress("isData", &isData);
+//        Run_Tree->SetBranchAddress("run", &run);
+//        Run_Tree->SetBranchAddress("lumis", &lumis);
+//        Run_Tree->SetBranchAddress("event", &event);
+//        Run_Tree->SetBranchAddress("genWeight",&genWeight);
+//        Run_Tree->SetBranchAddress("HLTEleMuX", &HLTEleMuX);
+//        Run_Tree->SetBranchAddress("puTrue", &puTrue);
+//        Run_Tree->SetBranchAddress("nVtx",&nVtx);
+//        
+//        //########################################   MC Info
+//        Run_Tree->SetBranchAddress("nMC", &nMC);
+//        Run_Tree->SetBranchAddress("mcPID", &mcPID);
+//        Run_Tree->SetBranchAddress("mcStatus", &mcStatus);
+//        Run_Tree->SetBranchAddress("mcPt", &mcPt );
+//        Run_Tree->SetBranchAddress("mcEta", &mcEta );
+//        Run_Tree->SetBranchAddress("mcPhi", &mcPhi );
+//        Run_Tree->SetBranchAddress("mcE", &mcE );
+//        Run_Tree->SetBranchAddress("mcMass", &mcMass );
+//        Run_Tree->SetBranchAddress("mcMomPID", &mcMomPID );
+//        Run_Tree->SetBranchAddress("mcGMomPID", &mcGMomPID );
+//        
+//        //########################################   Tau Info
+//        Run_Tree->SetBranchAddress("nTau", &nTau);
+//        Run_Tree->SetBranchAddress("tauPt"  ,&tauPt);
+//        Run_Tree->SetBranchAddress("tauEta"  ,&tauEta);
+//        Run_Tree->SetBranchAddress("tauPhi"  ,&tauPhi);
+//        Run_Tree->SetBranchAddress("tauMass"  ,&tauMass);
+//        Run_Tree->SetBranchAddress("tauCharge"  ,&tauCharge);
+//        Run_Tree->SetBranchAddress("taupfTausDiscriminationByDecayModeFinding", &taupfTausDiscriminationByDecayModeFinding);
+//        Run_Tree->SetBranchAddress("tauByTightMuonRejection3", &tauByTightMuonRejection3);
+//        Run_Tree->SetBranchAddress("tauByLooseMuonRejection3", &tauByLooseMuonRejection3);
+//        Run_Tree->SetBranchAddress("tauByMVA6MediumElectronRejection"  ,&tauByMVA6MediumElectronRejection);
+//        Run_Tree->SetBranchAddress("tauByLooseCombinedIsolationDeltaBetaCorr3Hits",&tauByLooseCombinedIsolationDeltaBetaCorr3Hits);
+//        Run_Tree->SetBranchAddress("tauByMediumCombinedIsolationDeltaBetaCorr3Hits",&tauByMediumCombinedIsolationDeltaBetaCorr3Hits);
+//        Run_Tree->SetBranchAddress("tauByMVA6LooseElectronRejection", &tauByMVA6LooseElectronRejection);
+//        Run_Tree->SetBranchAddress("tauDxy",&tauDxy);
+//        Run_Tree->SetBranchAddress("tauDecayMode",&tauDecayMode);
+//        Run_Tree->SetBranchAddress("tauByLooseIsolationMVArun2v1DBoldDMwLT",&tauByLooseIsolationMVArun2v1DBoldDMwLT);
+//        Run_Tree->SetBranchAddress("tauByVLooseIsolationMVArun2v1DBoldDMwLT",&tauByVLooseIsolationMVArun2v1DBoldDMwLT);
+//        
+//        //########################################   Mu Info
+//        Run_Tree->SetBranchAddress("nMu", &nMu);
+//        Run_Tree->SetBranchAddress("muPt"  ,&muPt);
+//        Run_Tree->SetBranchAddress("muEta"  ,&muEta);
+//        Run_Tree->SetBranchAddress("muPhi"  ,&muPhi);
+//        Run_Tree->SetBranchAddress("muIsoTrk", &muIsoTrk);
+//        Run_Tree->SetBranchAddress("muCharge",&muCharge);
+//        Run_Tree->SetBranchAddress("muIDbit",&muIDbit);//NEW
+//        Run_Tree->SetBranchAddress("muPFChIso", &muPFChIso);
+//        Run_Tree->SetBranchAddress("muPFPhoIso", &muPFPhoIso);
+//        Run_Tree->SetBranchAddress("muPFNeuIso", &muPFNeuIso);
+//        Run_Tree->SetBranchAddress("muPFPUIso", &muPFPUIso);
+//        Run_Tree->SetBranchAddress("muD0",&muD0);
+//        Run_Tree->SetBranchAddress("muDz",&muDz);
+//        
+//        //########################################   Ele Info
+//        Run_Tree->SetBranchAddress("nEle", &nEle);
+//        Run_Tree->SetBranchAddress("elePt"  ,&elePt);
+//        Run_Tree->SetBranchAddress("eleEta"  ,&eleEta);
+//        Run_Tree->SetBranchAddress("elePhi"  ,&elePhi);
+//        Run_Tree->SetBranchAddress("elePFChIso", &elePFChIso);
+//        Run_Tree->SetBranchAddress("eleIDMVA", &eleIDMVA);//NEW
+//        Run_Tree->SetBranchAddress("eleCharge",&eleCharge);
+//        Run_Tree->SetBranchAddress("eleSCEta",&eleSCEta);
+//        Run_Tree->SetBranchAddress("elePFChIso", &elePFChIso);
+//        Run_Tree->SetBranchAddress("elePFPhoIso", &elePFPhoIso);
+//        Run_Tree->SetBranchAddress("elePFNeuIso", &elePFNeuIso);
+//        Run_Tree->SetBranchAddress("elePFPUIso", &elePFPUIso);
+//        Run_Tree->SetBranchAddress("eleD0",&eleD0);
+//        Run_Tree->SetBranchAddress("eleDz",&eleDz);
+//        Run_Tree->SetBranchAddress("eleMissHits", &eleMissHits);
+//        Run_Tree->SetBranchAddress("eleConvVeto", &eleConvVeto);
+//        Run_Tree->SetBranchAddress("eleSCEta", &eleSCEta );
+//        
+//        //########################################   Jet Info
+//        Run_Tree->SetBranchAddress("nJet",&nJet);
+//        Run_Tree->SetBranchAddress("jetPt",&jetPt);
+//        Run_Tree->SetBranchAddress("jetEta",&jetEta);
+//        Run_Tree->SetBranchAddress("jetPhi",&jetPhi);
+//        Run_Tree->SetBranchAddress("jetEn",&jetEn);
+//        Run_Tree->SetBranchAddress("jetCSV2BJetTags",&jetCSV2BJetTags);
+//        Run_Tree->SetBranchAddress("jetPFLooseId",&jetPFLooseId);
+//        Run_Tree->SetBranchAddress("jetPUID",&jetPUID);
+//        Run_Tree->SetBranchAddress("jetRawPt",&jetRawPt);
+//        Run_Tree->SetBranchAddress("jetJECUnc",&jetJECUnc);
+//        Run_Tree->SetBranchAddress("jetRawEn",&jetRawEn);
+//        Run_Tree->SetBranchAddress("jetHadFlvr",&jetHadFlvr);
+//        Run_Tree->SetBranchAddress("jetCHF",&jetCHF);
+//        Run_Tree->SetBranchAddress("jetNHF",&jetNHF);
+//        Run_Tree->SetBranchAddress("jetCEF",&jetCEF);
+//        Run_Tree->SetBranchAddress("jetNEF",&jetNEF);
+//        Run_Tree->SetBranchAddress("jetNCH",&jetNCH);
+//        Run_Tree->SetBranchAddress("jetNNP",&jetNNP);
+//        
+//        
+//        //########################################   MET Info
+//        Run_Tree->SetBranchAddress("pfMET",&pfMET);
+//        Run_Tree->SetBranchAddress("pfMETPhi",&pfMETPhi);
+//        Run_Tree->SetBranchAddress("metFilters",&metFilters);
+//        Run_Tree->SetBranchAddress("genHT",&genHT);
         
         //########################################################################################################################################################
         //########################################################################################################################################################
@@ -318,129 +228,99 @@ int main(int argc, char** argv) {
             if (i % 10000 == 0) fprintf(stdout, "\r  Processed events: %8d of %8d ", i, nentries_wtn);
             fflush(stdout);
             
-            
             //###############################################################################################
             //  MET Filters (only on Data)
             //###############################################################################################
-//            if (isData && (metFilters!=1536)) continue;
+            //            if (isData && (metFilters!=1536)) continue;
+            
+            //###########       Trigger Requirement ###########################################################
+                        bool PassTrigger =((HLTEleMuX >> 21 & 1) == 1 || (HLTEleMuX >> 41 & 1) == 1); //   else if (name.find("HLT_Mu50_v") != string::npos) bitEleMuX = 21;
+            if (! PassTrigger) continue;
             
             //###############################################################################################
-            //  This part is to avoid of the duplicate of mu-j pai from one events
+            //  This part is to avoid of the duplicate of mu-j pair from one events
             //###############################################################################################
             std::vector<string> HistNamesFilled;
             HistNamesFilled.clear();
             
-            //###############################################################################################
-            //  TOP pT Reweighting & W-Kfactor  & Z-Kfactor
-            //###############################################################################################
-            
-            float GenTopPt=0;
-            float GenAntiTopPt=0;
-            float TopPtReweighting = 1;
-            float WBosonPt=0;
-            float WBosonKFactor=1;
-            float ZBosonPt=0;
-            float ZBosonKFactor=1;
-            int modPDGId=-10;
-            int AntimodPDGId=-10;
-            float WBosonMass=0;
-            int numMuon=0;
-            
-            TLorentzVector GenMu4Momentum,GenAntiMu4Momentum, WGEN4Momentum, MUGEN4Momentum, NUGEN4Momentum;
-            vector <TLorentzVector> LepFromW;
-            vector <TLorentzVector> NuetrinoFromW;
-            for (int igen=0;igen < nMC; igen++){
-                
-                //Top pt correction
-                if (mcPID->at(igen) == 6 && mcStatus->at(igen) ==62) GenTopPt=mcPt->at(igen) ;
-                if (mcPID->at(igen) == -6 && mcStatus->at(igen) ==62) GenAntiTopPt=mcPt->at(igen);
-                
-                //W Mass
-                if (fabs(mcPID->at(igen)) ==24   && mcStatus->at(igen) ==22)  {WBosonPt= mcPt->at(igen); WBosonMass=mcMass->at(igen);}
-                if ( fabs(mcPID->at(igen)) ==13 && mcStatus->at(igen) ==1 )  {MUGEN4Momentum.SetPtEtaPhiM(mcPt->at(igen),mcEta->at(igen),mcPhi->at(igen),mcMass->at(igen));LepFromW.push_back(MUGEN4Momentum);}
-                if ( fabs(mcPID->at(igen)) ==14  && mcStatus->at(igen) ==1)  {NUGEN4Momentum.SetPtEtaPhiM(mcPt->at(igen),mcEta->at(igen),mcPhi->at(igen),mcMass->at(igen));NuetrinoFromW.push_back(NUGEN4Momentum);}
-                
-                //DY sample
-                if (fabs(mcPID->at(igen)) ==23)  ZBosonPt= mcPt->at(igen); //FIXME somethime we do not have Z in the DY events
-                if ( mcPID->at(igen) ==13  )  {GenMu4Momentum.SetPtEtaPhiM(mcPt->at(igen),mcEta->at(igen),mcPhi->at(igen),mcMass->at(igen));}
-                if ( mcPID->at(igen) ==-13  )  {GenAntiMu4Momentum.SetPtEtaPhiM(mcPt->at(igen),mcEta->at(igen),mcPhi->at(igen),mcMass->at(igen));}
-                
-                
-            }
-            
-            if (LepFromW.size()> 0 && NuetrinoFromW.size()>0)
-                WGEN4Momentum=LepFromW[0]+NuetrinoFromW[0];
-            
-            if (ZBosonPt ==0)
-                ZBosonPt=(GenMu4Momentum+GenAntiMu4Momentum).Pt();  //This is a temp solution to the above problem
-            
-            if (WBosonPt==0)
-                WBosonPt = WGEN4Momentum.Pt();
-            
-            if (WBosonMass==0)
-                WBosonMass = WGEN4Momentum.M();
-            
-            
-            
-            //######################## Top Pt Reweighting
-            size_t isTTJets = InputROOT.find("TTJets");
-            if (isTTJets!= string::npos) TopPtReweighting = compTopPtWeight(GenTopPt, GenAntiTopPt);
-            
-            //######################## W K-factor
-            size_t isWJetsToLNu_Inc = InputROOT.find("WJetsToLNu_Inc");
-            size_t isWJets = InputROOT.find("WJets");
-            size_t isWToMuNu = (InputROOT.find("WToLNu") || InputROOT.find("WToTauNu"));
-            
-            if (isWJets!= string::npos || isWToMuNu!= string::npos )WBosonKFactor=HistMassDepKFactor->GetBinContent(int(WBosonMass)/10 +1); //Mass binned K-factor
-            
-            //######################## Z K-factor
-            size_t isDYJets = InputROOT.find("DYJets");
-            if (isDYJets!= string::npos) ZBosonKFactor= kf_Z_1 + kf_Z_2 * ZBosonPt;
-            
-            
-            //................................................................................................................
-            //................................................................................................................
-            if (isWJets!= string::npos && WBosonMass > 100) continue;
-            if (isWJetsToLNu_Inc!= string::npos && genHT > 70.0) continue;
-            
-            //................................................................................................................
-            //................................................................................................................
-            
-            //###############################################################################################
-            //  Lumi, GEN & PileUp Weight
-            //###############################################################################################
-            
-            float LumiWeight = 1;
-            float GetGenWeight=1;
-            float PUWeight = 1;
-            
-            if (!isData){
-                
-                //######################## Lumi Weight
-                //                if (HistoTot) LumiWeight = weightCalc(HistoTot, InputROOT,genHT,WBosonPt, W_Events, DY_Events,W_EventsNLO);
-                if (HistoTot) LumiWeight = weightCalc(HistoTot, InputROOT,genHT, W_HTBinROOTFiles, WBosonMass, W_MassBinROOTFiles,WTauNu_MassBinROOTFiles);
-                
-                //######################## Gen Weight
-                GetGenWeight=genWeight;
-                
-                //######################## PileUp Weight
-                int puNUmmc=int(puTrue->at(0)*10);
-                int puNUmdata=int(puTrue->at(0)*10);
-                float PUMC_=HistoPUMC->GetBinContent(puNUmmc+1);
-                float PUData_=HistoPUData->GetBinContent(puNUmdata+1);
-                if (PUMC_ ==0)
-                    cout<<"PUMC_ is zero!!! & num pileup= "<< puTrue->at(0)<<"\n";
-                else
-                    PUWeight= PUData_/PUMC_;
-                
-            }
+//            //###############################################################################################
+//            //  GenInfo
+//            //###############################################################################################
+//            vector<float>  genInfo=GeneratorInfo();
+//            
+//            //            //######################## Top Pt Reweighting
+//            float TopPtReweighting = 1;
+//            size_t isTTJets = InputROOT.find("TTJets");
+//            if (isTTJets!= string::npos) TopPtReweighting = genInfo[0];
+//            
+//            //            //######################## W K-factor
+//            float WBosonPt=0;
+//            float WBosonMass=0;
+//            float WBosonKFactor=1;
+//            
+//            WBosonPt=genInfo[1];
+//            WBosonMass=genInfo[3];
+//            
+//            size_t isWJetsToLNu_Inc = InputROOT.find("WJetsToLNu_Inc");
+//            size_t isWJets = InputROOT.find("WJets");
+//            //            size_t isWToMuTauNu = (InputROOT.find("WToLNu") || InputROOT.find("WToTauNu"));  size_t in NOT BOOLEAN!!!!!!
+//            size_t isWToLNu = (InputROOT.find("WToLNu") );
+//            size_t isWToTauNu = (InputROOT.find("WToTauNu") );
+//            
+//            if (WBosonMass > 100 && (isWToLNu!= string::npos || isWToTauNu!=string::npos)) WBosonKFactor=HistMassDepKFactor->GetBinContent(int(WBosonMass)/10 +1); //Mass binned K-factor
+//            if (WBosonMass <= 100 && isWJets!= string::npos  )WBosonKFactor= FuncBosonKFactor("W1") + FuncBosonKFactor("W2") * WBosonPt; //HT binned & inclusive K-factor
+//            
+//            //................................................................................................................
+//            //................................................................................................................
+//            if (isWJets!= string::npos && WBosonMass > 100) continue;
+//            if (isWJetsToLNu_Inc!= string::npos && genHT > 70.0) continue;
+//            //................................................................................................................
+//            //................................................................................................................
+//            
+//            //            //######################## Z K-factor
+//            float ZBosonPt=0;
+//            float ZBosonKFactor=1;
+//            size_t isDYJets = InputROOT.find("DYJets");
+//            ZBosonPt=genInfo[2];
+//            if (isDYJets!= string::npos) ZBosonKFactor= FuncBosonKFactor("Z1") + FuncBosonKFactor("Z2") * ZBosonPt;
+//            
+//            
+//            //###############################################################################################
+//            //  Lumi, GEN & PileUp Weight
+//            //###############################################################################################
+//            
+//            float LumiWeight = 1;
+//            float GetGenWeight=1;
+//            float PUWeight = 1;
+//            
+//            if (!isData){
+//                
+//                //######################## Lumi Weight
+//                //                if (HistoTot) LumiWeight = weightCalc(HistoTot, InputROOT,genHT,WBosonPt, W_Events, DY_Events,W_EventsNLO);
+//                if (HistoTot) LumiWeight = weightCalc(HistoTot, InputROOT,genHT, W_HTBinROOTFiles, WBosonMass, W_MassBinROOTFiles,WTauNu_MassBinROOTFiles);
+//                
+//                //######################## Gen Weight
+//                GetGenWeight=genWeight;
+//                
+//                //######################## PileUp Weight
+//                int puNUmmc=int(puTrue->at(0)*10);
+//                int puNUmdata=int(puTrue->at(0)*10);
+//                float PUMC_=HistoPUMC->GetBinContent(puNUmmc+1);
+//                float PUData_=HistoPUData->GetBinContent(puNUmdata+1);
+//                if (PUMC_ ==0)
+//                    cout<<"PUMC_ is zero!!! & num pileup= "<< puTrue->at(0)<<"\n";
+//                else
+//                    PUWeight= PUData_/PUMC_;
+//            }
             
             
-            //############################################################################################
-            //   Final Total Weight
-            //############################################################################################
-            float TotalWeight_withTopPtRW = LumiWeight * GetGenWeight * PUWeight * TopPtReweighting * WBosonKFactor * ZBosonKFactor ;
-            float TotalWeight_NoTopPtRW = LumiWeight * GetGenWeight * PUWeight * WBosonKFactor * ZBosonKFactor ;
+//            //############################################################################################
+//            //   Final Total Weight
+//            //############################################################################################
+//            float TotalWeight_withTopPtRW = LumiWeight * GetGenWeight * PUWeight * TopPtReweighting * WBosonKFactor * ZBosonKFactor ;
+//            float TotalWeight_NoTopPtRW = LumiWeight * GetGenWeight * PUWeight * WBosonKFactor * ZBosonKFactor ;
+            
+
             
             //###############################################################################################
             //###############################################################################################
@@ -452,121 +332,64 @@ int main(int argc, char** argv) {
             
             
             //###########       Trigger Requirement ###########################################################
-            bool PassTrigger = 1;
+//            bool PassTrigger = 1;
 //            bool PassTrigger = ((HLTEleMuX >> 21 & 1) == 1 || (HLTEleMuX >> 41 & 1) == 1); //   else if (name.find("HLT_Mu50_v") != string::npos) bitEleMuX = 21;
-            if (! PassTrigger) continue;
+//            if (! PassTrigger) continue;
             if (pfMET < 100) continue;
             
-//            //###########       tau Veto   ###########################################################
-//            int numTau=0;
-//            for  (int itau=0 ; itau < nTau; itau++){
-//                
-//                if (tauPt->at(itau) < TauPtCut_  || fabs(tauEta->at(itau)) > 2.3 ) continue;
-//                
-//                bool TauIdIso =  taupfTausDiscriminationByDecayModeFinding->at(itau) > 0.5 && tauByLooseMuonRejection3->at(itau) > 0 && tauByMVA6LooseElectronRejection->at(itau) > 0 && tauByLooseIsolationMVArun2v1DBoldDMwLT->at(itau) > 0;
-//                
-//                if (!TauIdIso) continue;
-//                numTau++;
-//            }
-//            //###########       Ele Veto   ###########################################################
-//            //            https://twiki.cern.ch/twiki/bin/view/CMS/MultivariateElectronIdentificationRun2#Recommended_MVA_recipes_for_2016
-//            int numElectron=0;
-//            float ElectronCor=1;
-//            TLorentzVector Ele4Momentum;
-//            float ElectronEffVeto=1;
-//            Ele4Momentum.SetPtEtaPhiM(0,0,0,0);
-//            for  (int jele=0 ; jele < nEle; jele++){
-//                
-//                if ( elePt->at(jele) < 15 || fabs(eleEta->at(jele)) > 2.5) continue;
-//                
-//                bool eleMVAIdExtra= false;
-//                if (fabs (eleSCEta->at(jele)) <= 0.8 && eleIDMVA->at(jele) >   0.837  ) eleMVAIdExtra= true;
-//                else if (fabs (eleSCEta->at(jele)) >  0.8 &&fabs (eleSCEta->at(jele)) <=  1.5 && eleIDMVA->at(jele) >   0.715  ) eleMVAIdExtra= true;
-//                else if ( fabs (eleSCEta->at(jele)) >=  1.5 && eleIDMVA->at(jele) >  0.357  ) eleMVAIdExtra= true;
-//                else eleMVAIdExtra= false;
-//                
-//                
-//                
-//                if (!(eleMVAIdExtra )) {
-//                    ElectronEffVeto= ElectronEffVeto * getEffVetoMVA90WPElectron80X(isData,  elePt->at(jele),eleSCEta->at(jele),    HistoEleMVAIdIso90 , HistoEleMVAIdIso90_EffMC,HistoEleMVAIdIso90_EffData);
-//                    continue;
-//                }
-//                
-//                ElectronCor=getCorrFactorMVA90WPElectron80X(isData,  elePt->at(jele),eleSCEta->at(jele),    HistoEleMVAIdIso90 );
-//                Ele4Momentum.SetPtEtaPhiM(elePt->at(jele),eleEta->at(jele),elePhi->at(jele),eleMass);
-//                numElectron++;
-//                
-//                break;
-//            }
-//            //###########       bJet Veto   ###########################################################
-//            int numBJet=0;
-//            int numlightJet=0;
-//            float EffJet =1;
-//            float SF=1;
-//            float P_Data_P_mc=1;
-            float FinalBTagSF=1;
-//            bool  METisCloseToJet=false;
-//            
-//            
-//            for (int ijet= 0 ; ijet < nJet ; ijet++){
-//                
-//                
-//                float HadronFlavor= isData ? 1 : jetHadFlvr->at(ijet);
-//                
-//                if (jetPFLooseId->at(ijet) > 0.5 && jetPt->at(ijet) > BJetPtCut && fabs(jetEta->at(ijet)) < 2.4 ){
-//                    
-//                    
-//                    if ( jetCSV2BJetTags->at(ijet) >  CSVCut ){
-//                        numBJet++;
-//                        EffJet= getBtagEfficiency( isData, 1,  jetPt->at(ijet), fabs(jetEta->at(ijet)), Btagg_TT);
-//                        SF= GetBJetSF(isData, jetPt->at(ijet), jetPt->at(ijet), HadronFlavor);
-//                        P_Data_P_mc=SF*EffJet/EffJet;
-//                        
-//                        
-//                    }
-//                    else{
-//                        EffJet= getBtagEfficiency( isData, 0,  jetPt->at(ijet), fabs(jetEta->at(ijet)), Btagg_TT);
-//                        numlightJet++;
-//                        SF=GetBJetSF(isData,jetPt->at(ijet), jetPt->at(ijet), HadronFlavor);
-//                        P_Data_P_mc=(1-SF*EffJet)/(1-EffJet);
-//                        
-//                    }
-//                    
-//                }
-//                
-//                FinalBTagSF *=P_Data_P_mc;
-//            }
-//            if (isData) FinalBTagSF=1;
-//            
-//            int numJet=0;
-//            for (int ijet= 0 ; ijet < nJet ; ijet++){
-//                if (jetPFLooseId->at(ijet) > 0.5 && jetPt->at(ijet) > SimpleJetPtCut && fabs(jetEta->at(ijet)) < 2.4 )
-//                    numJet++;
-//            }
-//            
-//            //###########       Z boson Veto   ###########################################################
-//            int numZboson=0;
-//            for (int xmu=0; xmu< nMu; xmu++){
-//                for (int ymu=xmu+1; ymu< nMu; ymu++){
-//                    
-//                    TLorentzVector Mu4Momentum_0,Mu4Momentum_1,Z4Momentum;
-//                    Mu4Momentum_0.SetPtEtaPhiM(muPt->at(xmu),muEta->at(xmu),muPhi->at(xmu),MuMass);
-//                    Mu4Momentum_1.SetPtEtaPhiM(muPt->at(ymu),muEta->at(ymu),muPhi->at(ymu),MuMass);
-//                    Z4Momentum=Mu4Momentum_1+Mu4Momentum_0;
-//                    
-//                    float IsoMu1=muPFChIso->at(xmu)/muPt->at(xmu);
-//                    if ( (muPFNeuIso->at(xmu) + muPFPhoIso->at(xmu) - 0.5* muPFPUIso->at(xmu) )  > 0.0)
-//                        IsoMu1= ( muPFChIso->at(xmu)/muPt->at(xmu) + muPFNeuIso->at(xmu) + muPFPhoIso->at(xmu) - 0.5* muPFPUIso->at(xmu))/muPt->at(xmu);
-//                    
-//                    float IsoMu2=muPFChIso->at(ymu)/muPt->at(ymu);
-//                    if ( (muPFNeuIso->at(ymu) + muPFPhoIso->at(ymu) - 0.5* muPFPUIso->at(ymu) )  > 0.0)
-//                        IsoMu2= ( muPFChIso->at(ymu)/muPt->at(ymu) + muPFNeuIso->at(ymu) + muPFPhoIso->at(ymu) - 0.5* muPFPUIso->at(ymu))/muPt->at(ymu);
-//                    
-//                    if ( muPt->at(xmu) > 60 && muPt->at(ymu) > 15 &&  (muIDbit->at(xmu) >> 1 & 1) & (muIDbit->at(ymu) >> 1 & 1) & IsoMu1 < 0.25  && IsoMu2 < 0.25 && Z4Momentum.M() > 80 && Z4Momentum.M()< 100  && (muCharge->at(xmu) * muCharge->at(ymu) < 0))
-//                        numZboson++;
-//                }
-//            }
-//            
+            //###########       numTau   ###########################################################
+            int numTau= getNumTau();
+            
+            //###########       Ele Veto   ###########################################################
+            //            https://twiki.cern.ch/twiki/bin/view/CMS/MultivariateElectronIdentificationRun2#Recommended_MVA_recipes_for_2016
+            int numElectron=0;
+            float ElectronCor=1;
+            TLorentzVector Ele4Momentum;
+            float ElectronEffVeto=1;
+            Ele4Momentum.SetPtEtaPhiM(0,0,0,0);
+            for  (int jele=0 ; jele < nEle; jele++){
+                
+                if ( elePt->at(jele) < 15 || fabs(eleEta->at(jele)) > 2.5) continue;
+                
+                bool eleMVAIdExtra= false;
+                if (fabs (eleSCEta->at(jele)) <= 0.8 && eleIDMVA->at(jele) >   0.837  ) eleMVAIdExtra= true;
+                else if (fabs (eleSCEta->at(jele)) >  0.8 &&fabs (eleSCEta->at(jele)) <=  1.5 && eleIDMVA->at(jele) >   0.715  ) eleMVAIdExtra= true;
+                else if ( fabs (eleSCEta->at(jele)) >=  1.5 && eleIDMVA->at(jele) >  0.357  ) eleMVAIdExtra= true;
+                else eleMVAIdExtra= false;
+                
+                
+                
+                if (!(eleMVAIdExtra )) {
+                    ElectronEffVeto= ElectronEffVeto * getEffVetoMVA90WPElectron80X(isData,  elePt->at(jele),eleSCEta->at(jele),    HistoEleMVAIdIso90 , HistoEleMVAIdIso90_EffMC,HistoEleMVAIdIso90_EffData);
+                    continue;
+                }
+                
+                ElectronCor=getCorrFactorMVA90WPElectron80X(isData,  elePt->at(jele),eleSCEta->at(jele),    HistoEleMVAIdIso90 );
+                Ele4Momentum.SetPtEtaPhiM(elePt->at(jele),eleEta->at(jele),elePhi->at(jele),eleMass);
+                numElectron++;
+                
+                break;
+            }
+            //###########       BTag SF   ###########################################################
+            float FinalBTagSF=FuncFinalBTagSF(isData,Btagg_TT);
+            
+            //###########       numBJet   ###########################################################
+            int numBJet=numBJets();
+            
+            //###########       numJet   ###########################################################
+            int numJet=numJets();
+            
+            //###########       numZboson   ###########################################################
+            int numZboson = getNumZBoson();
+            
+
+//            if (numTau+numZboson + numElectron  + numBJet > 0) continue;
+            if (numZboson + numElectron  + numBJet > 0) continue;
+            
+            
+            
+            
+            //
 //            //###############################################################################################
 //            //  Some Histogram Filling
 //            //###############################################################################################
@@ -597,7 +420,6 @@ int main(int argc, char** argv) {
 //                if ( muPt->at(xmu) > 60 ) numMuon++;
 ////                if ( muPt->at(xmu) > 50 && (muIDbit->at(xmu) >> 0 & 1)) numMuon++;
 //            }
-//            
             
             vector <TLorentzVector> muCollection;
             muCollection.clear();
@@ -625,11 +447,11 @@ int main(int argc, char** argv) {
                 
                 float IsoMu=muPFChIso->at(imu)/muPt->at(imu);
                 if ( (muPFNeuIso->at(imu) + muPFPhoIso->at(imu) - 0.5* muPFPUIso->at(imu) )  > 0.0)
-                    IsoMu= ( muPFChIso->at(imu)/muPt->at(imu) + muPFNeuIso->at(imu) + muPFPhoIso->at(imu) - 0.5* muPFPUIso->at(imu))/muPt->at(imu);
+                    IsoMu= ( muPFChIso->at(imu) + muPFNeuIso->at(imu) + muPFPhoIso->at(imu) - 0.5* muPFPUIso->at(imu))/muPt->at(imu);
                 
                 bool MuPtCut = muPt->at(imu) > LeptonPtCut_ && fabs(muEta->at(imu)) < 2.4 ;
 //                bool MuPtCut = muPt->at(imu) > LeptonPtCut_ && fabs(muEta->at(imu)) < 2.1 ;
-                bool MuIdIso=( (muIDbit->at(imu) >> 2 & 1)  && fabs(muD0->at(imu)) < 0.045 && fabs(muDz->at(imu)) < 0.2); //Tight Muon Id
+                bool MuIdIso=( (muIDbit->at(imu) >> 2 & 1)  && fabs(muD0->at(imu)) < 0.045 && fabs(muDz->at(imu)) < 0.2 &&  IsoMu < 0.15); //Tight Muon Id
 //                                bool MuIdIso=( (muIDbit->at(imu) >> 2 & 1)); //Tight Muon Id
                 
                 
@@ -720,7 +542,7 @@ int main(int argc, char** argv) {
                     //###############################################################################################
                     //  Isolation Categorization
                     //###############################################################################################
-                    bool LepPassIsolation= IsoMu < 1000000000;
+                    bool LepPassIsolation= IsoMu < 0.15;
                     
                     const int size_isoCat = 2;
                     bool Isolation = LepPassIsolation;
@@ -770,11 +592,11 @@ int main(int argc, char** argv) {
                     bool MT_category[size_mTCat] = {NoMT,HighMT,MT50To150,MTMore300,MTMore500};
                     std::string MT_Cat[size_mTCat] = {"_NoMT","_HighMT","_MT50To150","_MT300","_MT500"};
                     
+                 
                     
+                    if (hasonemuon && MTMore500) cout<<"Evt: "<<event <<", MuPt: "<<muPt->at(imu) <<", MuEta: "<<muEta->at(imu)  <<", MuIso: "<<IsoMu <<", muPFChIso: "<<   muPFChIso->at(imu)  <<", muPFNeuIso: "<<  muPFNeuIso->at(imu)  <<", muPFPhoIso: "<<   muPFPhoIso->at(imu) <<", muPFPUIso: "<<   muPFPUIso->at(imu)  <<", Met: "<<pfMET <<", jetPt: "<<jetPt->at(ijet) <<", jetEta: "<<jetEta->at(ijet) <<", DR: "<<Jet4Momentum.DeltaR(Mu4Momentum) << "  HLT" <<(HLTEleMuX >> 21 & 1) << " . "<< (HLTEleMuX >> 41 & 1)   <<"\n";
                     
-                    
-                    if (hasonemuon && MTMore500) cout<<"Evt: "<<event <<", MuPt: "<<muPt->at(imu) <<", MuEta: "<<muEta->at(imu) <<", Met: "<<pfMET <<", jetPt: "<<jetPt->at(ijet) <<", jetEta: "<<jetEta->at(ijet) <<", DR: "<<Jet4Momentum.DeltaR(Mu4Momentum) <<"\n";
-                    
+                        if (hasonemuon && MTMore500) plotFill("_LQMass",LQ4Momentum.M(),200,0,2000,1);
                     hasonemuon=0;
                     break;
                     
@@ -815,13 +637,13 @@ int main(int argc, char** argv) {
                     //###############################################################################################
                     //  Top Pt Reweighting Cat: The SF is meant to correct only the shape of the pt(top) distribution- not the amount of generated events ( you have to consider that the average weight is not 1 ! ) So we define two category for ttbar events
                     
-                    //###############################################################################################
-                    int size_topPtRW =2;
+//                    //###############################################################################################
+                    int size_topPtRW =1;
                     
-                    float TotalWeight[2] = {TotalWeight_withTopPtRW,TotalWeight_NoTopPtRW};
-                    std::string topPtRW[2] = {"", "_NoTopRW"};
+                    float TotalWeight[1] = {1};
+                    std::string topPtRW[1] = {""};
                     
-                    if (isTTJets == string::npos) size_topPtRW = 1; // If the sample in not ttbar, don't care about new category
+//                    if (isTTJets == string::npos) size_topPtRW = 1; // If the sample in not ttbar, don't care about new category
                     
                     //###############################################################################################
 //                    cout<<"Event: "<<event <<", Lumi: "<<lumis <<", Run: "<<run <<"\n";
@@ -842,7 +664,7 @@ int main(int argc, char** argv) {
                                             for (int iCR = 0; iCR < size_CR; iCR++) {
                                                 if (region_category[iCR]) {
                                                     for (int itopRW = 0; itopRW < size_topPtRW; itopRW++) {
-                                                        
+                                                
                                                         
                                                         
                                                         ////////////////////////////////////   Naming the Histogram
@@ -862,7 +684,7 @@ int main(int argc, char** argv) {
                                                             //                                                                if (LQ4Momentum.M() > 1100 && muPt->at(imu) < 300){
                                                             //                                                                    if ( pfMET < 300){
                                                             if (1){
-//                                                                cout<<"Event: "<<event <<", Lumi: "<<lumis <<", Run: "<<run <<"\n";
+                                                                cout<<"Event: "<<event <<", Lumi: "<<lumis <<", Run: "<<run <<"\n";
                                                                 //##################
                                                                 //                                                            plotFill(CHL+"_ElectronEffVeto"+FullStringName,ElectronEffVeto,300,0,3);
 //                                                                plotFill(CHL+"_tmass_MuMet"+FullStringName,tmass_MuMet,200,0,2000,FullWeight);

@@ -88,7 +88,7 @@ float XSection(std::string OutName) {
     
     else if (OutName.find("WWTo2L2Nu_powheg") != string::npos) return  12.178 ;
     else if (OutName.find("WWTo4Q_powheg") != string::npos) return  51.723 ;
-    else if (OutName.find("WWToLNuQQ_powheg") != string::npos) return  49.997 ;
+    else if (OutName.find("WWTo1LNuQQ_powheg") != string::npos) return  49.997 ;
     
     else if (OutName.find("WZTo1L3Nu_amcatnloFXFX") != string::npos) return 3.033e+00;
     else if (OutName.find("WZTo2L2Q_amcatnloFXFX") != string::npos) return  5.595 ;
@@ -114,7 +114,7 @@ float XSection(std::string OutName) {
     else if (OutName.find("ST_t-channel_top") != string::npos) return 136.02;
     else if (OutName.find("ST_tW_antitop_5f") != string::npos) return 35.6;
     else if (OutName.find("ST_tW_top_5f") != string::npos) return 35.6;
-    else if (OutName.find("ST_s-channel") != string::npos) return 3.36 ;
+    else if (OutName.find("ST_s_channel") != string::npos) return 3.36 ;
     
     
     
