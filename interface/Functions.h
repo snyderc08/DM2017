@@ -64,8 +64,8 @@ float dR_(float ieta, float iphi, float jeta, float jphi){
 
 TTree *  Xttree( TFile * f_Double){
     
-            TTree *Run_Tree = (TTree*) f_Double->Get("ggNtuplizer/EventTree");
-//    TTree *Run_Tree = (TTree*) f_Double->Get("EventTree");
+//            TTree *Run_Tree = (TTree*) f_Double->Get("ggNtuplizer/EventTree");
+    TTree *Run_Tree = (TTree*) f_Double->Get("EventTree");
     
     cout.setf(ios::fixed, ios::floatfield);
     cout.precision(6);

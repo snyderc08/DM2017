@@ -179,36 +179,36 @@ hadd DM_Codex_2000.root   crab_DM_Codex_2000*.root
 
 
 config.General.requestName = "ZJetsToNuNu_HT-100To200_"
-config.Data.inputDataset = "/ZJetsToNuNu_HT-100To200_13TeV-madgraph/RunIISpring15DR74-Asympt25ns_MCRUN2_74_V9-v1/MINIAODSIM""
+config.Data.inputDataset = "/ZJetsToNuNu_HT-100To200_13TeV-madgraph/RunIISpring15DR74-Asympt25ns_MCRUN2_74_V9-v1/MINIAODSIM"""
 submit(config)
 
 config.General.requestName = "ZJetsToNuNu_HT-100To200__ext"
-config.Data.inputDataset = "/ZJetsToNuNu_HT-100To200_13TeV-madgraph/RunIISpring15DR74-Asympt25ns_MCRUN2_74_V9_ext1-v2/MINIAODSIM""
+config.Data.inputDataset = "/ZJetsToNuNu_HT-100To200_13TeV-madgraph/RunIISpring15DR74-Asympt25ns_MCRUN2_74_V9_ext1-v2/MINIAODSIM"""
 submit(config)
 
 config.General.requestName = "ZJetsToNuNu_HT-200To400"
-config.Data.inputDataset = "/ZJetsToNuNu_HT-200To400_13TeV-madgraph/RunIISpring15DR74-Asympt25ns_MCRUN2_74_V9-v1/MINIAODSIM""
+config.Data.inputDataset = "/ZJetsToNuNu_HT-200To400_13TeV-madgraph/RunIISpring15DR74-Asympt25ns_MCRUN2_74_V9-v1/MINIAODSIM"""
 submit(config)
 
 config.General.requestName = "ZJetsToNuNu_HT-200To400_ext"
-config.Data.inputDataset = "/ZJetsToNuNu_HT-200To400_13TeV-madgraph/RunIISpring15DR74-Asympt25ns_MCRUN2_74_V9_ext1-v1/MINIAODSIM""
+config.Data.inputDataset = "/ZJetsToNuNu_HT-200To400_13TeV-madgraph/RunIISpring15DR74-Asympt25ns_MCRUN2_74_V9_ext1-v1/MINIAODSIM"""
 submit(config)
 
 config.General.requestName = "ZJetsToNuNu_HT-400To600"
-config.Data.inputDataset = "/ZJetsToNuNu_HT-400To600_13TeV-madgraph/RunIISpring15DR74-Asympt25ns_MCRUN2_74_V9-v1/MINIAODSIM""
+config.Data.inputDataset = "/ZJetsToNuNu_HT-400To600_13TeV-madgraph/RunIISpring15DR74-Asympt25ns_MCRUN2_74_V9-v1/MINIAODSIM"""
 submit(config)
 
 
 config.General.requestName = "ZJetsToNuNu_HT-400To600_ext"
-config.Data.inputDataset = "/ZJetsToNuNu_HT-400To600_13TeV-madgraph/RunIISpring15DR74-Asympt25ns_MCRUN2_74_V9_ext1-v2/MINIAODSIM""
+config.Data.inputDataset = "/ZJetsToNuNu_HT-400To600_13TeV-madgraph/RunIISpring15DR74-Asympt25ns_MCRUN2_74_V9_ext1-v2/MINIAODSIM"""
 submit(config)
 
 config.General.requestName = "ZJetsToNuNu_HT-600ToInf"
-config.Data.inputDataset = "/ZJetsToNuNu_HT-600ToInf_13TeV-madgraph/RunIISpring15DR74-Asympt25ns_MCRUN2_74_V9-v1/MINIAODSIM""
+config.Data.inputDataset = "/ZJetsToNuNu_HT-600ToInf_13TeV-madgraph/RunIISpring15DR74-Asympt25ns_MCRUN2_74_V9-v1/MINIAODSIM"""
 submit(config)
 
 config.General.requestName = "ZJetsToNuNu_HT-600ToInf_ext"
-config.Data.inputDataset = "/ZJetsToNuNu_HT-600ToInf_13TeV-madgraph/RunIISpring15DR74-Asympt25ns_MCRUN2_74_V9_ext1-v2/MINIAODSIM""
+config.Data.inputDataset = "/ZJetsToNuNu_HT-600ToInf_13TeV-madgraph/RunIISpring15DR74-Asympt25ns_MCRUN2_74_V9_ext1-v2/MINIAODSIM"""
 submit(config)
 
 
@@ -218,32 +218,90 @@ submit(config)
 
 
 config.General.requestName = "ZJetsToNuNu_HT-100To200_13TeV-madgraph"
-config.Data.inputDataset = "ZJetsToNuNu_HT-100To200_13TeV-madgraph/RunIISummer16MiniAODv2-PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6_ext1-v1/MINIAODSIM"
+config.Data.inputDataset = "ZJetsToNuNu_HT-100To200_13TeV-madgraph/RunIISummer16MiniAODv2-PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6_ext1-v1/MINIAODSIM""
 submit(config)
 
 config.General.requestName = "ZJetsToNuNu_HT-200To400_13TeV-madgraph"
-config.Data.inputDataset = "ZJetsToNuNu_HT-200To400_13TeV-madgraph/RunIISummer16MiniAODv2-PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6_ext1-v1/MINIAODSIM"
+config.Data.inputDataset = "ZJetsToNuNu_HT-200To400_13TeV-madgraph/RunIISummer16MiniAODv2-PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6_ext1-v1/MINIAODSIM""
 submit(config)
 
 config.General.requestName = "ZJetsToNuNu_HT-400To600_13TeV-madgraph"
-config.Data.inputDataset = "ZJetsToNuNu_HT-400To600_13TeV-madgraph/RunIISummer16MiniAODv2-PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6_ext1-v1/MINIAODSIM"
+config.Data.inputDataset = "ZJetsToNuNu_HT-400To600_13TeV-madgraph/RunIISummer16MiniAODv2-PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6_ext1-v1/MINIAODSIM""
 submit(config)
 
 
 config.General.requestName = "ZJetsToNuNu_HT-600To800_13TeV-madgraph"
-config.Data.inputDataset = "ZJetsToNuNu_HT-600To800_13TeV-madgraph/RunIISummer16MiniAODv2-PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/MINIAODSIM"
+config.Data.inputDataset = "ZJetsToNuNu_HT-600To800_13TeV-madgraph/RunIISummer16MiniAODv2-PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/MINIAODSIM""
 submit(config)
 
 config.General.requestName = "ZJetsToNuNu_HT-800To1200_13TeV-madgraph"
-config.Data.inputDataset = "ZJetsToNuNu_HT-800To1200_13TeV-madgraph/RunIISummer16MiniAODv2-PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/MINIAODSIM"
+config.Data.inputDataset = "ZJetsToNuNu_HT-800To1200_13TeV-madgraph/RunIISummer16MiniAODv2-PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/MINIAODSIM""
 submit(config)
 
 
 config.General.requestName = "ZJetsToNuNu_HT-1200To2500_13TeV-madgraph"
-config.Data.inputDataset = "ZJetsToNuNu_HT-1200To2500_13TeV-madgraph/RunIISummer16MiniAODv2-PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6_ext1-v1/MINIAODSIM"
+config.Data.inputDataset = "ZJetsToNuNu_HT-1200To2500_13TeV-madgraph/RunIISummer16MiniAODv2-PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6_ext1-v1/MINIAODSIM""
 submit(config)
 
 config.General.requestName = "ZJetsToNuNu_HT-2500ToInf_13TeV-madgraph"
-config.Data.inputDataset = "ZJetsToNuNu_HT-2500ToInf_13TeV-madgraph/RunIISummer16MiniAODv2-PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/MINIAODSIM"
+config.Data.inputDataset = "ZJetsToNuNu_HT-2500ToInf_13TeV-madgraph/RunIISummer16MiniAODv2-PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/MINIAODSIM""
 submit(config)
+
+
+
+
+
+config.General.requestName = "W1JetsToLNu"
+config.Data.inputDataset = "/W1JetsToLNu_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/RunIISummer16MiniAODv2-PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/MINIAODSIM"
+submit(config)
+
+
+config.General.requestName = "W2JetsToLNu"
+config.Data.inputDataset = "/W2JetsToLNu_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/RunIISummer16MiniAODv2-PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/MINIAODSIM"
+submit(config)
+
+
+config.General.requestName = "W2JetsToLNu_ext1"
+config.Data.inputDataset = "/W2JetsToLNu_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/RunIISummer16MiniAODv2-PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6_ext1-v1/MINIAODSIM"
+submit(config)
+
+
+
+config.General.requestName = "W3JetsToLNu"
+config.Data.inputDataset = "/W3JetsToLNu_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/RunIISummer16MiniAODv2-PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/MINIAODSIM"
+submit(config)
+
+
+config.General.requestName = "W3JetsToLNu_ext1"
+config.Data.inputDataset = "/W3JetsToLNu_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/RunIISummer16MiniAODv2-PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6_ext1-v1/MINIAODSIM"
+submit(config)
+
+
+
+config.General.requestName = "W4JetsToLNu"
+config.Data.inputDataset = "/W4JetsToLNu_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/RunIISummer16MiniAODv2-PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/MINIAODSIM"
+submit(config)
+
+
+config.General.requestName = "W4JetsToLNu_ext1"
+config.Data.inputDataset = "/W4JetsToLNu_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/RunIISummer16MiniAODv2-PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6_ext1-v1/MINIAODSIM"
+submit(config)
+
+
+config.General.requestName = "W4JetsToLNu_ext2"
+config.Data.inputDataset = "/W4JetsToLNu_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/RunIISummer16MiniAODv2-PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6_ext2-v1/MINIAODSIM"
+submit(config)
+
+
+
+
+
+
+
+
+
+cms.Path(pfMet+patJetCorrFactorsReapplyJEC+patJetsReapplyJEC+basicJetsForMet+jetSelectorForMet+cleanedPatJets+metrawCalo+patPFMet+patPFMetT1T2Corr+patPFMetT1+patPFMetTxyCorr+patPFMetT1Txy+patPFMetTxy+patSmearedJets+selectedPatJetsForMetT1T2SmearCorr+patPFMetT1T2SmearCorr+patPFMetT1Smear+ak4PFCHSL1FastjetCorrector+ak4PFCHSL2RelativeCorrector+ak4PFCHSL3AbsoluteCorrector+ak4PFCHSL1FastL2L3Corrector+ak4PFCHSL1FastjetCorrector+ak4PFCHSL2RelativeCorrector+ak4PFCHSL3AbsoluteCorrector+ak4PFCHSResidualCorrector+ak4PFCHSL1FastL2L3ResidualCorrector+pfCandsNoJets+pfCandsNoJetsNoEle+pfCandsNoJetsNoEleNoMu+pfCandsNoJetsNoEleNoMuNoTau+pfCandsForUnclusteredUnc+shiftedPatMuonEnDown+shiftedPatMETCorrMuonEnDown+shiftedPatMuonEnUp+shiftedPatMETCorrMuonEnUp+shiftedPatJetEnDown+shiftedPatMETCorrJetEnDown+shiftedPatJetEnUp+shiftedPatMETCorrJetEnUp+shiftedPatTauEnDown+shiftedPatMETCorrTauEnDown+shiftedPatTauEnUp+shiftedPatMETCorrTauEnUp+shiftedPatPhotonEnDown+shiftedPatMETCorrPhotonEnDown+shiftedPatPhotonEnUp+shiftedPatMETCorrPhotonEnUp+shiftedPatElectronEnDown+shiftedPatMETCorrElectronEnDown+shiftedPatElectronEnUp+shiftedPatMETCorrElectronEnUp+shiftedPatUnclusteredEnDown+shiftedPatMETCorrUnclusteredEnDown+shiftedPatUnclusteredEnUp+shiftedPatMETCorrUnclusteredEnUp+patPFMetT1JetResUp+patPFMetT1JetResDown+patPFMetT1MuonEnUp+patPFMetT1MuonEnDown+patPFMetT1JetEnUp+patPFMetT1JetEnDown+patPFMetT1TauEnDown+patPFMetT1TauEnUp+patPFMetT1PhotonEnUp+patPFMetT1PhotonEnDown+patPFMetT1ElectronEnUp+patPFMetT1ElectronEnDown+patPFMetT1UnclusteredEnUp+patPFMetT1UnclusteredEnDown+patPFMetT1SmearJetResDown+patPFMetT1SmearJetResUp+patPFMetT1SmearMuonEnUp+patPFMetT1SmearMuonEnDown+patPFMetT1SmearJetEnUp+patPFMetT1SmearJetEnDown+patPFMetT1SmearTauEnUp+patPFMetT1SmearTauEnDown+patPFMetT1SmearPhotonEnUp+patPFMetT1SmearPhotonEnDown+patPFMetT1SmearElectronEnDown+patPFMetT1SmearElectronEnUp+patPFMetT1SmearUnclusteredEnUp+patPFMetT1SmearUnclusteredEnDown+patCaloMet+slimmedMETs+cleanedPhotonsMuEGClean+cleanedCorPhotonsMuEGClean+matchedPhotonsMuEGClean+matchedElectronsMuEGClean+corMETPhotonMuEGClean+corMETElectronMuEGClean+patPFMetT1MuEGClean+patPFMetRawMuEGClean+patPFMetT1SmearMuEGClean+patPFMetT1TxyMuEGClean+patPFMetTxyMuEGClean+patPFMetT1JetEnUpMuEGClean+patPFMetT1JetResUpMuEGClean+patPFMetT1SmearJetResUpMuEGClean+patPFMetT1ElectronEnUpMuEGClean+patPFMetT1PhotonEnUpMuEGClean+patPFMetT1MuonEnUpMuEGClean+patPFMetT1TauEnUpMuEGClean+patPFMetT1UnclusteredEnUpMuEGClean+patPFMetT1JetEnDownMuEGClean+patPFMetT1JetResDownMuEGClean+patPFMetT1SmearJetResDownMuEGClean+patPFMetT1ElectronEnDownMuEGClean+patPFMetT1PhotonEnDownMuEGClean+patPFMetT1MuonEnDownMuEGClean+patPFMetT1TauEnDownMuEGClean+patPFMetT1UnclusteredEnDownMuEGClean+slimmedMETsMuEGClean+BadPFMuonFilter+BadChargedCandidateFilter+slimmedElectrons+slimmedPhotons+calibratedPatElectrons+calibratedPatPhotons+electronMVAValueMapProducer+heepIDVarValueMaps+egmGsfElectronIDs+electronRegressionValueMapProducer+egmPhotonIsolation+photonIDValueMapProducer+photonMVAValueMapProducer+egmPhotonIDs+photonRegressionValueMapProducer+ggNtuplizer)
+
+
+
 

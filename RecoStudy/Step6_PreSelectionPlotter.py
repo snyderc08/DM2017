@@ -65,8 +65,9 @@ ROOT.gROOT.SetBatch(True)
 #SubRootDir = 'NewOutFiles_Preselection_newCheckAddTkMu50/'
 #SubRootDir = 'NewOutFiles_Preselection_fixIsoBug/'
 #SubRootDir = 'NewOutFiles_Preselection_IncludeIsoBug/'
-SubRootDir = 'NewOutFiles_Preselection_FixBugNoBVetoREmove/'
-
+#SubRootDir = 'NewOutFiles_Preselection_FixBugNoBVetoREmove/'
+#SubRootDir = 'NewOutFiles_Preselection_addMetPhiRemoveBug/'
+SubRootDir = 'NewOutFiles_Preselection_ChecckMT400_600/'
 
 #SubRootDir = 'OutFiles_Excess_Jet50MT300_AllLQMAss/'
 #SubRootDir = 'OutFiles_Excess_Jet50MT300_AllLQMAss/'
@@ -362,7 +363,7 @@ if __name__ == "__main__":
 #    PlotName=["_tmass_MuMet","_tmass_LQMet","_LepEta","_LepPt","_JetPt","_JetEta","_MET","_LQMass","_dPhi_Jet_Met","_dPhi_Mu_Jet","_dPhi_Mu_Met","_NumJet","_NumBJet"]
 #    PlotName=["_JetPhi","_LepPhi","_METPhi"]
 #    PlotName=["_jetCHF","_jetNHF","_jetCEF","_jetNEF"]
-    PlotName=["_LQMass"]
+    PlotName=["_LQMass","_METPhi"]
 
 
 #    Isolation=["_Iso", "_AntiIso","_Total"]
@@ -378,8 +379,8 @@ if __name__ == "__main__":
 
     JPT=[ "_HighDPhi"]
 
-    region= ["", "_ttbarCRDiLep","_ttbarCRSingleLep"]
-#    region= [""]
+#    region= ["", "_ttbarCRDiLep","_ttbarCRSingleLep"]
+    region= [""]
 
     for Norm in PlotName:
         for iso in Isolation:

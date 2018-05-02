@@ -27,7 +27,10 @@ from Step5_TT_W_ScaleFactor import *
 
 #InputFilesLocation = 'NewOutFiles_Preselection_/'
 #InputFilesLocation = 'NewOutFiles_Preselection_addPhi/'
-InputFilesLocation = 'NewOutFiles_Preselection_jetinfo/'
+#InputFilesLocation = 'NewOutFiles_Preselection_jetinfo/'
+InputFilesLocation = 'NewOutFiles_Preselection_addMetPhiRemoveBug/'
+#InputFilesLocation = 'NewOutFiles_Preselection_ChecckMT400_600/'
+
 
 #................................................................................................................................
 #................................................................................................................................
@@ -224,12 +227,12 @@ def MakePlot(FileName,categoriy,HistName,Xaxis,Info,RB_,channel,yMin,isLOG,ttbar
     Data.SetLineWidth(2)
 
 
-#    #Making the plot blind
-#    if FileName.find("LQMass") > 0 :
-#        print "##################################\n", FileName
-#        for i in range(Data.GetNbinsX()):
-##            if i > 15 : Data.SetBinContent(i+1,0)
-#            if i > 6 : Data.SetBinContent(i+1,0)
+    #Making the plot blind
+    if FileName.find("LQMass") > 0 :
+        print "##################################\n", FileName
+        for i in range(Data.GetNbinsX()):
+#            if i > 15 : Data.SetBinContent(i+1,0)
+            if i > 6 : Data.SetBinContent(i+1,0)
 #
 #    if FileName.find("MET") > 0 :
 #        print "##################################\n", FileName
@@ -403,7 +406,7 @@ def MakePlot(FileName,categoriy,HistName,Xaxis,Info,RB_,channel,yMin,isLOG,ttbar
     c.SaveAs(InputFilesLocation+'_MuJet'+outName+".pdf")
 
 
-#FileNamesInfo=[
+FileNamesInfo=[
 ###               ["_tmass_JetMet","M_{T}(jet,MET) (GeV)","",5,1],
 #               ["_tmass_LQMet","M_{T}(LQ,MET)  (GeV)","",10,1],
 #               ["_LepPt","lepton p_{T} (GeV)","",50,1],
@@ -413,14 +416,15 @@ def MakePlot(FileName,categoriy,HistName,Xaxis,Info,RB_,channel,yMin,isLOG,ttbar
 ###               ["_nVtx","# of vertex","",1,10],
 ###               ["_nVtx_NoPU","# of vertex before PU reweighting","",1,10],
 #               ["_MET","MET  (GeV)","",5,1],
-#               ["_LQMass","M_{LQ}   (GeV)","",5,1],
+#               ["_LQMass","M_{LQ}   (GeV)","",10,1],
 #               ["_tmass_MuMet","M_{T}(#mu,MET) (GeV)","",5,1],
 #               ["_dPhi_Jet_Met","#Delta#phi (jet,MET)","",5,1],
 #               ["_dPhi_Mu_Jet","#Delta#phi (#mu,jet)","",5,1],
+               ["_METPhi"," MET #phi","",10,10],
 ###               ["_LQEta","#eta_{LQ}","",10,10],
 #               ["_NumJet","Jet multiplicity","",1,1],
 #               ["_NumBJet","BJet multiplicity","",1,1],
-#               ]
+               ]
 
 
 
@@ -431,14 +435,14 @@ def MakePlot(FileName,categoriy,HistName,Xaxis,Info,RB_,channel,yMin,isLOG,ttbar
 #               ["_LepPhi","lepton #phi","",20,1],
 #               ["_METPhi","MET #phi","",20,1],
 
-FileNamesInfo=[
-                  ["_jetCHF","jetCHF","",5,1],
-                  ["_jetNHF","jetNHF","",5,1],
-                  ["_jetCEF","jetCEF","",5,1],
-                  ["_jetNEF","jetNEF","",5,1]
-               
-               ]
-               
+#FileNamesInfo=[
+#                  ["_jetCHF","jetCHF","",5,1],
+#                  ["_jetNHF","jetNHF","",5,1],
+#                  ["_jetCEF","jetCEF","",5,1],
+#                  ["_jetNEF","jetNEF","",5,1]
+#               
+#               ]
+
             
 
                
@@ -474,8 +478,8 @@ FileNamesInfo=[
 Isolation=["_Iso"]
 #MT=["_HighMT"]
 #MT=["_HighMT","_MT500"]
-#MT= ["_NoMT","_HighMT","_MT300","_MT500"]
-MT= ["_HighMT","_MT500"]
+MT= ["_NoMT","_HighMT","_MT300","_MT500"]
+#MT= ["_NoMT","_HighMT","_MT500"]
 #MT= ["_NoMT","_HighMT","_MT50To150","_MT100","_MT150","_MT200","_MT300","_MT400","_MT500"]
 #MT= ["_MT100","_MT150"]
 #MT_legend= [" 50 < M_{T} < 100","100 < M_{T} < 150"]
@@ -489,8 +493,8 @@ region= [""]
 #region= ["","_ttbarCRDiLep","_ttbarCRSingleLep"]
 #region= ["_ttbarCRDiLep","_ttbarCRSingleLep"]
 
-#logStat=[0]
-logStat=[1]
+logStat=[0]
+#logStat=[1]
 
 
 
@@ -531,3 +535,4 @@ for i in range(0,len(FileNamesInfo)):
 #            FileName="TotalRootForLimit_PreSelection_"+ch+FileNamesInfo[i][0]+".root"
 #            MakePlot(FileName,ch+cat,FileNamesInfo[i][0],FileNamesInfo[i][1],FileNamesInfo[i][2],FileNamesInfo[i][3],ch+cat)
 #
+

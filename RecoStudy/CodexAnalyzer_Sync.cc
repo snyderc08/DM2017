@@ -225,13 +225,34 @@ int main(int argc, char** argv) {
         for (Int_t i = 0; i < nentries_wtn; i++) {
             //                    for (Int_t i = 0; i < 100; i++) {
             Run_Tree->GetEntry(i);
-            if (i % 10000 == 0) fprintf(stdout, "\r  Processed events: %8d of %8d ", i, nentries_wtn);
+//            if (i % 10000 == 0) fprintf(stdout, "\r  Processed events: %8d of %8d ", i, nentries_wtn);
             fflush(stdout);
+            
+//            283820:1419:1795563972
+            
+            if(event==1077480676 && lumis==1864 && run==283408) cout<<"beforeMETFLITER--------->Evt: "<<event <<",  Lumi: "<<lumis <<", Run: "<<run <<", Met: "<<pfMET <<"\n";
+            
+            //                    Evt: 1419040739, Lumi: 865, Run: 276935
+            if(event==1366286307 && lumis==808 && run==276542) cout<<"beforeMETFLITER--------->Evt: "<<event <<",  Lumi: "<<lumis <<", Run: "<<run <<", Met: "<<pfMET <<"\n";
+            
+            //                    vt: 1795563972, Lumi: 1419, Run: 283820,
+            if(event==1795563972 && lumis==1419 && run==283820) cout<<"beforeMETFLITER--------->Evt: "<<event <<",  Lumi: "<<lumis <<", Run: "<<run <<", Met: "<<pfMET <<"\n";
+            
+            if( lumis==1419 && run==283820) cout<<"#######beforeMETFLITER--------->Evt: "<<event <<",  Lumi: "<<lumis <<", Run: "<<run <<", Met: "<<pfMET <<"\n";
             
             //###############################################################################################
             //  MET Filters (only on Data)
             //###############################################################################################
-            //            if (isData && (metFilters!=1536)) continue;
+                        if (isData && (metFilters!=1536)) continue;
+            
+            
+            if(event==1077480676 && lumis==1864 && run==283408) cout<<"beforeTRigger--------->Evt: "<<event <<",  Lumi: "<<lumis <<", Run: "<<run <<", Met: "<<pfMET <<"\n";
+            
+            //                    Evt: 1419040739, Lumi: 865, Run: 276935
+            if(event==1366286307 && lumis==808 && run==276542) cout<<"beforeTRigger--------->Evt: "<<event <<",  Lumi: "<<lumis <<", Run: "<<run <<", Met: "<<pfMET <<"\n";
+            
+            //                    vt: 1795563972, Lumi: 1419, Run: 283820,
+            if(event==1795563972 && lumis==1419 && run==283820) cout<<"beforeTRigger--------->Evt: "<<event <<",  Lumi: "<<lumis <<", Run: "<<run <<", Met: "<<pfMET <<"\n";
             
             //###########       Trigger Requirement ###########################################################
                         bool PassTrigger =((HLTEleMuX >> 21 & 1) == 1 || (HLTEleMuX >> 41 & 1) == 1); //   else if (name.find("HLT_Mu50_v") != string::npos) bitEleMuX = 21;
@@ -329,6 +350,17 @@ int main(int argc, char** argv) {
             //###############################################################################################
             //###############################################################################################
             //###############################################################################################
+            
+            
+            if(event==1077480676 && lumis==1864 && run==283408) cout<<"--------->Evt: "<<event <<",  Lumi: "<<lumis <<", Run: "<<run <<", Met: "<<pfMET <<"\n";
+            
+            //                    Evt: 1419040739, Lumi: 865, Run: 276935
+            if(event==1366286307 && lumis==808 && run==276542) cout<<"--------->Evt: "<<event <<",  Lumi: "<<lumis <<", Run: "<<run <<", Met: "<<pfMET <<"\n";
+            
+            //                    vt: 1795563972, Lumi: 1419, Run: 283820,
+            if(event==1795563972 && lumis==1419 && run==283820) cout<<"--------->Evt: "<<event <<",  Lumi: "<<lumis <<", Run: "<<run <<", Met: "<<pfMET <<"\n";
+
+            
             
             
             //###########       Trigger Requirement ###########################################################
@@ -455,6 +487,9 @@ int main(int argc, char** argv) {
 //                                bool MuIdIso=( (muIDbit->at(imu) >> 2 & 1)); //Tight Muon Id
                 
                 
+                if(event==1366286307 && lumis==808 && run==276542) cout<<"Evt: "<<event <<",  Lumi: "<<lumis <<", Run: "<<run <<", MuPt: "<<muPt->at(imu) <<", MuEta: "<<muEta->at(imu)  <<", MuIso: "<<IsoMu << "fabs(muD0->at(imu)):"<<fabs(muD0->at(imu))<<" fabs(muDz->at(imu)):"<<fabs(muDz->at(imu))  <<   "id "<<(muIDbit->at(imu) >> 2 & 1) <<", Met: "<<pfMET <<"\n";
+                
+                
                 if (! MuPtCut || !MuIdIso ) continue;
                 
                 //                if (muCharge->at(imu) < 0) continue;
@@ -528,6 +563,10 @@ int main(int argc, char** argv) {
 //                            }
                     
                     
+                    if(event==1366286307 && lumis==808 && run==276542) cout<<"Evt: "<<event <<",  Lumi: "<<lumis <<", Run: "<<run <<", MuPt: "<<muPt->at(imu) <<", MuEta: "<<muEta->at(imu)  <<", MuIso: "<<IsoMu <<", Met: "<<pfMET <<", jetPt: "<<jetPt->at(ijet) <<", jetEta: "<<jetEta->at(ijet) <<", DR: "<<Jet4Momentum.DeltaR(Mu4Momentum) <<"\n";
+                    
+                    
+                    
                     if (! goodJet) continue;
                     
                     
@@ -594,13 +633,24 @@ int main(int argc, char** argv) {
                     
                  
                     
-                    if (hasonemuon && MTMore500) cout<<"Evt: "<<event <<", MuPt: "<<muPt->at(imu) <<", MuEta: "<<muEta->at(imu)  <<", MuIso: "<<IsoMu <<", muPFChIso: "<<   muPFChIso->at(imu)  <<", muPFNeuIso: "<<  muPFNeuIso->at(imu)  <<", muPFPhoIso: "<<   muPFPhoIso->at(imu) <<", muPFPUIso: "<<   muPFPUIso->at(imu)  <<", Met: "<<pfMET <<", jetPt: "<<jetPt->at(ijet) <<", jetEta: "<<jetEta->at(ijet) <<", DR: "<<Jet4Momentum.DeltaR(Mu4Momentum) << "  HLT" <<(HLTEleMuX >> 21 & 1) << " . "<< (HLTEleMuX >> 41 & 1)   <<"\n";
+                    if(event==1077480676 && lumis==1864 && run==283408) cout<<"Evt: "<<event <<",  Lumi: "<<lumis <<", Run: "<<run <<", MuPt: "<<muPt->at(imu) <<", MuEta: "<<muEta->at(imu)  <<", MuIso: "<<IsoMu <<", Met: "<<pfMET <<", jetPt: "<<jetPt->at(ijet) <<", jetEta: "<<jetEta->at(ijet) <<", DR: "<<Jet4Momentum.DeltaR(Mu4Momentum) << ", mT: "<< tmass_MuMet<<"\n";
+                    
+//                    Evt: 1419040739, Lumi: 865, Run: 276935
+                    if(event==1366286307 && lumis==808 && run==276542) cout<<"Evt: "<<event <<",  Lumi: "<<lumis <<", Run: "<<run <<", MuPt: "<<muPt->at(imu) <<", MuEta: "<<muEta->at(imu)  <<", MuIso: "<<IsoMu <<", Met: "<<pfMET <<", jetPt: "<<jetPt->at(ijet) <<", jetEta: "<<jetEta->at(ijet) <<", DR: "<<Jet4Momentum.DeltaR(Mu4Momentum) << ", mT: "<< tmass_MuMet<<"\n";
+                    
+//                    vt: 1795563972, Lumi: 1419, Run: 283820,
+                    if(event==1795563972 && lumis==1419 && run==283820) cout<<"Evt: "<<event <<",  Lumi: "<<lumis <<", Run: "<<run <<", MuPt: "<<muPt->at(imu) <<", MuEta: "<<muEta->at(imu)  <<", MuIso: "<<IsoMu <<", Met: "<<pfMET <<", jetPt: "<<jetPt->at(ijet) <<", jetEta: "<<jetEta->at(ijet) <<", DR: "<<Jet4Momentum.DeltaR(Mu4Momentum) << ", mT: "<< tmass_MuMet<<"\n";
+                    
+                    
+                    
+                    
+//                    if (hasonemuon && MTMore500) cout<<"Evt: "<<event <<",  Lumi: "<<lumis <<", Run: "<<run <<", MuPt: "<<muPt->at(imu) <<", MuEta: "<<muEta->at(imu)  <<", MuIso: "<<IsoMu <<", Met: "<<pfMET <<", jetPt: "<<jetPt->at(ijet) <<", jetEta: "<<jetEta->at(ijet) <<", DR: "<<Jet4Momentum.DeltaR(Mu4Momentum) <<"\n";
                     
                         if (hasonemuon && MTMore500) plotFill("_LQMass",LQ4Momentum.M(),200,0,2000,1);
                     hasonemuon=0;
                     break;
-                    
-                    
+//                    
+//                    if (hasonemuon && MTMore500) cout<<"Evt: "<<event <<",  Lumis: "<<lumi <<", Run: "<<run <<", MuPt: "<<muPt->at(imu) <<", MuEta: "<<muEta->at(imu)  <<", MuIso: "<<IsoMu <<", muPFChIso: "<<   muPFChIso->at(imu)  <<", muPFNeuIso: "<<  muPFNeuIso->at(imu)  <<", muPFPhoIso: "<<   muPFPhoIso->at(imu) <<", muPFPUIso: "<<   muPFPUIso->at(imu)  <<", Met: "<<pfMET <<", jetPt: "<<jetPt->at(ijet) <<", jetEta: "<<jetEta->at(ijet) <<", DR: "<<Jet4Momentum.DeltaR(Mu4Momentum) << "  HLT" <<(HLTEleMuX >> 21 & 1) << " . "<<
                     
                     //###############################################################################################
                     //  dPhi Jet_MET Categorization
