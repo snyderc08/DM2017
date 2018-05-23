@@ -50,7 +50,7 @@ int main(int argc, char** argv) {
     //########################################
     // W and DY K-factor files  (Bin-based K-factor)
     //########################################
-    std::string ROOTLocHT= "../interface/k_fakNNLO_use.root";
+    std::string ROOTLocHT= "../../QCDDIR/";
     vector<float> W_HTBinROOTFiles = W_HTBin(ROOTLocHT);
     vector<float> W_MassBinROOTFiles = W_MassBin(ROOTLocHT);
     vector<float> WTauNu_MassBinROOTFiles = WTauNu_MassBin(ROOTLocHT);
