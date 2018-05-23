@@ -33,10 +33,9 @@ import os
 
 
 ROOT.gROOT.SetBatch(True)
-SubRootDir = 'OutFiles_QCD/'
-#SubRootDir = 'OutFiles_QCD_NoTrgMC/'
+#SubRootDir = 'OutFiles_QCD/'
 #SubRootDir = 'OutFiles_QCD_40GeVMeT/'
-#SubRootDir = 'OutFiles_QCD_MET40_noOverLapJet/'
+SubRootDir = 'OutFiles_QCD_MET40_noOverLapJet/'
 #SubRootDir = 'OutFiles_QCD_Org/'
 
 

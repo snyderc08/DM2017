@@ -178,21 +178,24 @@ int main(int argc, char** argv) {
             size_t isWToLNu = (InputROOT.find("WToLNu") );
             size_t isWToTauNu = (InputROOT.find("WToTauNu") );
             
-                        if (WBosonMass > 100 && (isWToLNu!= string::npos || isWToTauNu!=string::npos)) WBosonKFactor=HistMassDepKFactor->GetBinContent(int(WBosonMass)/10 +1); //Mass binned K-factor
-                        if (WBosonMass <= 100 && isWJets!= string::npos  ){
             
-                            WBosonKFactor= FuncBosonKFactor("W1") + FuncBosonKFactor("W2") * WBosonPt; //HT binned & inclusive K-factor
-                            WBosonKFactor_ewkUp= FuncBosonKFactor("W1Up") + FuncBosonKFactor("W2Up") * WBosonPt; //HT binned & inclusive K-factor
-                            WBosonKFactor_ewkDown= FuncBosonKFactor("W1Down") + FuncBosonKFactor("W2Down") * WBosonPt; //HT binned & inclusive K-factor
             
-                        }
-//            if (isWJets!= string::npos || isWToLNu!= string::npos || isWToTauNu!=string::npos) {
-//                
-//                WBosonKFactor=HistMassDepKFactor->GetBinContent(int(WBosonMass)/10 +1); //Mass binned K-factor
-//                WBosonKFactor_ewkUp= FuncBosonKFactor("W1Up") + FuncBosonKFactor("W2Up") * WBosonPt; //HT binned & inclusive K-factor
-//                WBosonKFactor_ewkDown= FuncBosonKFactor("W1Down") + FuncBosonKFactor("W2Down") * WBosonPt; //HT binned & inclusive K-factor
-//                
-//            }
+            if (WBosonMass > 100 && (isWToLNu!= string::npos || isWToTauNu!=string::npos)) {
+                
+                WBosonKFactor=HistMassDepKFactor->GetBinContent(int(WBosonMass)/10 +1); //Mass binned K-factor
+                WBosonKFactor_ewkUp=HistMassDepKFactor_ewkUp->GetBinContent(int(WBosonMass)/10 +1); //Mass binned K-factor
+                WBosonKFactor_ewkDown=HistMassDepKFactor_ewkDown->GetBinContent(int(WBosonMass)/10 +1); //Mass binned K-factor
+            }
+            if (WBosonMass <= 100 && isWJets!= string::npos  ){
+                
+                WBosonKFactor= FuncBosonKFactor("W1Cen") + FuncBosonKFactor("W2Cen") * WBosonPt; //HT binned & inclusive K-factor
+                WBosonKFactor_ewkUp= FuncBosonKFactor("W1Up") + FuncBosonKFactor("W2Up") * WBosonPt; //HT binned & inclusive K-factor
+                WBosonKFactor_ewkDown= FuncBosonKFactor("W1Down") + FuncBosonKFactor("W2Down") * WBosonPt; //HT binned & inclusive K-factor
+            }
+            
+            
+            
+            
             //................................................................................................................
             //................................................................................................................
             if (isWJets!= string::npos && WBosonMass > 100) continue;
@@ -210,7 +213,7 @@ int main(int argc, char** argv) {
             ZBosonPt=genInfo[2];
             if (isDYJets!= string::npos) {
                 
-                ZBosonKFactor= FuncBosonKFactor("Z1") + FuncBosonKFactor("Z2") * ZBosonPt;
+                ZBosonKFactor= FuncBosonKFactor("Z1Cen") + FuncBosonKFactor("Z2Cen") * ZBosonPt;
                 ZBosonKFactor_ewkUp= FuncBosonKFactor("Z1Up") + FuncBosonKFactor("Z2Up") * ZBosonPt;
                 ZBosonKFactor_ewkDown= FuncBosonKFactor("Z1Down") + FuncBosonKFactor("Z2Down") * ZBosonPt;
                 
@@ -589,10 +592,10 @@ int main(int argc, char** argv) {
                                                                     
                                                                     
                                                                     ////////   Systematic on K-factor for W and Z for  ewk correction
-                                                                    if (isWJets!= string::npos) plotFill(CHL+"_LQMass"+FullStringName+"_ewkKfactor_WUp",LQ.M(),300,0,3000,FullWeight*WBosonKFactor_ewkUp);
-                                                                    if (isWJets!= string::npos) plotFill(CHL+"_LQMass"+FullStringName+"_ewkKfactor_WDown",LQ.M(),300,0,3000,FullWeight*WBosonKFactor_ewkDown);
-                                                                    if (isDYJets!= string::npos) plotFill(CHL+"_LQMass"+FullStringName+"_ewkKfactor_ZUp",LQ.M(),300,0,3000,FullWeight*ZBosonKFactor_ewkUp);
-                                                                    if (isDYJets!= string::npos) plotFill(CHL+"_LQMass"+FullStringName+"_ewkKfactor_ZDown",LQ.M(),300,0,3000,FullWeight*ZBosonKFactor_ewkDown);
+                                                                    if (isWJets!= string::npos) plotFill(CHL+"_LQMass"+FullStringName+"_ewkKfactor_WUp",LQ.M(),300,0,3000,FullWeight*WBosonKFactor_ewkUp/WBosonKFactor);
+                                                                    if (isWJets!= string::npos) plotFill(CHL+"_LQMass"+FullStringName+"_ewkKfactor_WDown",LQ.M(),300,0,3000,FullWeight*WBosonKFactor_ewkDown/WBosonKFactor);
+                                                                    if (isDYJets!= string::npos) plotFill(CHL+"_LQMass"+FullStringName+"_ewkKfactor_ZUp",LQ.M(),300,0,3000,FullWeight*ZBosonKFactor_ewkUp/ZBosonKFactor);
+                                                                    if (isDYJets!= string::npos) plotFill(CHL+"_LQMass"+FullStringName+"_ewkKfactor_ZDown",LQ.M(),300,0,3000,FullWeight*ZBosonKFactor_ewkDown/ZBosonKFactor);
                                                                     
                                                                     
                                                                     

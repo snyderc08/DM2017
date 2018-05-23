@@ -57,6 +57,7 @@ int main(int argc, char** argv) {
     vector<float> W_HTBinROOTFiles = W_HTBin(ROOTLocHT);
     vector<float> W_MassBinROOTFiles = W_MassBin(ROOTLocHT);
     vector<float> WTauNu_MassBinROOTFiles = WTauNu_MassBin(ROOTLocHT);
+    vector<float> W_NjetBinROOTFiles = W_JetBin(ROOTLocHT);
     TFile * MassDepKFactor=TFile::Open("../interface/k_fakNNLO_use.root");
     TH1F* HistMassDepKFactor= (TH1F*) MassDepKFactor->Get("k_fak_mean");
     
@@ -106,7 +107,7 @@ int main(int argc, char** argv) {
         Int_t nentries_wtn = (Int_t) Run_Tree->GetEntries();
         cout<<"nentries_wtn===="<<nentries_wtn<<"\n";
         for (Int_t i = 0; i < nentries_wtn; i++) {
-            //        for (Int_t i = 0; i < 10; i++) {
+//                    for (Int_t i = 0; i < 10000; i++) {
             Run_Tree->GetEntry(i);
             if (i % 10000 == 0) fprintf(stdout, "\r  Processed events: %8d of %8d ", i, nentries_wtn);
             fflush(stdout);
@@ -149,16 +150,23 @@ int main(int argc, char** argv) {
 //            size_t isWToMuTauNu = (InputROOT.find("WToLNu") || InputROOT.find("WToTauNu"));  size_t in NOT BOOLEAN!!!!!!
             size_t isWToLNu = (InputROOT.find("WToLNu") );
             size_t isWToTauNu = (InputROOT.find("WToTauNu") );
+            size_t isWNJets = (InputROOT.find("JetsToLNu") );
             
             if (WBosonMass > 100 && (isWToLNu!= string::npos || isWToTauNu!=string::npos)) WBosonKFactor=HistMassDepKFactor->GetBinContent(int(WBosonMass)/10 +1); //Mass binned K-factor
-            if (WBosonMass <= 100 && isWJets!= string::npos  )WBosonKFactor= FuncBosonKFactor("W1") + FuncBosonKFactor("W2") * WBosonPt; //HT binned & inclusive K-factor
+//           if (WBosonMass <= 100 && isWJets!= string::npos  )WBosonKFactor= FuncBosonKFactor("W1") + FuncBosonKFactor("W2") * WBosonPt; //HT binned & inclusive K-factor commented May4th 
+
+            
+            
+            
+            
             
 //            if (isWJets!= string::npos || isWToLNu!= string::npos || isWToTauNu!=string::npos) WBosonKFactor=HistMassDepKFactor->GetBinContent(int(WBosonMass)/10 +1); //Mass binned K-factor
-//            if (WBosonMass <= 100 && isWJets!= string::npos  )WBosonKFactor= FuncBosonKFactor("W1") + FuncBosonKFactor("W2") * WBosonPt; //HT binned & inclusive K-factor
-            
+            if (WBosonMass <= 100 && isWJets!= string::npos  )WBosonKFactor= FuncBosonKFactor("W1Cen") + FuncBosonKFactor("W2Cen") * WBosonPt; //HT binned & inclusive K-factor
+//            if (WBosonMass <= 100 && isWNJets!= string::npos  )WBosonKFactor= 1.21; //JetBinned binned & inclusive K- //added May4th
             //................................................................................................................
             //................................................................................................................
             if (isWJets!= string::npos && WBosonMass > 100) continue;
+            if (isWNJets!= string::npos && WBosonMass > 100) continue;
             if (isWJetsToLNu_Inc!= string::npos && genHT > 70.0) continue;
             //................................................................................................................
             //................................................................................................................
@@ -168,7 +176,7 @@ int main(int argc, char** argv) {
             float ZBosonKFactor=1;
             size_t isDYJets = InputROOT.find("DYJets");
             ZBosonPt=genInfo[2];
-            if (isDYJets!= string::npos) ZBosonKFactor= FuncBosonKFactor("Z1") + FuncBosonKFactor("Z2") * ZBosonPt;
+            if (isDYJets!= string::npos) ZBosonKFactor= FuncBosonKFactor("Z1Cen") + FuncBosonKFactor("Z2Cen") * ZBosonPt;
             
             
             //###############################################################################################
@@ -183,7 +191,7 @@ int main(int argc, char** argv) {
                 
                 //######################## Lumi Weight
                 //                if (HistoTot) LumiWeight = weightCalc(HistoTot, InputROOT,genHT,WBosonPt, W_Events, DY_Events,W_EventsNLO);
-                if (HistoTot) LumiWeight = weightCalc(HistoTot, InputROOT,genHT, W_HTBinROOTFiles, WBosonMass, W_MassBinROOTFiles,WTauNu_MassBinROOTFiles);
+                if (HistoTot) LumiWeight = weightCalc(HistoTot, InputROOT,genHT, W_HTBinROOTFiles, WBosonMass, W_MassBinROOTFiles,WTauNu_MassBinROOTFiles,W_NjetBinROOTFiles);
                 
                 //######################## Gen Weight
                 GetGenWeight=genWeight;
@@ -360,27 +368,27 @@ int main(int argc, char** argv) {
                     //###############################################################################################
                     //  TTbar & DY control region Categorization
                     //###############################################################################################
-//                    const int size_CR = 3;
-//                    
-//                    bool signalRegion = numTau+numZboson + numElectron  < 1  && numBJet < 1;
-////                    bool signalRegion = numTau+numZboson + numElectron  < 1;
-////                    bool TTcontrolRegion_DiLep = (numTau <1 && numZboson < 1 && numElectron > 0 && !isThisJetElectron );
-//                    bool TTcontrolRegion_DiLep = (numTau <1 && numZboson < 1 && numElectron > 0 );
-//                    if (TTcontrolRegion_DiLep) FinalBTagSF=1;
-//                    bool TTcontrolRegion_SingleLep = (numTau+numZboson + numElectron  < 1  && numBJet >= 1);
-//                    
-//                    bool region_category[size_CR] = {signalRegion,TTcontrolRegion_DiLep,TTcontrolRegion_SingleLep};
-//                    std::string region_Cat[size_CR] = {"", "_ttbarCRDiLep","_ttbarCRSingleLep"};
-//                    
-//                    
                     const int size_CR = 3;
                     
-                    bool signalRegion = numTau+numZboson + numElectron  + numBJet < 1  && nVtx < 20;
-                    bool TTcontrolRegion_DiLep = numTau+numZboson + numElectron  + numBJet < 1  && nVtx >= 20 && nVtx < 35;
-                    bool TTcontrolRegion_SingleLep = numTau+numZboson + numElectron  + numBJet < 1  && nVtx >= 35;;
+                    bool signalRegion = numTau+numZboson + numElectron  < 1  && numBJet < 1;
+//                    bool signalRegion = numTau+numZboson + numElectron  < 1;
+//                    bool TTcontrolRegion_DiLep = (numTau <1 && numZboson < 1 && numElectron > 0 && !isThisJetElectron );
+                    bool TTcontrolRegion_DiLep = (numTau <1 && numZboson < 1 && numElectron > 0 );
+                    if (TTcontrolRegion_DiLep) FinalBTagSF=1;
+                    bool TTcontrolRegion_SingleLep = (numTau+numZboson + numElectron  < 1  && numBJet >= 1);
                     
                     bool region_category[size_CR] = {signalRegion,TTcontrolRegion_DiLep,TTcontrolRegion_SingleLep};
-                    std::string region_Cat[size_CR] = {"_LowPU", "_MedPU","_HighPU"};
+                    std::string region_Cat[size_CR] = {"", "_ttbarCRDiLep","_ttbarCRSingleLep"};
+//
+//                    
+//                    const int size_CR = 3;
+//                    
+//                    bool signalRegion = numTau+numZboson + numElectron  + numBJet < 1  && nVtx < 20;
+//                    bool TTcontrolRegion_DiLep = numTau+numZboson + numElectron  + numBJet < 1  && nVtx >= 20 && nVtx < 35;
+//                    bool TTcontrolRegion_SingleLep = numTau+numZboson + numElectron  + numBJet < 1  && nVtx >= 35;;
+//                    
+//                    bool region_category[size_CR] = {signalRegion,TTcontrolRegion_DiLep,TTcontrolRegion_SingleLep};
+//                    std::string region_Cat[size_CR] = {"_LowPU", "_MedPU","_HighPU"};
                     
                     //###############################################################################################
                     //  Top Pt Reweighting Cat: The SF is meant to correct only the shape of the pt(top) distribution- not the amount of generated events ( you have to consider that the average weight is not 1 ! ) So we define two category for ttbar events
@@ -416,8 +424,8 @@ int main(int argc, char** argv) {
                                                         
                                                         ////////////////////////////////////   Naming the Histogram
                                                         float FullWeight = TotalWeight[itopRW] * MuonCor * FinalBTagSF;
-                                                        //                                                        std::string FullStringName = topPtRW[itopRW] + MT_Cat[imt] + jetMetPhi_Cat[jpt] +  region_Cat[iCR] + iso_Cat[iso]  ;
-                                                        std::string FullStringName = region_Cat[iCR] +topPtRW[itopRW] + MT_Cat[imt] + jetMetPhi_Cat[jpt] +   iso_Cat[iso]  ;
+                                                        std::string FullStringName = topPtRW[itopRW] + MT_Cat[imt] + jetMetPhi_Cat[jpt] +  region_Cat[iCR] + iso_Cat[iso]  ;
+//                                                        std::string FullStringName = region_Cat[iCR] +topPtRW[itopRW] + MT_Cat[imt] + jetMetPhi_Cat[jpt] +   iso_Cat[iso]  ;
 
                                                         
                                                         /////// CHECK FRXME
@@ -462,6 +470,8 @@ int main(int argc, char** argv) {
                                                                 
                                                                 plotFill(CHL+"_Cos_dPhi_Mu_Met"+FullStringName,(1-cos(deltaPhi(Mu4Momentum.Phi(),pfMETPhi))),200,0,2,FullWeight);
                                                                 plotFill(CHL+"_LepPhi"+FullStringName,muPhi->at(imu),400,-4,4,FullWeight);
+                                                                
+                                                                    plotFill("_FinalBTagSF"+FullStringName, FinalBTagSF,200,0,2);
                                                                 
 //                                                                if (nVtx < 20){
 //                                                                    plotFill(CHL+"_tmass_MuMet_LowPU"+FullStringName,tmass_MuMet,200,0,2000,FullWeight);

@@ -2,7 +2,7 @@ import os
 import ROOT
 from ROOT import *
 
-def MakeCompare(rootfile1,histo1,rootfile2,histo2,name):
+def MakeCompare(rootfile1,histo1,rootfile2,histo2,name,XAxis):
 
     ROOT.gStyle.SetFrameLineWidth(3)
     ROOT.gStyle.SetLineWidth(3)
@@ -11,13 +11,13 @@ def MakeCompare(rootfile1,histo1,rootfile2,histo2,name):
     
     file1=TFile(rootfile1,"open")
     Histo1=file1.Get(histo1)
-    Histo1.Rebin(10)
+    Histo1.Rebin(5)
     print rootfile1,histo1, Histo1.Integral()
 
 
     file2=TFile(rootfile2,"open")
     Histo2=file2.Get(histo2)
-    Histo2.Rebin(10)
+    Histo2.Rebin(5)
     print rootfile2,histo2, Histo2.Integral()
 
 
@@ -33,14 +33,14 @@ def MakeCompare(rootfile1,histo1,rootfile2,histo2,name):
     Can=TCanvas("canvas","",0,0,600,600)
 #
     Histo1.SetTitle('')
-    Histo1.GetXaxis().SetTitle('M_{LQ}')
+    Histo1.GetXaxis().SetTitle(XAxis)
     Histo1.GetXaxis().SetLabelSize(0.04)
     Histo1.GetXaxis().SetNdivisions(505)
     Histo1.GetXaxis().SetTitleSize(0.05)
     Histo1.GetXaxis().SetTitleOffset(0.9)
     Histo1.GetXaxis().SetLabelSize(0.04)
     Histo1.GetXaxis().SetTitleFont(42)
-#    Histo1.GetYaxis().SetTitle("Events")
+    Histo1.GetXaxis().SetRangeUser(0,1000)
 #
 #
 #
@@ -50,14 +50,14 @@ def MakeCompare(rootfile1,histo1,rootfile2,histo2,name):
     Histo2.Draw('same')
 #    Histo3.Draw('same')
 #
-    leg=TLegend(.5,.3,.9,.5, "", "brNDC")
+    leg=TLegend(.3,.7,.9,.9, "", "brNDC")
     leg.SetLineWidth(1)
     leg.SetLineStyle(0)
     leg.SetFillStyle(0)
 #    leg.SetBorderSize(0)
     leg.SetTextFont(62)
-    leg.AddEntry(Histo1,'Powheg','l')
-    leg.AddEntry(Histo2,'Pythia','l')
+    leg.AddEntry(Histo1,'HT_Binned + Mass_binned W samples','l')
+    leg.AddEntry(Histo2,'NJet_Binned + Mass_binned W samples','l')
 #    leg.AddEntry(Histo3,hist3.replace("_CMS_scale",""),'l')
     leg.Draw()
     
@@ -73,7 +73,7 @@ def MakeCompare(rootfile1,histo1,rootfile2,histo2,name):
     categ.AddText(name)
     categ.Draw()
     
-    Can.SaveAs('_diboson_%s.pdf'%histo1)
+    Can.SaveAs('_compare_WSamples_%s.pdf'%histo1)
 
 
 
@@ -81,14 +81,30 @@ def MakeCompare(rootfile1,histo1,rootfile2,histo2,name):
 #rootfile=['data_obs','TT','W','SingleTop','VV','ZTT','Codex_1200','QCD']
 #histo='NewROOTdePhiOnlyJet/TotalRootForLimit_PreSelection_MuJet_LQMass_HighMT_HighDPhi_AntiIso.root'
 
-rootfile1='VV_New.root'
-rootfile2='VV_Old_Pythia.root'
-histo1='MuJet_LQMass_HighMT_HighDPhi_Iso'
-histo2='MuJet_LQMass_HighMT_HighDPhi_Iso'
-MakeCompare(rootfile1,histo1,rootfile2,histo2,'MT > 100 GeV')
 
-histo1='MuJet_LQMass_MT400_HighDPhi_Iso'
-histo2='MuJet_LQMass_MT400_HighDPhi_Iso'
-MakeCompare(rootfile1,histo1,rootfile2,histo2,'MT > 400 GeV')
+rootfile1='NewOutFiles_Preselection_addMetPhiRemoveBug/WJetsToLNu.root'
+rootfile2='NewOutFiles_Preselection_addMetPhiRemoveBug/WJetsToLNu_NJetBinSamples.root'
+histo1='MuJet_LQMass_HighMT_HighDPhi_Iso'
+#histo2='MuJet_LQMass_HighMT_HighDPhi_Iso'
+MakeCompare(rootfile1,histo1,rootfile2,histo1,'MT > 100 GeV','M_{LQ}  (GeV)')
+
+histo1='MuJet_LQMass_NoMT_HighDPhi_Iso'
+MakeCompare(rootfile1,histo1,rootfile2,histo1,'MT > 0 GeV','M_{LQ}  (GeV)')
+
+histo1='MuJet_LQMass_MT500_HighDPhi_Iso'
+MakeCompare(rootfile1,histo1,rootfile2,histo1,'MT > 500 GeV','M_{LQ}  (GeV)')
+
+histo1='MuJet_tmass_MuMet_NoMT_HighDPhi_Iso'
+MakeCompare(rootfile1,histo1,rootfile2,histo1,'MT > 0 GeV','m_{T}(#mu,MET)  (GeV)')
+
+
+
+
+
+
+#
+#histo1='MuJet_LQMass_MT400_HighDPhi_Iso'
+#histo2='MuJet_LQMass_MT400_HighDPhi_Iso'
+#MakeCompare(rootfile1,histo1,rootfile2,histo2,'MT > 400 GeV')
 
 

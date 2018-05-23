@@ -378,9 +378,9 @@ float kf_Z_2Down=HistkfactorZDown->GetBinContent(2);
 
 float FuncBosonKFactor(std::string X){
     
-    if (X.find("W1") != string::npos)
+    if (X.find("W1Cen") != string::npos)
         return kf_W_1;
-    else if (X.find("W2") != string::npos)
+    else if (X.find("W2Cen") != string::npos)
         return kf_W_2;
     else if (X.find("W1Up") != string::npos)
         return kf_W_1Up;
@@ -391,9 +391,9 @@ float FuncBosonKFactor(std::string X){
     else if (X.find("W2Down") != string::npos)
         return kf_W_2Down;
     
-    else if (X.find("Z1") != string::npos)
+    else if (X.find("Z1Cen") != string::npos)
         return kf_Z_1;
-    else if (X.find("Z2") != string::npos)
+    else if (X.find("Z2Cen") != string::npos)
         return kf_Z_2;
     else if (X.find("Z1Up") != string::npos)
         return kf_Z_1Up;
@@ -619,10 +619,10 @@ float FuncFinalBTagSF(bool isData, TH2F ** Btagg_TT){
                 P_Data_P_mc=(1-SF*EffJet)/(1-EffJet);
                 
             }
-            
+        FinalBTagSF *=P_Data_P_mc;
         }
         
-        FinalBTagSF *=P_Data_P_mc;
+//        FinalBTagSF *=P_Data_P_mc; //BUG at May 17th
     }
     return FinalBTagSF;
 }

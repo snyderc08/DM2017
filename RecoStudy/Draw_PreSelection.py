@@ -30,6 +30,7 @@ from Step5_TT_W_ScaleFactor import *
 #InputFilesLocation = 'NewOutFiles_Preselection_jetinfo/'
 InputFilesLocation = 'NewOutFiles_Preselection_addMetPhiRemoveBug/'
 #InputFilesLocation = 'NewOutFiles_Preselection_ChecckMT400_600/'
+#InputFilesLocation = 'NewOutFiles_Preselection_FixBugNoBVetoREmove/'
 
 
 #................................................................................................................................
@@ -227,12 +228,12 @@ def MakePlot(FileName,categoriy,HistName,Xaxis,Info,RB_,channel,yMin,isLOG,ttbar
     Data.SetLineWidth(2)
 
 
-    #Making the plot blind
-    if FileName.find("LQMass") > 0 :
-        print "##################################\n", FileName
-        for i in range(Data.GetNbinsX()):
-#            if i > 15 : Data.SetBinContent(i+1,0)
-            if i > 6 : Data.SetBinContent(i+1,0)
+#    #Making the plot blind
+#    if FileName.find("LQMass") > 0 :
+#        print "##################################\n", FileName
+#        for i in range(Data.GetNbinsX()):
+##            if i > 15 : Data.SetBinContent(i+1,0)
+#            if i > 6 : Data.SetBinContent(i+1,0)
 #
 #    if FileName.find("MET") > 0 :
 #        print "##################################\n", FileName
@@ -407,26 +408,24 @@ def MakePlot(FileName,categoriy,HistName,Xaxis,Info,RB_,channel,yMin,isLOG,ttbar
 
 
 FileNamesInfo=[
+
+               ["_tmass_LQMet","M_{T}(LQ,MET)  (GeV)","",10,1],
+               ["_LepPt","lepton p_{T} (GeV)","",50,1],
+               ["_LepEta","lepton #eta ","",5,10],
+               ["_JetPt","jet p_{T} (GeV)","",50,1],
+               ["_JetEta","jet #eta ","",5,10],
+               ["_MET","MET  (GeV)","",5,1],
+               ["_LQMass","M_{LQ}   (GeV)","",10,1],
+               ["_tmass_MuMet","M_{T}(#mu,MET) (GeV)","",5,1],
+               ["_dPhi_Jet_Met","#Delta#phi (jet,MET)","",5,1],
+               ["_dPhi_Mu_Jet","#Delta#phi (#mu,jet)","",5,1],
+#               ["_METPhi"," MET #phi","",10,10],
+               ["_NumJet","Jet multiplicity","",1,1],
+               ["_NumBJet","BJet multiplicity","",1,1],
+               ]
 ###               ["_tmass_JetMet","M_{T}(jet,MET) (GeV)","",5,1],
-#               ["_tmass_LQMet","M_{T}(LQ,MET)  (GeV)","",10,1],
-#               ["_LepPt","lepton p_{T} (GeV)","",50,1],
-#               ["_LepEta","lepton #eta ","",5,10],
-#               ["_JetPt","jet p_{T} (GeV)","",50,1],
-#               ["_JetEta","jet #eta ","",5,10],
 ###               ["_nVtx","# of vertex","",1,10],
 ###               ["_nVtx_NoPU","# of vertex before PU reweighting","",1,10],
-#               ["_MET","MET  (GeV)","",5,1],
-#               ["_LQMass","M_{LQ}   (GeV)","",10,1],
-#               ["_tmass_MuMet","M_{T}(#mu,MET) (GeV)","",5,1],
-#               ["_dPhi_Jet_Met","#Delta#phi (jet,MET)","",5,1],
-#               ["_dPhi_Mu_Jet","#Delta#phi (#mu,jet)","",5,1],
-               ["_METPhi"," MET #phi","",10,10],
-###               ["_LQEta","#eta_{LQ}","",10,10],
-#               ["_NumJet","Jet multiplicity","",1,1],
-#               ["_NumBJet","BJet multiplicity","",1,1],
-               ]
-
-
 
 
 
@@ -493,8 +492,8 @@ region= [""]
 #region= ["","_ttbarCRDiLep","_ttbarCRSingleLep"]
 #region= ["_ttbarCRDiLep","_ttbarCRSingleLep"]
 
-logStat=[0]
-#logStat=[1]
+#logStat=[0]
+logStat=[1]
 
 
 

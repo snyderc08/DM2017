@@ -59,6 +59,13 @@ float XSection(std::string OutName) {
     
     
     
+    else if (OutName.find("W1JetsToLNu") != string::npos) return 9644.5;
+    else if (OutName.find("W2JetsToLNu") != string::npos) return 3144.5;
+    else if (OutName.find("W3JetsToLNu") != string::npos) return 954.8;
+    else if (OutName.find("W4JetsToLNu") != string::npos) return 485.6;
+    
+    
+    
     else if (OutName.find("WToTauNu_M-100_") != string::npos) return 163.15;
     else if (OutName.find("WToTauNu_M-200_") != string::npos) return 6.236;
     else if (OutName.find("WToTauNu_M-500_") != string::npos) return 0.2138;
@@ -220,7 +227,7 @@ vector <float> W_HTBin(std::string FileLoc){
         TFile * File_W = new TFile((FileLoc+W_ROOTFiles[i]).c_str());
         TH1F * Histo_W = (TH1F*) File_W->Get("hcount");
         W_events.push_back(Histo_W->GetBinContent(2));
-        cout<<"Number of proccessed evenets for "<<W_ROOTFiles[i]<<" = "<<Histo_W->GetBinContent(2)<<"\n";
+        cout<<"Number of proccessed evenets for HTBin"<<W_ROOTFiles[i]<<" = "<<Histo_W->GetBinContent(2)<<"\n";
     }
     
     return W_events ;
@@ -243,7 +250,7 @@ vector <float> W_MassBin(std::string FileLoc){
         TFile * File_W = new TFile((FileLoc+W_ROOTFiles[i]).c_str());
         TH1F * Histo_W = (TH1F*) File_W->Get("hcount");
         W_events.push_back(Histo_W->GetBinContent(2));
-        cout<<"Number of proccessed evenets for "<<W_ROOTFiles[i]<<" = "<<Histo_W->GetBinContent(2)<<"\n";
+        cout<<"Number of proccessed evenets for MassBinMu "<<W_ROOTFiles[i]<<" = "<<Histo_W->GetBinContent(2)<<"\n";
     }
     
     return W_events ;
@@ -265,12 +272,37 @@ vector <float> WTauNu_MassBin(std::string FileLoc){
         TFile * File_W = new TFile((FileLoc+W_ROOTFiles[i]).c_str());
         TH1F * Histo_W = (TH1F*) File_W->Get("hcount");
         WTauNu_events.push_back(Histo_W->GetBinContent(2));
-        cout<<"Number of proccessed evenets for "<<W_ROOTFiles[i]<<" = "<<Histo_W->GetBinContent(2)<<"\n";
+        cout<<"Number of proccessed evenets for MassBinTau "<<W_ROOTFiles[i]<<" = "<<Histo_W->GetBinContent(2)<<"\n";
     }
     
     return WTauNu_events ;
     
 }
+
+
+
+vector <float> W_JetBin(std::string FileLoc){
+    
+    const int WSize=4;
+    std::string W_ROOTFiles[WSize]={"W1JetsToLNu.root", "W2JetsToLNu.root","W3JetsToLNu.root","W4JetsToLNu.root"};
+    
+    
+    vector<float> W_njet;
+    W_njet.clear();
+    
+    for (int i=0; i <WSize;i++){
+        
+        TFile * File_W = new TFile((FileLoc+W_ROOTFiles[i]).c_str());
+        TH1F * Histo_W = (TH1F*) File_W->Get("hcount");
+        W_njet.push_back(Histo_W->GetBinContent(2));
+        cout<<"Number of proccessed evenets for NJET "<<W_ROOTFiles[i]<<" = "<<Histo_W->GetBinContent(2)<<"\n";
+    }
+    
+    return W_njet ;
+    
+}
+
+
 
 
 
@@ -364,7 +396,7 @@ vector <float> Z_PTBinNLO(std::string FileLoc){
 //####################################################################################################################################
 
 
-float weightCalc(TH1F *Histo,std::string outputName, float genHT,vector<float> W_HTbin, float WMass, vector<float> W_Massbin, vector<float> WTauNu_Massbin) {
+float weightCalc(TH1F *Histo,std::string outputName, float genHT,vector<float> W_HTbin, float WMass, vector<float> W_Massbin, vector<float> WTauNu_Massbin, vector<float> W_JetBin) {
     
     
     stringstream ss(outputName);
@@ -398,6 +430,10 @@ float weightCalc(TH1F *Histo,std::string outputName, float genHT,vector<float> W
     size_t isWjet = outputName.find("WJets");
     size_t isWToLNu = outputName.find("WToLNu");
     size_t isWToTauNu = outputName.find("WToTauNu");
+    size_t isW1j = outputName.find("W1Jets");
+    size_t isW2j = outputName.find("W2Jets");
+    size_t isW3j = outputName.find("W3Jets");
+    size_t isW4j = outputName.find("W4Jets");
     
     
     
@@ -436,6 +472,17 @@ float weightCalc(TH1F *Histo,std::string outputName, float genHT,vector<float> W
         else if  (WMass > 2000 )  return   luminosity / (WTauNu_Massbin[0] /XSection("WToLNu_M-100_") +  WTauNu_Massbin[1]/ XSection("WToLNu_M-200_") +  WTauNu_Massbin[2]/ XSection("WToLNu_M-500_") + WTauNu_Massbin[3]/ XSection("WToLNu_M-1000_") + WTauNu_Massbin[4]/ XSection("WToLNu_M-2000_")) ;
         else   {cout<<"**********   wooow  ********* There is a problem here\n";return 0;}
     }
+    
+    if (isWjet != string::npos && WMass <= 100){
+        
+        if (isW1j != string::npos) return  luminosity * XSection("W1JetsToLNu") / W_JetBin[1];
+        else if (isW1j != string::npos) return  luminosity * XSection("W2JetsToLNu") / W_JetBin[2];
+        else if (isW1j != string::npos) return  luminosity * XSection("W3JetsToLNu") / W_JetBin[3];
+        else if (isW1j != string::npos) return  luminosity * XSection("W4JetsToLNu") / W_JetBin[4];
+        else   {cout<<"**********   wooow  ********* There is a problem here\n";return 0;}
+    }
+    
+    
     
     
     
