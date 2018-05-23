@@ -146,12 +146,12 @@ int main(int argc, char** argv) {
             
             size_t isWJetsToLNu_Inc = InputROOT.find("WJetsToLNu_Inc");
             size_t isWJets = InputROOT.find("WJets");
-            //            size_t isWToMuTauNu = (InputROOT.find("WToLNu") || InputROOT.find("WToTauNu"));  size_t in NOT BOOLEAN!!!!!!
-            size_t isWToLNu = (InputROOT.find("WToLNu") );
+            //            size_t isWToMuTauNu = (InputROOT.find("WToMuNu") || InputROOT.find("WToTauNu"));  size_t in NOT BOOLEAN!!!!!!
+            size_t isWToMuNu = (InputROOT.find("WToMuNu") );
             size_t isWToTauNu = (InputROOT.find("WToTauNu") );
             size_t isWNJets = (InputROOT.find("JetsToLNu") );
             
-            if (WBosonMass > 100 && (isWToLNu!= string::npos || isWToTauNu!=string::npos)) WBosonKFactor=HistMassDepKFactor->GetBinContent(int(WBosonMass)/10 +1); //Mass binned K-factor
+            if (WBosonMass > 100 && (isWToMuNu!= string::npos || isWToTauNu!=string::npos)) WBosonKFactor=HistMassDepKFactor->GetBinContent(int(WBosonMass)/10 +1); //Mass binned K-factor
             //           if (WBosonMass <= 100 && isWJets!= string::npos  )WBosonKFactor= FuncBosonKFactor("W1") + FuncBosonKFactor("W2") * WBosonPt; //HT binned & inclusive K-factor commented May4th
             
             
@@ -159,7 +159,7 @@ int main(int argc, char** argv) {
             
             
             
-            //            if (isWJets!= string::npos || isWToLNu!= string::npos || isWToTauNu!=string::npos) WBosonKFactor=HistMassDepKFactor->GetBinContent(int(WBosonMass)/10 +1); //Mass binned K-factor
+            //            if (isWJets!= string::npos || isWToMuNu!= string::npos || isWToTauNu!=string::npos) WBosonKFactor=HistMassDepKFactor->GetBinContent(int(WBosonMass)/10 +1); //Mass binned K-factor
             if (WBosonMass <= 100 && isWJets!= string::npos  )WBosonKFactor= FuncBosonKFactor("W1Cen") + FuncBosonKFactor("W2Cen") * WBosonPt; //HT binned & inclusive K-factor
             //            if (WBosonMass <= 100 && isWNJets!= string::npos  )WBosonKFactor= 1.21; //JetBinned binned & inclusive K- //added May4th
             //................................................................................................................
