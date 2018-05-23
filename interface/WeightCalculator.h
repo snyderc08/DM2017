@@ -281,26 +281,26 @@ vector <float> WTauNu_MassBin(std::string FileLoc){
 
 
 
-vector <float> W_JetBin(std::string FileLoc){
-    
-    const int WSize=4;
-    std::string W_ROOTFiles[WSize]={"W1JetsToLNu.root", "W2JetsToLNu.root","W3JetsToLNu.root","W4JetsToLNu.root"};
-    
-    
-    vector<float> W_njet;
-    W_njet.clear();
-    
-    for (int i=0; i <WSize;i++){
-        
-        TFile * File_W = new TFile((FileLoc+W_ROOTFiles[i]).c_str());
-        TH1F * Histo_W = (TH1F*) File_W->Get("hcount");
-        W_njet.push_back(Histo_W->GetBinContent(2));
-        cout<<"Number of proccessed evenets for NJET "<<W_ROOTFiles[i]<<" = "<<Histo_W->GetBinContent(2)<<"\n";
-    }
-    
-    return W_njet ;
-    
-}
+//vector <float> W_JetBin(std::string FileLoc){
+//    
+//    const int WSize=4;
+//    std::string W_ROOTFiles[WSize]={"W1JetsToLNu.root", "W2JetsToLNu.root","W3JetsToLNu.root","W4JetsToLNu.root"};
+//    
+//    
+//    vector<float> W_njet;
+//    W_njet.clear();
+//    
+//    for (int i=0; i <WSize;i++){
+//        
+//        TFile * File_W = new TFile((FileLoc+W_ROOTFiles[i]).c_str());
+//        TH1F * Histo_W = (TH1F*) File_W->Get("hcount");
+//        W_njet.push_back(Histo_W->GetBinContent(2));
+//        cout<<"Number of proccessed evenets for NJET "<<W_ROOTFiles[i]<<" = "<<Histo_W->GetBinContent(2)<<"\n";
+//    }
+//    
+//    return W_njet ;
+//    
+//}
 
 
 
@@ -396,7 +396,7 @@ vector <float> Z_PTBinNLO(std::string FileLoc){
 //####################################################################################################################################
 
 
-float weightCalc(TH1F *Histo,std::string outputName, float genHT,vector<float> W_HTbin, float WMass, vector<float> W_Massbin, vector<float> WTauNu_Massbin, vector<float> W_JetBin) {
+float weightCalc(TH1F *Histo,std::string outputName, float genHT,vector<float> W_HTbin, float WMass, vector<float> W_Massbin, vector<float> WTauNu_Massbin) {
     
     
     stringstream ss(outputName);
@@ -473,14 +473,14 @@ float weightCalc(TH1F *Histo,std::string outputName, float genHT,vector<float> W
         else   {cout<<"**********   wooow  ********* There is a problem here\n";return 0;}
     }
     
-    if (isWjet != string::npos && WMass <= 100){
-        
-        if (isW1j != string::npos) return  luminosity * XSection("W1JetsToLNu") / W_JetBin[1];
-        else if (isW1j != string::npos) return  luminosity * XSection("W2JetsToLNu") / W_JetBin[2];
-        else if (isW1j != string::npos) return  luminosity * XSection("W3JetsToLNu") / W_JetBin[3];
-        else if (isW1j != string::npos) return  luminosity * XSection("W4JetsToLNu") / W_JetBin[4];
-        else   {cout<<"**********   wooow  ********* There is a problem here\n";return 0;}
-    }
+//    if (isWjet != string::npos && WMass <= 100){
+//        
+//        if (isW1j != string::npos) return  luminosity * XSection("W1JetsToLNu") / W_JetBin[1];
+//        else if (isW1j != string::npos) return  luminosity * XSection("W2JetsToLNu") / W_JetBin[2];
+//        else if (isW1j != string::npos) return  luminosity * XSection("W3JetsToLNu") / W_JetBin[3];
+//        else if (isW1j != string::npos) return  luminosity * XSection("W4JetsToLNu") / W_JetBin[4];
+//        else   {cout<<"**********   wooow  ********* There is a problem here\n";return 0;}
+//    }
     
     
     

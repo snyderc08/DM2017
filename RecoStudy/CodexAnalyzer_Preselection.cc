@@ -57,7 +57,7 @@ int main(int argc, char** argv) {
     vector<float> W_HTBinROOTFiles = W_HTBin(ROOTLocHT);
     vector<float> W_MassBinROOTFiles = W_MassBin(ROOTLocHT);
     vector<float> WTauNu_MassBinROOTFiles = WTauNu_MassBin(ROOTLocHT);
-    vector<float> W_NjetBinROOTFiles = W_JetBin(ROOTLocHT);
+//    vector<float> W_NjetBinROOTFiles = W_JetBin(ROOTLocHT);
     TFile * MassDepKFactor=TFile::Open("../interface/k_fakNNLO_use.root");
     TH1F* HistMassDepKFactor= (TH1F*) MassDepKFactor->Get("k_fak_mean");
     
@@ -150,7 +150,7 @@ int main(int argc, char** argv) {
 //            size_t isWToMuTauNu = (InputROOT.find("WToLNu") || InputROOT.find("WToTauNu"));  size_t in NOT BOOLEAN!!!!!!
             size_t isWToLNu = (InputROOT.find("WToLNu") );
             size_t isWToTauNu = (InputROOT.find("WToTauNu") );
-            size_t isWNJets = (InputROOT.find("JetsToLNu") );
+//            size_t isWNJets = (InputROOT.find("JetsToLNu") );
             
             if (WBosonMass > 100 && (isWToLNu!= string::npos || isWToTauNu!=string::npos)) WBosonKFactor=HistMassDepKFactor->GetBinContent(int(WBosonMass)/10 +1); //Mass binned K-factor
 //           if (WBosonMass <= 100 && isWJets!= string::npos  )WBosonKFactor= FuncBosonKFactor("W1") + FuncBosonKFactor("W2") * WBosonPt; //HT binned & inclusive K-factor commented May4th 
@@ -166,7 +166,7 @@ int main(int argc, char** argv) {
             //................................................................................................................
             //................................................................................................................
             if (isWJets!= string::npos && WBosonMass > 100) continue;
-            if (isWNJets!= string::npos && WBosonMass > 100) continue;
+//            if (isWNJets!= string::npos && WBosonMass > 100) continue;
             if (isWJetsToLNu_Inc!= string::npos && genHT > 70.0) continue;
             //................................................................................................................
             //................................................................................................................
@@ -191,7 +191,7 @@ int main(int argc, char** argv) {
                 
                 //######################## Lumi Weight
                 //                if (HistoTot) LumiWeight = weightCalc(HistoTot, InputROOT,genHT,WBosonPt, W_Events, DY_Events,W_EventsNLO);
-                if (HistoTot) LumiWeight = weightCalc(HistoTot, InputROOT,genHT, W_HTBinROOTFiles, WBosonMass, W_MassBinROOTFiles,WTauNu_MassBinROOTFiles,W_NjetBinROOTFiles);
+                if (HistoTot) LumiWeight = weightCalc(HistoTot, InputROOT,genHT, W_HTBinROOTFiles, WBosonMass, W_MassBinROOTFiles,WTauNu_MassBinROOTFiles);
                 
                 //######################## Gen Weight
                 GetGenWeight=genWeight;
