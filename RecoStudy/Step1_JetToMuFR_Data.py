@@ -35,7 +35,9 @@ import os
 ROOT.gROOT.SetBatch(True)
 #SubRootDir = 'OutFiles_QCD/'
 #SubRootDir = 'OutFiles_QCD_40GeVMeT/'
-SubRootDir = 'OutFiles_QCD_MET40_noOverLapJet/'
+#SubRootDir = 'OutFiles_QCD_MET40_noOverLapJet/'
+#SubRootDir = 'NewOutFiles_QCDEstim_Data_qcdNew/'
+SubRootDir = 'NewOutFiles_QCDEstim_Data_qcdFR_JetPt100/'
 #SubRootDir = 'OutFiles_QCD_Org/'
 
 
@@ -222,9 +224,11 @@ def _FIT_Jet(x, p):
 
 
 def _FIT_Lepton( x,  p) :
-    Land = p[2] * TMath.Landau(x[0], p[3], p[4])
-    Pol0 = p[0]
-    return Land + Pol0
+    Land=p[0]+p[1]*x[0]+p[2]*x[0]*x[0]+p[3]*x[0]*x[0]*x[0]+p[4]*x[0]*x[0]*x[0]*x[0]
+#    Land = p[2] * TMath.Landau(x[0], p[3], p[4])
+#    Pol0 = p[0]
+#    return Land + Pol0
+    return Land
 
 
 #############################################################################################################
@@ -237,9 +241,11 @@ def ApplyTheFakeRate(x, p,parametrization):
         Pol0 = p[0]+p[1]*x
         return Land + Pol0
     elif parametrization=='Lepton':
-        Land = p[2] * TMath.Landau(x, p[3], p[4])
-        Pol0 = p[0]
-        return Land + Pol0
+        Land=p[0]+p[1]*pow(x,1)+p[2]*pow(x,2)+p[3]*pow(x,3)+p[4]*pow(x,4)
+#        Land = p[2] * TMath.Landau(x, p[3], p[4])
+#        Pol0 = p[0]
+#        return Land + Pol0
+        return Land
     else:
         raise Exception("Not a valid parametrization")
 
@@ -254,7 +260,8 @@ def Make_Mu_FakeRate(channelName,Parametrization):
     if Parametrization=='Lepton':
         ObjectPT="_LepPt"
         FR_vs_LeptonPT=1
-        BinningFake = array.array("d",[0,60,70,80,90,100,110,120,130,150,175,200,240,300])
+#        BinningFake = array.array("d",[0,60,70,80,90,100,110,120,130,150,175,200,240,300,500])
+        BinningFake = array.array("d",[0,60,80,100,120,150,175,200,240,300,400])
     elif Parametrization=='Jet':
         ObjectPT="_CloseJetLepPt"
         FR_vs_LeptonPT=0
@@ -267,8 +274,11 @@ def Make_Mu_FakeRate(channelName,Parametrization):
 
     
     
-    HistoFakeNum=ObjectPT+"_LowMT_LowDPhi_TotEta_Iso"
-    HistoFakeDeNum=ObjectPT+"_LowMT_LowDPhi_TotEta_Total"
+#    HistoFakeNum=ObjectPT+"_LowMT_LowDPhi_TotEta_Iso"
+#    HistoFakeDeNum=ObjectPT+"_LowMT_LowDPhi_TotEta_Total"
+
+    HistoFakeNum=ObjectPT+"_HighMT_LowDPhi_TotEta_Iso"
+    HistoFakeDeNum=ObjectPT+"_HighMT_LowDPhi_TotEta_Total"
 
 
 
@@ -309,11 +319,11 @@ def Make_Mu_FakeRate(channelName,Parametrization):
 
     if FR_vs_LeptonPT:
         nPar = 5
-        theFit=TF1("theFit", _FIT_Lepton, 60, 300,nPar)
-        theFit.SetParameter(0, .25)
-        theFit.SetParLimits(0, 0.1, 0.3)
-        theFit.SetParameter(1, 0.1)
-        theFit.SetParameter(2, -.30)
+        theFit=TF1("theFit", _FIT_Lepton, 60, 350,nPar)
+        theFit.SetParameter(0, .85)
+#        theFit.SetParLimits(0, 0, 0.8)
+#        theFit.SetParameter(1, 0.7)
+#        theFit.SetParameter(2, -.90)
 
     else:
         nPar = 5
