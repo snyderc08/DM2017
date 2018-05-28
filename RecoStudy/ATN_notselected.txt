@@ -1,9 +1,0 @@
-Evt: 9045, MuPt: 567.776, MuEta: 0.783013, Met: 97.8088, jetPt: 715.644, jetEta: 0.632437, DR: 2.48604
-Evt: 9164, MuPt: 713.907, MuEta: 0.239752, Met: 48.519, jetPt: 681.901, jetEta: 1.22044, DR: 3.17624
-Evt: 9261, MuPt: 1038.2, MuEta: 0.236869, Met: 846.558, jetPt: 97.2345, jetEta: 2.08481, DR: 3.35122
-Evt: 9264, MuPt: 671.315, MuEta: 0.554393, Met: 47.8578, jetPt: 888.121, jetEta: 0.0066735, DR: 3.05905
-Evt: 9351, MuPt: 633.663, MuEta: 0.293346, Met: 58.4412, jetPt: 615.876, jetEta: 0.828151, DR: 3.3126
-Evt: 9422, MuPt: 683.67, MuEta: 0.104951, Met: 95.2116, jetPt: 792.863, jetEta: 0.26763, DR: 3.11395
-Evt: 9451, MuPt: 294.448, MuEta: 1.21963, Met: 752.624, jetPt: 941.959, jetEta: 0.469395, DR: 2.87871
-Evt: 9492, MuPt: 737.793, MuEta: 0.356448, Met: 45.5516, jetPt: 489.072, jetEta: 0.178734, DR: 2.90345
-

@@ -1,2 +1,0 @@
-open *cc *py ../interface/*.h  ../interface/*.cc
-
