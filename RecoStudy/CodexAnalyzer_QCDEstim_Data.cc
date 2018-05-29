@@ -73,8 +73,9 @@ int main(int argc, char** argv) {
         float eleMass= 0.000511;
         float LeptonPtCut_=60;
         float TauPtCut_=20;
-        float JetPtCut=50; // used to be 50
+        float JetPtCut=100; // used to be 50
         float BJetPtCut=20;
+        float SimpleJetPtCut=30;
         float ElectronPtCut_=15;
         float CSVCut= 0.8484  ;    // Medium WP                 //https://twiki.cern.ch/twiki/bin/view/CMS/BtagRecommendation80XReReco
         float LeptonIsoCut=0.15;
@@ -210,7 +211,7 @@ int main(int argc, char** argv) {
             //############################################################################################
             //   Final Total Weight
             //############################################################################################
-//            float TotalWeight_withTopPtRW = LumiWeight * GetGenWeight * PUWeight * TopPtReweighting * WBosonKFactor * ZBosonKFactor ;
+//            float TotalWeight_withTopPtRW = LumiWeight * GetGenWeight * PUWeight * TopPtReweighting * WBosonKFactor * ZBosonKFactor ; //Do not apply TopPt Reweighting for QCD estim
             float TotalWeight = LumiWeight * GetGenWeight * PUWeight * WBosonKFactor * ZBosonKFactor ;
             
             //###########       numTau   ###########################################################
@@ -247,13 +248,15 @@ int main(int argc, char** argv) {
                 break;
             }
             //###########       BTag SF   ###########################################################
-            float FinalBTagSF=FuncFinalBTagSF(isData,Btagg_TT);
+            float FinalBTagSF=FuncFinalBTagSF(isData,Btagg_TT,BJetPtCut,CSVCut);
+            //            float FinalBTagSF=1;
+            
             
             //###########       numBJet   ###########################################################
-            int numBJet=numBJets();
+            int numBJet=numBJets(BJetPtCut,CSVCut);
             
             //###########       numJet   ###########################################################
-            int numJet=numJets();
+            int numJet=numJets(SimpleJetPtCut);
             
             //###########       numZboson   ###########################################################
             int numZboson = getNumZBoson();

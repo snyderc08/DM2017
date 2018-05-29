@@ -42,11 +42,11 @@ print 'This is what we are runinng on .....',args.sample
 if args.sample=='SingleMu':
     SampleLoc='/Users/abdollah1/GIT_abdollah110/DM2017/ROOT80X/SampleLQ2/'
 
-if args.sample=='SingleEle':
-    SampleLoc='/Users/abdollah1/GIT_abdollah110/DM2017/ROOT80X/SampleLQ1/'
+#if args.sample=='SingleEle':
+#    SampleLoc='/Users/abdollah1/GIT_abdollah110/DM2017/ROOT80X/SampleLQ1/'
 
-if args.sample=='Mu50':
-    SampleLoc='/Users/abdollah1/GIT_abdollah110/DM2017/ROOT80X/lqsamples2_jetPt50_MT200/'
+#if args.sample=='Mu50':
+#    SampleLoc='/Users/abdollah1/GIT_abdollah110/DM2017/ROOT80X/lqsamples2_jetPt50_MT200/'
 
 CodexSignal='/Users/abdollah1/GIT_abdollah110/DM2017/ROOT80X/PrivateSample/'
 

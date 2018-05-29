@@ -123,9 +123,9 @@ float XSection(std::string OutName) {
     else if (OutName.find("ST_tW_top_5f") != string::npos) return 35.6;
     else if (OutName.find("ST_s_channel") != string::npos) return 3.36 ;
     
-    
-    
+    //Top
     else if (OutName.find("TTJets") != string::npos) return (831.76);
+    
     
     //    //    https://twiki.cern.ch/twiki/bin/view/CMS/Exo2015LQ1AndLQ2Analyses
     //    else if (OutName.find("skimed_lq200") != string::npos) return 60.6;
@@ -494,45 +494,45 @@ float weightCalc(TH1F *Histo,std::string outputName, float genHT,vector<float> W
 //####################################################################################################################################
 
 
-float weightCalc_NoWStitch(TH1F *Histo,std::string outputName, float genHT) {
-    
-    
-    stringstream ss(outputName);
-    
-    string token;
-    string M;
-    while (getline(ss,token, '/'))  M=token;
-    
-    std::string FirstPart = "";
-    std::string LastPart = ".root";
-    std::string newOut = M.substr(FirstPart.size());
-    newOut = newOut.substr(0, newOut.size() - LastPart.size());
-    
-    
-    //    float LOtoNLO_DY = 1.230888662;
-    float LOtoNLO_DY = 1; // Now we boson have pt dependent SF
-    //    float LOtoNLO_W = 1.213783784;
-    float LOtoNLO_W = 1;  // Now we boson have pt dependent SF
-    //    float luminosity=    12900;
-    float luminosity=    35867;
-    
-    
-    size_t isSingleMu = outputName.find("SingleMu");
-    size_t isSingleEle = outputName.find("SingleEle");
-    
-    
-    if (isSingleMu != string::npos || isSingleEle!= string::npos)   return 1;
-    
-    
-    else if (genHT < 70 &&  newOut.find("WJetsToLNu_Inc") != string::npos) return luminosity * 50690*1.0 / Histo->GetBinContent(2) ;   // As we have large cut at Skim, this one is not needed
-    else if (genHT >70 &&  newOut.find("WJetsToLNu_Inc") != string::npos) return 0 ;   // As we have large cut at Skim, this one is not needed
-    
-    
-    else
-        return luminosity * XSection(newOut)*1.0 / Histo->GetBinContent(2);
-    
-    
-}
+//float weightCalc_NoWStitch(TH1F *Histo,std::string outputName, float genHT) {
+//    
+//    
+//    stringstream ss(outputName);
+//    
+//    string token;
+//    string M;
+//    while (getline(ss,token, '/'))  M=token;
+//    
+//    std::string FirstPart = "";
+//    std::string LastPart = ".root";
+//    std::string newOut = M.substr(FirstPart.size());
+//    newOut = newOut.substr(0, newOut.size() - LastPart.size());
+//    
+//    
+//    //    float LOtoNLO_DY = 1.230888662;
+//    float LOtoNLO_DY = 1; // Now we boson have pt dependent SF
+//    //    float LOtoNLO_W = 1.213783784;
+//    float LOtoNLO_W = 1;  // Now we boson have pt dependent SF
+//    //    float luminosity=    12900;
+//    float luminosity=    35867;
+//    
+//    
+//    size_t isSingleMu = outputName.find("SingleMu");
+//    size_t isSingleEle = outputName.find("SingleEle");
+//    
+//    
+//    if (isSingleMu != string::npos || isSingleEle!= string::npos)   return 1;
+//    
+//    
+//    else if (genHT < 70 &&  newOut.find("WJetsToLNu_Inc") != string::npos) return luminosity * 50690*1.0 / Histo->GetBinContent(2) ;   // As we have large cut at Skim, this one is not needed
+//    else if (genHT >70 &&  newOut.find("WJetsToLNu_Inc") != string::npos) return 0 ;   // As we have large cut at Skim, this one is not needed
+//    
+//    
+//    else
+//        return luminosity * XSection(newOut)*1.0 / Histo->GetBinContent(2);
+//    
+//    
+//}
 
 
 

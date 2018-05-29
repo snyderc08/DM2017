@@ -29,9 +29,7 @@
 #include "../interface/CodexAnalyzer.h"
 #include "../interface/WeightCalculator.h"
 #include "../interface/Corrector.h"
-//#include "../interface/Functions.h"
 #include "../interface/makeHisto.h"
-
 
 
 
@@ -415,21 +413,7 @@ float FuncBosonKFactor(std::string X){
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+//###########       Tau Veto   ###########################################################
 
 
 int getNumTau(){
@@ -582,16 +566,15 @@ vector<float>  GeneratorInfo(){
 
 
 
-
 //###########       bJet Veto   ###########################################################
 
-float BJetPtCut=30;
-float SimpleJetPtCut=30;
-float ElectronPtCut_=15;
-float CSVCut=   0.9535   ;                  //  https://twiki.cern.ch/twiki/bin/viewauth/CMS/BtagRecommendation80XReReco
+//float BJetPtCut=30;
+//float SimpleJetPtCut=30;
+//float ElectronPtCut_=15;
+//float CSVCut=   0.9535   ;                  //  https://twiki.cern.ch/twiki/bin/viewauth/CMS/BtagRecommendation80XReReco
 
 
-float FuncFinalBTagSF(bool isData, TH2F ** Btagg_TT){
+float FuncFinalBTagSF(bool isData, TH2F ** Btagg_TT, float BJetPtCut, float CSVCut){
     
     
     float EffJet =1;
@@ -632,7 +615,7 @@ float FuncFinalBTagSF(bool isData, TH2F ** Btagg_TT){
 
 
 
-int numBJets(){
+int numBJets(float BJetPtCut,float CSVCut){
     int numBJet=0;
     for (int ijet= 0 ; ijet < nJet ; ijet++){
         if (jetPFLooseId->at(ijet) > 0.5 && jetPt->at(ijet) > BJetPtCut && fabs(jetEta->at(ijet)) < 2.4  && jetCSV2BJetTags->at(ijet) >  CSVCut)
@@ -642,7 +625,8 @@ int numBJets(){
 }
 
 
-int numJets(){
+
+int numJets(float SimpleJetPtCut){
     int numJet=0;
     for (int ijet= 0 ; ijet < nJet ; ijet++){
         if (jetPFLooseId->at(ijet) > 0.5 && jetPt->at(ijet) > SimpleJetPtCut && fabs(jetEta->at(ijet)) < 2.4 )
