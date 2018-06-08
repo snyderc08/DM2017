@@ -69,7 +69,8 @@ def LQXS(LQ):
 #BR=1  # 50% Branching ratio for visible and invisible
 
 
-FinalSampleDirectory='limits_LIMITS.json'
+#FinalSampleDirectory='limits_LIMITS.json'
+FinalSampleDirectory='limits_LIMITS_2016.json'
 
 
 lqmass=[800,900,1000,1100,1200,1300,1400,1500]

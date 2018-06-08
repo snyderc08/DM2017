@@ -55,7 +55,7 @@ int main(int argc, char** argv) {
     //########################################
     std::string ROOTLocHT= "/Users/abdollah1/GIT_abdollah110/DM2017/ROOT80X/SampleLQ2/";
     vector<float> W_HTBinROOTFiles = W_HTBin(ROOTLocHT);
-    vector<float> WMuNu_MassBinROOTFiles = W_MassBin(ROOTLocHT);
+    vector<float> WMuNu_MassBinROOTFiles = WMuNu_MassBin(ROOTLocHT);
     vector<float> WTauNu_MassBinROOTFiles = WTauNu_MassBin(ROOTLocHT);
     //    vector<float> W_NjetBinROOTFiles = W_JetBin(ROOTLocHT);
     TFile * MassDepKFactor=TFile::Open("../interface/k_fakNNLO_use.root");
@@ -232,6 +232,7 @@ int main(int argc, char** argv) {
                 }
                 
                 ElectronCor=getCorrFactorMVA90WPElectron80X(isData,  elePt->at(jele),eleSCEta->at(jele),    HistoEleMVAIdIso90 );
+                ElectronCor=1; // We se it to 1
                 Ele4Momentum.SetPtEtaPhiM(elePt->at(jele),eleEta->at(jele),elePhi->at(jele),eleMass);
                 numElectron++;
                 
@@ -359,6 +360,7 @@ int main(int argc, char** argv) {
                     const int size_CR = 3;
                     
                     bool signalRegion = numTau+numZboson + numElectron +numBJet < 1 ;
+//                    bool signalRegion = 1 ;
                     //                    bool TTcontrolRegion_DiLep = (numTau <1 && numZboson < 1 && numElectron > 0 && !isThisJetElectron );
                     bool TTcontrolRegion_DiLep = (numTau + numZboson < 1 && numElectron > 0 );
                     if (TTcontrolRegion_DiLep) FinalBTagSF=1;

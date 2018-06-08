@@ -52,7 +52,7 @@ int main(int argc, char** argv) {
     //########################################
     std::string ROOTLocHT= "../../QCDDIR/";
     vector<float> W_HTBinROOTFiles = W_HTBin(ROOTLocHT);
-    vector<float> W_MassBinROOTFiles = W_MassBin(ROOTLocHT);
+    vector<float> WMuNu_MassBinROOTFiles = WMuNu_MassBin(ROOTLocHT);
     vector<float> WTauNu_MassBinROOTFiles = WTauNu_MassBin(ROOTLocHT);
 //    vector<float> W_NjetBinROOTFiles = W_JetBin(ROOTLocHT);
     TFile * MassDepKFactor=TFile::Open("../interface/k_fakNNLO_use.root");
@@ -191,7 +191,7 @@ int main(int argc, char** argv) {
                 
                 //######################## Lumi Weight
                 //                if (HistoTot) LumiWeight = weightCalc(HistoTot, InputROOT,genHT,WBosonPt, W_Events, DY_Events,W_EventsNLO);
-                if (HistoTot) LumiWeight = weightCalc(HistoTot, InputROOT,genHT, W_HTBinROOTFiles, WBosonMass, W_MassBinROOTFiles,WTauNu_MassBinROOTFiles);
+                if (HistoTot) LumiWeight = weightCalc(HistoTot, InputROOT,genHT, W_HTBinROOTFiles, WBosonMass, WMuNu_MassBinROOTFiles,WTauNu_MassBinROOTFiles);
                 
                 //######################## Gen Weight
                 GetGenWeight=genWeight;
@@ -242,6 +242,7 @@ int main(int argc, char** argv) {
                 }
                 
                 ElectronCor=getCorrFactorMVA90WPElectron80X(isData,  elePt->at(jele),eleSCEta->at(jele),    HistoEleMVAIdIso90 );
+                ElectronCor=1; // We set it to 1
                 Ele4Momentum.SetPtEtaPhiM(elePt->at(jele),eleEta->at(jele),elePhi->at(jele),eleMass);
                 numElectron++;
                 

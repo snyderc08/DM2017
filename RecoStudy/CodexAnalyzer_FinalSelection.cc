@@ -52,7 +52,7 @@ int main(int argc, char** argv) {
     //########################################
     std::string ROOTLocHT= "/Users/abdollah1/GIT_abdollah110/DM2017/ROOT80X/SampleLQ2/";
     vector<float> W_HTBinROOTFiles = W_HTBin(ROOTLocHT);
-    vector<float> WMuNu_MassBinROOTFiles = W_MassBin(ROOTLocHT);
+    vector<float> WMuNu_MassBinROOTFiles = WMuNu_MassBin(ROOTLocHT);
     vector<float> WTauNu_MassBinROOTFiles = WTauNu_MassBin(ROOTLocHT);
     
     TFile * MassDepKFactor=TFile::Open("../interface/k_fakNNLO_use.root");
@@ -287,6 +287,7 @@ int main(int argc, char** argv) {
                 }
                 
                 ElectronCor=getCorrFactorMVA90WPElectron80X(isData,  elePt->at(jele),eleSCEta->at(jele),    HistoEleMVAIdIso90 );
+                ElectronCor=1; // We se it to 1
                 Ele4Momentum.SetPtEtaPhiM(elePt->at(jele),eleEta->at(jele),elePhi->at(jele),eleMass);
                 numElectron++;
                 
@@ -360,7 +361,7 @@ int main(int argc, char** argv) {
             
             
             //###########       numJet   ###########################################################
-            int numJet=numJets();
+            int numJet=numJets(SimpleJetPtCut);
             
             //###########       numZboson   ###########################################################
             int numZboson = getNumZBoson();
@@ -498,9 +499,24 @@ int main(int argc, char** argv) {
                                     
                                     LQ=NewJet4Collection + Mu4Momentum;
                                     if ((numTau+numElectron +numZboson + numBJet) > 0) continue;
-//                                    if ((numTau+numElectron +numZboson ) > 0) continue;
+                                    //                                    if ((numTau+numElectron +numZboson ) > 0) continue;
+//                                    bool HighDPhi = deltaPhi(NewJet4Collection.Phi(),jetMETPhi) > 0.5 && deltaPhi(Mu4Momentum.Phi(),jetMETPhi) > 0.5;
+//                                    if (!HighDPhi) continue;
+                                    
+                                    
+                                    //###############################################################################################
+                                    //  dPhi Jet_MET Categorization
+                                    //###############################################################################################
+                                    const int size_jetMetPhi = 2;
+                                    
                                     bool HighDPhi = deltaPhi(NewJet4Collection.Phi(),jetMETPhi) > 0.5 && deltaPhi(Mu4Momentum.Phi(),jetMETPhi) > 0.5;
-                                    if (!HighDPhi) continue;
+                                    bool noDPhi = 1;
+                                    
+                                    
+                                    bool jetMetPhi_category[size_jetMetPhi] = {HighDPhi,noDPhi};
+                                    std::string jetMetPhi_Cat[size_jetMetPhi] = {"", "_NoDPhi"};
+                                    
+                                    
                                     
                                     //###############################################################################################
                                     //  Isolation Categorization
@@ -522,11 +538,12 @@ int main(int argc, char** argv) {
                                     //###############################################################################################
                                     float tmass_LQMet= TMass_F(LQ.Pt(), LQ.Px(),LQ.Py(), pfMET, pfMETPhi);
                                     float tmass_MuMet= TMass_F(muPt->at(imu), muPt->at(imu)*cos(muPhi->at(imu)),muPt->at(imu)*sin(muPhi->at(imu)) , jetMET, jetMETPhi);
-                                    const int size_mTCat = 2;
+                                    const int size_mTCat = 3;
                                     bool MT100 = tmass_MuMet > 100;
                                     bool MT500 = tmass_MuMet > 500;
-                                    bool MT_category[size_mTCat] = {MT100,MT500};
-                                    std::string MT_Cat[size_mTCat] = {"_MT100","_MT500"};
+                                    bool MT400 = tmass_MuMet > 400;
+                                    bool MT_category[size_mTCat] = {MT100,MT500,MT400};
+                                    std::string MT_Cat[size_mTCat] = {"_MT100","_MT500","_MT400"};
                                     
                                     
                                     //###############################################################################################
@@ -566,69 +583,103 @@ int main(int argc, char** argv) {
                                                 if (MT_category[imt]) {
                                                     for (int jpt = 0; jpt < size_METcut; jpt++) {
                                                         if (MetCut_category[jpt]) {
-                                                            for (int itopRW = 0; itopRW < size_topPtRW; itopRW++) {
-                                                                
-                                                                
-                                                                
-                                                                float FullWeight = TotalWeight[itopRW] * LepCor *FinalBTagSF ;
-                                                                std::string FullStringName = topPtRW[itopRW] + MT_Cat[imt] + MetCut_Cat[jpt]+  iso_Cat[iso]+ ScaleJet_Cat[jetScl]+ResolJet_Cat[jetRes]+ ScaleMETUE_Cat[metUE];
-                                                                
-                                                                //This check is used to make sure that each event is just filled once for any of the categories ==> No doube-counting of events  (this is specially important for ttbar events where we have many jets and leptons)
-                                                                if (!( std::find(HistNamesFilled.begin(), HistNamesFilled.end(), FullStringName) != HistNamesFilled.end())){
-                                                                    HistNamesFilled.push_back(FullStringName);
+                                                            
+                                                            for (int jmet = 0; jmet < size_jetMetPhi; jmet++) {
+                                                                if (jetMetPhi_category[jmet]) {
                                                                     
                                                                     
-                                                                    
-                                                                    plotFill(CHL+"_JetPt"+FullStringName,NewJet4Collection.Pt() ,200,0,2000,FullWeight);
-                                                                    plotFill(CHL+"_LepPt"+FullStringName,Mu4Momentum.Pt(),2000,0,2000,FullWeight);
-                                                                    
-                                                                    
-                                                                    plotFill(CHL+"_tmass_MuMet"+FullStringName,tmass_MuMet,200,0,2000,FullWeight);
-                                                                    plotFill(CHL+"_MET"+FullStringName,UESMET[metUE],200,0,2000,FullWeight);
-                                                                    
-                                                                    //                                                                    plotFill(CHL+"_CloseJetLepPt"+FullStringName,CLoseJetMuPt,2000,0,2000,FullWeight);
-                                                                    plotFill(CHL+"_LQMass"+FullStringName,LQ.M(),300,0,3000,FullWeight);
-                                                                    plotFill(CHL+"_tmass_LQMet"+FullStringName,tmass_LQMet,300,0,3000,FullWeight);
-                                                                    
-                                                                    
-                                                                    ////////   Systematic on K-factor for W and Z for  ewk correction
-                                                                    if (isWJets!= string::npos) plotFill(CHL+"_LQMass"+FullStringName+"_ewkKfactor_WUp",LQ.M(),300,0,3000,FullWeight*WBosonKFactor_ewkUp/WBosonKFactor);
-                                                                    if (isWJets!= string::npos) plotFill(CHL+"_LQMass"+FullStringName+"_ewkKfactor_WDown",LQ.M(),300,0,3000,FullWeight*WBosonKFactor_ewkDown/WBosonKFactor);
-                                                                    if (isDYJets!= string::npos) plotFill(CHL+"_LQMass"+FullStringName+"_ewkKfactor_ZUp",LQ.M(),300,0,3000,FullWeight*ZBosonKFactor_ewkUp/ZBosonKFactor);
-                                                                    if (isDYJets!= string::npos) plotFill(CHL+"_LQMass"+FullStringName+"_ewkKfactor_ZDown",LQ.M(),300,0,3000,FullWeight*ZBosonKFactor_ewkDown/ZBosonKFactor);
-                                                                    
-                                                                    
-                                                                    
-                                                                    plotFill(CHL+"_LQMass_BtagUp"+FullStringName,LQ.M(),300,0,3000,FullWeight*FinalBTagSFUp/FinalBTagSF);
-                                                                    plotFill(CHL+"_LQMass_BtagDown"+FullStringName,LQ.M(),300,0,3000,FullWeight*FinalBTagSFDown/FinalBTagSF);
-                                                                    
-                                                                    if (isTTJets!= string::npos) plotFill(CHL+"_LQMassTopPtRWUp"+FullStringName,LQ.M(),nBin,binMin,binMax,FullWeight * TopPtReweighting);
-                                                                    if (isTTJets!= string::npos) plotFill(CHL+"_LQMassTopPtRWDown"+FullStringName,LQ.M(),nBin,binMin,binMax,FullWeight / TopPtReweighting);
-                                                                    
-                                                                    
-                                                                    
-                                                                    //##############################################################################
-                                                                    //  QCD Scale Uncertainty for TTbar and W+Jets
-                                                                    //##############################################################################
-                                                                    //                                                                    if (isTTJets== string::npos &&  isWJets== string::npos &&  isDYJets== string::npos)
-                                                                    if (isTTJets== string::npos &&  isWJets== string::npos)
-                                                                        continue; //scale factor only for W and TT
-                                                                    
-                                                                    int counterscale=0;
-                                                                    int counterpdf=0;
-                                                                    int StartNumber=0;  // qcd scale uncertainty for W Madgraph starts from 1000
-                                                                    if (isTTJets!= string::npos) StartNumber=1000; // qcd scale uncertainty for ttbar powheg starts from 1000
-                                                                    for (int isys=0; isys < pdfSystWeight->size(); isys++){
+                                                                    for (int itopRW = 0; itopRW < size_topPtRW; itopRW++) {
                                                                         
-                                                                        if (atoi(pdfSystWeightId->at(isys).c_str()) > StartNumber && atoi(pdfSystWeightId->at(isys).c_str()) < StartNumber+10){
+                                                                        
+                                                                        
+                                                                        float FullWeight = TotalWeight[itopRW] * LepCor *FinalBTagSF ;
+                                                                        std::string FullStringName = topPtRW[itopRW] + MT_Cat[imt] + MetCut_Cat[jpt]+  iso_Cat[iso]+ jetMetPhi_Cat[jmet] + ScaleJet_Cat[jetScl]+ResolJet_Cat[jetRes]+ ScaleMETUE_Cat[metUE];
+                                                                        
+                                                                        //This check is used to make sure that each event is just filled once for any of the categories ==> No doube-counting of events  (this is specially important for ttbar events where we have many jets and leptons)
+                                                                        if (!( std::find(HistNamesFilled.begin(), HistNamesFilled.end(), FullStringName) != HistNamesFilled.end())){
+                                                                            HistNamesFilled.push_back(FullStringName);
                                                                             
                                                                             
-                                                                            plotFill(CHL+"_LQMass_Scale"+std::to_string(counterscale)+FullStringName,LQ.M(),20,0,2000,FullWeight*pdfSystWeight->at(isys)/pdfWeight);
-                                                                            counterscale++;
                                                                             
+//                                                                            plotFill(CHL+"_JetPt"+FullStringName,NewJet4Collection.Pt() ,200,0,2000,FullWeight);
+                                                                            plotFill(CHL+"_LepPt"+FullStringName,Mu4Momentum.Pt(),2000,0,2000,FullWeight);
+                                                                            
+                                                                            
+//                                                                            plotFill(CHL+"_tmass_MuMet"+FullStringName,tmass_MuMet,200,0,2000,FullWeight);
+//                                                                            plotFill(CHL+"_MET"+FullStringName,UESMET[metUE],200,0,2000,FullWeight);
+                                                                            
+                                                                            //                                                                    plotFill(CHL+"_CloseJetLepPt"+FullStringName,CLoseJetMuPt,2000,0,2000,FullWeight);
+                                                                            plotFill(CHL+"_LQMass"+FullStringName,LQ.M(),300,0,3000,FullWeight);
+//                                                                            plotFill(CHL+"_tmass_LQMet"+FullStringName,tmass_LQMet,300,0,3000,FullWeight);
+                                                                            
+                                                                            
+                                                                            
+                                                                            
+                                                                            
+                                                                            
+//                                                                            plotFill(CHL+"_LQMass_BtagUp"+FullStringName,LQ.M(),300,0,3000,FullWeight*FinalBTagSFUp/FinalBTagSF);
+//                                                                            plotFill(CHL+"_LQMass_BtagDown"+FullStringName,LQ.M(),300,0,3000,FullWeight*FinalBTagSFDown/FinalBTagSF);
+                                                                            
+                                                                            if (isTTJets!= string::npos) plotFill(CHL+"_LQMassTopPtRWUp"+FullStringName,LQ.M(),nBin,binMin,binMax,FullWeight * TopPtReweighting);
+                                                                            if (isTTJets!= string::npos) plotFill(CHL+"_LQMassTopPtRWDown"+FullStringName,LQ.M(),nBin,binMin,binMax,FullWeight / TopPtReweighting);
+                                                                            
+                                                                            
+                                                                            
+                                                                            //###########################################################################################
+                                                                            ////////   Systematic on W k-factor   PDF + alpha_S
+                                                                            //###########################################################################################
+                                                                            if (isWJets!= string::npos || isWToMuNu!= string::npos || isWToTauNu!= string::npos) {
+                                                                                
+                                                                                
+                                                                                plotFill(CHL+"_LQMass"+FullStringName+"_ewkKfactor_WUp",LQ.M(),300,0,3000,FullWeight*WBosonKFactor_ewkUp/WBosonKFactor);
+                                                                                plotFill(CHL+"_LQMass"+FullStringName+"_ewkKfactor_WDown",LQ.M(),300,0,3000,FullWeight*WBosonKFactor_ewkDown/WBosonKFactor);
+                                                                                plotFill(CHL+"_LQMass"+FullStringName+"_W_PDF_AlphaS_Up",LQ.M(),nBin,binMin,binMax,FullWeight*W_PDFAlphaS(WBosonMass,1));
+                                                                                plotFill(CHL+"_LQMass"+FullStringName+"_W_PDF_AlphaS_Down",LQ.M(),nBin,binMin,binMax,FullWeight*W_PDFAlphaS(WBosonMass,-1));
+                                                                            }
+                                                                            
+                                                                            
+                                                                            
+                                                                            
+                                                                            //###########################################################################################
+                                                                            ////////   Systematic on DY k-factor
+                                                                            //###########################################################################################
+                                                                            
+                                                                            
+                                                                            if (isDYJets!= string::npos) {
+                                                                                
+                                                                                
+                                                                                plotFill(CHL+"_LQMass"+FullStringName+"_ewkKfactor_ZUp",LQ.M(),300,0,3000,FullWeight*ZBosonKFactor_ewkUp/ZBosonKFactor);
+                                                                                plotFill(CHL+"_LQMass"+FullStringName+"_ewkKfactor_ZDown",LQ.M(),300,0,3000,FullWeight*ZBosonKFactor_ewkDown/ZBosonKFactor);
+                                                                                
+                                                                            }
+                                                                            
+                                                                            
+                                                                            
+                                                                            
+                                                                            //                                                                    //##############################################################################
+                                                                            //                                                                    //  QCD Scale Uncertainty for TTbar and W+Jets
+                                                                            //                                                                    //##############################################################################
+                                                                            //                                                                    //                                                                    if (isTTJets== string::npos &&  isWJets== string::npos &&  isDYJets== string::npos)
+                                                                            //                                                                    if (isTTJets== string::npos &&  isWJets== string::npos)
+                                                                            //                                                                        continue; //scale factor only for W and TT
+                                                                            //
+                                                                            //                                                                    int counterscale=0;
+                                                                            //                                                                    int counterpdf=0;
+                                                                            //                                                                    int StartNumber=0;  // qcd scale uncertainty for W Madgraph starts from 1000
+                                                                            //                                                                    if (isTTJets!= string::npos) StartNumber=1000; // qcd scale uncertainty for ttbar powheg starts from 1000
+                                                                            //                                                                    for (int isys=0; isys < pdfSystWeight->size(); isys++){
+                                                                            //
+                                                                            //                                                                        if (atoi(pdfSystWeightId->at(isys).c_str()) > StartNumber && atoi(pdfSystWeightId->at(isys).c_str()) < StartNumber+10){
+                                                                            //
+                                                                            //
+                                                                            //                                                                            plotFill(CHL+"_LQMass_Scale"+std::to_string(counterscale)+FullStringName,LQ.M(),20,0,2000,FullWeight*pdfSystWeight->at(isys)/pdfWeight);
+                                                                            //                                                                            counterscale++;
+                                                                            //
+                                                                            //                                                                        }
+                                                                            //                                                                    }
+                                                                            //##############################################################################
                                                                         }
                                                                     }
-                                                                    //##############################################################################
                                                                 }
                                                             }
                                                         }

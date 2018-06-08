@@ -7,30 +7,31 @@ from Step5_TT_W_ScaleFactor import *
 #from Step5_TT_W_ScaleFactor_ForJet50 import *
 #................................................................................................................................
 #................................................................................................................................
-#InputFilesLocation='OutFiles_Excess_Jet50MT300_LQBump/'
-#InputFilesLocation='OutFiles_Jet50_200_WMinus/'
-#InputFilesLocation='NewOutFiles_CodexAnalyzer_Preselection_MuEta2p1/'
-#InputFilesLocation='NewOutFiles_CodexAnalyzer_Preselection_MLQ_1100_1400/'
-#InputFilesLocation='NewOutFiles_CodexAnalyzer_Preselection_MLQ_1100_1400_JETLess200/'
-#InputFilesLocation = 'NewOutFiles_CodexAnalyzer_Preselection_Lplus/'
-#InputFilesLocation = 'NewOutFiles_CodexAnalyzer_Preselection_Lminus/'
-#InputFilesLocation = 'NewOutFiles_CodexAnalyzer_Preselection_JetPt50_200/'
-#InputFilesLocation = 'NewOutFiles_CodexAnalyzer_Preselection_JetPt50_200_LQMore1100/'
-#InputFilesLocation = 'NewOutFiles_CodexAnalyzer_Preselection_JetPt50_200_LQMore1100_METLess300/'
-#InputFilesLocation = 'NewOutFiles_CodexAnalyzer_Preselection_JetPt50_200_LQMore1100_MuPtLess300/'
-#InputFilesLocation = 'NewOutFiles_CodexAnalyzer_Preselection_JetPt50_200_MuPtLess300/'
-#InputFilesLocation = 'NewOutFiles_CodexAnalyzer_Preselection_JetPt50_200_METLess300/'
-#InputFilesLocation = 'NewOutFiles_Preselection_JetPt50_200_Lplus/'
-#InputFilesLocation = 'NewOutFiles_Preselection_JetPt50_200_Lminus/'
-#InputFilesLocation = 'NewOutFiles_Preselection_JetPt50_200_Lplus_MLQPlus1100/'
+#SubRootDir='OutFiles_Excess_Jet50MT300_LQBump/'
+#SubRootDir='OutFiles_Jet50_200_WMinus/'
+#SubRootDir='NewOutFiles_CodexAnalyzer_Preselection_MuEta2p1/'
+#SubRootDir='NewOutFiles_CodexAnalyzer_Preselection_MLQ_1100_1400/'
+#SubRootDir='NewOutFiles_CodexAnalyzer_Preselection_MLQ_1100_1400_JETLess200/'
+#SubRootDir = 'NewOutFiles_CodexAnalyzer_Preselection_Lplus/'
+#SubRootDir = 'NewOutFiles_CodexAnalyzer_Preselection_Lminus/'
+#SubRootDir = 'NewOutFiles_CodexAnalyzer_Preselection_JetPt50_200/'
+#SubRootDir = 'NewOutFiles_CodexAnalyzer_Preselection_JetPt50_200_LQMore1100/'
+#SubRootDir = 'NewOutFiles_CodexAnalyzer_Preselection_JetPt50_200_LQMore1100_METLess300/'
+#SubRootDir = 'NewOutFiles_CodexAnalyzer_Preselection_JetPt50_200_LQMore1100_MuPtLess300/'
+#SubRootDir = 'NewOutFiles_CodexAnalyzer_Preselection_JetPt50_200_MuPtLess300/'
+#SubRootDir = 'NewOutFiles_CodexAnalyzer_Preselection_JetPt50_200_METLess300/'
+#SubRootDir = 'NewOutFiles_Preselection_JetPt50_200_Lplus/'
+#SubRootDir = 'NewOutFiles_Preselection_JetPt50_200_Lminus/'
+#SubRootDir = 'NewOutFiles_Preselection_JetPt50_200_Lplus_MLQPlus1100/'
 
 
-#InputFilesLocation = 'NewOutFiles_Preselection_/'
-#InputFilesLocation = 'NewOutFiles_Preselection_addPhi/'
-#InputFilesLocation = 'NewOutFiles_Preselection_jetinfo/'
-InputFilesLocation = 'NewOutFiles_Preselection_addMetPhiRemoveBug/'
-#InputFilesLocation = 'NewOutFiles_Preselection_ChecckMT400_600/'
-#InputFilesLocation = 'NewOutFiles_Preselection_FixBugNoBVetoREmove/'
+#SubRootDir = 'NewOutFiles_Preselection_/'
+#SubRootDir = 'NewOutFiles_Preselection_addPhi/'
+#SubRootDir = 'NewOutFiles_Preselection_jetinfo/'
+#SubRootDir = 'NewOutFiles_Preselection_addMetPhiRemoveBug/'
+#SubRootDir = 'NewOutFiles_Preselection_ChecckMT400_600/'
+#SubRootDir = 'NewOutFiles_Preselection_FixBugNoBVetoREmove/'
+SubRootDir = 'NewOutFiles_Preselection_Approval_v1/'
 
 
 #................................................................................................................................
@@ -95,7 +96,7 @@ def MakePlot(FileName,categoriy,HistName,Xaxis,Info,RB_,channel,yMin,isLOG,ttbar
     c=ROOT.TCanvas("canvas","",0,0,600,600)
     c.cd()
 
-    file=ROOT.TFile(InputFilesLocation+FileName,"r")
+    file=ROOT.TFile(SubRootDir+FileName,"r")
 
     adapt=ROOT.gROOT.GetColor(12)
     new_idx=ROOT.gROOT.GetListOfColors().GetSize() + 1
@@ -326,9 +327,11 @@ def MakePlot(FileName,categoriy,HistName,Xaxis,Info,RB_,channel,yMin,isLOG,ttbar
     categ.SetTextColor(    1 )
 #    categ.SetTextFont (   41 )
     #       if i==1 or i==3:
-    if MTLegend=='_HighMT': categ.AddText("M_{T}(#mu,j) > 100 GeV")
-#    if MTLegend=='_MT300': categ.AddText("M_{T}(#mu,j) > 200 GeV")
-    if MTLegend=='_MT500': categ.AddText("M_{T}(#mu,j) > 500 GeV")
+    if MTLegend=='_NoMT': categ.AddText("M_{T}(#mu,MET) > 0 GeV")
+    if MTLegend=='_HighMT': categ.AddText("M_{T}(#mu,MET) > 100 GeV")
+    if MTLegend=='_MT300': categ.AddText("M_{T}(#mu,MET) > 300 GeV")
+    if MTLegend=='_MT500': categ.AddText("M_{T}(#mu,MET) > 500 GeV")
+    if MTLegend=='_MT50To150': categ.AddText("50 GeV <M_{T}(#mu,MET) < 150 GeV")
 #    categ.AddText("1100<M_{LQ}<1400 GeV")
 #    categ.AddText("Jet Pt < 200 GeV")
 #    categ.AddText(ttbarCR)
@@ -404,93 +407,35 @@ def MakePlot(FileName,categoriy,HistName,Xaxis,Info,RB_,channel,yMin,isLOG,ttbar
 
     c.Modified()
     outName=((FileName.replace('TotalRootForLimit_PreSelection_MuJet','').replace('.root','')).replace('_HighDPhi_Iso','')).replace('_HighMT','_MT100')
-    c.SaveAs(InputFilesLocation+'_MuJet'+outName+".pdf")
+    c.SaveAs(SubRootDir+'_MuJet'+outName+".pdf")
 
 
 FileNamesInfo=[
-
+               #               ["_tmass_JetMet","M_{T}(jet,MET) (GeV)","",5,1],
                ["_tmass_LQMet","M_{T}(LQ,MET)  (GeV)","",10,1],
-               ["_LepPt","lepton p_{T} (GeV)","",50,1],
+               ["_LepPt","lepton p_{T} (GeV)","",100,1],
                ["_LepEta","lepton #eta ","",5,10],
-               ["_JetPt","jet p_{T} (GeV)","",50,1],
+               ["_JetPt","jet p_{T} (GeV)","",100,1],
                ["_JetEta","jet #eta ","",5,10],
-               ["_MET","MET  (GeV)","",5,1],
+               ["_nVtx","# of vertex","",2,10],
+               ["_nVtx_NoPU","# of vertex before PU reweighting","",2,10],
+               ["_MET","MET  (GeV)","",10,1],
                ["_LQMass","M_{LQ}   (GeV)","",10,1],
-               ["_tmass_MuMet","M_{T}(#mu,MET) (GeV)","",5,1],
+               ["_tmass_MuMet","M_{T}(#mu,MET) (GeV)","",10,1],
                ["_dPhi_Jet_Met","#Delta#phi (jet,MET)","",5,1],
                ["_dPhi_Mu_Jet","#Delta#phi (#mu,jet)","",5,1],
-#               ["_METPhi"," MET #phi","",10,10],
+               ["_dPhi_Mu_MET","#Delta#phi (#mu,MET)","",10,1],
+               ["_METPhi","MET #phi ","",10,10],
                ["_NumJet","Jet multiplicity","",1,1],
                ["_NumBJet","BJet multiplicity","",1,1],
+               ["_recoHT","Jet HT  (GeV)","",10,1],
                ]
-###               ["_tmass_JetMet","M_{T}(jet,MET) (GeV)","",5,1],
-###               ["_nVtx","# of vertex","",1,10],
-###               ["_nVtx_NoPU","# of vertex before PU reweighting","",1,10],
-
-
-
-#FileNamesInfo=[
-#               ["_JetPhi","jet #phi","",20,1],
-#               ["_LepPhi","lepton #phi","",20,1],
-#               ["_METPhi","MET #phi","",20,1],
-
-#FileNamesInfo=[
-#                  ["_jetCHF","jetCHF","",5,1],
-#                  ["_jetNHF","jetNHF","",5,1],
-#                  ["_jetCEF","jetCEF","",5,1],
-#                  ["_jetNEF","jetNEF","",5,1]
-#               
-#               ]
-
-            
-
-               
-#               ##               ["_tmass_JetMet","M_{T}(jet,MET) (GeV)","",5,1],
-#               ["_tmass_LQMet","M_{T}(LQ,MET)  (GeV)","",10,1],
-#               ["_LepPt","lepton p_{T} (GeV)","",100,1],
-#               ["_LepEta","lepton #eta ","",10,.1],
-#               ["_JetPt","jet p_{T} (GeV)","",50,.1],
-#               ["_JetEta","jet #eta ","",10,1],
-#               ##               ["_nVtx","# of vertex","",1,10],
-#               ##               ["_nVtx_NoPU","# of vertex before PU reweighting","",1,10],
-#               ["_MET","MET  (GeV)","",10,.1],
-#               ["_LQMass","M_{LQ}   (GeV)","",10,1],
-#               ["_tmass_MuMet","M_{T}(#mu,MET) (GeV)","",10,1],
-#               ["_dPhi_Jet_Met","#Delta#phi (jet,MET)","",10,1],
-#               ["_dPhi_Mu_Jet","#Delta#phi (#mu,jet)","",10,1],
-#               ["_dPhi_Mu_MET","#Delta#phi (#mu,MET)","",10,1],
-#               ##               ["_LQEta","#eta_{LQ}","",10,10],
-#               ["_NumJet","Jet multiplicity","",1,1],
-#               ["_NumBJet","BJet multiplicity","",1,1],
-#               ["_recoHT","Jet HT  (GeV)","",10,1],
-#               ["_ST"," ST  (GeV)","",10,.1],
-#               ["_dR_Mu_Jet","#DeltaR (#mu,jet)","",20,1],
-#               ["_dEta_Mu_Jet","#Delta#eta (#mu,jet)","",50,1],
-#               ]
-
-
-
-
-
-#    Isolation=["_Iso", "_AntiIso","_Total"]
 
 Isolation=["_Iso"]
-#MT=["_HighMT"]
-#MT=["_HighMT","_MT500"]
-MT= ["_NoMT","_HighMT","_MT300","_MT500"]
-#MT= ["_NoMT","_HighMT","_MT500"]
-#MT= ["_NoMT","_HighMT","_MT50To150","_MT100","_MT150","_MT200","_MT300","_MT400","_MT500"]
-#MT= ["_MT100","_MT150"]
-#MT_legend= [" 50 < M_{T} < 100","100 < M_{T} < 150"]
-#MT= ["_NoMT","_HighMT"]
-#    JPT=["_LowDPhi", "_HighDPhi"];
+MT= ["_NoMT","_HighMT","_MT50To150","_MT300","_MT500"]
 JPT=[ "_HighDPhi"]
-
-#lqEta= ["_Barrel", "_Endcap","_TotEta"]
 lqEta= [""]
-region= [""]
-#region= ["","_ttbarCRDiLep","_ttbarCRSingleLep"]
-#region= ["_ttbarCRDiLep","_ttbarCRSingleLep"]
+region= ["","_ttbarCRDiLep","_ttbarCRSingleLep"]
 
 #logStat=[0]
 logStat=[1]
@@ -512,26 +457,11 @@ for i in range(0,len(FileNamesInfo)):
                 for etalq in lqEta:
                     for reg in region:
                         for isLOG in logStat:
-                    
+                            
                             FileName="TotalRootForLimit_PreSelection_"+"MuJet"+NormMC+mt+jpt+etalq+reg+iso+".root"
                             Info=NormMC+mt+jpt+etalq+reg+iso
                             print "---->", FileName
                             MakePlot(FileName,"MuJet","",axisName,Info,Bin,"",yMin,isLOG,reg,mt)
 
 
-
-#MakeTheHistogram("MuJet",NormMC+mt+jpt+dr+iso,NormMC+mt+jpt+dr+iso,"",1)
-#
-#
-#
-#
-#
-#for ch in channelDirectory:
-#    for cat in Category:
-#        for i in range(0,len(FileNamesInfo)):
-#
-##            FileName="TotalRootForLimit_PreSelection_"+ch+FileNamesInfo[i][0]+"_OS.root"
-#            FileName="TotalRootForLimit_PreSelection_"+ch+FileNamesInfo[i][0]+".root"
-#            MakePlot(FileName,ch+cat,FileNamesInfo[i][0],FileNamesInfo[i][1],FileNamesInfo[i][2],FileNamesInfo[i][3],ch+cat)
-#
 

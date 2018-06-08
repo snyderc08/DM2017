@@ -124,11 +124,122 @@ def MakeCompare(r1,hist1,r2,hist2,name,RB_,XTit,name2):
 #MakeCompare('ScaleCorretion/WJet.root','MuJet_LQMassCorrMuScale_MT500_HighDPhi_Iso','ScaleCorretion/WJet.root','MuJet_LQMass_MT500_HighDPhi_Iso','HighMTMLQ',10,'M_{LQ} GeV','M_{T} > 500 GeV')
 #MakeCompare('ScaleCorretion/Data.root','MuJet_LQMassCorrMuScale_MT500_HighDPhi_Iso','ScaleCorretion/Data.root','MuJet_LQMass_MT500_HighDPhi_Iso','HighMTMLQ',10,'M_{LQ} GeV','M_{T} > 500 GeV')
 
-MakeCompare('ScaleCorretion/__Codex1200_CheckMuCorrection.root','MuJet_LQMassDifference_MT500_HighDPhi_Iso','ScaleCorretion/__Codex1200_CheckMuCorrection.root','MuJet_LQMassDifference_MT500_HighDPhi_Iso','allEta',10,'M_{LQ}_{cor} - M_{LQ}_{uncor} / M_{LQ}_{uncor}','M_{T} > 500 GeV')
 
-MakeCompare('ScaleCorretion/Codex_EtaCheckMuCor.root','MuJet_LQMassDifference_Barrel_MT500_HighDPhi_Iso','ScaleCorretion/Codex_EtaCheckMuCor.root','MuJet_LQMassDifference_Barrel_MT500_HighDPhi_Iso','Barrel',10,'M_{LQ}_{cor} - M_{LQ}_{uncor} / M_{LQ}_{uncor}','M_{T} > 500 GeV, |#eta| < 1.5')
+AllHist=['TotalRootForLimit_PreSelection_MuJet_JetEta_HighMT_HighDPhi_Iso.root',
+'TotalRootForLimit_PreSelection_MuJet_JetEta_MT300_HighDPhi_Iso.root',
+ 'TotalRootForLimit_PreSelection_MuJet_JetEta_MT500_HighDPhi_Iso.root',
+ 'TotalRootForLimit_PreSelection_MuJet_JetEta_MT50To150_HighDPhi_Iso.root',
+ 'TotalRootForLimit_PreSelection_MuJet_JetEta_NoMT_HighDPhi_Iso.root',
+ 'TotalRootForLimit_PreSelection_MuJet_JetPt_HighMT_HighDPhi_Iso.root',
+ 'TotalRootForLimit_PreSelection_MuJet_JetPt_MT300_HighDPhi_Iso.root',
+ 'TotalRootForLimit_PreSelection_MuJet_JetPt_MT500_HighDPhi_Iso.root',
+ 'TotalRootForLimit_PreSelection_MuJet_JetPt_MT50To150_HighDPhi_Iso.root',
+ 'TotalRootForLimit_PreSelection_MuJet_JetPt_NoMT_HighDPhi_Iso.root',
+ 'TotalRootForLimit_PreSelection_MuJet_LQMass_HighMT_HighDPhi_Iso.root',
+ 'TotalRootForLimit_PreSelection_MuJet_LQMass_MT300_HighDPhi_Iso.root',
+ 'TotalRootForLimit_PreSelection_MuJet_LQMass_MT500_HighDPhi_Iso.root',
+ 'TotalRootForLimit_PreSelection_MuJet_LQMass_MT50To150_HighDPhi_Iso.root',
+ 'TotalRootForLimit_PreSelection_MuJet_LQMass_NoMT_HighDPhi_Iso.root',
+ 'TotalRootForLimit_PreSelection_MuJet_LepEta_HighMT_HighDPhi_Iso.root',
+ 'TotalRootForLimit_PreSelection_MuJet_LepEta_MT300_HighDPhi_Iso.root',
+ 'TotalRootForLimit_PreSelection_MuJet_LepEta_MT500_HighDPhi_Iso.root',
+ 'TotalRootForLimit_PreSelection_MuJet_LepEta_MT50To150_HighDPhi_Iso.root',
+ 'TotalRootForLimit_PreSelection_MuJet_LepEta_NoMT_HighDPhi_Iso.root',
+ 'TotalRootForLimit_PreSelection_MuJet_LepPhi_HighMT_HighDPhi_Iso.root',
+ 'TotalRootForLimit_PreSelection_MuJet_LepPhi_MT300_HighDPhi_Iso.root',
+ 'TotalRootForLimit_PreSelection_MuJet_LepPhi_MT500_HighDPhi_Iso.root',
+ 'TotalRootForLimit_PreSelection_MuJet_LepPhi_MT50To150_HighDPhi_Iso.root',
+ 'TotalRootForLimit_PreSelection_MuJet_LepPhi_NoMT_HighDPhi_Iso.root',
+ 'TotalRootForLimit_PreSelection_MuJet_LepPt_HighMT_HighDPhi_Iso.root',
+ 'TotalRootForLimit_PreSelection_MuJet_LepPt_MT300_HighDPhi_Iso.root',
+ 'TotalRootForLimit_PreSelection_MuJet_LepPt_MT500_HighDPhi_Iso.root',
+ 'TotalRootForLimit_PreSelection_MuJet_LepPt_MT50To150_HighDPhi_Iso.root',
+ 'TotalRootForLimit_PreSelection_MuJet_LepPt_NoMT_HighDPhi_Iso.root',
+ 'TotalRootForLimit_PreSelection_MuJet_METPhi_HighMT_HighDPhi_Iso.root',
+ 'TotalRootForLimit_PreSelection_MuJet_METPhi_MT300_HighDPhi_Iso.root',
+ 'TotalRootForLimit_PreSelection_MuJet_METPhi_MT500_HighDPhi_Iso.root',
+ 'TotalRootForLimit_PreSelection_MuJet_METPhi_MT50To150_HighDPhi_Iso.root',
+ 'TotalRootForLimit_PreSelection_MuJet_METPhi_NoMT_HighDPhi_Iso.root',
+ 'TotalRootForLimit_PreSelection_MuJet_MET_HighMT_HighDPhi_Iso.root',
+ 'TotalRootForLimit_PreSelection_MuJet_MET_MT300_HighDPhi_Iso.root',
+ 'TotalRootForLimit_PreSelection_MuJet_MET_MT500_HighDPhi_Iso.root',
+ 'TotalRootForLimit_PreSelection_MuJet_MET_MT50To150_HighDPhi_Iso.root',
+ 'TotalRootForLimit_PreSelection_MuJet_MET_NoMT_HighDPhi_Iso.root',
+ 'TotalRootForLimit_PreSelection_MuJet_NumBJet_HighMT_HighDPhi_Iso.root',
+ 'TotalRootForLimit_PreSelection_MuJet_NumBJet_MT300_HighDPhi_Iso.root',
+ 'TotalRootForLimit_PreSelection_MuJet_NumBJet_MT500_HighDPhi_Iso.root',
+ 'TotalRootForLimit_PreSelection_MuJet_NumBJet_MT50To150_HighDPhi_Iso.root',
+ 'TotalRootForLimit_PreSelection_MuJet_NumBJet_NoMT_HighDPhi_Iso.root',
+ 'TotalRootForLimit_PreSelection_MuJet_NumJet_HighMT_HighDPhi_Iso.root',
+ 'TotalRootForLimit_PreSelection_MuJet_NumJet_MT300_HighDPhi_Iso.root',
+ 'TotalRootForLimit_PreSelection_MuJet_NumJet_MT500_HighDPhi_Iso.root',
+ 'TotalRootForLimit_PreSelection_MuJet_NumJet_MT50To150_HighDPhi_Iso.root',
+ 'TotalRootForLimit_PreSelection_MuJet_NumJet_NoMT_HighDPhi_Iso.root',
+ 'TotalRootForLimit_PreSelection_MuJet_ST_HighMT_HighDPhi_Iso.root',
+ 'TotalRootForLimit_PreSelection_MuJet_ST_MT300_HighDPhi_Iso.root',
+ 'TotalRootForLimit_PreSelection_MuJet_ST_MT500_HighDPhi_Iso.root',
+ 'TotalRootForLimit_PreSelection_MuJet_ST_MT50To150_HighDPhi_Iso.root',
+ 'TotalRootForLimit_PreSelection_MuJet_ST_NoMT_HighDPhi_Iso.root',
+ 'TotalRootForLimit_PreSelection_MuJet_dPhi_Jet_Met_HighMT_HighDPhi_Iso.root',
+ 'TotalRootForLimit_PreSelection_MuJet_dPhi_Jet_Met_MT300_HighDPhi_Iso.root',
+ 'TotalRootForLimit_PreSelection_MuJet_dPhi_Jet_Met_MT500_HighDPhi_Iso.root',
+ 'TotalRootForLimit_PreSelection_MuJet_dPhi_Jet_Met_MT50To150_HighDPhi_Iso.root',
+ 'TotalRootForLimit_PreSelection_MuJet_dPhi_Jet_Met_NoMT_HighDPhi_Iso.root',
+ 'TotalRootForLimit_PreSelection_MuJet_dPhi_Mu_Jet_HighMT_HighDPhi_Iso.root',
+ 'TotalRootForLimit_PreSelection_MuJet_dPhi_Mu_Jet_MT300_HighDPhi_Iso.root',
+ 'TotalRootForLimit_PreSelection_MuJet_dPhi_Mu_Jet_MT500_HighDPhi_Iso.root',
+ 'TotalRootForLimit_PreSelection_MuJet_dPhi_Mu_Jet_MT50To150_HighDPhi_Iso.root',
+ 'TotalRootForLimit_PreSelection_MuJet_dPhi_Mu_Jet_NoMT_HighDPhi_Iso.root',
+ 'TotalRootForLimit_PreSelection_MuJet_dPhi_Mu_Met_HighMT_HighDPhi_Iso.root',
+ 'TotalRootForLimit_PreSelection_MuJet_dPhi_Mu_Met_MT300_HighDPhi_Iso.root',
+ 'TotalRootForLimit_PreSelection_MuJet_dPhi_Mu_Met_MT500_HighDPhi_Iso.root',
+ 'TotalRootForLimit_PreSelection_MuJet_dPhi_Mu_Met_MT50To150_HighDPhi_Iso.root',
+ 'TotalRootForLimit_PreSelection_MuJet_dPhi_Mu_Met_NoMT_HighDPhi_Iso.root',
+ 'TotalRootForLimit_PreSelection_MuJet_dR_Mu_Jet_HighMT_HighDPhi_Iso.root',
+ 'TotalRootForLimit_PreSelection_MuJet_dR_Mu_Jet_MT300_HighDPhi_Iso.root',
+ 'TotalRootForLimit_PreSelection_MuJet_dR_Mu_Jet_MT500_HighDPhi_Iso.root',
+ 'TotalRootForLimit_PreSelection_MuJet_dR_Mu_Jet_MT50To150_HighDPhi_Iso.root',
+ 'TotalRootForLimit_PreSelection_MuJet_dR_Mu_Jet_NoMT_HighDPhi_Iso.root',
+ 'TotalRootForLimit_PreSelection_MuJet_nVtx_HighMT_HighDPhi_Iso.root',
+ 'TotalRootForLimit_PreSelection_MuJet_nVtx_MT300_HighDPhi_Iso.root',
+ 'TotalRootForLimit_PreSelection_MuJet_nVtx_MT500_HighDPhi_Iso.root',
+ 'TotalRootForLimit_PreSelection_MuJet_nVtx_MT50To150_HighDPhi_Iso.root',
+ 'TotalRootForLimit_PreSelection_MuJet_nVtx_NoMT_HighDPhi_Iso.root',
+ 'TotalRootForLimit_PreSelection_MuJet_nVtx_NoPU_HighMT_HighDPhi_Iso.root',
+ 'TotalRootForLimit_PreSelection_MuJet_nVtx_NoPU_MT300_HighDPhi_Iso.root',
+ 'TotalRootForLimit_PreSelection_MuJet_nVtx_NoPU_MT500_HighDPhi_Iso.root',
+ 'TotalRootForLimit_PreSelection_MuJet_nVtx_NoPU_MT50To150_HighDPhi_Iso.root',
+ 'TotalRootForLimit_PreSelection_MuJet_nVtx_NoPU_NoMT_HighDPhi_Iso.root',
+ 'TotalRootForLimit_PreSelection_MuJet_recoHT_HighMT_HighDPhi_Iso.root',
+ 'TotalRootForLimit_PreSelection_MuJet_recoHT_MT300_HighDPhi_Iso.root',
+ 'TotalRootForLimit_PreSelection_MuJet_recoHT_MT500_HighDPhi_Iso.root',
+ 'TotalRootForLimit_PreSelection_MuJet_recoHT_MT50To150_HighDPhi_Iso.root',
+ 'TotalRootForLimit_PreSelection_MuJet_recoHT_NoMT_HighDPhi_Iso.root',
+ 'TotalRootForLimit_PreSelection_MuJet_tmass_LQMet_HighMT_HighDPhi_Iso.root',
+ 'TotalRootForLimit_PreSelection_MuJet_tmass_LQMet_MT300_HighDPhi_Iso.root',
+ 'TotalRootForLimit_PreSelection_MuJet_tmass_LQMet_MT500_HighDPhi_Iso.root',
+ 'TotalRootForLimit_PreSelection_MuJet_tmass_LQMet_MT50To150_HighDPhi_Iso.root',
+ 'TotalRootForLimit_PreSelection_MuJet_tmass_LQMet_NoMT_HighDPhi_Iso.root',
+ 'TotalRootForLimit_PreSelection_MuJet_tmass_MuMet_HighMT_HighDPhi_Iso.root',
+ 'TotalRootForLimit_PreSelection_MuJet_tmass_MuMet_MT300_HighDPhi_Iso.root',
+ 'TotalRootForLimit_PreSelection_MuJet_tmass_MuMet_MT500_HighDPhi_Iso.root',
+ 'TotalRootForLimit_PreSelection_MuJet_tmass_MuMet_MT50To150_HighDPhi_Iso.root',
+ 'TotalRootForLimit_PreSelection_MuJet_tmass_MuMet_NoMT_HighDPhi_Iso.root']
 
-MakeCompare('ScaleCorretion/Codex_EtaCheckMuCor.root','MuJet_LQMassDifference_EndCap_MT500_HighDPhi_Iso','ScaleCorretion/Codex_EtaCheckMuCor.root','MuJet_LQMassDifference_EndCap_MT500_HighDPhi_Iso','Endcap',10,'M_{LQ}_{cor} - M_{LQ}_{uncor} / M_{LQ}_{uncor}','M_{T} > 500 GeV, |#eta > 1.5|')
+
+
+
+Samples=['Data','W','VV']
+
+ 
+for histo in AllHist:
+    for sam in Samples:
+
+        MakeCompare(NewOutFiles_Preselection_Approval_V1+'/'+histo,sam, NewOutFiles_Preselection_Approval_V2_NoPUWeighting+'/'+histo,sam ,'allEta',10,'M_{LQ}_{cor} - M_{LQ}_{uncor} / M_{LQ}_{uncor}','M_{T} > 500 GeV')
+
+#MakeCompare('ScaleCorretion/Codex_EtaCheckMuCor.root','MuJet_LQMassDifference_Barrel_MT500_HighDPhi_Iso','ScaleCorretion/Codex_EtaCheckMuCor.root','MuJet_LQMassDifference_Barrel_MT500_HighDPhi_Iso','Barrel',10,'M_{LQ}_{cor} - M_{LQ}_{uncor} / M_{LQ}_{uncor}','M_{T} > 500 GeV, |#eta| < 1.5')
+#
+#MakeCompare('ScaleCorretion/Codex_EtaCheckMuCor.root','MuJet_LQMassDifference_EndCap_MT500_HighDPhi_Iso','ScaleCorretion/Codex_EtaCheckMuCor.root','MuJet_LQMassDifference_EndCap_MT500_HighDPhi_Iso','Endcap',10,'M_{LQ}_{cor} - M_{LQ}_{uncor} / M_{LQ}_{uncor}','M_{T} > 500 GeV, |#eta > 1.5|')
 
 
 

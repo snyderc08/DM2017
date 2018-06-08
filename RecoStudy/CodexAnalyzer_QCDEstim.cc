@@ -1,10 +1,7 @@
-#include "../interface/CodexAnalyzer.h"
-#include "../interface/WeightCalculator.h"
-#include "../interface/Corrector.h"
 #include "../interface/Functions.h"
-#include "../interface/makeHisto.h"
 #include <string>
 #include <ostream>
+#include <vector>
 
 
 int main(int argc, char** argv) {
@@ -21,126 +18,10 @@ int main(int argc, char** argv) {
     std::vector<string> input;
     for (int f = 2; f < argc; f++) {
         input.push_back(*(argv + f));
-        cout << "\n INPUT NAME IS:   " << input[f - 2] << "\n";
+        cout <<"INPUT NAME IS:   " << input[f - 2] << "\n";
     }
+        
     
-    
-    
-    
-    for (int k = 0; k < input.size(); k++) {
-        
-        //std::string input = *(argv + 2);
-        TFile *f_Double = TFile::Open(input[k].c_str());
-        cout << "\n  Now is running on ------->   " << std::string(f_Double->GetName()) << "\n";
-        
-        std::string InputROOT= std::string(f_Double->GetName());
-        TFile * myFile = TFile::Open(f_Double->GetName());
-        TH1F * HistoTot = (TH1F*) myFile->Get("hcount");
-        
-        //        TTree *Run_Tree = (TTree*) f_Double->Get("ggNtuplizer/EventTree");
-        TTree *Run_Tree = (TTree*) f_Double->Get("EventTree");
-        
-        cout.setf(ios::fixed, ios::floatfield);
-        cout.precision(6);
-        
-        
-        
-        
-        //########################################   General Info
-        Run_Tree->SetBranchAddress("isData", &isData);
-        Run_Tree->SetBranchAddress("run", &run);
-        Run_Tree->SetBranchAddress("lumis", &lumis);
-        Run_Tree->SetBranchAddress("event", &event);
-        Run_Tree->SetBranchAddress("genWeight",&genWeight);
-        Run_Tree->SetBranchAddress("HLTEleMuX", &HLTEleMuX);
-        Run_Tree->SetBranchAddress("puTrue", &puTrue);
-        Run_Tree->SetBranchAddress("nVtx",&nVtx);
-        
-        //########################################   MC Info
-        Run_Tree->SetBranchAddress("nMC", &nMC);
-        Run_Tree->SetBranchAddress("mcPID", &mcPID);
-        Run_Tree->SetBranchAddress("mcStatus", &mcStatus);
-        Run_Tree->SetBranchAddress("mcPt", &mcPt );
-        Run_Tree->SetBranchAddress("mcEta", &mcEta );
-        Run_Tree->SetBranchAddress("mcPhi", &mcPhi );
-        Run_Tree->SetBranchAddress("mcE", &mcE );
-        Run_Tree->SetBranchAddress("mcMass", &mcMass );
-        Run_Tree->SetBranchAddress("mcMomPID", &mcMomPID );
-        Run_Tree->SetBranchAddress("mcGMomPID", &mcGMomPID );
-        
-        
-        //########################################   Tau Info
-        Run_Tree->SetBranchAddress("nTau", &nTau);
-        Run_Tree->SetBranchAddress("tauPt"  ,&tauPt);
-        Run_Tree->SetBranchAddress("tauEta"  ,&tauEta);
-        Run_Tree->SetBranchAddress("tauPhi"  ,&tauPhi);
-        Run_Tree->SetBranchAddress("tauMass"  ,&tauMass);
-        Run_Tree->SetBranchAddress("tauCharge"  ,&tauCharge);
-        Run_Tree->SetBranchAddress("taupfTausDiscriminationByDecayModeFinding", &taupfTausDiscriminationByDecayModeFinding);
-        Run_Tree->SetBranchAddress("tauByTightMuonRejection3", &tauByTightMuonRejection3);
-        Run_Tree->SetBranchAddress("tauByLooseMuonRejection3", &tauByLooseMuonRejection3);
-        Run_Tree->SetBranchAddress("tauByMVA6MediumElectronRejection"  ,&tauByMVA6MediumElectronRejection);
-        Run_Tree->SetBranchAddress("tauByLooseCombinedIsolationDeltaBetaCorr3Hits",&tauByLooseCombinedIsolationDeltaBetaCorr3Hits);
-        Run_Tree->SetBranchAddress("tauByMediumCombinedIsolationDeltaBetaCorr3Hits",&tauByMediumCombinedIsolationDeltaBetaCorr3Hits);
-        Run_Tree->SetBranchAddress("tauByMVA6LooseElectronRejection", &tauByMVA6LooseElectronRejection);
-        Run_Tree->SetBranchAddress("tauDxy",&tauDxy);
-        Run_Tree->SetBranchAddress("tauDecayMode",&tauDecayMode);
-        Run_Tree->SetBranchAddress("tauByLooseIsolationMVArun2v1DBoldDMwLT",&tauByLooseIsolationMVArun2v1DBoldDMwLT);
-        Run_Tree->SetBranchAddress("tauByVLooseIsolationMVArun2v1DBoldDMwLT",&tauByVLooseIsolationMVArun2v1DBoldDMwLT);
-        
-        //########################################   Mu Info
-        Run_Tree->SetBranchAddress("nMu", &nMu);
-        Run_Tree->SetBranchAddress("muPt"  ,&muPt);
-        Run_Tree->SetBranchAddress("muEta"  ,&muEta);
-        Run_Tree->SetBranchAddress("muPhi"  ,&muPhi);
-        Run_Tree->SetBranchAddress("muIsoTrk", &muIsoTrk);
-        Run_Tree->SetBranchAddress("muCharge",&muCharge);
-        Run_Tree->SetBranchAddress("muIDbit",&muIDbit);//NEW
-        Run_Tree->SetBranchAddress("muPFChIso", &muPFChIso);
-        Run_Tree->SetBranchAddress("muPFPhoIso", &muPFPhoIso);
-        Run_Tree->SetBranchAddress("muPFNeuIso", &muPFNeuIso);
-        Run_Tree->SetBranchAddress("muPFPUIso", &muPFPUIso);
-        Run_Tree->SetBranchAddress("muD0",&muD0);
-        Run_Tree->SetBranchAddress("muDz",&muDz);
-        
-        //########################################   Ele Info
-        Run_Tree->SetBranchAddress("nEle", &nEle);
-        Run_Tree->SetBranchAddress("elePt"  ,&elePt);
-        Run_Tree->SetBranchAddress("eleEta"  ,&eleEta);
-        Run_Tree->SetBranchAddress("elePhi"  ,&elePhi);
-        Run_Tree->SetBranchAddress("elePFChIso", &elePFChIso);
-        Run_Tree->SetBranchAddress("eleIDMVA", &eleIDMVA);//NEW
-        Run_Tree->SetBranchAddress("eleCharge",&eleCharge);
-        Run_Tree->SetBranchAddress("eleSCEta",&eleSCEta);
-        Run_Tree->SetBranchAddress("elePFChIso", &elePFChIso);
-        Run_Tree->SetBranchAddress("elePFPhoIso", &elePFPhoIso);
-        Run_Tree->SetBranchAddress("elePFNeuIso", &elePFNeuIso);
-        Run_Tree->SetBranchAddress("elePFPUIso", &elePFPUIso);
-        Run_Tree->SetBranchAddress("eleD0",&eleD0);
-        Run_Tree->SetBranchAddress("eleDz",&eleDz);
-        Run_Tree->SetBranchAddress("eleMissHits", &eleMissHits);
-        Run_Tree->SetBranchAddress("eleConvVeto", &eleConvVeto);
-        Run_Tree->SetBranchAddress("eleSCEta", &eleSCEta );
-        
-        //########################################   Jet Info
-        Run_Tree->SetBranchAddress("nJet",&nJet);
-        Run_Tree->SetBranchAddress("jetPt",&jetPt);
-        Run_Tree->SetBranchAddress("jetEta",&jetEta);
-        Run_Tree->SetBranchAddress("jetPhi",&jetPhi);
-        Run_Tree->SetBranchAddress("jetEn",&jetEn);
-        Run_Tree->SetBranchAddress("jetCSV2BJetTags",&jetCSV2BJetTags);
-        Run_Tree->SetBranchAddress("jetPFLooseId",&jetPFLooseId);
-        Run_Tree->SetBranchAddress("jetPUID",&jetPUID);
-        Run_Tree->SetBranchAddress("jetRawPt",&jetRawPt);
-        Run_Tree->SetBranchAddress("jetJECUnc",&jetJECUnc);
-        Run_Tree->SetBranchAddress("jetRawEn",&jetRawEn);
-        Run_Tree->SetBranchAddress("jetHadFlvr",&jetHadFlvr);
-        
-        //########################################   MET Info
-        Run_Tree->SetBranchAddress("pfMET",&pfMET);
-        Run_Tree->SetBranchAddress("pfMETPhi",&pfMETPhi);
-        Run_Tree->SetBranchAddress("metFilters",&metFilters);
-        Run_Tree->SetBranchAddress("genHT",&genHT);
         
         
         //###############################################################################################
@@ -160,26 +41,38 @@ int main(int argc, char** argv) {
         float LeptonIsoCut=0.15;
         
         
+    for (int k = 0; k < input.size(); k++) {
+        
+        TFile *f_Double = TFile::Open(input[k].c_str());
+        cout << "\n  Now is running on ------->   " << std::string(f_Double->GetName()) << "\n";
+        
+        std::string InputROOT= std::string(f_Double->GetName());
+        TFile * myFile = TFile::Open(f_Double->GetName());
+        TH1F * HistoTot = (TH1F*) myFile->Get("hcount");
+        
+        TTree *  Run_Tree;
+        Run_Tree= Xttree(f_Double);
+        
+        //#####################################################################
+        //#####################################################################
+        //                           Loop over Events in each ROOT files
+        //#####################################################################
+        //#####################################################################
         Int_t nentries_wtn = (Int_t) Run_Tree->GetEntries();
         cout<<"nentries_wtn===="<<nentries_wtn<<"\n";
         for (Int_t i = 0; i < nentries_wtn; i++) {
+            //                    for (Int_t i = 0; i < 10000; i++) {
             Run_Tree->GetEntry(i);
             if (i % 10000 == 0) fprintf(stdout, "\r  Processed events: %8d of %8d ", i, nentries_wtn);
             fflush(stdout);
             
-            if (isData && (metFilters!=1536)) continue;  
+            
+            
+            //###############################################################################################
+            //  This part is to avoid of the duplicate of mu-j pair from one events
+            //###############################################################################################
             std::vector<string> HistNamesFilled;
             HistNamesFilled.clear();
-            //###############################################################################################
-            //  Weight Calculation
-            //###############################################################################################
-            
-            //###############################################################################################
-            //  Doing MuTau Analysis
-            //###############################################################################################
-            
-            
-            
             
             
             //############################################################################################
@@ -191,7 +84,8 @@ int main(int argc, char** argv) {
                 
                 float IsoMu=muPFChIso->at(imu)/muPt->at(imu);
                 if ( (muPFNeuIso->at(imu) + muPFPhoIso->at(imu) - 0.5* muPFPUIso->at(imu) )  > 0.0)
-                    IsoMu= ( muPFChIso->at(imu)/muPt->at(imu) + muPFNeuIso->at(imu) + muPFPhoIso->at(imu) - 0.5* muPFPUIso->at(imu))/muPt->at(imu);
+                    IsoMu= ( muPFChIso->at(imu) + muPFNeuIso->at(imu) + muPFPhoIso->at(imu) - 0.5* muPFPUIso->at(imu))/muPt->at(imu);
+//                    IsoMu= ( muPFChIso->at(imu)/muPt->at(imu) + muPFNeuIso->at(imu) + muPFPhoIso->at(imu) - 0.5* muPFPUIso->at(imu))/muPt->at(imu); //BUGGY
                 
                 bool MuPtCut = muPt->at(imu) > LeptonPtCut_ && fabs(muEta->at(imu)) < 2.4 ;
                 bool MuIdIso= (muIDbit->at(imu) >> 2 & 1);
@@ -225,7 +119,6 @@ int main(int argc, char** argv) {
                             if (Refer_R_jetmu < 0.5 && jetPt->at(kjet)  >= muPt->at(imu)) {
                                 CLoseJetMuPt = jetPt->at(kjet);
                                 CLoseJetMuEta = jetEta->at(kjet);
-                                
                             }
                         }
                     }
@@ -264,13 +157,14 @@ int main(int argc, char** argv) {
                     
                     bool LepPassIsolation= IsoMu < LeptonIsoCut;
                     
-                    const int size_isoCat = 3;
+                    const int size_isoCat = 4;
                     bool Isolation = LepPassIsolation;
                     bool AntiIsolation =  !LepPassIsolation;
                     bool Total = 1;
+                    bool LooseIso = IsoMu < 0.25;
                     
-                    bool Iso_category[size_isoCat] = {Isolation, AntiIsolation,Total};
-                    std::string iso_Cat[size_isoCat] = {"_Iso", "_AntiIso","_Total"};
+                    bool Iso_category[size_isoCat] = {Isolation, AntiIsolation,Total,LooseIso};
+                    std::string iso_Cat[size_isoCat] = {"_Iso", "_AntiIso","_Total","_LooseIso"};
                     //###############################################################################################
                     //  MT Categorization
                     //###############################################################################################
@@ -307,7 +201,6 @@ int main(int argc, char** argv) {
                     std::string CHL="MuJet";
                     
                     
-                        
                         for (int iso = 0; iso < size_isoCat; iso++) {
                             if (Iso_category[iso]) {
                                 for (int imt = 0; imt < size_mTCat; imt++) {
@@ -316,8 +209,7 @@ int main(int argc, char** argv) {
                                             if (jetMetPhi_category[jpt]) {
                                                 
                                                         
-                                                        
-                                                        
+                                                
                                                         
                                                         float FullWeight = 1;
                                                         std::string FullStringName = MT_Cat[imt] + jetMetPhi_Cat[jpt]+ iso_Cat[iso] ;
