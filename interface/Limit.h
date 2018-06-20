@@ -305,3 +305,15 @@ cms.Path(pfMet+patJetCorrFactorsReapplyJEC+patJetsReapplyJEC+basicJetsForMet+jet
 
 
 
+printf "cd $1 ...\n\n\n\n"
+cd LIMITS/$1/
+
+printf "Impact  ...\n\n\n\n"
+combineTool.py -M Impacts -d workspace.root -m $1 --doInitialFit --robustFit 1 --rMin -5 --rMax 5 --parallel 8
+combineTool.py -M Impacts -d workspace.root -m $1 --robustFit 1 --doFits --rMin -5 --rMax 5 --expectSignal=1 --parallel 8 --X-rtd FITTER_NEW_CROSSING_ALGO --X-rtd FITTER_N
+EVER_GIVE_UP
+combineTool.py -M Impacts -d workspace.root -m $1 -o impacts.json
+plotImpacts.py -i impacts.json -o impacts
+
+
+

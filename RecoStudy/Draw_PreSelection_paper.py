@@ -1,45 +1,27 @@
 #!/usr/bin/env python
 import ROOT
 import re
+import os
 from array import array
 
 from Step5_TT_W_ScaleFactor import *
 #from Step5_TT_W_ScaleFactor_ForJet50 import *
 #................................................................................................................................
 #................................................................................................................................
-#SubRootDir='OutFiles_Excess_Jet50MT300_LQBump/'
-#SubRootDir='OutFiles_Jet50_200_WMinus/'
-#SubRootDir='NewOutFiles_CodexAnalyzer_Preselection_MuEta2p1/'
-#SubRootDir='NewOutFiles_CodexAnalyzer_Preselection_MLQ_1100_1400/'
-#SubRootDir='NewOutFiles_CodexAnalyzer_Preselection_MLQ_1100_1400_JETLess200/'
-#SubRootDir = 'NewOutFiles_CodexAnalyzer_Preselection_Lplus/'
-#SubRootDir = 'NewOutFiles_CodexAnalyzer_Preselection_Lminus/'
-#SubRootDir = 'NewOutFiles_CodexAnalyzer_Preselection_JetPt50_200/'
-#SubRootDir = 'NewOutFiles_CodexAnalyzer_Preselection_JetPt50_200_LQMore1100/'
-#SubRootDir = 'NewOutFiles_CodexAnalyzer_Preselection_JetPt50_200_LQMore1100_METLess300/'
-#SubRootDir = 'NewOutFiles_CodexAnalyzer_Preselection_JetPt50_200_LQMore1100_MuPtLess300/'
-#SubRootDir = 'NewOutFiles_CodexAnalyzer_Preselection_JetPt50_200_MuPtLess300/'
-#SubRootDir = 'NewOutFiles_CodexAnalyzer_Preselection_JetPt50_200_METLess300/'
-#SubRootDir = 'NewOutFiles_Preselection_JetPt50_200_Lplus/'
-#SubRootDir = 'NewOutFiles_Preselection_JetPt50_200_Lminus/'
-#SubRootDir = 'NewOutFiles_Preselection_JetPt50_200_Lplus_MLQPlus1100/'
 
 
-#SubRootDir = 'NewOutFiles_Preselection_/'
-#SubRootDir = 'NewOutFiles_Preselection_addPhi/'
-#SubRootDir = 'NewOutFiles_Preselection_jetinfo/'
-#SubRootDir = 'NewOutFiles_Preselection_addMetPhiRemoveBug/'
-#SubRootDir = 'NewOutFiles_Preselection_ChecckMT400_600/'
-#SubRootDir = 'NewOutFiles_Preselection_FixBugNoBVetoREmove/'
-SubRootDir = 'NewOutFiles_Preselection_Approval_v1/'
 
+
+#InputFilesLocation = 'NewOutFiles_Preselection_Approval_V1/___WithTopPtRW/'
+#InputFilesLocation = 'NewOutFiles_Preselection_Approval_V1/___NoTopPtRW/'
+InputFilesLocation = 'NewOutFiles_Preselection_Approval_V1/'
 
 #................................................................................................................................
 #................................................................................................................................
-ForAN=1
+ForAN=0
 RB_=20
 def add_lumi():
-    lowX=0.69
+    lowX=0.59
     lowY=0.835
     lumi  = ROOT.TPaveText(lowX, lowY+0.06, lowX+0.30, lowY+0.16, "NDC")
     lumi.SetBorderSize(   0 )
@@ -61,7 +43,7 @@ def add_CMS():
     lumi.SetFillStyle(    0 )
     lumi.SetTextAlign(   12 )
     lumi.SetTextColor(    1 )
-    lumi.AddText("CMS")
+    lumi.AddText("CMS 2016")
     return lumi
 
 def add_Preliminary():
@@ -96,7 +78,7 @@ def MakePlot(FileName,categoriy,HistName,Xaxis,Info,RB_,channel,yMin,isLOG,ttbar
     c=ROOT.TCanvas("canvas","",0,0,600,600)
     c.cd()
 
-    file=ROOT.TFile(SubRootDir+FileName,"r")
+    file=ROOT.TFile(InputFilesLocation+FileName,"r")
 
     adapt=ROOT.gROOT.GetColor(12)
     new_idx=ROOT.gROOT.GetListOfColors().GetSize() + 1
@@ -107,10 +89,10 @@ def MakePlot(FileName,categoriy,HistName,Xaxis,Info,RB_,channel,yMin,isLOG,ttbar
     
     
     QCD=file.Get(categoriy).Get("QCD")
-    if not QCD:
-        QCD=file.Get(categoriy).Get("VV")
-        QCD.Scale(.0001)
-        print "\n\n\n\nn\######################### whatch out VV  instead of QCD\n\n\n\n"
+#    if not QCD:
+#        QCD=file.Get(categoriy).Get("VV")
+#        QCD.Scale(.0001)
+#        print "\n\n\n\nn\######################### whatch out VV  instead of QCD\n\n\n\n"
     QCD.Rebin(RB_)
     
 
@@ -120,7 +102,7 @@ def MakePlot(FileName,categoriy,HistName,Xaxis,Info,RB_,channel,yMin,isLOG,ttbar
 
     W=file.Get(categoriy).Get("W")
     W.Rebin(RB_)
-    W.Scale(1)
+#    W.Scale(1)
     if ttbarCR=="" :  W.Scale(SF_W_SingleLep())
     if ttbarCR=="_ttbarCRSingleLep" :  W.Scale(SF_W_SingleLep())
     if ttbarCR=="_ttbarCRDiLep" :  W.Scale(SF_W_DiLep())
@@ -131,12 +113,12 @@ def MakePlot(FileName,categoriy,HistName,Xaxis,Info,RB_,channel,yMin,isLOG,ttbar
 
 
     TT=file.Get(categoriy).Get("TT")
-    if not TT:
-        TT=file.Get(categoriy).Get("VV")
-        TT.Scale(.0001)
-        print "\n\n\n\nn\######################### whatch out VV  instead of TT\n\n\n\n"
+#    if not TT:
+#        TT=file.Get(categoriy).Get("VV")
+#        TT.Scale(.0001)
+#        print "\n\n\n\nn\######################### whatch out VV  instead of TT\n\n\n\n"
     TT.Rebin(RB_)
-    TT.Scale(1)
+#    TT.Scale(1)
     if ttbarCR=="" :  TT.Scale(SF_TT_SingleLep())
     if ttbarCR=="_ttbarCRSingleLep" :  TT.Scale(SF_TT_SingleLep())
     if ttbarCR=="_ttbarCRDiLep" :  TT.Scale(SF_TT_DiLep())
@@ -146,10 +128,10 @@ def MakePlot(FileName,categoriy,HistName,Xaxis,Info,RB_,channel,yMin,isLOG,ttbar
 
 
     SingleT=file.Get(categoriy).Get("SingleTop")
-    if not SingleT:
-        SingleT=file.Get(categoriy).Get("VV")
-        SingleT.Scale(.0001)
-        print "\n\n\n\nn\######################### whatch out VV  instead of SingleT\n\n\n\n"
+#    if not SingleT:
+#        SingleT=file.Get(categoriy).Get("VV")
+#        SingleT.Scale(.0001)
+#        print "\n\n\n\nn\######################### whatch out VV  instead of SingleT\n\n\n\n"
     SingleT.Rebin(RB_)
 
 
@@ -165,10 +147,10 @@ def MakePlot(FileName,categoriy,HistName,Xaxis,Info,RB_,channel,yMin,isLOG,ttbar
 
 
     DYS=file.Get(categoriy).Get("ZTT")
-    if not DYS:
-        DYS=file.Get(categoriy).Get("VV")
-        DYS.Scale(.0001)
-        print "\n\n\n\nn\######################### whatch out VV  instead of DYS\n\n\n\n"
+#    if not DYS:
+#        DYS=file.Get(categoriy).Get("VV")
+#        DYS.Scale(.0001)
+#        print "\n\n\n\nn\######################### whatch out VV  instead of DYS\n\n\n\n"
     DYS.Rebin(RB_)
 
     Data.GetXaxis().SetTitle("")
@@ -180,16 +162,31 @@ def MakePlot(FileName,categoriy,HistName,Xaxis,Info,RB_,channel,yMin,isLOG,ttbar
     Data.GetYaxis().SetTitleSize(0.075)
     Data.GetYaxis().SetTitleOffset(1.04)
     Data.SetTitle("")
-    Data.GetYaxis().SetTitle("Events")
+    Data.GetYaxis().SetTitle("Events / GeV")
 
 
-    Signal=file.Get(categoriy).Get("Codex_1200")
+#    Signal=file.Get(categoriy).Get("Codex_1200")
+    Signal=file.Get(categoriy).Get("VV")
     Signal.Scale(1.50E-03*.5)
     Signal.Rebin(RB_)
     Signal.SetLineStyle(11)
     Signal.SetLineWidth(3)
     Signal.SetLineColor(4)
     Signal.SetMarkerColor(4)
+
+
+
+    ##### chnage binning content
+    ALLSample=[Data,QCD,W,TT,SingleT,VV,DYS]
+    for sample in ALLSample:
+        for ibin in range(sample.GetXaxis().GetNbins()):
+            #            print ibin+1, sample.GetBinWidth(ibin+1)
+            
+            sample.SetBinContent(ibin+1,1.0*sample.GetBinContent(ibin+1)/sample.GetBinWidth(ibin+1))
+            sample.SetBinError(ibin+1,1.0*sample.GetBinError(ibin+1)/sample.GetBinWidth(ibin+1))
+            
+            if sample==Data and sample.GetBinContent(ibin+1)==0: #https://twiki.cern.ch/twiki/bin/view/CMS/PoissonErrorBars
+                sample.SetBinError(ibin+1,1.0*1.8/sample.GetBinWidth(ibin+1))
 
 
     QCD.SetFillColor(ROOT.TColor.GetColor(408, 106, 154))
@@ -234,7 +231,9 @@ def MakePlot(FileName,categoriy,HistName,Xaxis,Info,RB_,channel,yMin,isLOG,ttbar
 #        print "##################################\n", FileName
 #        for i in range(Data.GetNbinsX()):
 ##            if i > 15 : Data.SetBinContent(i+1,0)
-#            if i > 6 : Data.SetBinContent(i+1,0)
+#            if i > 9 :
+#                Data.SetBinContent(i+1,0)
+#                Data.SetBinError(i+1,0)
 #
 #    if FileName.find("MET") > 0 :
 #        print "##################################\n", FileName
@@ -250,12 +249,18 @@ def MakePlot(FileName,categoriy,HistName,Xaxis,Info,RB_,channel,yMin,isLOG,ttbar
 
 
     stack=ROOT.THStack("stack","stack")
-    stack.Add(QCD)
+    
     stack.Add(VV)
     stack.Add(DYS)
+    stack.Add(QCD)
     stack.Add(SingleT)
-    stack.Add(TT)
-    stack.Add(W)
+
+    if ttbarCR=="":
+        stack.Add(TT)
+        stack.Add(W)
+    else:
+        stack.Add(W)
+        stack.Add(TT)
 
     errorBand = W.Clone()
     errorBand.Add(QCD)
@@ -288,25 +293,34 @@ def MakePlot(FileName,categoriy,HistName,Xaxis,Info,RB_,channel,yMin,isLOG,ttbar
     pad1.SetFrameBorderSize(10)
 
     Data.GetXaxis().SetLabelSize(0)
-    if isLOG: Data.SetMaximum(Data.GetMaximum()*10000)
+    if isLOG: Data.SetMaximum(Data.GetMaximum()*1000)
     else:  Data.SetMaximum(Data.GetMaximum()*3)
     Data.SetMinimum(yMin)
     Data.Draw("e")
     stack.Draw("histsame")
     errorBand.Draw("e2same")
     Data.Draw("esame")
-    Signal.Draw("histsame")
+#    Signal.Draw("histsame")
+
+
+
+
 
     legende=make_legend()
-    legende.AddEntry(Data,"Observed","elp")
-    legende.AddEntry(Signal,"Codex_1200","l")
-    legende.AddEntry(TT,"t#bar{t}+jets","f")
+    legende.AddEntry(Data,"Data","elp")
+    if ttbarCR=="":
+        legende.AddEntry(W,"W+jets","f")
+        legende.AddEntry(TT,"t#bar{t}+jets","f")
+
+    else:
+        legende.AddEntry(TT,"t#bar{t}+jets","f")
+        legende.AddEntry(W,"W+jets","f")
+
     legende.AddEntry(SingleT,"Single Top","f")
+    legende.AddEntry(QCD,"QCD multijet","f")
     legende.AddEntry(DYS,"DY#rightarrowll+jets ","f")
     legende.AddEntry(VV,"Diboson","f")
-    legende.AddEntry(W,"W+jets","f")
-    legende.AddEntry(QCD,"QCD multijet","f")
-    legende.AddEntry(errorBand,"Uncertainty","f")
+    legende.AddEntry(errorBand,"Stat. Uncertainty","f")
 
     legende.Draw()
 
@@ -314,8 +328,8 @@ def MakePlot(FileName,categoriy,HistName,Xaxis,Info,RB_,channel,yMin,isLOG,ttbar
     l1.Draw("same")
     l2=add_CMS()
     l2.Draw("same")
-    l3=add_Preliminary()
-    l3.Draw("same")
+#    l3=add_Preliminary()
+#    l3.Draw("same")
 
     pad1.RedrawAxis()
 
@@ -325,24 +339,25 @@ def MakePlot(FileName,categoriy,HistName,Xaxis,Info,RB_,channel,yMin,isLOG,ttbar
     categ.SetTextAlign(   12 )
     categ.SetTextSize ( 0.04 )
     categ.SetTextColor(    1 )
+#    categ.SetTextFont (   41 )
+    #       if i==1 or i==3:
     if ForAN:
-    #    categ.SetTextFont (   41 )
-        #       if i==1 or i==3:
         if MTLegend=='_NoMT': categ.AddText("M_{T}(#mu,MET) > 0 GeV")
         if MTLegend=='_HighMT': categ.AddText("M_{T}(#mu,MET) > 100 GeV")
         if MTLegend=='_MT300': categ.AddText("M_{T}(#mu,MET) > 300 GeV")
         if MTLegend=='_MT500': categ.AddText("M_{T}(#mu,MET) > 500 GeV")
         if MTLegend=='_MT50To150': categ.AddText("50 GeV <M_{T}(#mu,MET) < 150 GeV")
-    #    categ.AddText("1100<M_{LQ}<1400 GeV")
-    #    categ.AddText("Jet Pt < 200 GeV")
-    #    categ.AddText(ttbarCR)
-    #    categ.AddText('50 <Jet p_{T} < 200 GeV')
-    #    categ.AddText("M_{LQ} > 1100 GeV")
-    #    categ.AddText("#mu  p_{T} < 300 GeV")
-    #    categ.AddText('q_{#mu} > 0')
-    #    categ.AddText(MTLegend)
-        #       else :
-        #        categ.AddText("SS")
+
+#    categ.AddText("1100<M_{LQ}<1400 GeV")
+#    categ.AddText("Jet Pt < 200 GeV")
+#    categ.AddText(ttbarCR)
+#    categ.AddText('50 <Jet p_{T} < 200 GeV')
+#    categ.AddText("M_{LQ} > 1100 GeV")
+#    categ.AddText("#mu  p_{T} < 300 GeV")
+#    categ.AddText('q_{#mu} > 0')
+#    categ.AddText(MTLegend)
+    #       else :
+    #        categ.AddText("SS")
         categ.Draw()
 
     c.cd()
@@ -360,8 +375,10 @@ def MakePlot(FileName,categoriy,HistName,Xaxis,Info,RB_,channel,yMin,isLOG,ttbar
     pad2.cd()
     
     h1=errorBand.Clone()
-    h1.SetMaximum(2)
-    h1.SetMinimum(0)
+#    h1.SetMaximum(2)
+#    h1.SetMinimum(0)
+    h1.SetMaximum(2.0)
+    h1.SetMinimum(0.0)
     h1.SetMarkerStyle(20)
 
     h3=Data.Clone()
@@ -408,35 +425,36 @@ def MakePlot(FileName,categoriy,HistName,Xaxis,Info,RB_,channel,yMin,isLOG,ttbar
 
     c.Modified()
     outName=((FileName.replace('TotalRootForLimit_PreSelection_MuJet','').replace('.root','')).replace('_HighDPhi_Iso','')).replace('_HighMT','_MT100')
-    c.SaveAs(SubRootDir+'_MuJet'+outName+".pdf")
+    c.SaveAs("PAPERControlPlots/"+'_MuJet'+outName+".pdf")
 
 
 FileNamesInfo=[
-               #               ["_tmass_JetMet","M_{T}(jet,MET) (GeV)","",5,1],
-               ["_tmass_LQMet","M_{T}(LQ,MET)  (GeV)","",10,.1],
-               ["_LepPt","lepton p_{T} (GeV)","",100,.1],
-               ["_LepEta","lepton #eta ","",5,10],
-               ["_JetPt","jet p_{T} (GeV)","",100,.1],
-               ["_JetEta","jet #eta ","",5,10],
-               ["_nVtx","# of vertex","",2,10],
-               ["_nVtx_NoPU","# of vertex before PU reweighting","",2,10],
-               ["_MET","MET  (GeV)","",10,.1],
-               ["_LQMass","M_{LQ}   (GeV)","",10,.1],
-               ["_tmass_MuMet","M_{T}(#mu,MET) (GeV)","",10,.1],
-               ["_dPhi_Jet_Met","#Delta#phi (jet,MET)","",5,.1],
-               ["_dPhi_Mu_Jet","#Delta#phi (#mu,jet)","",5,.1],
-               ["_dPhi_Mu_MET","#Delta#phi (#mu,MET)","",10,.1],
-               ["_METPhi","MET #phi ","",10,10],
-               ["_NumJet","Jet multiplicity","",1,1],
-               ["_NumBJet","BJet multiplicity","",1,1],
-               ["_recoHT","Jet HT  (GeV)","",10,.1],
+#               ["_tmass_JetMet","M_{T}(jet,MET) (GeV)","",5,1],
+#               ["_tmass_LQMet","M_{T}(LQ,MET)  (GeV)","",10,1],
+#               ["_LepPt","lepton p_{T} (GeV)","",100,1],
+#               ["_LepEta","lepton #eta ","",5,10],
+#               ["_JetPt","jet p_{T} (GeV)","",100,1],
+#               ["_JetEta","jet #eta ","",5,10],
+#               ["_nVtx","# of vertex","",2,10],
+#               ["_nVtx_NoPU","# of vertex before PU reweighting","",2,10],
+#               ["_MET","MET  (GeV)","",10,1],
+                ["_LQMass","m_{#muj}   (GeV)","",10,.001],
+#               ["_tmass_MuMet","M_{T}(#mu,MET) (GeV)","",10,1],
+#               ["_dPhi_Jet_Met","#Delta#phi (jet,MET)","",5,1],
+#               ["_dPhi_Mu_Jet","#Delta#phi (#mu,jet)","",5,1],
+#               ["_dPhi_Mu_MET","#Delta#phi (#mu,MET)","",10,1],
+#               ["_METPhi","MET #phi ","",10,10],
+#               ["_NumJet","Jet multiplicity","",1,1],
+#               ["_NumBJet","BJet multiplicity","",1,1],
+#              ["_recoHT","Jet HT  (GeV)","",10,1],
                ]
 
 Isolation=["_Iso"]
-MT= ["_NoMT","_HighMT","_MT50To150","_MT300","_MT500"]
+#MT= ["_NoMT","_HighMT","_MT50To150","_MT300","_MT500"]
+MT= ["_HighMT","_MT50To150"]
 JPT=[ "_HighDPhi"]
 lqEta= [""]
-region= ["","_ttbarCRDiLep","_ttbarCRSingleLep"]
+region= ["","_ttbarCRSingleLep"]
 
 #logStat=[0]
 logStat=[1]
@@ -459,10 +477,15 @@ for i in range(0,len(FileNamesInfo)):
                     for reg in region:
                         for isLOG in logStat:
                             
+                            if mt=="_HighMT" and reg=="": continue
+                            if mt=="_MT50To150" and reg=="_ttbarCRSingleLep": continue
+                    
                             FileName="TotalRootForLimit_PreSelection_"+"MuJet"+NormMC+mt+jpt+etalq+reg+iso+".root"
                             Info=NormMC+mt+jpt+etalq+reg+iso
                             print "---->", FileName
                             MakePlot(FileName,"MuJet","",axisName,Info,Bin,"",yMin,isLOG,reg,mt)
 
 
+os.system("cp PAPERControlPlots/_MuJet_LQMass_MT100_HighDPhi_ttbarCRSingleLep_Iso.pdf  /Users/abdollah1/Documents/SVNNew/myDir/papers/EXO-17-015/trunk/Figure_001-a.pdf")
+os.system("cp PAPERControlPlots/_MuJet_LQMass_MT50To150.pdf  /Users/abdollah1/Documents/SVNNew/myDir/papers/EXO-17-015/trunk/Figure_001-c.pdf")
 

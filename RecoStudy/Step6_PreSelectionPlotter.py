@@ -114,7 +114,7 @@ def _FileReturn(Name, channel,cat,HistoName):
 ####################################################
 ##   Start Making the Datacard Histograms
 ####################################################
-def MakeTheHistogram(channel,NormMC,NormQCD,ShapeQCD,NormTTbar):
+def MakeTheHistogram(channel,NormMC,NormQCD,ShapeQCD,NormTTbar,ttbarCR):
     
     OutFile = TFile(SubRootDir+"TotalRootForLimit_PreSelection_"+channel + NormMC+".root" , 'RECREATE') # Name Of the output file
 #    OutFile = TFile("TotalRootForLimit_Jet50_"+channel + NormMC+".root" , 'RECREATE') # Name Of the output file
@@ -304,8 +304,12 @@ def MakeTheHistogram(channel,NormMC,NormQCD,ShapeQCD,NormTTbar):
             SingleTSampleQCDNormHist=SingleTSampleQCDNorm.Get("HISTO")
             VVSampleQCDNormHist=VVSampleQCDNorm.Get("HISTO")
             TTSampleQCDNormHist=TTSampleQCDNorm.Get("HISTO")
+            if ttbarCR=="" :  TTSampleQCDNormHist.Scale(0.95)
+            if ttbarCR=="_ttbarCRSingleLep" :  TTSampleQCDNormHist.Scale(0.95)
+            if ttbarCR=="_ttbarCRDiLep" :  TTSampleQCDNormHist.Scale(0.95)
             ZTTSampleQCDNormHist=ZTTSampleQCDNorm.Get("HISTO")
             WSampleQCDNormHist=WSampleQCDNorm.Get("HISTO")
+            WSampleQCDNormHist.Scale(1.02)
             DataSampleQCDNormHist=DataSampleQCDNorm.Get("HISTO")
             dataBeforeSub=DataSampleQCDNormHist.Integral() #Here we get the data yeild before subtracting other background
             if SingleTSampleQCDNormHist:  DataSampleQCDNormHist.Add(SingleTSampleQCDNormHist, -1)
@@ -373,7 +377,7 @@ if __name__ == "__main__":
 
 
 #    Isolation=["_Iso", "_AntiIso","_Total"]
-    Isolation=["_Iso"]
+    Isolation=["_Iso", "_AntiIso"]
     
     
     
@@ -404,4 +408,4 @@ if __name__ == "__main__":
                         NormTTbar=Norm+"_NoTopRW"+mt+jpt+reg+iso
 #                        NormTTbar=NormMC
 
-                        MakeTheHistogram(channel,NormMC,NormQCD,ShapeQCD,NormTTbar)
+                        MakeTheHistogram(channel,NormMC,NormQCD,ShapeQCD,NormTTbar,reg)

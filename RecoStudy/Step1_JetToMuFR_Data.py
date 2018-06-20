@@ -178,7 +178,8 @@ def MakeTheHistogram(channel,NormQCD,ShapeQCD,Binning,doBinning,HistoType):
             
             print "\n ----> Data before subtraction is = ", DataSampleQCDNormHist.Integral()
             QCDEstimation= (DataSampleQCDNormHist.Integral()- (TT_qcd+ZTT_qcd+W_qcd+SingleT_qcd+VV_qcd))
-            print "\n ---->  Data aftre ____ subtraction is = ", QCDEstimation , "  which should be =", DataSampleQCDShapeHist.Integral()
+            print "\n ---->  Data aftre ____ subtraction is = ", QCDEstimation , "    ############## purity= =", DataSampleQCDShapeHist.Integral()/DataSampleQCDNormHist.Integral()
+            
             
             
             #            NameOut= "QCD"+str(TauScaleOut[tscale])
@@ -226,8 +227,8 @@ def _FIT_Jet(x, p):
 
 def _FIT_Lepton( x,  p) :
 #    Land=p[0]+p[1]*pow(x[0],1)+p[2]*pow(x[0],2)+p[3]*pow(x[0],3)+p[4]*pow(x[0],4)
+#    Land=p[0]+p[1]*x[0]+p[2]*x[0]*x[0]+p[3]*x[0]*x[0]*x[0]+p[4]*x[0]*x[0]*x[0]*x[0]*x[0]*x[0]
     Land=p[0]+p[1]*x[0]+p[2]*x[0]*x[0]+p[3]*x[0]*x[0]*x[0]+p[4]*x[0]*x[0]*x[0]*x[0]
-#    Land=p[0]+p[1]*x[0]+p[2]*x[0]*x[0]+p[3]*x[0]*x[0]*x[0]+p[4]*x[0]*x[0]*x[0]*x[0]
 #    Land = p[2] * TMath.Landau(x[0], p[3], p[4])
 #    Pol0 = p[0]
 #    return Land + Pol0
