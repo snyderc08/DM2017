@@ -40,7 +40,8 @@ int main(int argc, char** argv) {
     //########################################
     TH2F** HistoMuId=FuncHistMuId();
     TH2F** HistoMuIso=FuncHistMuIso();
-    TH1F** HistoMuTrg=FuncHistMuTrigger();
+//    TH1F** HistoMuTrg=FuncHistMuTrigger();
+    TH2F** HistoMuTrg=FuncHistMuTrigger();
     TGraphAsymmErrors * HistoMuTrack=FuncHistMuTrack();
     
     //########################################

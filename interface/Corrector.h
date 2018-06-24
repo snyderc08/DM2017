@@ -727,7 +727,14 @@ float Cor80X_Trigger_Mu_BCDEF(float pt,float eta, TH2F* HistoTrg ){
     if (1.2 <= fabs(eta) && fabs(eta) < 2.1) etaBIN=3;
     if (2.1 <= fabs(eta) && fabs(eta) < 2.4) etaBIN=4;
     
-    //    cout<< "--->Trigger    pt= "<<pt<<  "   eta" <<eta<< "  SF="<<HistoTrg->GetBinContent(ptBIN,etaBIN)<<"\n";
+    if (pt > 750) pt=750;
+    
+        if (HistoTrg->GetBinContent(ptBIN,etaBIN)-HistoTrg->GetBinContent(HistoTrg->GetXaxis()->FindBin(pt),HistoTrg->GetYaxis()->FindBin(fabs(eta)))) cout<< "--->Trigger    pt= "<<pt<<  "   eta" <<eta<< "  SF="<<HistoTrg->GetBinContent(ptBIN,etaBIN)-HistoTrg->GetBinContent(HistoTrg->GetXaxis()->FindBin(pt),HistoTrg->GetYaxis()->FindBin(fabs(eta)))<<"\n";
+    
+//    float zpt_corr=histZ->GetBinContent(histZ->GetXaxis()->FindBin(genM),histZ->GetYaxis()->FindBin(genpT));
+    
+    
+    
     return HistoTrg->GetBinContent(ptBIN,etaBIN);
     
 }
@@ -750,7 +757,11 @@ float Cor80X_Trigger_Mu_GH(float pt,float eta, TH2F* HistoTrg ){
     if (1.2 <= fabs(eta) && fabs(eta) < 2.1) etaBIN=3;
     if (2.1 <= fabs(eta) && fabs(eta) < 2.4) etaBIN=4;
     
-    //    cout<< "--->Trigger    pt= "<<pt<<  "   eta" <<eta<< "  SF="<<HistoTrg->GetBinContent(ptBIN,etaBIN)<<"\n";
+    
+    if (pt > 750) pt=750;
+    
+    
+    if (HistoTrg->GetBinContent(ptBIN,etaBIN)-HistoTrg->GetBinContent(HistoTrg->GetXaxis()->FindBin(pt),HistoTrg->GetYaxis()->FindBin(fabs(eta)))) cout<< "--->Trigger    pt= "<<pt<<  "   eta" <<eta<< "  SF="<<HistoTrg->GetBinContent(ptBIN,etaBIN)- HistoTrg->GetBinContent(HistoTrg->GetXaxis()->FindBin(pt),HistoTrg->GetYaxis()->FindBin(fabs(eta)))<<"\n";
     return HistoTrg->GetBinContent(ptBIN,etaBIN);
     
 }
@@ -1170,16 +1181,16 @@ float CalcWeightedObj(float Obj_period1, float Obj_period2){
 
 
 
-//   float getCorrFactorMuon80X(bool isData, float pt, float eta, TH2F ** HistoId, TH2F ** HistoIso,TH2F ** HistoTrg, TGraphAsymmErrors * graph) { // This for pt_eta-Trigger
-float getCorrFactorMuon80X(bool isData, float pt, float eta, TH2F ** HistoId, TH2F ** HistoIso,TH1F ** HistoTrg, TGraphAsymmErrors * graph) {
+   float getCorrFactorMuon80X(bool isData, float pt, float eta, TH2F ** HistoId, TH2F ** HistoIso,TH2F ** HistoTrg, TGraphAsymmErrors * graph) { // This for pt_eta-Trigger
+//float getCorrFactorMuon80X(bool isData, float pt, float eta, TH2F ** HistoId, TH2F ** HistoIso,TH1F ** HistoTrg, TGraphAsymmErrors * graph) {
     
     if (isData)
         return 1;
     else{
         float Weighted_IDSF=CalcWeightedObj(Cor80X_ID_Mu_BCDEF(pt,eta,HistoId[0]), Cor80X_ID_Mu_GH(pt,eta,HistoId[1]));
         float Weighted_IsoSF=CalcWeightedObj(Cor80X_Iso_Mu_BCDEF(pt,eta,HistoIso[0]), Cor80X_Iso_Mu_GH(pt,eta,HistoIso[1]));
-        //            float Weighted_TriggerSF=CalcWeightedObj(Cor80X_Trigger_Mu_BCDEF(pt,eta,HistoTrg[0]), Cor80X_Trigger_Mu_GH(pt,eta,HistoTrg[1]));
-        float Weighted_TriggerSF=CalcWeightedObj(Cor80X_Trigger_Mu_BCDEF_onlyEta(eta,HistoTrg[0]), Cor80X_Trigger_Mu_GH_onlyEta(eta,HistoTrg[1]));
+        float Weighted_TriggerSF=CalcWeightedObj(Cor80X_Trigger_Mu_BCDEF(pt,eta,HistoTrg[0]), Cor80X_Trigger_Mu_GH(pt,eta,HistoTrg[1]));
+//        float Weighted_TriggerSF=CalcWeightedObj(Cor80X_Trigger_Mu_BCDEF_onlyEta(eta,HistoTrg[0]), Cor80X_Trigger_Mu_GH_onlyEta(eta,HistoTrg[1]));
         float Tracking_SF=Cor80X_TRK_Mu_Full2016(eta, graph);
         return (Weighted_IDSF * Weighted_IsoSF * Tracking_SF * Weighted_TriggerSF);
     }
