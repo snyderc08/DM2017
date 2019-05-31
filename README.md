@@ -21,7 +21,7 @@ I have different Skimmer.cc's, InputSamples.txt's, Submit_batch.jdl's and Submit
 
 Once the Skimmer.cc is saved type make into the terminal to create Skimmer.h
 
-The next step is to modify Submit_batch.jdl, Submit_run2.sh and InputSamples.txt in similar manner as done for the Skimmer.cc. You do not need to type make because Makefile is only for the skimmer. 
+The next step is to modify Submit_batch.jdl, Submit_run2.sh and InputSamples.txt in similar manner as done for the Skimmer.cc. You do not need to type make because Makefile is only for the skimmer. Just remember with these 4 files to change the path. If the main path is the same for all submitions you can just change the InputSamples.txt. 
 
 Now you are ready to submit by typing into terminal 
 
