@@ -8,9 +8,9 @@ https://github.com/cmkuo/ggAnalysis
 
 The Crab is the first step in the analysis and generates the n-tuples for data and MC. These can be large so they are stored in your eos space. The extra files in the Crab3 directory that aren't in Abdollah's should be in the environment once it is set up, but if not they are here. You need to modify multicrab_Data/BG_cfg.py and run_data/mc_80X.py. Once those are modified for your submission type:
 
-' python multicrab_Data_cfg.py '
+` python multicrab_Data_cfg.py `
 or
-' python multicrab_BG_cfg.py '
+` python multicrab_BG_cfg.py `
 
 Depending on what files you want. 
 
