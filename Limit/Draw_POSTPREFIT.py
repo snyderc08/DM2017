@@ -27,7 +27,7 @@ def add_CMS():
     lumi.SetFillStyle(    0 )
     lumi.SetTextAlign(   12 )
     lumi.SetTextColor(    1 )
-    lumi.AddText("CMS 2016")
+    lumi.AddText("CMS")
     return lumi
 
 def add_Preliminary():
@@ -156,9 +156,9 @@ def MakePlot(FileName,categoriy,HistName,Xaxis,MaxRange,sig,sigLeg,XSection, Sta
     DYS.SetFillColor(ROOT.TColor.GetColor(108, 226, 354))
 
 
-#    for i in range(Data.GetNbinsX()):
-#        if i > 6 : Data.SetBinContent(i+1,0)
-#        if i > 6 : Data.SetBinError(i+1,0)
+    for i in range(Data.GetNbinsX()):
+        if i > 6 : Data.SetBinContent(i+1,0)
+        if i > 6: Data.SetBinError(i+1,0)
 
 
     ######  Add OverFlow Bin
@@ -185,12 +185,18 @@ def MakePlot(FileName,categoriy,HistName,Xaxis,MaxRange,sig,sigLeg,XSection, Sta
     Data.SetLineColor(ROOT.kBlack)
     Data.SetLineWidth(2)
 
-    stack=ROOT.THStack("stack","stack")
-    
+    # if Data and FileName.find("LQMass") > 0 :
+    #     print "##################################\n", FileName
+    #     for i in range(Data.GetNbinsX()):
+    # #           
+    #         if i > 19 : Data.SetBinContent(i+1,0)
+            
 
+    stack=ROOT.THStack("stack","stack")
+  
+    stack.Add(QCD)
     stack.Add(VV)
     stack.Add(DYS)
-    stack.Add(QCD)
     stack.Add(SingleT)
     stack.Add(TT)
     stack.Add(W)
@@ -246,15 +252,16 @@ def MakePlot(FileName,categoriy,HistName,Xaxis,MaxRange,sig,sigLeg,XSection, Sta
 #    Signal.Draw("histsame")
 
     legende=make_legend()
-    legende.AddEntry(Data,"Data","elp")
+    legende.AddEntry(Data,"Observed","elp")
 
     legende.AddEntry(Signal,sigLeg,"l")
-    legende.AddEntry(W,"W+jets","f")
+    legende.AddEntry(W,"W","f")
     legende.AddEntry(TT,"t#bar{t}+jets","f")
-    legende.AddEntry(SingleT,"single Top","f")
+    legende.AddEntry(SingleT,"SingleT","f")
+    legende.AddEntry(DYS,"DY #rightarrowll ","f")
+    legende.AddEntry(VV,"VV","f")
+
     legende.AddEntry(QCD,"QCD multijet","f")
-    legende.AddEntry(DYS,"DY#rightarrowll+jets ","f")
-    legende.AddEntry(VV,"VV","f")    
     legende.AddEntry(errorBand,"Uncertainty","f")
 
     legende.Draw()
@@ -264,7 +271,7 @@ def MakePlot(FileName,categoriy,HistName,Xaxis,MaxRange,sig,sigLeg,XSection, Sta
     l2=add_CMS()
     l2.Draw("same")
     l3=add_Preliminary()
-#    l3.Draw("same")
+    l3.Draw("same")
 
     pad1.RedrawAxis()
 
@@ -276,7 +283,7 @@ def MakePlot(FileName,categoriy,HistName,Xaxis,MaxRange,sig,sigLeg,XSection, Sta
     categ.SetTextColor(    1 )
 #    categ.SetTextFont (   41 )
     #       if i==1 or i==3:
-#    categ.AddText('|#eta_{#mu} < 2.0|')
+#    categ.AddText(HistName)
     #       else :
     #        categ.AddText("SS")
     categ.Draw()
@@ -361,7 +368,7 @@ def MakePlot(FileName,categoriy,HistName,Xaxis,MaxRange,sig,sigLeg,XSection, Sta
 #    c.Modified()
     h1.GetYaxis().SetRangeUser(.01,2.99)
 #    c.Modified()
-    c.SaveAs("_Finalplot"+categoriy+Status+".pdf")
+    c.SaveAs("_Finalplot_"+categoriy+Status+".pdf")
 #    c.SaveAs("_Finalplot_"+categoriy+".pdf")
     #       c.SaveAs("mvis"+categoriy+".png")
 
@@ -373,55 +380,25 @@ def MakePlot(FileName,categoriy,HistName,Xaxis,MaxRange,sig,sigLeg,XSection, Sta
 #Category = ["_inclusive"]
 
 
+# FileNamesInfo=[
+#                ["postfit_shapes.root","Codex__mj_1_13TeV_prefit","M_{#muj} [GeV]","#mu j ",2000,"Codex_","LQ 1200GeV (DM 500 GeV)",10],
+#                ["postfit_shapes.root","Codex__mj_1_13TeV_postfit","M_{#muj} [GeV]","#mu j ",2000,"Codex_","LQ 1200GeV (DM 500 GeV)",10],
+#                ]
+# #   ["../RecoStudy/_ej_LQMass_Final_2016.root","EleJet","M_{e j} [GeV]"," e j ",2000,"Codex_","LQ 1200GeV (DM 500 GeV)",10]
 
-FileNamesInfo=[
-               ["postfit_shapes.root","Codex__mj_1_13TeV_prefit","m_{#muj} [GeV]","#mu j ",2000,"Codex_","LQ 1200GeV (DM 500 GeV)",10],
-               ["postfit_shapes.root","Codex__mj_1_13TeV_postfit","m_{#muj} [GeV]","#mu j ",2000,"Codex_","LQ 1200GeV (DM 500 GeV)",10],
-               ]
+FileNamesInfo = ["../RecoStudy/_ej_LQMass_Final_2016.root","EleJet","M_{e j} [GeV]"," e j ",2000,"Codex_1200","LQ 1200GeV (DM 500 GeV)",10]
 
-
-#FileNamesInfo=[
-#               ["postfit_shapes_approval_v3.root","Codex__mj_1_13TeV_prefit","m_{#muj} [GeV]","#mu j ",2000,"Codex_","LQ 1200GeV (DM 500 GeV)",10],
-#               ["postfit_shapes_approval_v3.root","Codex__mj_1_13TeV_postfit","m_{#muj} [GeV]","#mu j ",2000,"Codex_","LQ 1200GeV (DM 500 GeV)",10],
-#               ]
-
-#FileNamesInfo=[
-#               ["postfit_shapes_Jet50.root","Codex__mj_1_13TeV_prefit","m_{#muj} [GeV]","#mu j ",2000,"Codex_","LQ 1200GeV (DM 500 GeV)",10],
-#               ["postfit_shapes_Jet50.root","Codex__mj_1_13TeV_postfit","m_{#muj} [GeV]","#mu j ",2000,"Codex_","LQ 1200GeV (DM 500 GeV)",10],
-#               ]
-
-#FileNamesInfo=[
-#               ["postfit_shapes_PreARCReview.root","Codex__mj_1_13TeV_prefit","m_{#muj} [GeV]","#mu j ",2000,"Codex_","LQ 1200GeV (DM 500 GeV)",10],
-#               ["postfit_shapes_PreARCReview.root","Codex__mj_1_13TeV_postfit","m_{#muj} [GeV]","#mu j ",2000,"Codex_","LQ 1200GeV (DM 500 GeV)",10],
-#               ]
-
-
-#FileNamesInfo=[
-#               ["postfit_shapes_TkMu50.root","Codex__mj_1_13TeV_prefit","m_{#muj} [GeV]","#mu j ",2000,"Codex_","LQ 1200GeV (DM 500 GeV)",10],
-#               ["postfit_shapes_TkMu50.root","Codex__mj_1_13TeV_postfit","m_{#muj} [GeV]","#mu j ",2000,"Codex_","LQ 1200GeV (DM 500 GeV)",10],
-#               ]
-
-#FileNamesInfo=[
-#               ["postfit_shapes_NoBtagveto.root","Codex__mj_1_13TeV_prefit","m_{#muj} [GeV]","#mu j ",2000,"Codex_","LQ 1200GeV (DM 500 GeV)",10],
-#               ["postfit_shapes_NoBtagveto.root","Codex__mj_1_13TeV_postfit","m_{#muj} [GeV]","#mu j ",2000,"Codex_","LQ 1200GeV (DM 500 GeV)",10],
-#               ]
+MakePlot(FileNamesInfo[0],FileNamesInfo[1],FileNamesInfo[3],FileNamesInfo[2],FileNamesInfo[4],FileNamesInfo[5],FileNamesInfo[6],FileNamesInfo[7],"LOG")
+MakePlot(FileNamesInfo[0],FileNamesInfo[1],FileNamesInfo[3],FileNamesInfo[2],FileNamesInfo[4],FileNamesInfo[5],FileNamesInfo[6],FileNamesInfo[7],"Normal")
 
 
 
+# #for ch in channelDirectory:
+# #    for cat in Category:
+# for i in range(0,len(FileNamesInfo)):
 
+# #    FileName="ztt_"+ch+"_shapes.root"
+#     MakePlot(FileNamesInfo[i][0],FileNamesInfo[i][1],FileNamesInfo[i][3],FileNamesInfo[i][2],FileNamesInfo[i][4],FileNamesInfo[i][5],FileNamesInfo[i][6],FileNamesInfo[i][7],"LOG")
+#     MakePlot(FileNamesInfo[i][0],FileNamesInfo[i][1],FileNamesInfo[i][3],FileNamesInfo[i][2],FileNamesInfo[i][4],FileNamesInfo[i][5],FileNamesInfo[i][6],FileNamesInfo[i][7],"Normal")
+# #    MakePlot(FileNamesInfo[i][0],FileNamesInfo[i][1],FileNamesInfo[i][3],FileNamesInfo[i][2],FileNamesInfo[i][4],FileNamesInfo[i][5],FileNamesInfo[i][6],FileNamesInfo[i][7],"Normal")
 
-
-
-#for ch in channelDirectory:
-#    for cat in Category:
-for i in range(0,len(FileNamesInfo)):
-
-#    FileName="ztt_"+ch+"_shapes.root"
-    MakePlot(FileNamesInfo[i][0],FileNamesInfo[i][1],FileNamesInfo[i][3],FileNamesInfo[i][2],FileNamesInfo[i][4],FileNamesInfo[i][5],FileNamesInfo[i][6],FileNamesInfo[i][7],"LOG")
-    MakePlot(FileNamesInfo[i][0],FileNamesInfo[i][1],FileNamesInfo[i][3],FileNamesInfo[i][2],FileNamesInfo[i][4],FileNamesInfo[i][5],FileNamesInfo[i][6],FileNamesInfo[i][7],"Normal")
-#    MakePlot(FileNamesInfo[i][0],FileNamesInfo[i][1],FileNamesInfo[i][3],FileNamesInfo[i][2],FileNamesInfo[i][4],FileNamesInfo[i][5],FileNamesInfo[i][6],FileNamesInfo[i][7],"Normal")
-
-
-
-#import os
-#os.system("cp _FinalplotCodex__mj_1_13TeV_postfitLOG.pdf  /Users/abdollah1/Documents/SVNNew/myDir/papers/EXO-17-015/trunk/Figure_002-a.pdf")
