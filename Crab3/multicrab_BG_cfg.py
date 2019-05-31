@@ -12,7 +12,8 @@ config.section_('Data')
 config.Data.unitsPerJob = 2
 #config.Data.inputDBS = 'phys03'
 config.Data.splitting = 'FileBased'
-config.Data.outLFNDirBase = '/store/user/abdollah/Moriond17/MC/'
+#config.Data.outLFNDirBase = '/store/user/abdollah/Moriond17/MC/'
+config.Data.outLFNDirBase = '/store/user/csnyder/DM_MC/MC/'
 config.Data.allowNonValidInputDataset = True
 config.section_('User')
 config.section_('Site')
