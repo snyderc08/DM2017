@@ -35,7 +35,17 @@ If the file is to big you can either remove the jobs by typing
 
 condor_ rm -name scheddname -all 
 
-where you can see the scheddname with the condor_q being something like lpcschedd3.fnal.gov if on cmslpc. Once the jobs are removed you need to go into Submit_batch.jdl and change the 
+where you can see the scheddname with the condor_q being something like lpcschedd3.fnal.gov if on cmslpc. Once the jobs are removed you need to go into Submit_batch.jdl and change the request_memory but don't put it large, like over 10,000, to begin with or your jobs will take forever. Another way is to type:
+
+condor_qedit ID# RequestMemory 20,000
+
+ID# is the number on the side of your jobs when you run condor_q. There is a decimal place that you ignore including the number after the decimal. The 20,000 can be what ever you want to increase the memory to but remember if it is too big it will take for ever. 
+
+Once it is edited you now have to release it from the hold by typing:
+
+condor_release ID# 
+
+That should work and your skimmed root files should be in your eos. 
 
 
 
