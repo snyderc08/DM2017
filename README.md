@@ -1,5 +1,6 @@
-# DM2017
-Git repository for search for Dark Matter in 2017
+# Git repository for search for Dark Matter in 2017
+-------------------------------------------------------------------------------------------------------------------------
+##Running Crab
 
 Crab3 files belong in cd CMSSW_8_0_26_patch1 and follow the directions for set up here:
 
