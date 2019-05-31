@@ -2,7 +2,7 @@ universe = vanilla
 Executable = Submit_runV2.sh 
 Requirements = OpSys == "LINUX" && (Arch != "DUMMY" )
 request_disk = 200000000
-request_memory = 60000
+request_memory = 6000
 runPath = /uscms_data/d3/snyderc3/DM/CMSSW_8_0_11/src/DM2017/Skim3
 should_transfer_files = YES
 WhenTOTransferOutput  = ON_EXIT
