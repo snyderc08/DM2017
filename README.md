@@ -31,7 +31,11 @@ You can check on jobs by typing:
 
 condor_q
 
+If the file is to big you can either remove the jobs by typing 
 
+condor_ rm -name scheddname -all 
+
+where you can see the scheddname with the condor_q being something like lpcschedd3.fnal.gov if on cmslpc. Once the jobs are removed you need to go into Submit_batch.jdl and change the 
 
 
 
