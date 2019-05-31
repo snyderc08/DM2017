@@ -1,12 +1,20 @@
 # Git repository for search for Dark Matter in 2017
--------------------------------------------------------------------------------------------------------------------------
-##Running Crab
 
+##Running Crab
+--------------
 Crab3 files belong in cd CMSSW_8_0_26_patch1 and follow the directions for set up here:
 
 https://github.com/cmkuo/ggAnalysis 
 
-The Crab is the first step in the analysis and generates the n-tuples for data and MC. These can be large so they are stored in your eos space. The extra files there that aren't in Abdollah's should be in the environment once it is set up but if not they are here. 
+The Crab is the first step in the analysis and generates the n-tuples for data and MC. These can be large so they are stored in your eos space. The extra files in the Crab3 directory that aren't in Abdollah's should be in the environment once it is set up, but if not they are here. You need to modify multicrab_Data/BG_cfg.py and run_data/mc_80X.py. Once those are modified for your submission type:
+
+'python multicrab_Data_cfg.py'
+or
+'python multicrab_BG_cfg.py'
+
+Depending on what files you want. 
+
+##Skimming
 
 Once those are done you have to skim. I put my skimming files in the folder called Skim3 just because one of the files refers to the name of the folder it is in and I was trying to make it work. Condor had issues so had to modify it from working in nobackup to working in the eos. These new files in Skim3 should account for that. 
 
